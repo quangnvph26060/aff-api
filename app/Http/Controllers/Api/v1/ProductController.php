@@ -45,6 +45,9 @@ class ProductController extends Controller
     public function show($id)
     {
         try {
+            if (!$id) {
+                return ApiResponse::error('ID not provided', 400);
+            }
             $product = $this->productService->getProductById($id);
             return ApiResponse::success($product);
         } catch (ModelNotFoundException $e) {
