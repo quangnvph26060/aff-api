@@ -166,4 +166,14 @@ class ProductService
             throw new Exception('Failed to delete product');
         }
     }
+    public function productByCategory($id): array {
+        try {
+            $products = $this->product->where('category_id', $id)->get()->toArray();
+            return $products;
+        } catch (\Exception $e) {
+            Log::error("Failed to fetch products: {$e->getMessage()}");
+            throw new Exception('Failed to fetch products');
+        }
+    }
+    
 }
