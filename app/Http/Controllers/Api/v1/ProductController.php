@@ -25,7 +25,10 @@ class ProductController extends Controller
         try {
             $products = $this->productService->getAllProducts();
             return ApiResponse::success($products);
-        } catch (\Exception $e) {
+        }catch (ModelNotFoundException $e) {
+            $exception = new ProductNotFoundException();
+            return $exception->render(request());
+        }  catch (\Exception $e){
             Log::error('Failed to fetch products: ' . $e->getMessage());
             return ApiResponse::error('Failed to fetch products', 500);
         }
@@ -86,4 +89,17 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to delete product', 500);
         }
     }
+    public function getProductByCategory($id) {
+        try {
+            $data = $this->productService->productByCategory($id);
+            return ApiResponse::success($data, 'Product by category fetched successfully');
+        } catch (ModelNotFoundException $e) {
+            $exception = new ProductNotFoundException();
+            return $exception->render(request());
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch products: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch products', 500);
+        }
+    }
+    
 }

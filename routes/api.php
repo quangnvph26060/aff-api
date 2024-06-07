@@ -60,6 +60,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::get('/{id}', [ProductController::class, 'edit']);
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
+        Route::post('/bycategory/{id}', [ProductController::class, 'getProductByCategory']);
     });
 
     Route::group(['prefix' => 'cart'], function ($router) {
