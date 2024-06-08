@@ -29,15 +29,9 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $this->route('user'),
-            'password' => 'sometimes|required|string|min:6',
-            'role_id' => 'sometimes|required|numeric',
+            'name' => 'sometimes|required|string|max:50',
             'address' => 'nullable|string|max:255',
-            'referral_code' => 'nullable|string|max:255|unique:users',
-            'referrer_id' => 'nullable|string|exists:users,id',
             'phone' => 'nullable|string|max:15',
-            'status' => 'sometimes|required|string',
         ];
     }
 

@@ -39,9 +39,6 @@ class UserController extends Controller
     {
         try {
             $is_user_confirm = $this->userService->sendCodeOtp($request->validated());
-//            $request = new Request($is_user_confirm);
-//            $request->merge(['otp' => $is_user_confirm['otp']]);
-//            $this->store($request);
             return ApiResponse::success($is_user_confirm, 'User created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create user: ' . $e->getMessage());
@@ -53,7 +50,11 @@ class UserController extends Controller
         try {
             $user = $this->userService->createUser($request->all());
             return ApiResponse::success($user, 'User created successfully', 201);
-        } catch (\Exception $e) {
+        }
+        catch (ModelNotFoundException $e) {
+            $exception = new UserNotFoundException();
+            return $exception->render(request());
+        }catch (\Exception $e) {
             Log::error('Failed to create user: ' . $e->getMessage());
             return ApiResponse::error('Failed to create user ', 500);
         }
