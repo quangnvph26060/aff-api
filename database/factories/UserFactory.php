@@ -20,16 +20,14 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('password'),// Mật khẩu mặc định có thể là '12346578'
             'address' => $this->faker->address,
-            'phone' => $this->faker->phoneNumber,
-            'password' => bcrypt('password'), // Mật khẩu mặc định có thể là 'password'
-            'referral_code' => Str::random(8),
+            'referral_code' => null,
             'referrer_id' => null,
-            'status' => $this->faker->randomElement(['active', 'inactive', 'pending']),
-            'total_revenue' => $this->faker->randomFloat(2, 0, 1000),
-            'wallet' => $this->faker->randomFloat(2, 0, 100),
-            'bonus_wallet' => $this->faker->randomFloat(2, 0, 50),
-            'role_id' => 1, // Giả sử role_id mặc định là 1
+            'phone' => $this->faker->phoneNumber,
+            'commission_id' => $this->faker->randomElement(['1', '2', '3', '4', '5', '6']),
+            'status' =>'active',
+            'role_id' => 2, // Giả sử role_id mặc định là 1
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

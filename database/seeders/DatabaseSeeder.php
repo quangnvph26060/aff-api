@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(15)->create();
+        User::factory(10)->create();
         // Role::factory(15)->create();
         // Categories::factory(15)->create();
         // Products::factory(15)->create();
@@ -44,11 +44,11 @@ class DatabaseSeeder extends Seeder
         // Discounts::factory(15)->create();
         // Cart::factory(15)->create();
 
-        $this->call([
-            RoleSeeder::class,
-            UserSeeder::class,
-            CommissionSeeder::class,
-            WalletSeeder::class
-        ]);
+        // $this->call([
+        //     RoleSeeder::class,
+        //     UserSeeder::class,
+        //     CommissionSeeder::class,
+        //     WalletSeeder::class
+        // ]);
     }
 }
