@@ -28,27 +28,22 @@ class AuthController extends Controller
      */
 
 
-    public function login(Request $request, $type)
+    public function login(Request $request)
     {
-
-        //  dd($request->password);
+     
         $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
-
-        if ($user && Hash::check($request->get('password'), $user->password)) {
-
+        if ($user && Hash::check($request->get('password'), $user->password)) { 
             if (!$token = Auth::login($user)) {
                 // return ApiResponse::error('Unauthorized', 401);
                 return redirect()->back();
-            }
-            if($type == 'loginadmin'){
+            }    
+            if ($request->type === 'loginadmin') { 
+                session()->put('authUser', true);
                 return redirect()->route('product.store');
             }
-             return $this->respondWithToken($token);
-
+            return $this->respondWithToken($token);
         }
         return ApiResponse::error('Error', 401);
-
-
     }
 
     /**
