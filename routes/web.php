@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::get('/admin/login', function () {
+    return view('admin.login');
+});
+Route::get('/admin/product', function () {
+    return view('admin.product');
+});
+Route::get('/admin/product/add', function () {
+    return view('admin.add');
+});
+Route::get('/admin/product/list', function () {
+    return view('admin.listproduct');
+});
+
+Route::get('/admin/category', function () {
+    return view('admin.category');
+});
+Route::get('/admin/category/add', function () {
+    return view('admin.addcategory');
+});
+Route::get('/admin/category/list', function () {
+    return view('admin.listcategory');
 });

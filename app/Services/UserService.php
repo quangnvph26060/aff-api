@@ -62,12 +62,10 @@ class UserService
     {
         Log::info("Fetching user with ID: $id");
         $user = $this->user->find($id);
-
         if (!$user) {
             Log::warning("User with ID: $id not found");
             throw new ModelNotFoundException("User not found");
         }
-
         return $user;
     }
 
