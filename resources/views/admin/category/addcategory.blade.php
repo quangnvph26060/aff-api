@@ -20,20 +20,22 @@
 <div class="col-12">
 <div class="card">
     <div class="card-body p-4">
-        <form action="#" method="POST">
-                                     
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+        <form action="{{ route('admin.category.store') }}" method="POST">    
+            @csrf                  
           <div class="row">
-               
                 <div class="col-lg-6">
-                    <div>
-                       
                     <div class="mb-3">
-                            <label for="example-text-input" class="form-label">Danh Mục<span class="text text-danger">*</span></label>
-                            <input value="" required class="form-control" name="danhmuc" type="text" id="example-text-input">
+                        <label for="example-text-input" class="form-label">Danh Mục<span class="text text-danger">*</span></label>
+                        <input value="" required class="form-control" name="name" type="text" id="example-text-input">
                     </div>
                     <div class="mb-3">
-                            <label for="example-text-input" class="form-label">Mô tả</label>
-                            <input value="" required class="form-control" name="danhmuc" type="text" id="example-text-input">
+                        <label for="example-text-input" class="form-label">Mô tả</label>
+                        <input value="" required class="form-control" name="description" type="text" id="example-text-input">
                     </div>
                      
                 </div>

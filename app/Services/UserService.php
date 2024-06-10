@@ -19,7 +19,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 class UserService
 {
     protected $user;
@@ -232,5 +233,45 @@ class UserService
         }
 
         return $rand;
+    }
+     /**
+     * Hàm lấy check thông tin user đăng nhập 
+     */
+    public function authenticateUser($credentials)
+    {
+        // Tìm user theo email hoặc số điện thoại
+        $user = User::where('phone', $credentials['phone'])
+                    ->orWhere('email', $credentials['phone'])
+                    ->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            throw new \Exception('Unauthorized');
+        }
+
+        // Đăng nhập người dùng và lấy token
+        $token = Auth::login($user);
+        if (!$token) {
+            throw new \Exception('Could not create token');
+        }
+
+        return ['user' => $user, 'token' => $token];
+    }
+    /**
+     * Hàm random mật khẩu
+     */
+    public function generatePassword(): string
+    {
+        $length     = 6;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $password   = '';
+   
+        do {
+            $password = '';
+            for ($i = 0; $i < $length; $i++) {
+                $password .= $characters[rand(0, strlen($characters) - 1)];
+            }
+        } while (!preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])/', $password));
+   
+        return $password;
     }
 }
