@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAuthController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\checklogin;
@@ -18,7 +18,9 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 
-Route::get('', function () {
+Route::get('/admin/product',[ProductController::class,'store'])->name('product.store');
+
+Route::get('/admin/login', function () {
     return view('admin.login');
 });
 
@@ -28,18 +30,15 @@ Route::prefix('login')->group(function(){
 });
 
 Route::prefix('product')->group(function(){
-    Route::get('', [ProductController::class, 'store'])->name('product.store');
-});
-
-
-Route::get('/admin/product', function () {
-    return view('admin.products.product');
+    Route::get('/admin/product', function () {
+        return view('admin.products.product');
+    });
 });
 Route::get('/admin/product/add', function () {
     return view('admin.products.add');
 });
 Route::get('/admin/product/list', function () {
-    return view('admin.listproduct');
+    return view('admin.products.listproduct');
 });
 
 Route::get('/admin/category', function () {
