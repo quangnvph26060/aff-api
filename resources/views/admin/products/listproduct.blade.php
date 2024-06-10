@@ -82,26 +82,44 @@
                                         <th>Tên sản phẩm</th>
                                         <th>Ảnh sản phẩm</th>
                                         <th>Số lượng</th>
-
+                                        <th>Đơn giá</th>
+                                        <th>Hoa Hồng</th>
+                                        <th>Loại danh mục</th>
                                         <th style="text-align: center">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($products as $key => $value)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $value->name }}</td>
+                                        <td>
+                                            @foreach($imges as $key => $item)
+                                                {{ $value->id == $item->product_id? $item->image_path:'' }}
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $value->quantity }}</td>
+                                        <td>{{ $value->price }}</td>
+                                        <td>{{ $value->commission_rate }}</td>
+                                        <td>{{ $value->categorie->name }}</td>
+                                        <td align="center">
+                                            <a class="btn btn-warning"
+                                                href="">Sửa</a>
+                                            <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                class="btn btn-danger"
+                                                href="https://quanlycongviec.site/admin/mission/2808/delete">Xóa</a>
 
-                                    <td align="center">
-                                        <a class="btn btn-warning"
-                                            href="https://quanlycongviec.site/admin/mission/2808/edit?url_pre=aHR0cHM6Ly9xdWFubHljb25ndmllYy5zaXRlL2FkbWluL21pc3Npb24vbGlzdD8%3D">Sửa</a>
-                                        <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                            class="btn btn-danger"
-                                            href="https://quanlycongviec.site/admin/mission/2808/delete">Xóa</a>
+                                            <button onclick="openModel(2808, 'Top 3 Hút mùi Faster')"
+                                                class="btn btn-primary waves-effect waves-light"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                type="button">
+                                                Trao đổi
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
 
-                                        <button onclick="openModel(2808, 'Top 3 Hút mùi Faster')"
-                                            class="btn btn-primary waves-effect waves-light"
-                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                            type="button">
-                                            Trao đổi
-                                        </button>
-                                    </td>
+
 
                                 </tbody>
                             </table>
