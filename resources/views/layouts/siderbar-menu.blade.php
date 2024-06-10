@@ -21,7 +21,7 @@
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
                     <li class="ms-3">
-                        <a href="/admin/product/add">
+                        <a href="{{ route('admin.product.add') }}">
                             <span data-key="t-calendar">Thêm mới</span>
                         </a>
                     </li>

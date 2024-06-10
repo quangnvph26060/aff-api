@@ -12,6 +12,10 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\ProductNotFoundException;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Services\CategoryService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ProductController extends Controller
 {
@@ -19,14 +23,21 @@ class ProductController extends Controller
 
     public function __construct(ProductService $productService)
     {
+
         $this->productService = $productService;
+
     }
+
+
     // show screen product
     public function store()
     {
         try {
-            $products = $this->productService->getAllProducts();
-            return view('admin.products.listproduct',compact('products'));
+            // $products = $this->productService->getAllProducts();
+            $products = Product::with('categorie')->get();
+            // dd($products);
+            $imges = ProductImage::with('product')->get();
+            return view('admin.products.listproduct',compact('products', 'imges'));
         }catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
             return $exception->render(request());
@@ -35,4 +46,21 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to fetch products', 500);
         }
     }
+    public function add(){
+        $category = Category::all();
+
+        return view('admin.products.add', compact('category'));
+    }
+
+    public function addSubmit(StoreProductRequest $request)
+    {
+        try {
+            $product = $this->productService->createProduct($request->validated());
+            return ApiResponse::success($product, 'Product created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to create product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to create product', 500);
+        }
+    }
+
 }
