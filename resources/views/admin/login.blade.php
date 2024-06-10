@@ -28,17 +28,18 @@
                 <div class="mb-4 mb-md-5 text-center">
     <a href="#" class="d-block auth-logo">
         
-        <span class="logo-txt">Quản lý công việc</span>
+        <span class="logo-txt">Quản lý Affilate</span>
     </a>
 </div>                <div class="auth-content my-auto">
                     <div class="text-center">
                         <h5 class="mb-0">Đăng nhập Admin</h5>
                     </div>
-                                        <form method="POST" class="mt-4 pt-2" action="https://quanlycongviec.site/admin/login">
-                        <input type="hidden" name="_token" value="A7FDigGF6lv8cWwAlcN45ZM9qciwSYrmpAWN3BcM">                        <div class="mb-3">
+                     <form method="POST" class="mt-4 pt-2" action="">
+                                               
+                        <div class="mb-3">
                             <label class="form-label">Username hoặc Email</label>
                             <input name="email" type="text" class="form-control" id="username">
-                                                    </div>
+                         </div>
                         <div class="mb-3">
                             <div class="d-flex align-items-start">
                                 <div class="flex-grow-1">
@@ -47,8 +48,14 @@
                             </div>
                             <div class="input-group auth-pass-inputgroup">
                                 <input type="password" name="password" class="form-control" aria-label="Password" aria-describedby="password-addon">
-                                <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
-                                                            </div>
+                                <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                        <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M29 16c0 3-5.82 9-13 9S3 19 3 16s5.82-9 13-9s13 6 13 9Z"/>
+                                            <path d="M21 16a5 5 0 1 1-10 0a5 5 0 0 1 10 0Z"/>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">

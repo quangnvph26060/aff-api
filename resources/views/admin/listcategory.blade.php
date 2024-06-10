@@ -28065,7 +28065,7 @@
                         </form>
                     </div>
                     <div class="card-body">
-                                                <div class="table-rep-plugin">
+                        <div class="table-rep-plugin">
                             <div class="table-responsive mb-0" data-pattern="priority-columns">
                                 <table id="tech-companies-1" class="table table-striped">
                                     <thead>
@@ -28504,7 +28504,7 @@
                                                                             </tbody>
                                 </table>
                                 <nav>
-        <ul class="pagination">
+            <!-- <ul class="pagination">
             
                             <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
                     <span class="page-link" aria-hidden="true">&lsaquo;</span>
@@ -28522,7 +28522,7 @@
                             <li class="page-item">
                     <a class="page-link" href="https://quanlycongviec.site/admin/user/list?page=2" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
                 </li>
-                    </ul>
+            </ul> -->
     </nav>
 
                             </div>
