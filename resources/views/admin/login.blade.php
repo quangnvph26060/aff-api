@@ -32,7 +32,7 @@
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="#" class="d-block auth-logo">
 
-                                        <span class="logo-txt">Quản lý công việc</span>
+                                        <span class="logo-txt">Quản lý Affilate</span>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
