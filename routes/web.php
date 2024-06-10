@@ -18,38 +18,31 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 
-Route::get('/admin/product',[ProductController::class,'store'])->name('product.store');
+
 
 Route::get('/admin/login', function () {
     return view('admin.login');
 });
-
-
-Route::prefix('login')->group(function(){
-    Route::post('dangnhap/{type}', [AuthController::class, 'login'])->name('logindangnhap');
-});
-
-Route::prefix('product')->group(function(){
-    Route::get('/admin/product', function () {
-        return view('admin.products.product');
+Route::post('admin/login', [AuthController::class, 'login'])->name('login');
+Route::middleware(['auth.user'])->group(function () {
+    Route::get('/admin/product',[ProductController::class,'store'])->name('product.store');
+    Route::get('/admin/product/add', function () {
+        return view('admin.products.add');
     });
-});
-Route::get('/admin/product/add', function () {
-    return view('admin.products.add');
-});
-Route::get('/admin/product/list', function () {
-    return view('admin.products.listproduct');
-});
-
-Route::get('/admin/category', function () {
-    return view('admin..category.category');
-});
-Route::get('/admin/category/add', function () {
-    return view('admin.category.addcategory');
-});
-Route::get('/admin/category/list', function () {
-    return view('admin.listcategory');
-});
-Route::get('/admin/order/list', function () {
-    return view('admin.order.list');
+    Route::get('/admin/product/list', function () {
+        return view('admin.products.listproduct');
+    });
+    
+    Route::get('/admin/category', function () {
+        return view('admin..category.category');
+    });
+    Route::get('/admin/category/add', function () {
+        return view('admin.category.addcategory');
+    });
+    Route::get('/admin/category/list', function () {
+        return view('admin.listcategory');
+    });
+    Route::get('/admin/order/list', function () {
+        return view('admin.order.list');
+    });
 });
