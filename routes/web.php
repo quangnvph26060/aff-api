@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\checklogin;
+use Predis\Configuration\Option\Prefix;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,27 +18,17 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-
-
-Route::get('/admin/login', function () {
+Route::get('', function () {
     return view('admin.login');
 });
-Route::get('/admin/product', function () {
-    return view('admin.product');
-});
-Route::get('/admin/product/add', function () {
-    return view('admin.add');
-});
-Route::get('/admin/product/list', function () {
-    return view('admin.listproduct');
+
+
+Route::prefix('login')->group(function(){
+    Route::post('dangnhap/{type}', [AuthController::class, 'login'])->name('logindangnhap');
 });
 
-Route::get('/admin/category', function () {
-    return view('admin.category');
+Route::prefix('product')->group(function(){
+    Route::get('', [ProductController::class, 'store'])->name('product.store');
 });
-Route::get('/admin/category/add', function () {
-    return view('admin.addcategory');
-});
-Route::get('/admin/category/list', function () {
-    return view('admin.listcategory');
-});
+
+
