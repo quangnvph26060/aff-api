@@ -52,6 +52,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
+            // $credentials = $this->filterUserData($request->all());
             $credentials = $request->only(['phone', 'password']);
             $result = $this->userService->authenticateUser($credentials);
             // Kiểm tra loại đăng nhập và thực hiện hành động phù hợp
@@ -64,6 +65,15 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return $this->handleLoginError($request, $e);
         }
+    }
+    /**
+     * hàm check key $data  
+     */
+    protected function filterUserData(array $data): array
+    {
+        return array_filter($data, function ($key) {
+            return in_array($key, ['phone', 'password','type']);
+        }, ARRAY_FILTER_USE_KEY);
     }
     protected function handleLoginError($request, Exception $e)
     {

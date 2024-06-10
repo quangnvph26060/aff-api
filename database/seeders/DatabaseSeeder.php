@@ -45,6 +45,10 @@ class DatabaseSeeder extends Seeder
         // Cart::factory(15)->create();
 
         $this->call([
+          
+            CitySeeder::class,  
+            DistrictsSeeder::class,
+            WardsSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             CommissionSeeder::class,
