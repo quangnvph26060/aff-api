@@ -26,16 +26,29 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+
+
+    public function login(Request $request, $type)
     {
+
+        //  dd($request->password);
         $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
+
+        if ($user && Hash::check($request->get('password'), $user->password)) {
+
             if (!$token = Auth::login($user)) {
-                return ApiResponse::error('Unauthorized', 401);
+                // return ApiResponse::error('Unauthorized', 401);
+                return redirect()->back();
             }
-            return $this->respondWithToken($token);
+            if($type == 'loginadmin'){
+                return redirect()->route('product.store');
+            }
+             return $this->respondWithToken($token);
+
         }
         return ApiResponse::error('Error', 401);
+
+
     }
 
     /**
