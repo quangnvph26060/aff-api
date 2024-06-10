@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CartController;
+use App\Http\Controllers\Api\v1\TeamController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -61,7 +63,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::delete('/{id}', [ProductController::class, 'destroy']);
         Route::post('/bycategory/{id}', [ProductController::class, 'getProductByCategory']);
     });
-
+    // Route::group(['prefix' => 'team'],function($router){
+    //     Route::get('/', [TeamController::cl])
+    // });
+    Route::get('/teammember', [TeamController::class, 'index']);
     Route::group(['prefix' => 'cart'], function ($router) {
         Route::post('/', [CartController::class, 'addToCart']);
         Route::get('/', [CartController::class, 'getToCart']);

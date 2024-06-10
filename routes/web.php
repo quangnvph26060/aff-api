@@ -32,3 +32,25 @@ Route::prefix('product')->group(function(){
 });
 
 
+Route::get('/admin/product', function () {
+    return view('admin.products.product');
+});
+Route::get('/admin/product/add', function () {
+    return view('admin.products.add');
+});
+Route::get('/admin/product/list', function () {
+    return view('admin.listproduct');
+});
+
+Route::get('/admin/category', function () {
+    return view('admin..category.category');
+});
+Route::get('/admin/category/add', function () {
+    return view('admin.category.addcategory');
+});
+Route::get('/admin/category/list', function () {
+    return view('admin.listcategory');
+});
+Route::get('/admin/order/list', function () {
+    return view('admin.order.list');
+});

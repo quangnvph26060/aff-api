@@ -32,7 +32,7 @@ class AuthController extends Controller
     {
 
         //  dd($request->password);
-        $user = User::where('phone', $request->get('email'))->orwhere('email',$request->get('email'))->first();
+        $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
 
         if ($user && Hash::check($request->get('password'), $user->password)) {
 

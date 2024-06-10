@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 //use Illuminate\Support\Facades\Log;
 //use Exception;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -48,7 +50,25 @@ class UserService
             throw new Exception('Failed to fetch users');
         }
     }
-
+    /**
+     * Hàm lấy ra thông tin của tất cả thành viên trong nhóm
+     * @param $id
+     * @return $user
+     * CreatedBy: youngbachhh (24/05/2024)
+     * UpdatedBy: youngbachhh (27/05/2024)
+     */
+    public function getAllTeamMember(): Collection
+    {
+        try {
+            Log::info('Fetching all users');
+            $currentUser = Auth::user();
+            $teammember = User::where('referral_code', $currentUser->referrer_id)->get();
+            return $teammember;
+        } catch (Exception $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            throw new Exception('Failed to fetch users');
+        }
+    }
     /**
      * Hàm lấy ra thông tin của người dùng theo id
      *

@@ -45,7 +45,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Username hoặc Email</label>
-                                            <input name="email" type="text" class="form-control" id="username">
+                                            <input name="phone" type="text" class="form-control" id="username">
                                         </div>
                                         <div class="mb-3">
                                             <div class="d-flex align-items-start">
