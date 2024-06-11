@@ -17,6 +17,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Services\CategoryService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class ProductController extends Controller
 {
     protected $productService;
@@ -33,23 +34,20 @@ class ProductController extends Controller
     // show screen product
     public function store()
     {
-        $admin = Auth::user();
-
         try {
-
-            $products = Product::with('categorie')->get();
-
-            $imges = ProductImage::with('product')->get();
-            return view('admin.products.listproduct',compact('products', 'imges'));
-        }catch (ModelNotFoundException $e) {
+            $products = $this->productService->getAllProducts();
+            $category = $this->categoryService->getAllCategories();
+            return view('admin.products.listproduct', compact('products', 'category'));
+        } catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
             return $exception->render(request());
-        }  catch (\Exception $e){
+        } catch (\Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());
             return ApiResponse::error('Failed to fetch products', 500);
         }
     }
-    public function add(){
+    public function addForm()
+    {
         try {
             $category = $this->categoryService->getAllCategories();
             return view('admin.products.add', compact('category'));
@@ -61,12 +59,12 @@ class ProductController extends Controller
     public function addSubmit(StoreProductRequest $request)
     {
         try {
-            $product = $this->productService->createProduct($request->validated());
-            return ApiResponse::success($product, 'Product created successfully', 201);
+            $product = $this->productService->createProduct($request->all());
+            return redirect()->route('admin.product.store');
+            // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create product: ' . $e->getMessage());
             return ApiResponse::error('Failed to create product', 500);
         }
     }
-
 }

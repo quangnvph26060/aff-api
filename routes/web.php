@@ -51,18 +51,17 @@ Route::get('demo', [AuthController::class, 'getUser']);
 Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
-    
+
     // Product routes
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
-    Route::get('product/add', function () {
-        return view('admin.products.add');
-    })->name('product.add');
+    Route::get('product/add', [ProductController::class, 'addForm'])->name('product.add');
+    Route::post('product/add', [ProductController::class, 'addSubmit'])->name('product.add.submit');
     Route::get('product/list', function () {
         return view('admin.products.listproduct');
     })->name('product.list');
-    
+
     // Category routes
-  
+
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     // add category
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');

@@ -22,8 +22,8 @@
 
 
                         <div class="card-body p-4">
-                            <form action="https://quanlycongviec.site/admin/user/store" method="POST">
-                                <input type="hidden" name="_token" value="A7FDigGF6lv8cWwAlcN45ZM9qciwSYrmpAWN3BcM">
+                            <form action="{{ route('admin.product.add.submit') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-12">
                                     </div>
@@ -38,8 +38,11 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" class="form-control" name="name" type="file"
-                                                    id="example-text-input">
+                                                {{-- <input value="" required class="form-control" name="images"
+                                                    type="file" id="example-text-input"> --}}
+                                                <input id="images" class="form-control" type="file" name="images[]"
+                                                    multiple accept="image/*" required>
+
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Giá sản phẩm <span
@@ -56,7 +59,7 @@
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Hoa Hồng <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" required class="form-control" name="quantity"
+                                                <input value="" required class="form-control" name="commission_rate"
                                                     type="number" id="example-email-input">
                                             </div>
 
@@ -64,11 +67,30 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Loại Danh Mục<span
                                                         class="text text-danger">*</span></label>
-                                                <select class="form-control" name="type" id="">
+                                                <select class="form-control" name="category_id" id="" required>
                                                     <option value="">Chọn danh mục</option>
                                                     @foreach ($category as $item )
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="example-url-input" class="form-label">Mô tả <span
+                                                        class="text text-danger">*</span></label>
+                                                <textarea class="form-control" id="example-url-input" name="description"
+                                                    rows="2" required></textarea>
+                                            </div>
+
+
+                                            <div class="mb-3">
+                                                <label for="example-text-input" class="form-label">Trạng thái<span
+                                                        class="text text-danger">*</span></label>
+                                                <select class="form-control" name="status" id="" >
+                                                    <option value="">Chọn trạng thái</option>
+                                                    <option value="published">published</option>
+                                                    <option value="inactive">inactive</option>
+                                                    <option value="scheduled">scheduled</option>
                                                 </select>
                                             </div>
                                         </div>
