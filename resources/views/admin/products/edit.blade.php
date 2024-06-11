@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Thêm Sản Phẩm</h4>
+                        <h4 class="mb-sm-0 font-size-18">Sửa Sản Phẩm</h4>
 
                     </div>
                 </div>
@@ -22,7 +22,7 @@
 
 
                         <div class="card-body p-4">
-                            <form action="{{ route('admin.product.add.submit') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.product.edit.submit', ['id'=> $product->id]) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -32,14 +32,12 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Tên sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" required class="form-control" name="name" type="text"
-                                                    id="example-text-input">
+                                                <input  required class="form-control" name="name" type="text"
+                                                    id="example-text-input" value="{{ $product->name }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                {{-- <input value="" required class="form-control" name="images"
-                                                    type="file" id="example-text-input"> --}}
                                                 <input id="images" class="form-control" type="file" name="images[]"
                                                     multiple accept="image/*" required>
 
@@ -47,20 +45,20 @@
                                             <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Giá sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" required class="form-control" name="price" type="number"
-                                                    id="example-search-input">
+                                                <input  required class="form-control" name="price" type="number"
+                                                    id="example-search-input" value="{{ $product->price }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Số lượng <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" required class="form-control" name="quantity"
-                                                    type="number" id="example-email-input">
+                                                <input required class="form-control" name="quantity"
+                                                    type="number" id="example-email-input" value="{{ $product->quantity }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Hoa Hồng <span
                                                         class="text text-danger">*</span></label>
-                                                <input value="" required class="form-control" name="commission_rate"
-                                                    type="number" id="example-email-input">
+                                                <input  required class="form-control" name="commission_rate"
+                                                    type="number" id="example-email-input"  value="{{ $product->commission_rate }}">
                                             </div>
 
 
@@ -70,7 +68,7 @@
                                                 <select class="form-control" name="category_id" id="" required>
                                                     <option value="">Chọn danh mục</option>
                                                     @foreach ($category as $item )
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    <option {{ $product->category_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -79,7 +77,7 @@
                                                 <label for="example-url-input" class="form-label">Mô tả <span
                                                         class="text text-danger">*</span></label>
                                                 <textarea class="form-control" id="example-url-input" name="description"
-                                                    rows="2" required></textarea>
+                                                    rows="2" required> {{ $product->description }}</textarea>
                                             </div>
 
 
@@ -88,9 +86,9 @@
                                                         class="text text-danger">*</span></label>
                                                 <select class="form-control" name="status" id="" >
                                                     <option value="">Chọn trạng thái</option>
-                                                    <option value="published">published</option>
-                                                    <option value="inactive">inactive</option>
-                                                    <option value="scheduled">scheduled</option>
+                                                    <option  {{ $product->status == 'published' ? 'selected' : '' }} value="published">published</option>
+                                                    <option  {{ $product->status == 'inactive' ? 'selected' : '' }} value="inactive">inactive</option>
+                                                    <option  {{ $product->status == 'scheduled' ? 'selected' : '' }} value="scheduled">scheduled</option>
                                                 </select>
                                             </div>
                                         </div>

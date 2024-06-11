@@ -29,18 +29,18 @@ class CategoryService
     {
         try {
             Log::info('Fetching all categories');
-
-            $categories = $this->category::withCount('products')
-                ->leftJoin('products', 'categories.id', '=', 'products.category_id')
-                ->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
-                ->select(
-                    'categories.*',
-                    DB::raw('COALESCE(SUM(products.price * order_details.quantity), 0) as revenue'),
-                    DB::raw('COUNT(products.id) as products_count')
-                )
-                ->groupBy('categories.id')
-                ->get();
-
+               $categories = $this->category->all();
+        //     $categories = $this->category::withCount('products')
+        //         ->leftJoin('products', 'categories.id', '=', 'products.category_id')
+        //         ->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
+        //         ->select(
+        //             'categories.*',
+        //             DB::raw('COALESCE(SUM(products.price * order_details.quantity), 0) as revenue'),
+        //             DB::raw('COUNT(products.id) as products_count')
+        //         )
+        //         ->groupBy('categories.id')
+        //         ->get();
+        // dd($categories);
             return $categories;
         } catch (Exception $e) {
             Log::error('Failed to fetch categories: ' . $e->getMessage());

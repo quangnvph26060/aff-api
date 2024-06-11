@@ -21,8 +21,9 @@ class Product extends Model
         "commission_rate",
         "category_id",
         "discount_id",
-        "status"
+        "status",
     ];
+
     protected $appends = ['category','images'];
     public function getImagesAttribute(){
         return ProductImage::where('product_id',$this->attributes['id'])->get();
@@ -43,10 +44,7 @@ class Product extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function categorie()
-    {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
-    }
+
     public function productImages()
     {
         return $this->hasMany(ProductImage::class);
