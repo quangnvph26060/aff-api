@@ -34,7 +34,6 @@ class AuthController extends Controller
 
     // public function login(Request $request)
     // {
-
     //     $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
     //     if ($user && Hash::check($request->get('password'), $user->password)) {
     //         if (!$token = Auth::login($user)) {
@@ -101,13 +100,16 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+       
+        if($request->type === "web"){
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();  
+            return redirect()->route('admin.login');
+        }
         $user = User::where('id', Auth::user()->id)->first();
         $user->tokens()->delete();
         Auth::logout();
-        $request->session()->flush();
-
-          return redirect()->route('admin.login');
-        // return ApiResponse::success('Successfully logged out', 201);
+       return ApiResponse::success('Successfully logged out', 201);
     }
 
 

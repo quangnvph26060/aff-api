@@ -140,11 +140,11 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $this->randomReferalCode(),
+                'referral_code' => $is_result[0]['referrer_id'],
                 // 'referral_code' => $this->randomReferralCode(),
                 // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
-                'referrer_id' => $is_result[0]['referrer_id'],
+                'referrer_id' => $this->randomReferalCode(),
                 'role_id' => 3,
                 'status' => 'active',
                 'otp'=> @$data['otp'],
@@ -169,9 +169,9 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $is_result[0]['referrer_id'],
+                'referral_code' => $this->randomReferalCode(),
                 'phone' => @$data['phone'],
-                'referrer_id' => $this->randomReferalCode(),
+                'referrer_id' => $is_result[0]['referrer_id'],
                 'role_id' => 3,
                 'status' => 'active',
             ]);
@@ -284,12 +284,13 @@ class UserService
 
         return ['user' => $user, 'token' => $token];
     }
+
     /**
      * Hàm random mật khẩu
      */
     public function generatePassword(): string
     {
-        $length     = 6;
+        $length     = 8;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $password   = '';
 
@@ -302,5 +303,4 @@ class UserService
 
         return $password;
     }
-
 }

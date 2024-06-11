@@ -22,9 +22,9 @@ class TeamController extends Controller
     {
         try {
             $data = $this->userService->getAllTeamMember();
-            dd($data);
+         
             // Trích xuất thông tin cần thiết từ dữ liệu
-            $teamMembers = $data['teamMember']->map(function ($member) {
+            $teamMembers = $data['$teamMembersB']->map(function ($member) {
                 return [
                     'name' => $member->name,
                     'id' => $member->id,
@@ -37,8 +37,8 @@ class TeamController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $teamMembers,
-                'personalRevenueTotal' => $data['personalRevenueTotal'],
-                'teamRevenueTotal' => $data['teamRevenueTotal'],
+                'personalRevenue' => $data['personalRevenue'],
+                'teamRevenue' => $data['teamRevenue'],
             ]);
         } catch (\Exception $e) {
             Log::error('Failed to fetch users: ' . $e->getMessage());
