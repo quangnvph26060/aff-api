@@ -39,15 +39,13 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     })->name('product.list');
     // Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-    // add category
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');
-    // screen add category
+    Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('category/add', function () {
         return view('admin.category.addcategory');
     })->name('category.add');
-    Route::get('category/list', function () {
-        return view('admin.category.listcategory');
-    })->name('category.list');
+    Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // Order routes
     Route::get('order/list', function () {
         return view('admin.order.list');
