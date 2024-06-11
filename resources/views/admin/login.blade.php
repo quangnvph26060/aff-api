@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Đăng nhập Ship Viêt </title>
+        Đăng nhập Admin </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="https://quanlycongviec.site/libs/assets/images/favicon.ico">
@@ -40,9 +40,9 @@
                                         <h5 class="mb-0">Đăng nhập Admin</h5>
                                     </div>
                                     <form method="POST" class="mt-4 pt-2"
-                                        action="{{ route('logindangnhap', ['type' =>'loginadmin']) }}">
+                                        action="{{ route('login') }}">
                                         @csrf
-
+                                        <input name="type" type="hidden" class="form-control" id="username" value=" loginadmin">
                                         <div class="mb-3">
                                             <label class="form-label">Username hoặc Email</label>
                                             <input name="phone" type="text" class="form-control" id="username">
@@ -132,7 +132,7 @@
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="assets/images/users/avatar-1.jpg"
+                                                                <img src=""
                                                                     class="avatar-md img-fluid rounded-circle"
                                                                     alt="...">
                                                             </div>

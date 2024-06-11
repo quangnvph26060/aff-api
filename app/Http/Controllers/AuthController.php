@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use Illuminate\Support\Facades\Hash;
+use App\Services\UserService;
 class AuthController extends Controller
 {
     /**
@@ -16,9 +17,12 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        // $this->middleware('auth:api', ['except' => ['login']]);
+        $this->userService = $userService;
     }
 
     /**
@@ -28,34 +32,60 @@ class AuthController extends Controller
      */
 
 
-    public function login(Request $request, $type)
+    // public function login(Request $request)
+    // {
+
+    //     $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
+    //     if ($user && Hash::check($request->get('password'), $user->password)) {
+    //         if (!$token = Auth::login($user)) {
+    //             // return ApiResponse::error('Unauthorized', 401);
+    //             return redirect()->back();
+    //         }
+    //         if ($request->type === 'loginadmin') {
+    //             session()->put('authUser', true);
+    //             return redirect()->route('product.store');
+    //         }
+    //         return $this->respondWithToken($token);
+    //     }
+    //     return ApiResponse::error('Error', 401);
+    // }
+    public function login(Request $request)
     {
-
-
-        $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
-
-        if ($user && Hash::check($request->get('password'), $user->password)) {
-            $token = Auth::login($user);
-            if (!Auth::check()) {
-
-                // return ApiResponse::error('Unauthorized', 401);
-                return redirect()->back();
+        try {
+            // $credentials = $this->filterUserData($request->all());
+            $credentials = $request->only(['phone', 'password']);
+            $result = $this->userService->authenticateUser($credentials);
+            // Kiểm tra loại đăng nhập và thực hiện hành động phù hợp
+            if ($request->type === 'loginadmin') {
+                session()->put('authUser', $result);
+                return redirect()->route('admin.product.store');
+            } elseif ($request->type === 'fe') {
+                return $this->respondWithToken($result['token']);
             }
-
-            if($type == 'loginadmin'){
-
-                 return redirect()->route('product.store');
-            }
-              return $this->respondWithToken($token);
+        } catch (\Exception $e) {
+            return $this->handleLoginError($request, $e);
 
         }
-        return ApiResponse::error('Error', 401);
-
-
     }
-
     /**
-     * Get the authenticated User.
+     * hàm check key $data
+     */
+    protected function filterUserData(array $data): array
+    {
+        return array_filter($data, function ($key) {
+            return in_array($key, ['phone', 'password','type']);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+    protected function handleLoginError($request, \Exception $e)
+    {
+        if ($request->type === 'loginadmin') {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        } else {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+    }
+    /**
+     * Get the authenticated User. ( thông tin user )
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -123,19 +153,29 @@ class AuthController extends Controller
             'role' => $role,
         ]);
     }
+    /**
+     * hàm lấy thông tin người dùng
+     */
     public function getUser(Request $request) {
-        try {
+        if ($request->is('api/*')) {
+            // Xác định người dùng qua token (cho API)
             $user = Auth::user();
-            return response()->json([
-                'status' => 'success',
-                'data' => $user,
-            ]);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage()
-            ], 500);
+            if ($user) {
+                return response()->json([
+                    'status' => 'success',
+                    'data' => $user,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthenticated',
+                ], 401);
+            }
+        } else {
+            // Xác định người dùng qua session (cho web)
+            if ($request->session()->has('authUser')) {
+                $user = $request->session()->get('authUser');
+            }
         }
     }
 }

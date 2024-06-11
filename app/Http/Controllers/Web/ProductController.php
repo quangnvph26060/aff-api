@@ -20,12 +20,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ProductController extends Controller
 {
     protected $productService;
+    protected $categoryService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, CategoryService $categoryService)
     {
 
         $this->productService = $productService;
-
+        $this->categoryService = $categoryService;
     }
 
 
@@ -49,11 +50,14 @@ class ProductController extends Controller
         }
     }
     public function add(){
-        $category = Category::all();
-
-        return view('admin.products.add', compact('category'));
+        try {
+            $category = $this->categoryService->getAllCategories();
+            return view('admin.products.add', compact('category'));
+        } catch (\Exception $e) {
+            Log::error('Failed to create category: ' . $e->getMessage());
+            return ApiResponse::error('Failed to create category', 500);
+        }
     }
-
     public function addSubmit(StoreProductRequest $request)
     {
         try {
