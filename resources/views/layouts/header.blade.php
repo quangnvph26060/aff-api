@@ -219,7 +219,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{route('admin.user-info')}}">
                         <svg xmlns="http://www.w3.org/200/svg" width="20" height="20" viewBox="0 0 1408 1472">
                             <path fill="currentColor"
                                 d="M704 128q-144 0-225 106t-81 271q-1 205 132 325q17 16 12 41l-23 48q-11 24-32.5 37.5T396 995q-3 1-126.5 41T138 1080q-84 35-110 73q-28 63-28 319h1408q0-256-28-319q-26-38-110-73q-8-4-131.5-44T1012 995q-69-25-90.5-38.5T889 919l-23-48q-5-25 12-41q133-120 132-325q0-165-81-271T704 128z" />
@@ -228,15 +228,23 @@
                     <!-- <a class="dropdown-item" href="auth-lock-screen.html"><i
                                     class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock Screen</a>
                             <div class="dropdown-divider"></div> -->
-                    <a class="dropdown-item" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2">
-                                <path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" />
-                                <path d="M9 12h12l-3-3m0 6l3-3" />
-                            </g>
-                        </svg>
-                        Đăng xuất</a>
+                            <form action="{{ route('admin.logout') }}" method="POST">
+                                @csrf 
+                                <input type="hidden" value="web" name="type">
+                                  <button class="btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2">
+                                                <path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" />
+                                                <path d="M9 12h12l-3-3m0 6l3-3" />
+                                            </g>
+                                        </svg>
+                                        Đăng xuất
+                                  </button>
+                               
+                            </form>    
+            
+                       
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
+use App\Models\Commission;
 use Exception;
 use App\Models\User;
 use App\Models\Wallet;
@@ -58,18 +59,49 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function getAllTeamMember(): Collection
-    {
-        try {
-            Log::info('Fetching all users');
-            $currentUser = Auth::user();
-            $teammember = User::where('referral_code', $currentUser->referrer_id)->get();
-            return $teammember;
-        } catch (Exception $e) {
-            Log::error('Failed to fetch users: ' . $e->getMessage());
-            throw new Exception('Failed to fetch users');
+    public function getAllTeamMember(): \Illuminate\Database\Eloquent\Collection
+{
+    try {
+        Log::info('Fetching all users');
+        $currentUser = Auth::user();
+        $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->with('userwallet')->get();
+        $result = new \Illuminate\Database\Eloquent\Collection;
+
+        foreach ($teamMembersB as $memberB) {
+            // Lấy tổng doanh số cá nhân của thành viên B
+            $personalRevenue = $memberB->userwallet->sum('total_revenue');
+
+            // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+            $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                ->with('userwallet')
+                ->get()
+                ->sum(function ($user) {
+                    return $user->userwallet->sum('total_revenue');
+                });
+
+            // Tạo đối tượng kết quả và thêm vào Collection
+            $result->push((object)[
+                'name' => $memberB->name,
+                'email' => $memberB->email,
+                'phone' => $memberB->phone,
+                'referral_code'=> $memberB->referral_code,
+                'personalRevenue' => $personalRevenue,
+                'teamRevenue' => $teamRevenue
+            ]);
         }
+
+        // dd($result);
+        return $result;
+    } catch (Exception $e) {
+        Log::error('Failed to fetch users: ' . $e->getMessage());
+        throw new Exception('Failed to fetch users');
     }
+}
+
+
+
+
+
     /**
      * Hàm lấy ra thông tin của người dùng theo id
      *
@@ -112,11 +144,11 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $this->randomReferalCode(),
+                'referral_code' => $is_result[0]['referrer_id'],
                 // 'referral_code' => $this->randomReferralCode(),
                 // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
-                'referrer_id' => $is_result[0]['referrer_id'],
+                'referrer_id' => $this->randomReferalCode(),
                 'role_id' => 3,
                 'status' => 'active',
                 'otp'=> @$data['otp'],
@@ -141,9 +173,9 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $is_result[0]['referrer_id'],
+                'referral_code' => $this->randomReferalCode(),
                 'phone' => @$data['phone'],
-                'referrer_id' => $this->randomReferalCode(),
+                'referrer_id' => $is_result[0]['referrer_id'],
                 'role_id' => 3,
                 'status' => 'active',
             ]);
@@ -235,7 +267,7 @@ class UserService
         return $rand;
     }
      /**
-     * Hàm lấy check thông tin user đăng nhập 
+     * Hàm lấy check thông tin user đăng nhập
      */
     public function authenticateUser($credentials)
     {
@@ -256,23 +288,23 @@ class UserService
 
         return ['user' => $user, 'token' => $token];
     }
+
     /**
      * Hàm random mật khẩu
      */
     public function generatePassword(): string
     {
-        $length     = 6;
+        $length     = 8;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $password   = '';
-   
+
         do {
             $password = '';
             for ($i = 0; $i < $length; $i++) {
                 $password .= $characters[rand(0, strlen($characters) - 1)];
             }
         } while (!preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])/', $password));
-   
+
         return $password;
     }
-    
 }

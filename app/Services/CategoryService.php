@@ -117,4 +117,24 @@ class CategoryService
             throw new Exception('Failed to delete category');
         }
     }
+     /**
+     * Hàm lấy ra  một danh mục
+     *
+     * @param array $data
+     * @return Category
+     * @throws ModelNotFoundException
+     */
+    public function findOrFailCategory($id)
+    {
+        try {
+            Log::info('Creating new category');
+            $category = $this->category->findOrFail($id);
+          
+            return $category;
+        } catch (Exception $e) {
+           
+            Log::error('Failed to find category: ' . $e->getMessage());
+            throw new Exception('Failed to find category');
+        }
+    }
 }

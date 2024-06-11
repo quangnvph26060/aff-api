@@ -23,35 +23,13 @@ use Predis\Configuration\Option\Prefix;
 
 Route::get('/admin/login', function () {
     return view('admin.login');
-});
-// Route::post('admin/login', [AuthController::class, 'login'])->name('login');
-// Route::middleware(['auth.user'])->group(function () {
-//     Route::get('/admin/product',[ProductController::class,'store'])->name('product.store');
-//     Route::get('/admin/product/add', function () {
-//         return view('admin.products.add');
-//     });
-//     Route::get('/admin/product/list', function () {
-//         return view('admin.products.listproduct');
-//     });
-//     Route::get('add', [ProductController::class, 'add'])->name('admin.product.add');
-//     Route::get('/admin/category', function () {
-//         return view('admin.category.category');
-//     });
-//     Route::get('/admin/category/add', function () {
-//         return view('admin.category.addcategory');
-//     });
-//     Route::get('/admin/category/list', function () {
-//         return view('admin.listcategory');
-//     });
-//     Route::get('/admin/order/list', function () {
-//         return view('admin.order.list');
-//     });
-// });
+})->name('admin.login');
 Route::get('demo', [AuthController::class, 'getUser']);
-Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 
+Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
 
+    Route::post('logout', [AuthController::class,'logout'])->name('logout');
     // Product routes
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
     Route::get('product/add', [ProductController::class, 'addForm'])->name('product.add');
@@ -60,22 +38,22 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
         return view('admin.products.listproduct');
     })->name('product.list');
 
-    // Category routes
 
+    // Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-    // add category
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');
-    // screen add category
+    Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('category/add', function () {
         return view('admin.category.addcategory');
     })->name('category.add');
-
-    Route::get('category/list', function () {
-        return view('admin.category.listcategory');
-    })->name('category.list');
-
+    Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // Order routes
     Route::get('order/list', function () {
         return view('admin.order.list');
     })->name('order.list');
+    // user
+    Route::get('user-info',function(){
+        return view('admin.user.index');
+    })->name('user-info');
 });

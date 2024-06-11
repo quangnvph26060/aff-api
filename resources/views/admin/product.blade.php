@@ -27877,7 +27877,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">Menu</li>
                 <li>
-                    <a href="https://quanlycongviec.site/admin">
+                    <a href="#">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
@@ -27890,7 +27890,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="https://quanlycongviec.site/admin/project/add">
+                            <a href="#">
                                 <span data-key="t-calendar">Thêm mới</span>
                             </a>
                         </li>

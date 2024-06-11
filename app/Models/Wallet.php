@@ -12,9 +12,14 @@ class Wallet extends Model
     protected $fillable = [
         'name',
     ];
-
+    public function userwallet(){
+        return $this -> hasOne(UserWallet::class);
+    }
     public function user()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
+    }
+    public function transaction(){
+        return $this -> hasMany(Transaction::class, 'wallet_id');
     }
 }

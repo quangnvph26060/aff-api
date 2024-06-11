@@ -47,5 +47,54 @@ class CategoryController extends Controller
             return ApiResponse::error('Failed to create category', 500);
         }
     }
-
+    /*
+    hàm xóa danh mục theo id 
+    @pram $id
+    */
+    public function destroy($id)
+    {
+        try {
+            $this->categoryService->deleteCategory($id);
+            session()->flash('success', 'Xóa danh mục thành công.');
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            $exception = new CategoryNotFoundException();
+            return $exception->render(request());
+        } catch (\Exception $e) {
+            Log::error('Failed to delete category: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete category', 500);
+        }
+    }
+    /**
+     * hàm hiển thị ra form edit 
+     */
+    public function edit($id)
+    {
+        try{
+            $category = $this->categoryService->findOrFailCategory($id);
+            return view('admin.category.editcategory', compact('category'));
+        }
+        catch (ModelNotFoundException $e) {
+            $exception = new CategoryNotFoundException();
+            return $exception->render(request());
+        }catch(\Exception $e){
+            Log::error('Failed to find category: ' . $e->getMessage());
+        }
+       
+        
+    }
+    public function update($id, Request $request)
+    {
+        try {
+            $category = $this->categoryService->updateCategory($id, $request->all());
+            session()->flash('success', 'Cập nhật  danh mục thành công.');
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            $exception = new CategoryNotFoundException();
+            return $exception->render(request());
+        } catch (\Exception $e) {
+            Log::error('Failed to update category: ' . $e->getMessage());
+            return ApiResponse::error('Failed to update category', 500);
+        }
+    }
 }
