@@ -32,10 +32,12 @@ class ProductController extends Controller
     // show screen product
     public function store()
     {
+        $admin = Auth::user();
+
         try {
-            // $products = $this->productService->getAllProducts();
+
             $products = Product::with('categorie')->get();
-            // dd($products);
+
             $imges = ProductImage::with('product')->get();
             return view('admin.products.listproduct',compact('products', 'imges'));
         }catch (ModelNotFoundException $e) {

@@ -31,19 +31,22 @@ class AuthController extends Controller
     public function login(Request $request, $type)
     {
 
-        //  dd($request->password);
+
         $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
 
         if ($user && Hash::check($request->get('password'), $user->password)) {
+            $token = Auth::login($user);
+            if (!Auth::check()) {
 
-            if (!$token = Auth::login($user)) {
                 // return ApiResponse::error('Unauthorized', 401);
                 return redirect()->back();
             }
+
             if($type == 'loginadmin'){
-                return redirect()->route('product.store');
+
+                 return redirect()->route('product.store');
             }
-             return $this->respondWithToken($token);
+              return $this->respondWithToken($token);
 
         }
         return ApiResponse::error('Error', 401);
@@ -66,12 +69,18 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->first();
         $user->tokens()->delete();
-        return ApiResponse::success('Successfully logged out', 201);
+        Auth::logout();
+        $request->session()->flush();
+
+          return redirect()->route('admin.login');
+        // return ApiResponse::success('Successfully logged out', 201);
     }
+
+
 
     /**
      * Refresh a token.
