@@ -19,4 +19,7 @@ class Wallet extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+    public function transaction(){
+        return $this -> hasMany(Transaction::class, 'wallet_id');
+    }
 }
