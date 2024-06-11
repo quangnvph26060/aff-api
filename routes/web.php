@@ -34,9 +34,11 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
     Route::get('product/add', [ProductController::class, 'addForm'])->name('product.add');
     Route::post('product/add', [ProductController::class, 'addSubmit'])->name('product.add.submit');
-    Route::get('product/list', function () {
-        return view('admin.products.listproduct');
-    })->name('product.list');
+    Route::get('product/{id}', [ProductController::class, 'editForm'])->name('product.edit');
+    Route::post('product/{id}', [ProductController::class, 'editSubmit'])->name('product.edit.submit');
+    // Route::get('product/list', function () {
+    //     return view('admin.products.listproduct');
+    // })->name('product.list');
 
 
     // Category routes

@@ -81,7 +81,8 @@
                                             <td>
 
                                                 @if (isset($value->images[0]))
-                                             <img style="width: 100px; height: 75px;" src="{{asset($value->images[0]->image_path )}}" alt="">
+                                                <img style="width: 100px; height: 75px;"
+                                                    src="{{asset($value->images[0]->image_path )}}" alt="">
                                                 @endif
 
                                             </td>
@@ -90,7 +91,7 @@
                                             <td>{{ $value->commission_rate }}</td>
                                             <td>{{ $value->category->name }}</td>
                                             <td align="center">
-                                                <a class="btn btn-warning" href="">Sửa</a>
+                                                <a class="btn btn-warning" href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
                                                 <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-danger"
                                                     href="https://quanlycongviec.site/admin/mission/2808/delete">Xóa</a>

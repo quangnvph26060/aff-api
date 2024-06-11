@@ -67,4 +67,16 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to create product', 500);
         }
     }
+
+    public function editForm($id){
+        // dd($id);
+        $product = $this->productService->getProductById($id);
+        $category = $this->categoryService->getAllCategories();
+        // dd($product);
+        return view('admin.products.edit', compact('product', 'category'));
+    }
+    public function editSubmit(Request $request, $id){
+            $product = $this->productService->createProduct($request->all());
+            dd($product);
+    }
 }

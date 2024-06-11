@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+
 class ProductService
 {
     protected $product;
@@ -29,6 +30,7 @@ class ProductService
     {
         try {
             Log::info('Fetching all products');
+
             return $this->product->all();
         } catch (Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());
@@ -71,6 +73,8 @@ class ProductService
 
         try {
             Log::info("Creating a new product with name: {$data['name']}");
+
+
             $product = $this->product->create([
                 'name' => $data['name'],
                 'price' => $data['price'],
@@ -80,26 +84,21 @@ class ProductService
                 'description' => @$data['description'],
                 'is_featured' => @$data['is_featured'],
                 'is_new_arrival' => @$data['is_new_arrival'],
+                'status' =>  $data['status'],
                 'reviews' => @$data['reviews'],
                 'commission_rate' => @$data['commission_rate'],
-                'discount_id' => @$data['discount_id'],
+                'discount_id' => 1,
             ]);
+            if ($product) {
 
-            if($product){
-                $imagesArray =json_decode($data['images'], true);
-                Log::info("{$data['images']}");
-                foreach ($imagesArray as $item) {
-                    $fileData = $item['data'];
-                    $file = base64_decode($fileData);
-                    $filename = 'image_' . time() . '_' . uniqid() . '.jpg'; // Thêm một chuỗi duy nhất vào tên tệp tin
-                    $path = 'public/images/' . $filename;
-                    // Lưu file vào thư mục "storage/app/public/images"
-                    Storage::put($path, $file);
-                    $url = Storage::url($path);
-                    Log::info("File ảnh đã được lưu: {$url}");
+                foreach ($data['images'] as $item)  {
+                    $image = $item;
+                    $filename = 'image_' .time() . '_' .$image->getClientOriginalName();
+                    $filePath = 'storage/images/' . $filename;
+                    Storage::putFileAs('public/images', $image, $filename);
                     $image = new ProductImage();
                     $image->product_id = $product->id;
-                    $image->image_path = $path;
+                    $image->image_path = $filePath;
                     $image->save();
                 }
             }
@@ -166,7 +165,8 @@ class ProductService
             throw new Exception('Failed to delete product');
         }
     }
-    public function productByCategory($id): array {
+    public function productByCategory($id): array
+    {
         try {
             $products = $this->product->where('category_id', $id)->get()->toArray();
             return $products;
@@ -175,5 +175,4 @@ class ProductService
             throw new Exception('Failed to fetch products');
         }
     }
-    
 }

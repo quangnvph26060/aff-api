@@ -277,7 +277,7 @@ class UserService
                     ->first();
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            throw new \Exception('Unauthorized');
+            throw new Exception('Unauthorized');
         }
 
         // Đăng nhập người dùng và lấy token
@@ -307,4 +307,5 @@ class UserService
 
         return $password;
     }
+
 }
