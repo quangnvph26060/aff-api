@@ -34,14 +34,14 @@ class AuthController extends Controller
 
     // public function login(Request $request)
     // {
-     
+
     //     $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
-    //     if ($user && Hash::check($request->get('password'), $user->password)) { 
+    //     if ($user && Hash::check($request->get('password'), $user->password)) {
     //         if (!$token = Auth::login($user)) {
     //             // return ApiResponse::error('Unauthorized', 401);
     //             return redirect()->back();
-    //         }    
-    //         if ($request->type === 'loginadmin') { 
+    //         }
+    //         if ($request->type === 'loginadmin') {
     //             session()->put('authUser', true);
     //             return redirect()->route('product.store');
     //         }
@@ -62,12 +62,13 @@ class AuthController extends Controller
             } elseif ($request->type === 'fe') {
                 return $this->respondWithToken($result['token']);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->handleLoginError($request, $e);
+
         }
     }
     /**
-     * hàm check key $data  
+     * hàm check key $data
      */
     protected function filterUserData(array $data): array
     {
@@ -75,7 +76,7 @@ class AuthController extends Controller
             return in_array($key, ['phone', 'password','type']);
         }, ARRAY_FILTER_USE_KEY);
     }
-    protected function handleLoginError($request, Exception $e)
+    protected function handleLoginError($request, \Exception $e)
     {
         if ($request->type === 'loginadmin') {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
@@ -98,12 +99,18 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->first();
         $user->tokens()->delete();
-        return ApiResponse::success('Successfully logged out', 201);
+        Auth::logout();
+        $request->session()->flush();
+
+          return redirect()->route('admin.login');
+        // return ApiResponse::success('Successfully logged out', 201);
     }
+
+
 
     /**
      * Refresh a token.
