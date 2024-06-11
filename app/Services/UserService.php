@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
+use App\Models\Commission;
 use Exception;
 use App\Models\User;
 use App\Models\Wallet;
@@ -59,17 +60,46 @@ class UserService
      * UpdatedBy: youngbachhh (27/05/2024)
      */
     public function getAllTeamMember(): Collection
-    {
-        try {
-            Log::info('Fetching all users');
-            $currentUser = Auth::user();
-            $teammember = User::where('referral_code', $currentUser->referrer_id)->get();
-            return $teammember;
-        } catch (Exception $e) {
-            Log::error('Failed to fetch users: ' . $e->getMessage());
-            throw new Exception('Failed to fetch users');
+{
+    try {
+        Log::info('Fetching all users');
+        $currentUser = Auth::user();
+        $teamMembersB = User::where('referral_code', $currentUser->referrer_id)->get();
+
+        // Khởi tạo biến để tính tổng doanh thu nhóm
+        $teamRevenue = 0;
+
+        foreach ($teamMembersB as $memberB) {
+            $teamMembersC = User::where('referral_code', $memberB->referrer_id)->with('userwallet')->get();
+
+            // Tính tổng doanh thu của tất cả các thành viên C
+            $teamRevenue += $teamMembersC->sum(function ($user) {
+                return $user->userwallet->sum('total_revenue');
+            });
         }
+
+        // Thêm thông tin cấp độ hoa hồng cho mỗi thành viên B
+        $teamMembersB->each(function ($member) {
+            $member->load('commission');
+            $member->level = $member->commission->level;
+        });
+
+        // Tạo Collection để trả về
+        $result = $teamMembersB->map(function ($member) use ($teamRevenue) {
+            return [
+                'member' => $member,
+                'teamRevenueTotal' => $teamRevenue,
+            ];
+        });
+
+        return new \Illuminate\Database\Eloquent\Collection($result);
+    } catch (Exception $e) {
+        Log::error('Failed to fetch users: ' . $e->getMessage());
+        throw new Exception('Failed to fetch users');
     }
+}
+
+
     /**
      * Hàm lấy ra thông tin của người dùng theo id
      *
