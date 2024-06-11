@@ -60,42 +60,46 @@ class UserService
      * UpdatedBy: youngbachhh (27/05/2024)
      */
     public function getAllTeamMember(): \Illuminate\Database\Eloquent\Collection
-    {
-        try {
-            Log::info('Fetching all users');
-            $currentUser = Auth::user();
-            $teamMembersB = User::where('referral_code', $currentUser->referrer_id)->with('userwallet')->get();
+{
+    try {
+        Log::info('Fetching all users');
+        $currentUser = Auth::user();
+        $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->with('userwallet')->get();
+        $result = new \Illuminate\Database\Eloquent\Collection;
 
-            $result = new \Illuminate\Database\Eloquent\Collection;
+        foreach ($teamMembersB as $memberB) {
+            // Lấy tổng doanh số cá nhân của thành viên B
+            $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-            foreach ($teamMembersB as $memberB) {
-                // Lấy tổng doanh số cá nhân của thành viên B
-                $personalRevenue = $memberB->userwallet->sum('total_revenue');
-
-                // Lấy tất cả các thành viên C có referral_code trùng với referrer_id của thành viên B
-                $teamMembersC = User::where('referral_code', $memberB->referrer_id)->with('userwallet')->get();
-
-                // Tính tổng doanh thu của tất cả các thành viên C
-                $teamRevenue = $teamMembersC->sum(function ($user) {
+            // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+            $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                ->with('userwallet')
+                ->get()
+                ->sum(function ($user) {
                     return $user->userwallet->sum('total_revenue');
                 });
 
-                // Tạo đối tượng kết quả
-                $result->push((object)[
-                    'name' => $memberB->name,
-                    'email' => $memberB->email,
-                    'phone' => $memberB->phone, // Assuming phone is a column in the User model
-                    'personalRevenue' => $personalRevenue,
-                    'teamRevenue' => $teamRevenue
-                ]);
-            }
-
-            return $result;
-        } catch (Exception $e) {
-            Log::error('Failed to fetch users: ' . $e->getMessage());
-            throw new Exception('Failed to fetch users');
+            // Tạo đối tượng kết quả và thêm vào Collection
+            $result->push((object)[
+                'name' => $memberB->name,
+                'email' => $memberB->email,
+                'phone' => $memberB->phone,
+                'referral_code'=> $memberB->referral_code,
+                'personalRevenue' => $personalRevenue,
+                'teamRevenue' => $teamRevenue
+            ]);
         }
+
+        // dd($result);
+        return $result;
+    } catch (Exception $e) {
+        Log::error('Failed to fetch users: ' . $e->getMessage());
+        throw new Exception('Failed to fetch users');
     }
+}
+
+
+
 
 
     /**

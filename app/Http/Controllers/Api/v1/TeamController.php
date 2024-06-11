@@ -19,32 +19,30 @@ class TeamController extends Controller
     }
 
     public function index()
-    {
-        try {
-            $data = $this->userService->getAllTeamMember();
-            dd($data);
-            // Trích xuất thông tin cần thiết từ dữ liệu
-            $teamMembers = $data['teamMember']->map(function ($member) {
-                return [
-                    'name' => $member->name,
-                    'id' => $member->id,
-                    'personal_sale' => $member->personalRevenue,
-                    'team_sale' => $member->teamRevenue,
-                ];
-            });
-
-            // Trả về dữ liệu dưới dạng JSON
-            return response()->json([
-                'status' => 'success',
-                'data' => $teamMembers,
-                'personalRevenueTotal' => $data['personalRevenueTotal'],
-                'teamRevenueTotal' => $data['teamRevenueTotal'],
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Failed to fetch users: ' . $e->getMessage());
-            return response()->json(['status' => 'error', 'message' => 'Failed to fetch users'], 500);
-        }
+{
+    try {
+        $data = $this->userService->getAllTeamMember();
+        // dd($data);
+        // Trích xuất thông tin cần thiết từ dữ liệu
+        $teamMembers = $data->map(function ($member) {
+            return [
+                'name' => $member->name,
+                'personal_sale' => $member->personalRevenue,
+                'team_sale' => $member->teamRevenue,
+            ];
+        });
+        // dd($teamMembers);
+        // Trả về dữ liệu dưới dạng JSON
+        return response()->json([
+            'status' => 'success',
+            'data' => $teamMembers,
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Failed to fetch users: ' . $e->getMessage());
+        return response()->json(['status' => 'error', 'message' => 'Failed to fetch users'], 500);
     }
+}
+
 
 
     /**
