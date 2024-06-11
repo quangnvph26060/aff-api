@@ -59,45 +59,43 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function getAllTeamMember(): Collection
-{
-    try {
-        Log::info('Fetching all users');
-        $currentUser = Auth::user();
-        $teamMembersB = User::where('referral_code', $currentUser->referrer_id)->get();
+    public function getAllTeamMember(): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            Log::info('Fetching all users');
+            $currentUser = Auth::user();
+            $teamMembersB = User::where('referral_code', $currentUser->referrer_id)->with('userwallet')->get();
 
-        // Khởi tạo biến để tính tổng doanh thu nhóm
-        $teamRevenue = 0;
+            $result = new \Illuminate\Database\Eloquent\Collection;
 
-        foreach ($teamMembersB as $memberB) {
-            $teamMembersC = User::where('referral_code', $memberB->referrer_id)->with('userwallet')->get();
+            foreach ($teamMembersB as $memberB) {
+                // Lấy tổng doanh số cá nhân của thành viên B
+                $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-            // Tính tổng doanh thu của tất cả các thành viên C
-            $teamRevenue += $teamMembersC->sum(function ($user) {
-                return $user->userwallet->sum('total_revenue');
-            });
+                // Lấy tất cả các thành viên C có referral_code trùng với referrer_id của thành viên B
+                $teamMembersC = User::where('referral_code', $memberB->referrer_id)->with('userwallet')->get();
+
+                // Tính tổng doanh thu của tất cả các thành viên C
+                $teamRevenue = $teamMembersC->sum(function ($user) {
+                    return $user->userwallet->sum('total_revenue');
+                });
+
+                // Tạo đối tượng kết quả
+                $result->push((object)[
+                    'name' => $memberB->name,
+                    'email' => $memberB->email,
+                    'phone' => $memberB->phone, // Assuming phone is a column in the User model
+                    'personalRevenue' => $personalRevenue,
+                    'teamRevenue' => $teamRevenue
+                ]);
+            }
+
+            return $result;
+        } catch (Exception $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            throw new Exception('Failed to fetch users');
         }
-
-        // Thêm thông tin cấp độ hoa hồng cho mỗi thành viên B
-        $teamMembersB->each(function ($member) {
-            $member->load('commission');
-            $member->level = $member->commission->level;
-        });
-
-        // Tạo Collection để trả về
-        $result = $teamMembersB->map(function ($member) use ($teamRevenue) {
-            return [
-                'member' => $member,
-                'teamRevenueTotal' => $teamRevenue,
-            ];
-        });
-
-        return new \Illuminate\Database\Eloquent\Collection($result);
-    } catch (Exception $e) {
-        Log::error('Failed to fetch users: ' . $e->getMessage());
-        throw new Exception('Failed to fetch users');
     }
-}
 
 
     /**
@@ -265,7 +263,7 @@ class UserService
         return $rand;
     }
      /**
-     * Hàm lấy check thông tin user đăng nhập 
+     * Hàm lấy check thông tin user đăng nhập
      */
     public function authenticateUser($credentials)
     {
@@ -294,15 +292,15 @@ class UserService
         $length     = 6;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $password   = '';
-   
+
         do {
             $password = '';
             for ($i = 0; $i < $length; $i++) {
                 $password .= $characters[rand(0, strlen($characters) - 1)];
             }
         } while (!preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])/', $password));
-   
+
         return $password;
     }
-    
+
 }
