@@ -40,7 +40,6 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     //     return view('admin.products.listproduct');
     // })->name('product.list');
 
-
     // Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');
