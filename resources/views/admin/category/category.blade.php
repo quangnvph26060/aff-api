@@ -19,94 +19,53 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <form method="GET">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="">Từ khóa</label>
-                                        <input value="" autocomplete="off" name="keyword" type="text"
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="">Chọn dự án</label>
-                                        <select name="project_id" class="form-control" id=""> </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="">Từ ngày</label>
-                                    <input value="" type="date" name="date_from" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="">Đến ngày</label>
-                                    <input value="" type="date" name="date_to" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="">Trạng thái</label>
-                                    <select name="status" class="form-control" id="">
-                                        <option value="-1">Tất cả</option>
-
-                                    </select>
-                                </div>
-                            </div>
-
-
                             <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="" style="opacity: 0">1</label> <br>
-                                    <button type="submit" class="btn btn-primary"><i
-                                            class="fas fa-search"></i> Tìm kiếm</button>
-                                    <a href="https://quanlycongviec.site/admin/mission/list"
-                                        class="btn btn-danger"><i class="fas fa-history"></i> Tải lại</a>
-
-                                </div>
+                                <form action="" method="post">
+                                     <div class="form-group d-flex col-7">
+                                        <input type="text" class="form-control" name="search" placeholder="Nhập tìm kiếm">
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </form>
+                               
                             </div>
                     </div>
-                    </form>
+                    
                 </div>
                 <div class="card-body">
                     <div class="table-rep-plugin">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive mb-0" data-pattern="priority-columns">
                             <table id="tech-companies-1" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Nhân viên</th>
-                                        <th>Dự án</th>
-                                        <th>Ngày giao</th>
-                                        <th>Deadline</th>
-                                        <th>Time hoàn thành</th>
-                                        <th>Từ khóa giao</th>
-                                        <th>URL viết bài</th>
-                                        <th>URL publish</th>
-                                        <th>Trạng thái</th>
+                                        <th>Tên danh mục</th> 
+                                        <th>Mô tả</th>
+                                        <th>Tổng sản phẩm</th>
                                         <th style="text-align: center">Hành động</th>
                                     </tr>
                                 </thead>
-
-                                <td align="center">
-                                    <a class="btn btn-warning"
-                                        href="https://quanlycongviec.site/admin/mission/2808/edit?url_pre=aHR0cHM6Ly9xdWFubHljb25ndmllYy5zaXRlL2FkbWluL21pc3Npb24vbGlzdD8%3D">Sửa</a>
-                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                        class="btn btn-danger"
-                                        href="https://quanlycongviec.site/admin/mission/2808/delete">Xóa</a>
-
-                                    <button onclick="openModel(2808, 'Top 3 Hút mùi Faster')"
-                                        class="btn btn-primary waves-effect waves-light"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                        type="button">
-                                        Trao đổi
-                                    </button>
-                                </td>
-                                </tr>
+                                <tbody>
+                                    @foreach($data as $index => $item)
+                                            <tr>
+                                            <td> {{ $index + 1 }}</td>
+                                            <td>{{$item->name}}</td>
+                                            <td class="text-black">{{$item->description}}</td>
+                                            <td>{{$item->products_count}}</td>
+                                            <td align="center">
+                                                <a class="btn btn-warning" href="{{ route('admin.category.edit', ['id' => $item->id]) }}">Sửa</a>
+                                                <form class="mt-3" action="{{ route('admin.category.destroy', ['id' => $item->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Xóa</button>
+                                                </form>
+                                            </td>
+                                            </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <nav>

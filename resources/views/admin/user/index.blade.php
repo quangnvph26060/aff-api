@@ -6,84 +6,290 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="MuiStack-root css-19mppu4">
-                        <h6 class="MuiTypography-root MuiTypography-h6 css-tc0nct">
-                            Thông tin tài khoản</h6>
-                    <div class="MuiStack-root css-1mzerio">
-                        <p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">
-                            Hạng thành viên:</p>
-                            <p class="MuiTypography-root MuiTypography-body1 css-m7shl8">
-                                Membership</p></div><div class="MuiStack-root css-1mzerio">
-                                   
-                                    <p class="MuiTypography-root MuiTypography-body1 css-7443v9">
-                                        Tài khoản đã được xác thực
-                                    </p>
-                                    </div>
-                                    <div class="MuiStack-root css-1mzerio">
-                                        <p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Mã khách hàng: KP702624</p>
-                                    </div>
-                                    <button class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall css-1jbi43g" tabindex="0" type="button">
-                                        Giới thiệu bạn bè<span class="MuiTouchRipple-root css-w0pj6f"></span></button></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Thông tin tài khoản</h6>
+                            <p>Hạng thành viên: <strong>Membership</strong></p>
+                            <p>Tài khoản đã được xác thực</p>
+                            <p>Mã khách hàng: <strong>KP702624</strong></p>
+                            <button class="btn btn-outline-primary btn-sm">Giới thiệu bạn bè</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-8">
-                        <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 css-1ak9ift"><div class="MuiStack-root css-uzl12b"><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-m7shl8">Ví chính</p><div class="MuiStack-root css-1mzerio"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r2:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0đ"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-m7shl8">Ví tri ân 1</p><div class="MuiStack-root css-1mzerio"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r3:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0đ"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-m7shl8">Ví tri ân 2</p><div class="MuiStack-root css-1mzerio"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r4:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0đ"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-1olvo7y">Chỉ số năng động</p><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r5:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="500.000đ"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-m7shl8">Số thứ tự</p><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r6:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="401"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div><div class="MuiStack-root css-j7qwjs"><p class="MuiTypography-root MuiTypography-body1 css-1olvo7y">Điểm thưởng</p><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r7:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0đ"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Ví chính</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Ví tri ân 1</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Ví tri ân 2</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Chỉ số năng động</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="500.000đ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Số thứ tự</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="401">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Điểm thưởng</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row mt-4">
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <img src="{{ asset('path/to/avatar.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">
                             <h4>name</h4>
                             <p>email</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
-                  <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><form action="#"><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1dfbvbe"><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-smg319"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Họ và tên</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r8:" name="name" placeholder="Họ và tên" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="Nguyễn Thị Kiều Tiên"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 MuiTypography-alignRight css-1btvm6l">Ngày sinh</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":r9:" name="dob" placeholder="DD/MM/YYYY" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value=""><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-smg319"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Địa chỉ</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":ra:" placeholder="Địa chỉ" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value=""><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-smg319"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Số điện thoại</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":rb:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0359862787"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-smg319"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Email</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":rc:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value=""><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-de79q9"><button class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-1cy4nyg" tabindex="0" type="button">Cập nhật thông tin<span class="MuiTouchRipple-root css-w0pj6f"></span></button><a class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-1cy4nyg" tabindex="0" href="/user/kyc">Định danh cá nhân<span class="MuiTouchRipple-root css-w0pj6f"></span></a></div></div></form></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="user-info-form" action="" method="POST">
+                                @csrf
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name" value="Nguyễn Thị Kiều Tiên" >
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group row mt-2 mb-2 ">
+                                <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <select class="form-control" id="city">
+                                                <option value="">Chọn thành phố</option>
+                                                <!-- Danh sách các thành phố -->
+                                                <option value="tp_hcm">TP. Hồ Chí Minh</option>
+                                                <option value="ha_noi">Hà Nội</option>
+                                                <!-- Thêm các thành phố khác nếu cần -->
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" id="district">
+                                                <option value="">Chọn quận/huyện</option>
+                                                <!-- Danh sách các quận/huyện sẽ được thêm bằng JS -->
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" id="ward">
+                                                <option value="">Chọn xã/phường/thị trấn</option>
+                                                <!-- Danh sách các xã/phường/thị trấn sẽ được thêm bằng JS -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="form-group row">
+                                    <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="phone" name="phone" value="0359862787" >
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" name="email" value="" >
+                                    </div>
+                                </div>
+                                <button type="button" id="update-info-btn" class="btn btn-outline-primary">Cập nhật thông tin</button>
+                                <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal" data-target="#kycModal">Định danh cá nhân</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6 css-pujot8"><h6 class="MuiTypography-root MuiTypography-h6 css-tc0nct">Thông tin đăng nhập</h6><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-s6d7yw"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Tên đăng nhập</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":rd:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="0359862787"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-item css-ptm9v0"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-o0rlmm"><p class="MuiTypography-root MuiTypography-body1 css-9l3uo3">Mật khẩu</p></div><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-kxu0dz"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-15y8jl9"><input aria-invalid="false" disabled="" id=":re:" type="text" class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-z0l92q" value="*********"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1xe2zcn"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div><button class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall css-xfz3q1" tabindex="0" type="button">Đổi mật khẩu<span class="MuiTouchRipple-root css-w0pj6f"></span></button></div></div>
-                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
-                        Chỉnh sửa thông tin
-                    </button> -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Thông tin đăng nhập</h6>
+                <div class="form-group row">
+                    <label for="username" class="col-sm-2 col-form-label">Tên đăng nhập</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control bg-white" id="username" value="0359862787" disabled>
+                    </div>
                 </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control bg-white" id="password" value="*********" disabled>
+                    </div>
+                </div>
+                <button type="button" id="changePasswordBtn" class="btn btn-outline-primary btn-sm">Đổi mật khẩu</button>
+
+                <!-- Thêm input mật khẩu mới và xác nhận mật khẩu -->
+               <form action="" method="post" id="changePasswordFields" style="display: none;">
+                        <div>
+                        <div class="form-group row">
+                                <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện tại</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="newPassword" placeholder ="Mật khẩu hiện tại">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="newPassword">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật khẩu</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="confirmPassword">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button"  class="btn btn-outline-primary btn-sm">Lưu</button>
+               </form>
             </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Modal -->
+<div class="modal fade" id="kycModal" tabindex="-1" role="dialog" aria-labelledby="kycModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Chỉnh sửa thông tin</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST">
-                    @csrf
-                    
-                    <div class="form-group">
-                        <label for="name">Tên</label>
-                        <input type="text" class="form-control" id="name" name="name" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
-                    </div>
-                    <!-- Thêm các trường thông tin khác ở đây nếu cần -->
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </form>
-            </div>
+        <div class="form-group">
+        <label for="cccdFrontImage">Ảnh CCCD mặt trước</label>
+        <input type="file" class="form-control-file" id="cccdFrontImage">
+    </div>
+    <div class="form-group">
+        <label for="cccdBackImage">Ảnh CCCD mặt sau</label>
+        <input type="file" class="form-control-file" id="cccdBackImage">
+    </div>
+    <div class="form-group">
+        <label for="fullName">Họ và tên</label>
+        <input type="text" class="form-control" id="fullName" value="Nguyễn Thị Kiều Tiên">
+    </div>
+    <div class="form-group">
+        <label for="cccdNumber">Số CCCD</label>
+        <input type="text" class="form-control" id="cccdNumber" value="093179006863">
+    </div>
+    <div class="form-group">
+        <label for="bank">Chọn ngân hàng</label>
+        <select class="form-control" id="bank">
+            <option value="MB">Ngân hàng Quân Đội (MB Bank, MB)</option>
+            <!--Thêm các ngân hàng khác nếu cần-->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="accountNumber">Số tài khoản</label>
+        <input type="text" class="form-control" id="accountNumber" value="9704229207176818767">
+    </div>
+    <div class="form-group">
+        <label for="accountHolderName">Tên chủ tài khoản</label>
+        <input type="text" class="form-control" id="accountHolderName" value="Nguyễn Thị Kiều Tiên">
+    </div>
+    <div class="form-group">
+        <label for="bankBranch">Chi nhánh ngân hàng</label>
+        <input type="text" class="form-control" id="bankBranch" value="Châu Thành a">
+    </div>
+    <div class="form-group">
+        <label for="bankProvince">Chọn tỉnh của ngân hàng</label>
+        <select class="form-control" id="bankProvince">
+            <option value="Hậu Giang">Hậu Giang</option>
+            <!--Thêm các tỉnh khác nếu cần-->
+        </select>
+    </div>
         </div>
     </div>
 </div>
+
+<script>
+    const updateinfo = document.getElementById('update-info-btn');
+    if(updateinfo){
+        updateinfo.addEventListener('click', function() {
+            const inputs = document.querySelectorAll('#user-info-form input');
+            const isDisabled = inputs[0].disabled;
+            
+            inputs.forEach(input => {
+                input.disabled = !isDisabled;
+            });
+
+            if (isDisabled) {
+                this.textContent = 'Lưu';
+            } else {
+                this.textContent = 'Cập nhật thông tin';
+                document.getElementById('user-info-form').submit();
+            }
+        });
+    }
+    // định dang
+    const kyc =  document.getElementById('kyc-btn');
+    if(kyc){
+        kyc.addEventListener('click', function() {
+        $('#kycModal').modal('show');
+    });
+    }
+   
+    //change password 
+    const changePassword = document.getElementById('changePasswordBtn');
+    console.log(changePassword);
+    if(changePassword){
+        changePassword.addEventListener('click', function() {
+            var changePasswordForm = document.getElementById('changePasswordFields');
+                changePasswordForm.style.display = 'block';
+                
+                // Ẩn nút đổi mật khẩu
+                this.style.display = 'none';
+
+                // Xuất thông báo ra console để kiểm tra xem sự kiện click được kích hoạt hay không
+                console.log('Đã bấm vào nút đổi mật khẩu');
+        });
+    }
+
+</script>
+<style>
+    .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 0.5rem);
+    margin-bottom: 0.5rem;
+}
+
+.modal-content {
+    width: 100%;
+}
+
+</style>
 @endsection
-
-
