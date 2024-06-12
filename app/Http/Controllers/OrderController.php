@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers;
 
 use App\Exceptions\UserNotFoundException;
-use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-use Illuminate\Http\Request;
-use App\Services\TransactionService;
+use App\Services\OrderService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class TransactionController extends Controller
+class OrderController extends Controller
 {
-    protected $transactionService;
+    protected $orderService;
 
-    public function __construct(TransactionService $transactionService)
+    public function __construct(OrderService $orderService)
     {
-        $this->transactionService = $transactionService;
+        $this->orderService = $orderService;
     }
+
     /**
      * Display a listing of the resource.
-     *
+     *b
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -44,21 +44,24 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function createOrder(Request $request)
     {
         try{
-            $transaction = $this->transactionService->addTransaction($request->all());
-            return ApiResponse::success($transaction, 'Transaction requested successfully',201);
+            $order = $this->orderService->createOrder($request->all());
+            return ApiResponse::success($order, 'Order created successfully', 201);
         }
-        catch(ModelNotFoundException $e)
-        {
+        catch(ModelNotFoundException $e){
             $exception = new UserNotFoundException();
             return $exception -> render(request());
         }
         catch(\Exception $e){
-            Log::error('Failed to create request :' . $e->getMessage());
-            return ApiResponse::error('Failed to create request', 500);
+            Log::error('Failed to create order: ' .$e ->getMessage());
+            return ApiResponse::error('Failed to create order', 500);
         }
+    }
+    private function saveOrder($data)
+    {
+        return $order;
     }
 
     /**
