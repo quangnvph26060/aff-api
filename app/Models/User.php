@@ -29,9 +29,9 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
-    protected $appends = ['role', 'user_wallet'];
+    protected $appends = ['role','wallet'];
     public function getWalletAttribute(){
-        return UserWallet::where('id', $this->attributes['user_id'])->first();
+        return UserWallet::where('user_id', $this->attributes['id'])->get();
     }
     public function getRoleAttribute(){
       return  Role::where('id',$this->attributes['role_id'])->first();

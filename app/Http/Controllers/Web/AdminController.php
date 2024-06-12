@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\City;
+use App\Models\Districts;
+use App\Models\User;
+use App\Models\Wards;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -25,8 +29,13 @@ class AdminController extends Controller
     {
         try{
             if ($request->session()->has('authUser')) {
-                $admin = $request->session()->get('authUser');
-                return view('admin.user.index', compact('admin'));
+                $user = $request->session()->get('authUser');
+                $admin = User::find($user['user']['id']);
+                $city = City::all();
+                $districts = Districts::all();
+                $wards = Wards::all();
+                
+                return view('admin.user.index', compact('admin','wards','city','districts'));
             }
         }
         catch(\Exception $e)
