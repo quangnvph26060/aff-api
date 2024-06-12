@@ -35,6 +35,11 @@ class TransactionService
     // }
 
 //    add to cart
+
+    public function getTransaction($data)
+    {
+
+    }
     public function addTransaction($data)
     {
         DB::beginTransaction();

@@ -26,9 +26,13 @@ class TeamController extends Controller
         // Trích xuất thông tin cần thiết từ dữ liệu
         $teamMembers = $data->map(function ($member) {
             return [
+                'id' => $member->id,
                 'name' => $member->name,
+                'email' => $member->email,
+                'phone' => $member->phone,
                 'personal_sale' => $member->personalRevenue,
                 'team_sale' => $member->teamRevenue,
+                'level' => $member ->level
             ];
         });
         // dd($teamMembers);
