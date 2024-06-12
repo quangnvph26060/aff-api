@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
+use App\Jobs\SendMail;
 use App\Models\Commission;
 use Exception;
 use App\Models\User;
@@ -156,7 +157,13 @@ class UserService
                 'status' => 'active',
                 'otp'=> @$data['otp'],
             ];
-            event(new EventRegister($user,@$data['otp']));
+                $arrSendMail = [
+                    'type' => 'send_otp',
+                    'user' => $user,
+                    'otp'=>$data['otp'],
+                ];
+                SendMail::dispatch($arrSendMail);
+           //  event(new EventRegister($user,@$data['otp']));
             return $user;
         } catch (Exception $e) {
             Log::error("Failed to create user: {$e->getMessage()}");
