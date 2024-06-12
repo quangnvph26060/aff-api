@@ -74,7 +74,6 @@ class ProductService
         try {
             Log::info("Creating a new product with name: {$data['name']}");
 
-
             $product = $this->product->create([
                 'name' => $data['name'],
                 'price' => $data['price'],
@@ -127,10 +126,8 @@ class ProductService
 
         try {
             $product = $this->getProductById($id);
-
             Log::info("Updating product with ID: $id");
             $product->update($data);
-
             DB::commit();
             return $product;
         } catch (Exception $e) {
