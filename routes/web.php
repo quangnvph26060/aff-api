@@ -5,6 +5,8 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\AdminController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
 
@@ -57,7 +59,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
         return view('admin.order.list');
     })->name('order.list');
     // user
-    Route::get('user-info',function(){
-        return view('admin.user.index');
-    })->name('user-info');
+    // Route::get('user-info',function(){
+    //     return view('admin.user.index');
+    // })->name('user-info');
+    Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
 });
