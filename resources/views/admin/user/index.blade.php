@@ -78,10 +78,10 @@
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="Nguyễn Thị Kiều Tiên" >
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$admin["user"]->name}}" >
                                     </div>
                                 </div>
-                               
+
                                 <div class="form-group row mt-2 mb-2 ">
                                 <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                                 <div class="col-sm-10">
@@ -114,13 +114,13 @@
                                 <div class="form-group row">
                                     <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="phone" name="phone" value="0359862787" >
+                                        <input type="text" class="form-control" id="phone" name="phone" value="{{$admin["user"]->phone}}" >
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
                                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" value="" >
+                                        <input type="email" class="form-control" id="email" name="email" value="{{$admin["user"]->email}}" >
                                     </div>
                                 </div>
                                 <button type="button" id="update-info-btn" class="btn btn-outline-primary">Cập nhật thông tin</button>
@@ -240,7 +240,7 @@
         updateinfo.addEventListener('click', function() {
             const inputs = document.querySelectorAll('#user-info-form input');
             const isDisabled = inputs[0].disabled;
-            
+
             inputs.forEach(input => {
                 input.disabled = !isDisabled;
             });
@@ -260,15 +260,15 @@
         $('#kycModal').modal('show');
     });
     }
-   
-    //change password 
+
+    //change password
     const changePassword = document.getElementById('changePasswordBtn');
     console.log(changePassword);
     if(changePassword){
         changePassword.addEventListener('click', function() {
             var changePasswordForm = document.getElementById('changePasswordFields');
                 changePasswordForm.style.display = 'block';
-                
+
                 // Ẩn nút đổi mật khẩu
                 this.style.display = 'none';
 
