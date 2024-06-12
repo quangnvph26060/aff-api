@@ -76,7 +76,13 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'category'));
     }
     public function editSubmit(Request $request, $id){
-            $product = $this->productService->createProduct($request->all());
-            dd($product);
+        try {
+            $product = $this->productService->updateProduct($id, $request->all());
+            return redirect()->route('admin.product.store');
+            // return ApiResponse::success($product, 'Product created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to update product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to update product', 500);
+        }
     }
 }
