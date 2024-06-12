@@ -21,16 +21,17 @@
     <!-- Bootstrap Css -->
         <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"
         type="text/css" />
-       
+
     <!-- Icons Css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
- 
+
     <!-- App Css-->
     <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet"
         type="text/css" />
     <link href="https://quanlycongviec.site/libs/assets/libs/choices.js/public/assets/styles/choices.min.css"
         rel="stylesheet" type="text/css" />
-      
+
+
 </head>
 
 <body>
@@ -49,10 +50,10 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-       <div class="content"> 
+       <div class="content">
             @yield('content')
        </div>
-       
+
         <input type="hidden" id="mission-id">
         <style>
             .modal-comment .active {
@@ -64,9 +65,9 @@
             }
         </style>
         <!-- End Page-content -->
-        @include('layouts.footer')      
+        @include('layouts.footer')
 
-        
+
     </div>
     <!-- end main content-->
 
@@ -75,7 +76,7 @@
 
 
     <!-- Right Sidebar -->
-    
+
      <!-- /Right-bar -->
 
     <!-- Right bar overlay-->

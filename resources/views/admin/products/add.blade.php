@@ -38,8 +38,7 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                {{-- <input value="" required class="form-control" name="images"
-                                                    type="file" id="example-text-input"> --}}
+
                                                 <input id="images" class="form-control" type="file" name="images[]"
                                                     multiple accept="image/*" required>
 
@@ -60,7 +59,7 @@
                                                 <label for="example-url-input" class="form-label">Hoa Hồng <span
                                                         class="text text-danger">*</span></label>
                                                 <input value="" required class="form-control" name="commission_rate"
-                                                    type="number" id="example-email-input">
+                                                    type="number" id="example-email-input" max="100">
                                             </div>
 
 
@@ -79,7 +78,7 @@
                                                 <label for="example-url-input" class="form-label">Mô tả <span
                                                         class="text text-danger">*</span></label>
                                                 <textarea class="form-control" id="example-url-input" name="description"
-                                                    rows="2" required></textarea>
+                                                    rows="2" ></textarea>
                                             </div>
 
 
@@ -88,9 +87,9 @@
                                                         class="text text-danger">*</span></label>
                                                 <select class="form-control" name="status" id="" >
                                                     <option value="">Chọn trạng thái</option>
-                                                    <option value="published">published</option>
-                                                    <option value="inactive">inactive</option>
-                                                    <option value="scheduled">scheduled</option>
+                                                    <option value="published">Được phát hành</option>
+                                                    <option value="inactive">Không hoạt động</option>
+                                                    <option value="scheduled">Lên kế hoạch</option>
                                                 </select>
                                             </div>
                                         </div>
