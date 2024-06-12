@@ -179,4 +179,10 @@ class AuthController extends Controller
             }
         }
     }
+    /**
+     * hàm hiển thị view login
+     */
+    public function viewLogin(){
+        return view('admin.login');
+    }
 }

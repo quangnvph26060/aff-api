@@ -8,21 +8,21 @@
         Đăng nhập Admin </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="https://quanlycongviec.site/libs/assets/images/favicon.ico">
+  
     <!-- preloader css -->
-    <link rel="stylesheet" href="https://quanlycongviec.site/libs/assets/css/preloader.min.css" type="text/css" />
+    <link rel="stylesheet" href="{{asset('css/preloader.min.css')}}" type="text/css" />
     <!-- Bootstrap Css -->
-    <link href="https://quanlycongviec.site/libs/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet"
-        type="text/css" />
+    <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"
+    type="text/css" />
     <!-- Icons Css -->
-    <link href="https://quanlycongviec.site/libs/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="https://quanlycongviec.site/libs/assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->
     <!-- App Css-->
-    <link href="https://quanlycongviec.site/libs/assets/css/app.min.css" id="app-style" rel="stylesheet"
-        type="text/css" />
+    <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet"
+    type="text/css" />
 </head>
 
 <body>
-    <!-- <body data-layout="horizontal"> -->
+   
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
@@ -58,7 +58,11 @@
                                                 <input type="password" name="password" class="form-control"
                                                     aria-label="Password" aria-describedby="password-addon">
                                                 <button class="btn btn-light shadow-none ms-0" type="button"
-                                                    id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                                    id="password-addon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                                                        <path fill="currentColor" d="M8 6.003a2.667 2.667 0 1 1 0 5.334a2.667 2.667 0 0 1 0-5.334Zm0 1a1.667 1.667 0 1 0 0 3.334a1.667 1.667 0 0 0 0-3.334Zm0-3.336c3.076 0 5.73 2.1 6.467 5.043a.5.5 0 1 1-.97.242a5.67 5.67 0 0 0-10.995.004a.5.5 0 0 1-.97-.243A6.669 6.669 0 0 1 8 3.667Z"/>
+                                                    </svg>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
@@ -160,7 +164,7 @@
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="assets/images/users/avatar-2.jpg"
+                                                                <img src="#"
                                                                     class="avatar-md img-fluid rounded-circle"
                                                                     alt="...">
                                                             </div>
@@ -186,7 +190,7 @@
                                                         feel.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
-                                                            <img src="assets/images/users/avatar-3.jpg"
+                                                            <img src="#"
                                                                 class="avatar-md img-fluid rounded-circle" alt="...">
                                                             <div class="flex-1 ms-3 mb-4">
                                                                 <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
