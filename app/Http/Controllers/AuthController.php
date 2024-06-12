@@ -100,10 +100,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-       
+
         if($request->type === "web"){
             $request->session()->invalidate();
-            $request->session()->regenerateToken();  
+            $request->session()->regenerateToken();
             return redirect()->route('admin.login');
         }
         $user = User::where('id', Auth::user()->id)->first();
@@ -111,7 +111,6 @@ class AuthController extends Controller
         Auth::logout();
        return ApiResponse::success('Successfully logged out', 201);
     }
-
 
     /**
      * Refresh a token.

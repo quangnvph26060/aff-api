@@ -88,7 +88,7 @@
                                             </td>
                                             <td>{{ $value->quantity }}</td>
                                             <td>{{ $value->price }}</td>
-                                            <td>{{ $value->commission_rate }}</td>
+                                            <td>{{ $value->commission_rate }}%</td>
                                             <td>{{ $value->category->name }}</td>
                                             <td align="center">
                                                 <a class="btn btn-warning" href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>

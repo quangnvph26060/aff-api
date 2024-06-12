@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exceptions\CategoryNotFoundException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
@@ -48,7 +49,7 @@ class CategoryController extends Controller
         }
     }
     /*
-    hàm xóa danh mục theo id 
+    hàm xóa danh mục theo id
     @pram $id
     */
     public function destroy($id)
@@ -66,7 +67,7 @@ class CategoryController extends Controller
         }
     }
     /**
-     * hàm hiển thị ra form edit 
+     * hàm hiển thị ra form edit
      */
     public function edit($id)
     {
@@ -80,8 +81,8 @@ class CategoryController extends Controller
         }catch(\Exception $e){
             Log::error('Failed to find category: ' . $e->getMessage());
         }
-       
-        
+
+
     }
     public function update($id, Request $request)
     {
