@@ -30,6 +30,7 @@ Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('logout', [AuthController::class,'logout'])->name('logout');
+    Route::post('ChangePassword', [AuthController::class, 'ChangePassword'])->name('ChangePassword');
     // Product routes
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
     Route::get('product/add', [ProductController::class, 'addForm'])->name('product.add');

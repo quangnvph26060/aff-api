@@ -308,4 +308,31 @@ class UserService
         return $password;
     }
 
+
+    public function changePassword($userId, $currentPassword, $newPassword, $confirmPassword)
+    {
+        $admin = User::findOrFail($userId);
+        if (!Hash::check($currentPassword, $admin->password)) {
+            return [
+                'status' => 'error',
+                'message' => 'Mật khẩu hiện tại không đúng !'
+            ];
+        }
+
+        if ($newPassword !== $confirmPassword) {
+            return [
+                'status' => 'error',
+                'message' => 'Xác nhận mật khẩu không đúng !'
+            ];
+        }
+
+        $admin->password = Hash::make($newPassword);
+        $admin->save();
+
+        return [
+            'status' => 'success',
+            'message' => 'Đổi mật khẩu thành công !'
+        ];
+    }
+
 }

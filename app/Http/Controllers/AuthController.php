@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 //use http\Env\Request;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
@@ -177,5 +177,22 @@ class AuthController extends Controller
                 $user = $request->session()->get('authUser');
             }
         }
+    }
+
+
+    public function ChangePassword(Request $request){
+
+        //  $userId = Auth::id(); // Lấy ID của user hiện tại
+        //  dd($userId);
+        $userId = 1;
+        $result = $this->userService->changePassword(
+            $userId,
+            $request->password,
+            $request->newPassword,
+            $request->confirmPassword
+        );
+
+        return redirect()->back()->with($result['status'], $result['message']);
+
     }
 }

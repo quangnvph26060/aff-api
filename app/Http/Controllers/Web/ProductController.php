@@ -102,11 +102,11 @@ class ProductController extends Controller
             $category = $this->categoryService->getAllCategories();
             $products = $this->productService->productByName($request->name);
 
-            if($products->count() >0){
+            // if($products->count() >0){
                 return view('admin.products.listproduct', compact('products','category'));
-            }else{
-                return redirect()->route('admin.product.store')->with('fail', 'Không tìm thấy sản phần có ký tự : '.$request->name);
-            }
+            // }else{
+            //     return redirect()->route('admin.product.store')->with('fail', 'Không tìm thấy sản phần có ký tự : '.$request->name);
+            // }
             // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to delete product: ' . $e->getMessage());
@@ -120,11 +120,11 @@ class ProductController extends Controller
             $category = $this->categoryService->getAllCategories();
             $products = $this->productService->productByCategory($id);
             $category_name = $this->categoryService->findOrFailCategory($id)->name;
-            if($products->count() >0){
+            // if($products->count() >0){
                 return view('admin.products.listproduct', compact('products','category'));
-            }else{
-                return redirect()->route('admin.product.store')->with('fail', 'Không tìm thấy sản phần có tên loại  : '.$category_name);
-            }
+            // }else{
+            //     return redirect()->route('admin.product.store')->with('fail', 'Không tìm thấy sản phần có tên loại  : '.$category_name);
+            // }
 
             // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {

@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header" style="display: flex; justify-content: space-between ">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-end; ">
                             <div>
                                 <form method="get" action="{{ route('admin.product.search') }}">
                                     @csrf
@@ -61,11 +61,12 @@
                                     <div class="form-group">
                                         <label for="exampleSelect" class="form-label">Loại sản phẩm</label>
                                         <select class="form-select" id="loc_category" name="category">
-                                            <option value="">--- Loại sản phẩm ---</option>
+                                            <option value="}">--- Loại sản phẩm ---</option>
                                             @foreach ($category as $item)
                                             <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">{{
                                                 $item->name }}</option>
                                             @endforeach
+                                            <option value="{{ route('admin.product.store')}}"> Danh sách sản phẩm</option>
                                         </select>
                                     </div>
                                 </form>
@@ -104,6 +105,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @if ($products->count()>0)
                                             @foreach($products as $key => $value)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
@@ -129,6 +131,12 @@
                                                 </td>
                                             </tr>
                                             @endforeach
+                                            @else
+                                            <div class="alert alert-success">
+                                                Không có sản phẩm cần tìm
+                                            </div>
+                                            @endif
+
 
 
 
