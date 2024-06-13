@@ -90,7 +90,7 @@
                                                 <select class="form-control" id="city">
                                                     <option value="">Chọn thành phố</option>
                                                     @foreach($city as $item)
-                                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    <option value="{{$item->id}}" {{$item->id == $admin->city_id ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -98,7 +98,7 @@
                                                 <select class="form-control" id="district">
                                                     <option value="">Chọn quận/huyện</option>
                                                     @foreach($districts as $item)
-                                                    <option value="{{$item->city_id}}">{{$item->name}}</option>
+                                                    <option value="{{$item->city_id}}" {{$item->id == $admin->district_id ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -106,7 +106,7 @@
                                                 <select class="form-control" id="ward">
                                                     <option value="">Chọn xã/phường/thị trấn</option>
                                                     @foreach($wards as $item)
-                                                    <option value="{{$item->district_id}}">{{$item->name}}</option>
+                                                    <option value="{{$item->district_id}}" {{$item->id == $admin->ward_id ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -116,7 +116,7 @@
                                 <div class="form-group row">
                                     <label for="phone" class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ " id="phone" name="address">
+                                        <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ " id="address" name="address" value="{{$admin->address}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -163,7 +163,7 @@
                                 <div>
                                 {{$admin->id}}
                                     <div class="form-group row mt-2">
-                                      
+
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện tại</label>
                                         <div class="col-sm-10">
                                             <input type="password" class="form-control  is-invalid " id="password" name="password" placeholder="Mật khẩu hiện tại">
