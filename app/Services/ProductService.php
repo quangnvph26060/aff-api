@@ -86,13 +86,12 @@ class ProductService
                 'status' =>  $data['status'],
                 'reviews' => @$data['reviews'],
                 'commission_rate' => @$data['commission_rate'],
-                'discount_id' => 1,
+                'discount_id' => @$data['discount_id'],
             ]);
             if ($product) {
-
-                foreach ($data['images'] as $item)  {
+                foreach ($data['images'] as $item) {
                     $image = $item;
-                    $filename = 'image_' .time() . '_' .$image->getClientOriginalName();
+                    $filename = 'image_' . time() . '_' . $image->getClientOriginalName();
                     $filePath = 'storage/images/' . $filename;
                     Storage::putFileAs('public/images', $image, $filename);
                     $image = new ProductImage();
@@ -122,12 +121,37 @@ class ProductService
      */
     public function updateProduct(int $id, array $data): Product
     {
-        DB::beginTransaction();
+        $existingImagePaths = ProductImage::where('product_id', $id)->pluck('image_path')->toArray();
+        $imageNames = [];
+        foreach ($existingImagePaths as $path) {
+            $fullFileName = basename($path);
+            $pattern = '/image_\d+_(.*)/';
+            if (preg_match($pattern, $fullFileName, $matches)) {
+                $imageNames[] = $matches[1];
+            }
+        }
 
+        DB::beginTransaction();
         try {
             $product = $this->getProductById($id);
             Log::info("Updating product with ID: $id");
-            $product->update($data);
+            $update = $product->update($data);
+            if ($update) {
+                if (isset($data['images'])) {
+                    foreach ($data['images'] as $item) {
+                        $image = $item;
+                        $filename = 'image_' . time() . '_' . $image->getClientOriginalName();
+                        $filePath = 'storage/images/' . $filename;
+                        if (!in_array($image->getClientOriginalName(), $imageNames)) {
+                            Storage::putFileAs('public/images', $image, $filename);
+                            $image = new ProductImage();
+                            $image->product_id = $product->id;
+                            $image->image_path = $filePath;
+                            $image->save();
+                        }
+                    }
+                }
+            }
             DB::commit();
             return $product;
         } catch (Exception $e) {
@@ -148,13 +172,11 @@ class ProductService
     public function deleteProduct(int $id): void
     {
         DB::beginTransaction();
-
         try {
             $product = $this->getProductById($id);
 
             Log::info("Deleting product with ID: $id");
             $product->delete();
-
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -162,14 +184,26 @@ class ProductService
             throw new Exception('Failed to delete product');
         }
     }
-    public function productByCategory($id): array
+
+    public function productByCategory($id): \Illuminate\Database\Eloquent\Collection
     {
         try {
-            $products = $this->product->where('category_id', $id)->get()->toArray();
+            $products = $this->product->where('category_id', $id)->get();
             return $products;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Failed to fetch products: {$e->getMessage()}");
             throw new Exception('Failed to fetch products');
+        }
+    }
+
+    public function productByName($name): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            $products = $this->product->where('name', 'LIKE', '%' . $name . '%')->get();
+            return $products;
+        } catch (Exception $e) {
+            Log::error("Failed to search products: {$e->getMessage()}");
+            throw new Exception('Failed to search products');
         }
     }
 }

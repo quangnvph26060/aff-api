@@ -34,6 +34,8 @@ class ProductController extends Controller
     // show screen product
     public function store()
     {
+        // $user = Auth::user();
+        // dd($user);
         try {
             $products = $this->productService->getAllProducts();
             $category = $this->categoryService->getAllCategories();
@@ -59,8 +61,9 @@ class ProductController extends Controller
     public function addSubmit(StoreProductRequest $request)
     {
         try {
+
             $product = $this->productService->createProduct($request->all());
-            return redirect()->route('admin.product.store');
+            return redirect()->route('admin.product.store')->with('success', 'Thêm sản phẩm thành công');
             // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create product: ' . $e->getMessage());
@@ -69,7 +72,7 @@ class ProductController extends Controller
     }
 
     public function editForm($id){
-        // dd($id);
+
         $product = $this->productService->getProductById($id);
         $category = $this->categoryService->getAllCategories();
         // dd($product);
@@ -78,11 +81,57 @@ class ProductController extends Controller
     public function editSubmit(Request $request, $id){
         try {
             $product = $this->productService->updateProduct($id, $request->all());
-            return redirect()->route('admin.product.store');
+            return redirect()->back()->with('success', 'Cập nhật sản phẩm thành công');
             // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to update product: ' . $e->getMessage());
             return ApiResponse::error('Failed to update product', 500);
         }
+    }
+
+    public function delete($id){
+        try {
+            $this->productService->deleteProduct($id);
+            return redirect()->route('admin.product.store');
+            // return ApiResponse::success($product, 'Product created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to delete product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete product', 500);
+        }
+    }
+    public function search(Request $request){
+        try {
+            $category = $this->categoryService->getAllCategories();
+            $products = $this->productService->productByName($request->name);
+
+                return view('admin.products.listproduct', compact('products','category'));
+
+        } catch (\Exception $e) {
+            Log::error('Failed to delete product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete product', 500);
+        }
+    }
+    public function productFilter($id){
+
+        try {
+
+            $category = $this->categoryService->getAllCategories();
+            $products = $this->productService->productByCategory($id);
+            $category_name = $this->categoryService->findOrFailCategory($id)->name;
+
+                return view('admin.products.listproduct', compact('products','category'));
+
+            // return ApiResponse::success($product, 'Product created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to delete product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete product', 500);
+        }
+    }
+
+    public function deleteImagesProduct($id){
+        $productImages = ProductImage::find($id);
+        $productImages->delete();
+        session()->flash('success', 'Xóa thành công ảnh !');
+        return redirect()->back();
     }
 }

@@ -34,16 +34,20 @@ Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('logout', [AuthController::class,'logout'])->name('logout');
+    Route::post('ChangePassword', [AuthController::class, 'ChangePassword'])->name('ChangePassword');
     // Product routes
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
     Route::get('product/add', [ProductController::class, 'addForm'])->name('product.add');
     Route::post('product/add', [ProductController::class, 'addSubmit'])->name('product.add.submit');
     Route::get('product/{id}', [ProductController::class, 'editForm'])->name('product.edit');
     Route::post('product/{id}', [ProductController::class, 'editSubmit'])->name('product.edit.submit');
+    Route::get('product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+    Route::get('product-search-name', [ProductController::class, 'search'])->name('product.search');
+    Route::get('product-filter/{id}', [ProductController::class, 'productFilter'])->name('product.filter');
+    Route::get('product-images/{id}', [ProductController::class, 'deleteImagesProduct'])->name('deleteImagesProduct');
     // Route::get('product/list', function () {
     //     return view('admin.products.listproduct');
     // })->name('product.list');
-
 
     // Category routes
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');

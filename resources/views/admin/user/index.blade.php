@@ -82,6 +82,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-group row mt-2 mb-2">
                                     <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                                     <div class="col-sm-10">
@@ -141,45 +142,61 @@
 
             <div class="row mt-4">
                 <div class="col-md-12">
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                    @if (session('error'))
+                    <div class="alert alert-success">
+                        {{ session('error') }}
+                    </div>
+                    @endif
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Thông tin đăng nhập</h6>
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Tên đăng nhập</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control bg-white" id="username" value="{{$admin->email}}" disabled>
-                                </div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control bg-white" id="username" value="{{$admin->email}}" disabled>
                             </div>
-                            <div class="form-group row mt-2">
+                            </div>
+                            <div class="form-group row">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
-                                <div class="col-sm-10">
-                                    <input type="password" class="form-control bg-white" id="passwordc" value="*********" disabled>
+                                <div class="col-sm-10 mb-2">
+                                    <input type="password" class="form-control bg-white" id="password" value="*********"
+                                        disabled>
                                 </div>
                             </div>
-                            <button type="button" id="changePasswordBtn" class="btn btn-outline-primary btn-sm">Đổi mật khẩu</button>
+                            <button type="button" id="changePasswordBtn" class="btn btn-outline-primary btn-sm">Đổi mật
+                                khẩu</button>
 
                             <!-- Thêm input mật khẩu mới và xác nhận mật khẩu -->
-                            <form action="" method="post" class="changePasswordFields" id="changePasswordFields" style="display: none;">
+                            <form action="{{ route('admin.ChangePassword') }}" method="post" id="changePasswordFields"
+                                style="display: none;">
+                                @csrf
                                 <div>
-                                {{$admin->id}}
-                                    <div class="form-group row mt-2">
-
-                                        <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện tại</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control  is-invalid " id="password" name="password" placeholder="Mật khẩu hiện tại">
+                                    <div class="form-group row">
+                                        <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện
+                                            tại</label>
+                                        <div class="col-sm-10 mb-2">
+                                            <input type="password" class="form-control" name="password" id="password"
+                                                placeholder="Mật khẩu hiện tại">
                                         </div>
-                                        <span class="invalid-feedback d-block" style="font-weight: 500" id="password_error"></span>
                                     </div>
-                                    <div class="form-group row mt-2">
+                                    <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="newPassword">
+                                        <div class="col-sm-10 mb-2">
+                                            <input type="password" name="newPassword" class="form-control"
+                                                id="newPassword">
                                         </div>
                                     </div>
-                                    <div class="form-group row mt-2">
-                                        <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật khẩu</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="confirmPassword">
+                                    <div class="form-group row">
+                                        <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật
+                                            khẩu</label>
+                                        <div class="col-sm-10 mb-2">
+                                            <input type="password" class="form-control" name="confirmPassword"
+                                                id="confirmPassword">
                                         </div>
                                     </div>
                                 </div>
@@ -268,7 +285,19 @@
     const kyc = document.getElementById('kyc-btn');
     if (kyc) {
         kyc.addEventListener('click', function() {
-            $('#kycModal').modal('show');
+        $('#kycModal').modal('show');
+    });
+    }
+
+    //change password
+    const changePassword = document.getElementById('changePasswordBtn');
+
+    if(changePassword){
+        changePassword.addEventListener('click', function() {
+            var changePasswordForm = document.getElementById('changePasswordFields');
+                changePasswordForm.style.display = 'block';
+                // Ẩn nút đổi mật khẩu
+                this.style.display = 'none';
         });
     }
 
