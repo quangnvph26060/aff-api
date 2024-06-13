@@ -63,4 +63,5 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     //     return view('admin.user.index');
     // })->name('user-info');
     Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
+    Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
 });

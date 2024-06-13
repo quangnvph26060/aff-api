@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Exceptions\UserNotFoundException;
+use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Services\OrderService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -59,10 +60,10 @@ class OrderController extends Controller
             return ApiResponse::error('Failed to create order', 500);
         }
     }
-    private function saveOrder($data)
-    {
-        return $order;
-    }
+    // private function saveOrder($data)
+    // {
+    //     return $order;
+    // }
 
     /**
      * Display the specified resource.

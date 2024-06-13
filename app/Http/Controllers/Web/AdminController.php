@@ -45,6 +45,20 @@ class AdminController extends Controller
         }
     }
 
+    public function editAdmin(Request $request) {
+        try {
+            if ($request->session()->has('authUser')) {
+                $user = $request->session()->get('authUser');
+                $adminId = User::find($user['user']['id'])->id;
+                $admin = $this->adminService->updateAdmin($adminId, $request->all());
+                return redirect()->route('admin.user-info');
+            }
+        } catch(\Exception $e) {
+            Log::error('Failed to update admin: ' . $e->getMessage());
+            return ApiResponse::error('Failed to update admin', 500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
