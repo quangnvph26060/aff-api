@@ -9,9 +9,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Thông tin tài khoản</h6>
-                            <p>Hạng thành viên: <strong>Membership</strong></p>
-                            <p>Tài khoản đã được xác thực</p>
-                            <p>Mã khách hàng: <strong>KP702624</strong></p>
+                            <p>Hạng thành viên: <strong>Admin</strong></p>
+                            <p class="text-success">Tài khoản đã được xác thực</p>
+                            <p>Mã khách hàng: <strong>{{$admin->referrer_id ?? ""}}</strong></p>
                             <button class="btn btn-outline-primary btn-sm">Giới thiệu bạn bè</button>
                         </div>
                     </div>
@@ -22,22 +22,22 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví chính</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                    <input type="text" class="form-control bg-white" disabled value="{{number_format($admin->wallet[0]['total_revenue']) ?? 0}}đ">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Ví tri ân 1</label>
+                                <label class="col-sm-4 col-form-label">Ví thưởng </label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled value="0đ">
+                                    <input type="text" class="form-control bg-white" disabled value="{{number_format($admin->wallet[1]['total_revenue']) ?? 0}}đ">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví tri ân 2</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control bg-white" disabled value="0đ">
                                 </div>
-                            </div>
-                            <div class="form-group row">
+                            </div> -->
+                            <!-- <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Chỉ số năng động</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control bg-white" disabled value="500.000đ">
@@ -54,7 +54,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control bg-white" disabled value="0đ">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -64,72 +64,76 @@
                 <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-body">
-                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3"
-                                width="150" height="150">
-                            <h4>name</h4>
-                            <p>email</p>
+                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">
+                            <h4>{{$admin->name}}</h4>
+                            <p>{{$admin->email}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <form id="user-info-form" action="" method="POST">
+                            <form id="user-info-form" action="{{route('admin.profile.update')}}" method="POST">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="Nguyễn Thị Kiều Tiên">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$admin->name}}">
                                     </div>
                                 </div>
 
-                                <div class="form-group row mt-2 mb-2 ">
+
+                                <div class="form-group row mt-2 mb-2">
                                     <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                                     <div class="col-sm-10">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <select class="form-control" id="city">
+                                                <select class="form-control" name="city_id" id="city">
                                                     <option value="">Chọn thành phố</option>
-                                                    <!-- Danh sách các thành phố -->
-                                                    <option value="tp_hcm">TP. Hồ Chí Minh</option>
-                                                    <option value="ha_noi">Hà Nội</option>
-                                                    <!-- Thêm các thành phố khác nếu cần -->
+                                                    @foreach($city as $item)
+                                                    <option value="{{$item->id}}" {{$item->id == $admin->city_id ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select class="form-control" id="district">
+                                                <select class="form-control" name="district_id" id="district">
                                                     <option value="">Chọn quận/huyện</option>
-                                                    <!-- Danh sách các quận/huyện sẽ được thêm bằng JS -->
+                                                    @foreach($districts as $item)
+                                                    <option value="{{$item->id}}" {{$item->id == $admin->district_id ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select class="form-control" id="ward">
+                                                <select class="form-control" name="wards_id" id="ward">
                                                     <option value="">Chọn xã/phường/thị trấn</option>
-                                                    <!-- Danh sách các xã/phường/thị trấn sẽ được thêm bằng JS -->
+                                                    @foreach($wards as $item)
+                                                    <option value="{{$item->id}}" {{$item->id == $admin->wards_id ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label for="address" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ" id="address" name="address" value="{{$admin->address}}">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="phone" name="phone"
-                                            value="0359862787">
+                                        <input type="text" class="form-control" id="phone" name="phone" value="{{$admin->phone}}">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
                                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" value="">
+                                        <input type="email" class="form-control" id="email" name="email" value="{{$admin->email}}">
                                     </div>
                                 </div>
-                                <button type="button" id="update-info-btn" class="btn btn-outline-primary">Cập nhật
-                                    thông tin</button>
-                                <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#kycModal">Định danh cá nhân</button>
+                                <button type="submit" id="update-info-btn" class="btn btn-outline-primary">Cập nhật thông tin</button>
+                                <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal" data-target="#kycModal">Định danh cá nhân</button>
                             </form>
                         </div>
                     </div>
@@ -153,10 +157,9 @@
                             <h6 class="card-title">Thông tin đăng nhập</h6>
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Tên đăng nhập</label>
-                                <div class="col-sm-10 mb-2">
-                                    <input type="text" class="form-control bg-white" id="username" value="0359862787"
-                                        disabled>
-                                </div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control bg-white" id="username" value="{{$admin->email}}" disabled>
+                            </div>
                             </div>
                             <div class="form-group row">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
@@ -197,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-outline-primary btn-sm">Lưu</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="submitForm(event)">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -260,27 +263,27 @@
 </div>
 
 <script>
-    const updateinfo = document.getElementById('update-info-btn');
-    if(updateinfo){
-        updateinfo.addEventListener('click', function() {
-            const inputs = document.querySelectorAll('#user-info-form input');
-            const isDisabled = inputs[0].disabled;
+    // const updateinfo = document.getElementById('update-info-btn');
+    // if (updateinfo) {
+    //     updateinfo.addEventListener('click', function() {
+    //         const inputs = document.querySelectorAll('#user-info-form input');
+    //         const isDisabled = inputs[0].disabled;
 
-            inputs.forEach(input => {
-                input.disabled = !isDisabled;
-            });
+    //         inputs.forEach(input => {
+    //             input.disabled = !isDisabled;
+    //         });
 
-            if (isDisabled) {
-                this.textContent = 'Lưu';
-            } else {
-                this.textContent = 'Cập nhật thông tin';
-                document.getElementById('user-info-form').submit();
-            }
-        });
-    }
+    //         if (isDisabled) {
+    //             this.textContent = 'Lưu';
+    //         } else {
+    //             this.textContent = 'Cập nhật thông tin';
+    //             document.getElementById('user-info-form').submit();
+    //         }
+    //     });
+    // }
     // định dang
-    const kyc =  document.getElementById('kyc-btn');
-    if(kyc){
+    const kyc = document.getElementById('kyc-btn');
+    if (kyc) {
         kyc.addEventListener('click', function() {
         $('#kycModal').modal('show');
     });
@@ -288,20 +291,48 @@
 
     //change password
     const changePassword = document.getElementById('changePasswordBtn');
-    console.log(changePassword);
+
     if(changePassword){
         changePassword.addEventListener('click', function() {
             var changePasswordForm = document.getElementById('changePasswordFields');
                 changePasswordForm.style.display = 'block';
-
                 // Ẩn nút đổi mật khẩu
                 this.style.display = 'none';
-
-                // Xuất thông báo ra console để kiểm tra xem sự kiện click được kích hoạt hay không
-                console.log('Đã bấm vào nút đổi mật khẩu');
         });
     }
 
+    //change password
+    const changePassword = document.getElementById('changePasswordBtn');
+    if (changePassword) {
+        changePassword.addEventListener('click', function() {
+            var changePasswordForm = document.getElementsByClassName('changePasswordFields')[0];
+            if (changePasswordForm) {
+                changePasswordForm.style.display = 'block';
+            }
+            // Ẩn nút đổi mật khẩu
+            this.style.display = 'none';
+        });
+    }
+    var formEconomyEdit = {
+        'password': {
+            'element': document.getElementById('password'),
+            'error': document.getElementById('password_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E001')
+                },
+            ]
+        },
+    }
+    function submitForm(event) {
+        event.preventDefault();
+        if (validateAllFields(formEconomyEdit)){
+            document.getElementById('changePasswordFields').submit();
+        }
+    }
 </script>
 <style>
     .modal-dialog {

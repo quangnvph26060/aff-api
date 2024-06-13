@@ -5,6 +5,8 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\AdminController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
 
@@ -21,9 +23,11 @@ use Predis\Configuration\Option\Prefix;
 
 
 
-Route::get('/admin/login', function () {
-    return view('admin.login');
-})->name('admin.login');
+Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login', [AuthController::class,'viewLogin'])->name('admin.login');
+    Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
+});
 Route::get('demo', [AuthController::class, 'getUser']);
 
 Route::post('admin/login', [AuthController::class, 'login'])->name('login');
@@ -59,7 +63,9 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
         return view('admin.order.list');
     })->name('order.list');
     // user
-    Route::get('user-info',function(){
-        return view('admin.user.index');
-    })->name('user-info');
+    // Route::get('user-info',function(){
+    //     return view('admin.user.index');
+    // })->name('user-info');
+    Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
+    Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
 });

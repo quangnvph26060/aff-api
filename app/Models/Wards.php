@@ -14,4 +14,9 @@ class Wards extends Model
         'name',
         'id',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

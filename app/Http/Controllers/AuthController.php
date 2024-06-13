@@ -178,6 +178,7 @@ class AuthController extends Controller
             }
         }
     }
+
     public function ChangePassword(Request $request)
     {
         if ($request->session()->has('authUser')) {
@@ -192,5 +193,11 @@ class AuthController extends Controller
             return redirect()->back()->with($result['status'], $result['message']);
         }
 
+    }
+    /**
+     * hàm hiển thị view login
+     */
+    public function viewLogin(){
+        return view('admin.login');
     }
 }

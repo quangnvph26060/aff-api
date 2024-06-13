@@ -29,9 +29,10 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
-
-    protected $appends = ['role'];
-
+    protected $appends = ['role','wallet'];
+    public function getWalletAttribute(){
+        return UserWallet::where('user_id', $this->attributes['id'])->get();
+    }
     public function getRoleAttribute(){
       return  Role::where('id',$this->attributes['role_id'])->first();
     }
@@ -47,6 +48,15 @@ class User extends Authenticatable implements JWTSubject
     }
     public function userwallet(){
         return $this -> hasMany(UserWallet::class);
+    }
+    public function city(){
+        return $this -> belongsTo(City::class);
+    }
+    public function district(){
+        return $this -> belongsTo(Districts::class);
+    }
+    public function ward(){
+        return $this -> belongsTo(Wards::class);
     }
     public function userInfo()
     {

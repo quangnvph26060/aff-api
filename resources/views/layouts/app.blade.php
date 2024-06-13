@@ -31,6 +31,8 @@
     <link href="https://quanlycongviec.site/libs/assets/libs/choices.js/public/assets/styles/choices.min.css"
         rel="stylesheet" type="text/css" />
 
+    <!-- validator -->
+     <script src="{{asset('validator/validator.js')}}"></script>
 
 </head>
 

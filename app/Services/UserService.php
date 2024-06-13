@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
+use App\Jobs\SendMail;
 use App\Models\Commission;
 use Exception;
 use App\Models\User;
@@ -68,6 +69,7 @@ class UserService
         $result = new \Illuminate\Database\Eloquent\Collection;
 
         foreach ($teamMembersB as $memberB) {
+            $level = Commission::where('id', $memberB->commission_id)->value('level');
             // Lấy tổng doanh số cá nhân của thành viên B
             $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
@@ -81,12 +83,14 @@ class UserService
 
             // Tạo đối tượng kết quả và thêm vào Collection
             $result->push((object)[
+                'id' => $memberB->id,
                 'name' => $memberB->name,
                 'email' => $memberB->email,
                 'phone' => $memberB->phone,
                 'referral_code'=> $memberB->referral_code,
                 'personalRevenue' => $personalRevenue,
-                'teamRevenue' => $teamRevenue
+                'teamRevenue' => $teamRevenue,
+                'level' => $level,
             ]);
         }
 
@@ -153,7 +157,13 @@ class UserService
                 'status' => 'active',
                 'otp'=> @$data['otp'],
             ];
-            event(new EventRegister($user,@$data['otp']));
+                $arrSendMail = [
+                    'type' => 'send_otp',
+                    'user' => $user,
+                    'otp'=>$data['otp'],
+                ];
+                SendMail::dispatch($arrSendMail);
+           //  event(new EventRegister($user,@$data['otp']));
             return $user;
         } catch (Exception $e) {
             Log::error("Failed to create user: {$e->getMessage()}");
