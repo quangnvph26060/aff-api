@@ -40,6 +40,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
     Route::get('product-search-name', [ProductController::class, 'search'])->name('product.search');
     Route::get('product-filter/{id}', [ProductController::class, 'productFilter'])->name('product.filter');
+    Route::get('product-images/{id}', [ProductController::class, 'deleteImagesProduct'])->name('deleteImagesProduct');
     // Route::get('product/list', function () {
     //     return view('admin.products.listproduct');
     // })->name('product.list');

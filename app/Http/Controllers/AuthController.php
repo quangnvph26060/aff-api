@@ -178,21 +178,19 @@ class AuthController extends Controller
             }
         }
     }
-
-
-    public function ChangePassword(Request $request){
-
-        //  $userId = Auth::id(); // Lấy ID của user hiện tại
-        //  dd($userId);
-        $userId = 1;
-        $result = $this->userService->changePassword(
-            $userId,
-            $request->password,
-            $request->newPassword,
-            $request->confirmPassword
-        );
-
-        return redirect()->back()->with($result['status'], $result['message']);
+    public function ChangePassword(Request $request)
+    {
+        if ($request->session()->has('authUser')) {
+            $user = $request->session()->get('authUser');
+            $id = $user['user']->id;
+            $result = $this->userService->changePassword(
+                $id,
+                $request->password,
+                $request->newPassword,
+                $request->confirmPassword
+            );
+            return redirect()->back()->with($result['status'], $result['message']);
+        }
 
     }
 }

@@ -1,7 +1,24 @@
-
 @extends('layouts.app')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .close-icon {
+        position: absolute;
+        top: -5px;
+        right: 0px;
+        text-decoration: none;
+        color: #000;
+        font-size: 20px;
+    }
 
+    .close-icon {
+        color: rgb(234, 250, 12)
+    }
+
+    .close-icon:hover {
+        color: #fd0e0e;
+    }
+</style>
 <div class="main-content">
 
     <div class="page-content">
@@ -22,29 +39,45 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body p-4">
+                            @if (session('success'))
+                            <div class="alert alert-success h-10  mb-2 p-2 col-lg-6">
+                                {{ session('success') }}
+                            </div>
+                            @endif
                             <form action="{{ route('admin.product.edit.submit', ['id'=> $product->id]) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                    </div>
                                     <div class="col-lg-6">
                                         <div>
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Tên sản phẩm <span
                                                         class="text text-danger">*</span></label>
-                                                <input  class="form-control" name="name" type="text"
+                                                <input class="form-control" name="name" type="text"
                                                     id="example-text-input" value="{{ $product->name }}" required>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger"></span></label>
-                                                {{-- <input value="" required class="form-control" name="images"
-                                                    type="file" id="example-text-input"> --}}
-                                                <input id="images" class="form-control" type="file" name="images[]"
-                                                    multiple accept="image/*" >
 
+                                                <input id="images" class="form-control" type="file" name="images[]"
+                                                    multiple accept="image/*">
+                                                <div style="display: flex">
+                                                    @foreach($product->images as $key => $item)
+                                                    <div
+                                                        style="position: relative; margin-top: 10px; margin-right: 10px;">
+                                                        <img title="{{ $item->image_path }}"
+                                                            style="width: 100px; height: 75px;"
+                                                            src="{{ asset($item->image_path) }}" alt="">
+                                                        <a title="Xóa"
+                                                            href="{{ route('admin.deleteImagesProduct', ['id'=>$item->id]) }}"
+                                                            class="close-icon">
+                                                            <i class="fas fa-minus-square"></i>
+                                                        </a>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
 
                                             <div class="mb-3">

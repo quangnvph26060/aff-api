@@ -89,9 +89,9 @@ class ProductService
                 'discount_id' => @$data['discount_id'],
             ]);
             if ($product) {
-                foreach ($data['images'] as $item)  {
+                foreach ($data['images'] as $item) {
                     $image = $item;
-                    $filename = 'image_' .time() . '_' .$image->getClientOriginalName();
+                    $filename = 'image_' . time() . '_' . $image->getClientOriginalName();
                     $filePath = 'storage/images/' . $filename;
                     Storage::putFileAs('public/images', $image, $filename);
                     $image = new ProductImage();
@@ -121,23 +121,34 @@ class ProductService
      */
     public function updateProduct(int $id, array $data): Product
     {
+        $existingImagePaths = ProductImage::where('product_id', $id)->pluck('image_path')->toArray();
+        $imageNames = [];
+        foreach ($existingImagePaths as $path) {
+            $fullFileName = basename($path);
+            $pattern = '/image_\d+_(.*)/';
+            if (preg_match($pattern, $fullFileName, $matches)) {
+                $imageNames[] = $matches[1];
+            }
+        }
+
         DB::beginTransaction();
         try {
             $product = $this->getProductById($id);
             Log::info("Updating product with ID: $id");
             $update = $product->update($data);
-            if($update){
-                if(isset($data['images'])){
-                    ProductImage::where('product_id', $id)->delete();
-                    foreach ($data['images'] as $item)  {
+            if ($update) {
+                if (isset($data['images'])) {
+                    foreach ($data['images'] as $item) {
                         $image = $item;
-                        $filename = 'image_' .time() . '_' .$image->getClientOriginalName();
+                        $filename = 'image_' . time() . '_' . $image->getClientOriginalName();
                         $filePath = 'storage/images/' . $filename;
-                        Storage::putFileAs('public/images', $image, $filename);
-                        $image = new ProductImage();
-                        $image->product_id = $product->id;
-                        $image->image_path = $filePath;
-                        $image->save();
+                        if (!in_array($image->getClientOriginalName(), $imageNames)) {
+                            Storage::putFileAs('public/images', $image, $filename);
+                            $image = new ProductImage();
+                            $image->product_id = $product->id;
+                            $image->image_path = $filePath;
+                            $image->save();
+                        }
                     }
                 }
             }
@@ -170,7 +181,7 @@ class ProductService
         } catch (Exception $e) {
             DB::rollBack();
             Log::error("Failed to delete product: {$e->getMessage()}");
-             throw new Exception('Failed to delete product');
+            throw new Exception('Failed to delete product');
         }
     }
 
@@ -188,7 +199,7 @@ class ProductService
     public function productByName($name): \Illuminate\Database\Eloquent\Collection
     {
         try {
-            $products = $this->product->where('name','LIKE', '%' . $name . '%')->get();
+            $products = $this->product->where('name', 'LIKE', '%' . $name . '%')->get();
             return $products;
         } catch (Exception $e) {
             Log::error("Failed to search products: {$e->getMessage()}");

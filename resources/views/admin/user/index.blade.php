@@ -153,14 +153,14 @@
                             <h6 class="card-title">Thông tin đăng nhập</h6>
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Tên đăng nhập</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 mb-2">
                                     <input type="text" class="form-control bg-white" id="username" value="0359862787"
                                         disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 mb-2">
                                     <input type="password" class="form-control bg-white" id="password" value="*********"
                                         disabled>
                                 </div>
@@ -176,14 +176,14 @@
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện
                                             tại</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 mb-2">
                                             <input type="password" class="form-control" name="password" id="password"
                                                 placeholder="Mật khẩu hiện tại">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 mb-2">
                                             <input type="password" name="newPassword" class="form-control"
                                                 id="newPassword">
                                         </div>
@@ -191,7 +191,7 @@
                                     <div class="form-group row">
                                         <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật
                                             khẩu</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10 mb-2">
                                             <input type="password" class="form-control" name="confirmPassword"
                                                 id="confirmPassword">
                                         </div>
