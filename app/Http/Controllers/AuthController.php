@@ -176,6 +176,7 @@ class AuthController extends Controller
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
             }
+             return $user;
         }
     }
 
@@ -199,5 +200,12 @@ class AuthController extends Controller
      */
     public function viewLogin(){
         return view('admin.login');
+    }
+    /*
+     * hàm upload ảnh  user
+     */
+    public function uploadImageUserInfo()
+    {
+
     }
 }
