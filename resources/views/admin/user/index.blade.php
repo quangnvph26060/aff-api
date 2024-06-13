@@ -153,19 +153,22 @@
                             <div class="form-group row mt-2">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control bg-white" id="password" value="*********" disabled>
+                                    <input type="password" class="form-control bg-white" id="passwordc" value="*********" disabled>
                                 </div>
                             </div>
                             <button type="button" id="changePasswordBtn" class="btn btn-outline-primary btn-sm">Đổi mật khẩu</button>
 
                             <!-- Thêm input mật khẩu mới và xác nhận mật khẩu -->
-                            <form action="" method="post" id="changePasswordFields" style="display: none;">
+                            <form action="" method="post" class="changePasswordFields" id="changePasswordFields" style="display: none;">
                                 <div>
+                                {{$admin->id}}
                                     <div class="form-group row mt-2">
+                                      
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện tại</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="newPassword" placeholder="Mật khẩu hiện tại">
+                                            <input type="password" class="form-control  is-invalid " id="password" name="password" placeholder="Mật khẩu hiện tại">
                                         </div>
+                                        <span class="invalid-feedback d-block" style="font-weight: 500" id="password_error"></span>
                                     </div>
                                     <div class="form-group row mt-2">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
@@ -180,7 +183,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Lưu</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="submitForm(event)">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -271,18 +274,35 @@
 
     //change password
     const changePassword = document.getElementById('changePasswordBtn');
-    console.log(changePassword);
     if (changePassword) {
         changePassword.addEventListener('click', function() {
-            var changePasswordForm = document.getElementById('changePasswordFields');
-            changePasswordForm.style.display = 'block';
-
+            var changePasswordForm = document.getElementsByClassName('changePasswordFields')[0];
+            if (changePasswordForm) {
+                changePasswordForm.style.display = 'block';
+            }
             // Ẩn nút đổi mật khẩu
             this.style.display = 'none';
-
-            // Xuất thông báo ra console để kiểm tra xem sự kiện click được kích hoạt hay không
-            console.log('Đã bấm vào nút đổi mật khẩu');
         });
+    }
+    var formEconomyEdit = {
+        'password': {
+            'element': document.getElementById('password'),
+            'error': document.getElementById('password_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E001')
+                },
+            ]
+        },
+    }
+    function submitForm(event) {
+        event.preventDefault();
+        if (validateAllFields(formEconomyEdit)){
+            document.getElementById('changePasswordFields').submit();
+        }
     }
 </script>
 <style>
