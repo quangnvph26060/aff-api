@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('loc_category').addEventListener('change', function() {
@@ -10,6 +9,8 @@
                 }
             });
         });
+
+
 </script>
 
 <div class="main-content">
@@ -31,14 +32,14 @@
                     <div class="card">
                         <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-end; ">
                             <div>
-                                <form method="get" action="{{ route('admin.product.search') }}">
+                                <form method="get" action="{{ route('admin.product.search') }}" id="productSearchForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="">Tên sản phẩm</label>
-                                                <input autocomplete="off" name="name" type="text" class="form-control"
-                                                    required>
+                                                <input autocomplete="off" name="name" type="text" class="form-control"  required>
+                                                    <div id="name_error" class="error"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -60,13 +61,13 @@
                                     <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
                                     <div class="form-group">
                                         <label for="exampleSelect" class="form-label">Loại sản phẩm</label>
-                                        <select class="form-select" id="loc_category" name="category">
+                                        <select class="form-select" id="loc_category" name="category" >
                                             <option value="}">--- Loại sản phẩm ---</option>
                                             @foreach ($category as $item)
                                             <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">{{
                                                 $item->name }}</option>
                                             @endforeach
-                                            <option value="{{ route('admin.product.store')}}"> Danh sách sản phẩm</option>
+                                            <option value="{{ route('admin.product.store')}}"> Danh sách tất cả các sản phẩm</option>
                                         </select>
                                     </div>
                                 </form>
@@ -154,4 +155,5 @@
 
         </div> <!-- container-fluid -->
     </div>
+
     @endsection
