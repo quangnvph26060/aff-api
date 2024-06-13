@@ -34,7 +34,7 @@ class AdminController extends Controller
                 $city = City::all();
                 $districts = Districts::all();
                 $wards = Wards::all();
-                
+
                 return view('admin.user.index', compact('admin','wards','city','districts'));
             }
         }
@@ -42,6 +42,20 @@ class AdminController extends Controller
         {
             Log::error('Failed to fetch admin infor: '. $e->getMessage());
             return ApiResponse::error('Failed to fetch admin infor', 500);
+        }
+    }
+
+    public function editAdmin(Request $request) {
+        try {
+            if ($request->session()->has('authUser')) {
+                $user = $request->session()->get('authUser');
+                $adminId = User::find($user['user']['id'])->id;
+                $admin = $this->adminService->updateAdmin($adminId, $request->all());
+                return redirect()->route('admin.user-info');
+            }
+        } catch(\Exception $e) {
+            Log::error('Failed to update admin: ' . $e->getMessage());
+            return ApiResponse::error('Failed to update admin', 500);
         }
     }
 
