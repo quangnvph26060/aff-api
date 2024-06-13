@@ -10,6 +10,8 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Expr\Array_;
+
 class AuthController extends Controller
 {
     /**
@@ -204,8 +206,24 @@ class AuthController extends Controller
     /*
      * hàm upload ảnh  user
      */
-    public function uploadImageUserInfo()
-    {
-
+    public function uploadImageUserInfo(Request $request)
+    {   
+        $user = $this->getUserInfo($request);
+        if ($request->file()) {
+            $file = $request->file('file');
+            $filePath = uploadFile('User', $file);
+            return response()->json(['success' => 'File uploaded successfully.', 'file' => $filePath]);
+        }
     }
+    /**
+     * hàm lấy thông tin user admin
+     */
+    public function getUserInfo(Request $request)
+    {
+        if ($request->session()->has('authUser')) {
+            $user = $request->session()->get('authUser');
+        }
+        return $user;
+    }
+        
 }

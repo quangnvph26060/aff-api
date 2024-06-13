@@ -21,6 +21,7 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 
+Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload');
 
 
 Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');

@@ -70,7 +70,11 @@
                             <label for="avatarInput">
                                 <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;" >
                             </label>
-                            <input id="avatarInput" type="file"  style="display: none;  cursor: pointer;" onchange="demo(event)">
+                            <form action="{{ route('file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
+                                @csrf
+                                <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
+                            </form>
+
 {{--                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">--}}
                             <h4>{{$admin->name}}</h4>
                             <p>{{$admin->email}}</p>
@@ -359,12 +363,14 @@
             document.getElementById('changePasswordFields').submit();
         }
     }
-    function demo(event){
-        event.preventDefault();
+    function changeImage(event) {
         const file = event.target.files[0];
-        const imageURL = URL.createObjectURL(file);
-        console.log(file);
+        if (file) {
+            document.getElementById('btn-upload').submit();
+        }
     }
+
+
 </script>
 <style>
     .modal-dialog {
