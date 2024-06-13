@@ -22,7 +22,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví chính</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled value="{{number_format($admin->wallet[0]['total_revenue']) ?? 0}}đ">
+                                    <input type="text" class="form-control bg-white" disabled value="{{ number_format($admin->wallet[0]['total_revenue']) ?? 0}}đ">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -200,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="submitForm(event)">Lưu</button>
+                                <button type="submit" class="btn btn-outline-primary btn-sm" >Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -263,24 +263,24 @@
 </div>
 
 <script>
-    // const updateinfo = document.getElementById('update-info-btn');
-    // if (updateinfo) {
-    //     updateinfo.addEventListener('click', function() {
-    //         const inputs = document.querySelectorAll('#user-info-form input');
-    //         const isDisabled = inputs[0].disabled;
+    const updateinfo = document.getElementById('update-info-btn');
+    if (updateinfo) {
+        updateinfo.addEventListener('click', function() {
+            const inputs = document.querySelectorAll('#user-info-form input');
+            const isDisabled = inputs[0].disabled;
 
-    //         inputs.forEach(input => {
-    //             input.disabled = !isDisabled;
-    //         });
+            inputs.forEach(input => {
+                input.disabled = !isDisabled;
+            });
 
-    //         if (isDisabled) {
-    //             this.textContent = 'Lưu';
-    //         } else {
-    //             this.textContent = 'Cập nhật thông tin';
-    //             document.getElementById('user-info-form').submit();
-    //         }
-    //     });
-    // }
+            if (isDisabled) {
+                this.textContent = 'Lưu';
+            } else {
+                this.textContent = 'Cập nhật thông tin';
+                document.getElementById('user-info-form').submit();
+            }
+        });
+    }
     // định dang
     const kyc = document.getElementById('kyc-btn');
     if (kyc) {
@@ -302,17 +302,17 @@
     }
 
     //change password
-    const changePassword = document.getElementById('changePasswordBtn');
-    if (changePassword) {
-        changePassword.addEventListener('click', function() {
-            var changePasswordForm = document.getElementsByClassName('changePasswordFields')[0];
-            if (changePasswordForm) {
-                changePasswordForm.style.display = 'block';
-            }
-            // Ẩn nút đổi mật khẩu
-            this.style.display = 'none';
-        });
-    }
+    // const changePassword = document.getElementById('changePasswordBtn');
+    // if (changePassword) {
+    //     changePassword.addEventListener('click', function() {
+    //         var changePasswordForm = document.getElementsByClassName('changePasswordFields')[0];
+    //         if (changePasswordForm) {
+    //             changePasswordForm.style.display = 'block';
+    //         }
+    //         // Ẩn nút đổi mật khẩu
+    //         this.style.display = 'none';
+    //     });
+    // }
     var formEconomyEdit = {
         'password': {
             'element': document.getElementById('password'),
@@ -328,7 +328,7 @@
         },
     }
     function submitForm(event) {
-        event.preventDefault();
+         event.preventDefault();
         if (validateAllFields(formEconomyEdit)){
             document.getElementById('changePasswordFields').submit();
         }
