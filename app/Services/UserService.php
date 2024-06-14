@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+
 class UserService
 {
     protected $user;
@@ -54,53 +55,139 @@ class UserService
         }
     }
     /**
+     * hàm lấy thông tin người dùng
+     */
+    public function getUser(Request $request)
+    {
+        if ($request->is('api/*')) {
+            // Xác định người dùng qua token (cho API)
+            $user = Auth::user();
+            if ($user) {
+                return response()->json([
+                    'status' => 'success',
+                    'data' => $user,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthenticated',
+                ], 401);
+            }
+        } else {
+            // Xác định người dùng qua session (cho web)
+            if ($request->session()->has('authUser')) {
+                $user = $request->session()->get('authUser');
+            }
+            return $user;
+        }
+    }
+
+    /**
      * Hàm lấy ra thông tin của tất cả thành viên trong nhóm
      * @param $id
      * @return $user
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function getAllTeamMember(): \Illuminate\Database\Eloquent\Collection
-{
-    try {
-        Log::info('Fetching all users');
-        $currentUser = Auth::user();
-        $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->with('userwallet')->get();
-        $result = new \Illuminate\Database\Eloquent\Collection;
+    public function getAllTeamMember(Request $request): \Illuminate\Database\Eloquent\Collection
+    {
 
-        foreach ($teamMembersB as $memberB) {
-            $level = Commission::where('id', $memberB->commission_id)->value('level');
-            // Lấy tổng doanh số cá nhân của thành viên B
-            $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-            // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
-            $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
-                ->with('userwallet')
-                ->get()
-                ->sum(function ($user) {
-                    return $user->userwallet->sum('total_revenue');
-                });
+        try {
+            if ($request->is('api/*')) {
+                // Xác định người dùng qua token (cho API)
+                $user = Auth::user();
+                if ($user) {
+                    // return response()->json([
+                    //     'status' => 'success',
+                    //     'data' => $user,
+                    // ]);
+                    $currentUser = $user;
+                    $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->get();
+                    Log::info($teamMembersB);
+                    $result = new \Illuminate\Database\Eloquent\Collection;
 
-            // Tạo đối tượng kết quả và thêm vào Collection
-            $result->push((object)[
-                'id' => $memberB->id,
-                'name' => $memberB->name,
-                'email' => $memberB->email,
-                'phone' => $memberB->phone,
-                'referral_code'=> $memberB->referral_code,
-                'personalRevenue' => $personalRevenue,
-                'teamRevenue' => $teamRevenue,
-                'level' => $level,
-            ]);
+                    foreach ($teamMembersB as $memberB) {
+                        $level = Commission::where('id', $memberB->commission_id)->value('level');
+                        // Lấy tổng doanh số cá nhân của thành viên B
+                        $personalRevenue = $memberB->userwallet->sum('total_revenue');
+
+                        // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+                        $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                            ->with('userwallet')
+                            ->get()
+                            ->sum(function ($user) {
+                                return $user->userwallet->sum('total_revenue');
+                            });
+
+                        // Tạo đối tượng kết quả và thêm vào Collection
+                        $result->push((object)[
+                            'id' => $memberB->id,
+                            'name' => $memberB->name,
+                            'email' => $memberB->email,
+                            'phone' => $memberB->phone,
+                            'referral_code' => $memberB->referral_code,
+                            'personalRevenue' => $personalRevenue,
+                            'teamRevenue' => $teamRevenue,
+                            'level' => $level,
+                        ]);
+                        // dd($result);
+                        return $result;
+                    }
+                } else {
+                    // return response()->json([
+                    //     'status' => 'error',
+                    //     'message' => 'Unauthenticated',
+                    // ], 401);
+                    $currentUser = $request->session()->get('authUser');
+                    dd($currentUser['user']);
+                    $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
+                    $result = new \Illuminate\Database\Eloquent\Collection;
+
+                    foreach ($teamMembersB as $memberB) {
+                        $level = Commission::where('id', $memberB->commission_id)->value('level');
+                        // Lấy tổng doanh số cá nhân của thành viên B
+                        $personalRevenue = $memberB->userwallet->sum('total_revenue');
+
+                        // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+                        $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                            ->with('userwallet')
+                            ->get()
+                            ->sum(function ($user) {
+                                return $user->userwallet->sum('total_revenue');
+                            });
+
+                        // Tạo đối tượng kết quả và thêm vào Collection
+                        $result->push((object)[
+                            'id' => $memberB->id,
+                            'name' => $memberB->name,
+                            'email' => $memberB->email,
+                            'phone' => $memberB->phone,
+                            'referral_code' => $memberB->referral_code,
+                            'personalRevenue' => $personalRevenue,
+                            'teamRevenue' => $teamRevenue,
+                            'level' => $level,
+                        ]);
+                        // dd($result);
+                        return $result;
+                    }
+                }
+            }
+            // dd(Auth::user());
+            Log::info('Fetching all users');
+            if ($request->session()->has('authUser')) {
+            }
+            // $currentUser = Auth::user();
+            // dd($currentUser);
+
+
+            // dd($result);
+
+        } catch (Exception $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            throw new Exception('Failed to fetch users');
         }
-
-        // dd($result);
-        return $result;
-    } catch (Exception $e) {
-        Log::error('Failed to fetch users: ' . $e->getMessage());
-        throw new Exception('Failed to fetch users');
     }
-}
 
 
 
@@ -139,9 +226,9 @@ class UserService
     {
 
         try {
-            Log::info("Creating a new user with phone: {$data['phone'] }");
+            Log::info("Creating a new user with phone: {$data['phone']}");
             $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $findUser = $this->user->where('referrer_id', $referral_id)->get();
             $is_result = $findUser->toArray();
             $user = [
                 'name' => @$data['name'],
@@ -155,15 +242,15 @@ class UserService
                 'referrer_id' => $this->randomReferalCode(),
                 'role_id' => 3,
                 'status' => 'active',
-                'otp'=> @$data['otp'],
+                'otp' => @$data['otp'],
             ];
-                $arrSendMail = [
-                    'type' => 'send_otp',
-                    'user' => $user,
-                    'otp'=>$data['otp'],
-                ];
-                SendMail::dispatch($arrSendMail);
-           //  event(new EventRegister($user,@$data['otp']));
+            $arrSendMail = [
+                'type' => 'send_otp',
+                'user' => $user,
+                'otp' => $data['otp'],
+            ];
+            SendMail::dispatch($arrSendMail);
+            //  event(new EventRegister($user,@$data['otp']));
             return $user;
         } catch (Exception $e) {
             Log::error("Failed to create user: {$e->getMessage()}");
@@ -174,9 +261,9 @@ class UserService
     {
         DB::beginTransaction();
         try {
-            Log::info("Creating a new user with phone: {$data['phone'] }");
+            Log::info("Creating a new user with phone: {$data['phone']}");
             $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $findUser = $this->user->where('referrer_id', $referral_id)->get();
             $is_result = $findUser->toArray();
             $user = $this->user->create([
                 'name' => @$data['name'],
@@ -276,15 +363,15 @@ class UserService
 
         return $rand;
     }
-     /**
+    /**
      * Hàm lấy check thông tin user đăng nhập
      */
     public function authenticateUser($credentials)
     {
         // Tìm user theo email hoặc số điện thoại
         $user = User::where('phone', $credentials['phone'])
-                    ->orWhere('email', $credentials['phone'])
-                    ->first();
+            ->orWhere('email', $credentials['phone'])
+            ->first();
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw new Exception('Unauthorized');
@@ -343,9 +430,8 @@ class UserService
     /**
      * hàm upload images user
      */
-    public function uploadImageUserInfo($data) 
+    public function uploadImageUserInfo($data)
     {
-        
-    }
 
+    }
 }
