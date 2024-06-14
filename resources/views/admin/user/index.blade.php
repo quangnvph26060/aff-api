@@ -74,8 +74,6 @@
                                 @csrf
                                 <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
                             </form>
-
-{{--                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">--}}
                             <h4>{{$admin->name}}</h4>
                             <p>{{$admin->email}}</p>
                         </div>
@@ -363,15 +361,42 @@
             document.getElementById('changePasswordFields').submit();
         }
     }
+    // function changeImage(event) {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         document.getElementById('btn-upload').submit();
+    //     }
+    // }
     function changeImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            document.getElementById('btn-upload').submit();
-        }
+    const file = event.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('_token', '{{ csrf_token() }}'); // Thêm CSRF token để bảo mật
+
+        $.ajax({
+            url: '{{ route("file.upload") }}', // Thay đổi URL đến route của bạn
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    $('#uploadResult').html('<p>File uploaded successfully: ' + response.file + '</p>');
+                } else {
+                    $('#uploadResult').html('<p>Error: ' + response.error + '</p>');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#uploadResult').html('<p>An error occurred: ' + textStatus + '</p>');
+            }
+        });
     }
+}
 
 
 </script>
+
 <style>
     .modal-dialog {
         display: flex;

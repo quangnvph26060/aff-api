@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
+use App\Models\UserInfo;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,22 +209,29 @@ class AuthController extends Controller
      */
     public function uploadImageUserInfo(Request $request)
     {   
-        $user = $this->getUserInfo($request);
+        $user = $this->getUser($request);
         if ($request->file()) {
             $file = $request->file('file');
             $filePath = uploadFile('User', $file);
-            return response()->json(['success' => 'File uploaded successfully.', 'file' => $filePath]);
+            $filename = 'storage/images/' . $filePath;
+            
+            $result = UserInfo::where('user_id', $user['user']->id)->first();
+            
+            if (!$result) {
+                $user_info = new UserInfo();
+                $user_info->img_url = $filename;
+                $user_info->user_id = $user['user']->id;
+                $user_info->save();
+            } else {
+                $result->update([
+                    'img_url' => $filename
+                ]);
+            }
+            return redirect()->back();
         }
+
+        return response()->json(['error' => 'No file uploaded.'], 400);
     }
-    /**
-     * hàm lấy thông tin user admin
-     */
-    public function getUserInfo(Request $request)
-    {
-        if ($request->session()->has('authUser')) {
-            $user = $request->session()->get('authUser');
-        }
-        return $user;
-    }
+
         
 }
