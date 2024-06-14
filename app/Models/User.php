@@ -37,14 +37,15 @@ class User extends Authenticatable implements JWTSubject
         return UserInfo::where('user_id', $this->attributes['id'])->get();
     }
     public function getWalletAttribute(){
-        $userWallets = UserWallet::where('user_id', $this->attributes['id'])->orderBy('created_at', 'desc') ->get();
-        $totalRevenueSum = $userWallets->sum('total_revenue');
-        $user =   UserWallet::where('user_id', $this->attributes['id'])->get();
-        $data = [
-            'total'=>$totalRevenueSum,
-            'user' => $user,
-        ];
-        return $data;
+       $totalRevenueSum = 0;
+      $user =   UserWallet::where('user_id', $this->attributes['id'])->get();
+      $totalRevenueSum += $user->sum('total_revenue');
+      $data = [
+        'total' => $totalRevenueSum,
+        'user' => $user,
+      ];
+      return $data;
+
     }
     public function getRoleAttribute(){
       return  Role::where('id',$this->attributes['role_id'])->first();

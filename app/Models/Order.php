@@ -14,7 +14,9 @@ class Order extends Model
         "status",
         "note",
         "receive_address",
-        "user_id"
+        "user_id",
+        'name',
+        'phone',
     ];
     public function orderDetail()
     {

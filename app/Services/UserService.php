@@ -91,22 +91,16 @@ class UserService
      */
     public function getAllTeamMember(Request $request): \Illuminate\Database\Eloquent\Collection
     {
-
-
         try {
             if ($request->is('api/*')) {
                 // Xác định người dùng qua token (cho API)
                 $user = Auth::user();
                 if ($user) {
-                    // return response()->json([
-                    //     'status' => 'success',
-                    //     'data' => $user,
-                    // ]);
                     $currentUser = $user;
                     $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->get();
+                   
                     Log::info($teamMembersB);
                     $result = new \Illuminate\Database\Eloquent\Collection;
-
                     foreach ($teamMembersB as $memberB) {
                         $level = Commission::where('id', $memberB->commission_id)->value('level');
                         // Lấy tổng doanh số cá nhân của thành viên B
@@ -131,16 +125,11 @@ class UserService
                             'teamRevenue' => $teamRevenue,
                             'level' => $level,
                         ]);
-                        // dd($result);
+                        Log::info('Fetching all users');
                         return $result;
                     }
                 } else {
-                    // return response()->json([
-                    //     'status' => 'error',
-                    //     'message' => 'Unauthenticated',
-                    // ], 401);
                     $currentUser = $request->session()->get('authUser');
-                    dd($currentUser['user']);
                     $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
                     $result = new \Illuminate\Database\Eloquent\Collection;
 
@@ -168,21 +157,11 @@ class UserService
                             'teamRevenue' => $teamRevenue,
                             'level' => $level,
                         ]);
-                        // dd($result);
+                        Log::info('Fetching all users');
                         return $result;
                     }
                 }
             }
-            // dd(Auth::user());
-            Log::info('Fetching all users');
-            if ($request->session()->has('authUser')) {
-            }
-            // $currentUser = Auth::user();
-            // dd($currentUser);
-
-
-            // dd($result);
-
         } catch (Exception $e) {
             Log::error('Failed to fetch users: ' . $e->getMessage());
             throw new Exception('Failed to fetch users');
@@ -432,6 +411,5 @@ class UserService
      */
     public function uploadImageUserInfo($data)
     {
-
     }
 }

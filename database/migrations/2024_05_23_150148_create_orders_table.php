@@ -15,10 +15,6 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
             $table->unsignedBigInteger('total_money')->nullable();
             $table->enum('status', ['pending', 'completed', 'refunded', 'failed'])->default('pending')->index();
             $table->string('note')->nullable();

@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\v1\OrderController;
 |
 */
 
-Route::post('/createorder', [OrderController::class, 'createOrder']);
+
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
@@ -77,4 +77,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::delete('/{id}', [CartController::class, 'deleteCart']);
         Route::post('update/{id}', [CartController::class, 'updateToCart']);
     });
+    Route::post('/createorder', [OrderController::class, 'createOrder']);
 });
