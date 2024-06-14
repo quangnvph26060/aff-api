@@ -340,5 +340,12 @@ class UserService
             'message' => 'Đổi mật khẩu thành công !'
         ];
     }
+    /**
+     * hàm upload images user
+     */
+    public function uploadImageUserInfo($data) 
+    {
+        
+    }
 
 }

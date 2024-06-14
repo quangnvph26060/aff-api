@@ -11,8 +11,8 @@
                             <h6 class="card-title">Thông tin tài khoản</h6>
                             <p>Hạng thành viên: <strong>Admin</strong></p>
                             <p class="text-success">Tài khoản đã được xác thực</p>
-                            <p>Mã khách hàng: <strong>{{$admin->referrer_id ?? ""}}</strong></p>
-                            <button class="btn btn-outline-primary btn-sm">Giới thiệu bạn bè</button>
+                            <p id="customer">Mã khách hàng: <strong>{{$admin->referrer_id ?? ""}}</strong></p>
+                            <button class="btn btn-outline-primary btn-sm" id="btn-copy">Giới thiệu bạn bè</button>
                         </div>
                     </div>
                 </div>
@@ -62,15 +62,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="row mt-4">
                 <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-body">
                             <label for="avatarInput">
-                                <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;" >
+                                <img id="userAvatar" src="{{ config('app.url') . '/' . $admin->user_info[0]['img_url'] }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;">
                             </label>
-                            <form action="{{ route('file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
+                            <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
                                 @csrf
                                 <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
                             </form>
@@ -361,21 +360,14 @@
             document.getElementById('changePasswordFields').submit();
         }
     }
-    // function changeImage(event) {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         document.getElementById('btn-upload').submit();
-    //     }
-    // }
     function changeImage(event) {
     const file = event.target.files[0];
     if (file) {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('_token', '{{ csrf_token() }}'); // Thêm CSRF token để bảo mật
-
+        formData.append('_token', '{{ csrf_token() }}');
         $.ajax({
-            url: '{{ route("file.upload") }}', // Thay đổi URL đến route của bạn
+            url: '{{ route("admin.file.upload") }}', 
             type: 'POST',
             data: formData,
             contentType: false,
@@ -383,6 +375,7 @@
             success: function (response) {
                 if (response.success) {
                     $('#uploadResult').html('<p>File uploaded successfully: ' + response.file + '</p>');
+                    $('#userAvatar').attr('src', '{{ config("app.url") }}/' + response.file);
                 } else {
                     $('#uploadResult').html('<p>Error: ' + response.error + '</p>');
                 }
@@ -393,7 +386,16 @@
         });
     }
 }
-
+document.getElementById('copyBtn').addEventListener('click', function() {
+    const textToCopy = document.getElementById('customerId').innerText;
+    navigator.clipboard.writeText(textToCopy).then(function() {
+        // Hiển thị thông báo khi sao chép thành công
+        document.getElementById('copyResult').innerText = 'Copied: ' + textToCopy;
+    }, function(err) {
+        console.error('Error copying text: ', err);
+        document.getElementById('copyResult').innerText = 'Failed to copy text';
+    });
+});
 
 </script>
 

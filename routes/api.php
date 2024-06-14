@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CartController;
 use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TransactionController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Api\v1\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-
+Route::post('/createorder', [OrderController::class, 'createOrder']);
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
@@ -68,7 +68,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     // Route::group(['prefix' => 'team'],function($router){
     //     Route::get('/', [TeamController::cl])
     // });
-    Route::post('/createorder', [OrderController::class, 'createOrder']);
+
     Route::get('/teammember', [TeamController::class, 'index']);
     Route::post('/transaction', [TransactionController::class, 'store']);
     Route::group(['prefix' => 'cart'], function ($router) {
