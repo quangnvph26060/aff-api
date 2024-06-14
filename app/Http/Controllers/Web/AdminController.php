@@ -34,7 +34,6 @@ class AdminController extends Controller
                 $city = City::all();
                 $districts = Districts::all();
                 $wards = Wards::all();
-
                 return view('admin.user.index', compact('admin','wards','city','districts'));
             }
         }

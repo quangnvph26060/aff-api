@@ -25,7 +25,7 @@ function checkEmail(value) {
     return false;
 }
 function checkLength(value, length) {
-    if (value.length != length) {
+    if (!(value.length >= length)) {
         return false;
     }
     return true;
@@ -88,6 +88,7 @@ function validateField(fieldName, data) {
 function generateErrorMessage(code, values = []) {
     const errorMessages = {
         E001: 'Mật khẩu không để trống',
+        E002: 'Mật khẩu ít nhất 8 ký tự',
     };
     const errorMessage = errorMessages[code];
     if (typeof errorMessage === 'function') {

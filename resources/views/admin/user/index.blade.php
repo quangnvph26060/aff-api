@@ -19,18 +19,21 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Ví chính</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled value="{{ number_format($admin->wallet[0]['total_revenue']) ?? 0}}đ">
+                            @foreach($admin->wallet as $item)
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{$item->wallet_id == 1 ? "Ví chính" :"Ví thưởng"}}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control bg-white" disabled value="{{  number_format($item->total_revenue)}}đ">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Ví thưởng </label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled value="{{number_format($admin->wallet[1]['total_revenue']) ?? 0}}đ">
-                                </div>
-                            </div>
+                            @endforeach
+
+{{--                            <div class="form-group row">--}}
+{{--                                <label class="col-sm-4 col-form-label">Ví thưởng </label>--}}
+{{--                                <div class="col-sm-8">--}}
+{{--                                    <input type="text" class="form-control bg-white" disabled value="{{ $admin->wallet == '[]' ? 0 : number_format($admin->wallet[1]['total_revenue'])}}đ">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <!-- <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví tri ân 2</label>
                                 <div class="col-sm-8">
@@ -64,7 +67,13 @@
                 <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-body">
-                            <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150">
+                            <label for="avatarInput">
+                                <img src="{{ asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;" >
+                            </label>
+                            <form action="{{ route('file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
+                                @csrf
+                                <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
+                            </form>
                             <h4>{{$admin->name}}</h4>
                             <p>{{$admin->email}}</p>
                         </div>
@@ -164,7 +173,7 @@
                             <div class="form-group row">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
                                 <div class="col-sm-10 mb-2">
-                                    <input type="password" class="form-control bg-white" id="password" value="*********"
+                                    <input type="password" class="form-control bg-white" id="password1" value="*********"
                                         disabled>
                                 </div>
                             </div>
@@ -172,35 +181,41 @@
                                 khẩu</button>
 
                             <!-- Thêm input mật khẩu mới và xác nhận mật khẩu -->
-                            <form action="{{ route('admin.ChangePassword') }}" method="post" id="changePasswordFields"
-                                style="display: none;">
+
+                            <form action="{{ route('admin.ChangePassword') }}" method="post" class="changePasswordFields" id="changePasswordFields" style="display: none;">
                                 @csrf
                                 <div>
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện
                                             tại</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control" name="password" id="password"
-                                                placeholder="Mật khẩu hiện tại">
+                                            <input type="password" class="form-control  is-invalid " id="password" name="password" placeholder="Mật khẩu hiện tại">
+                                        </div>
+                                        <div class="row">
+                                           <div class="col-lg-2"></div> <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="password_error"></span> </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" name="newPassword" class="form-control"
-                                                id="newPassword">
+                                            <input type="password" name="newPassword" class="form-control  is-invalid"   id="newPassword">
+                                        </div>
+                                        <div class="row">
+                                           <div class="col-lg-2"></div> <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="newPassword_error"></span> </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật
                                             khẩu</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control" name="confirmPassword"
-                                                id="confirmPassword">
+                                            <input type="password" class="form-control  is-invalid " name="confirmPassword" id="confirmPassword">
+                                        </div>
+                                        <div class="row">
+                                           <div class="col-lg-2"></div> <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="confirmPassword_error"></span> </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-outline-primary btn-sm" >Lưu</button>
+                                <button  type="button" class="btn btn-outline-primary btn-sm" onclick="submitForm(event)">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -263,24 +278,7 @@
 </div>
 
 <script>
-    const updateinfo = document.getElementById('update-info-btn');
-    if (updateinfo) {
-        updateinfo.addEventListener('click', function() {
-            const inputs = document.querySelectorAll('#user-info-form input');
-            const isDisabled = inputs[0].disabled;
 
-            inputs.forEach(input => {
-                input.disabled = !isDisabled;
-            });
-
-            if (isDisabled) {
-                this.textContent = 'Lưu';
-            } else {
-                this.textContent = 'Cập nhật thông tin';
-                document.getElementById('user-info-form').submit();
-            }
-        });
-    }
     // định dang
     const kyc = document.getElementById('kyc-btn');
     if (kyc) {
@@ -301,18 +299,6 @@
         });
     }
 
-    //change password
-    // const changePassword = document.getElementById('changePasswordBtn');
-    // if (changePassword) {
-    //     changePassword.addEventListener('click', function() {
-    //         var changePasswordForm = document.getElementsByClassName('changePasswordFields')[0];
-    //         if (changePasswordForm) {
-    //             changePasswordForm.style.display = 'block';
-    //         }
-    //         // Ẩn nút đổi mật khẩu
-    //         this.style.display = 'none';
-    //     });
-    // }
     var formEconomyEdit = {
         'password': {
             'element': document.getElementById('password'),
@@ -324,6 +310,48 @@
                     },
                     'message': generateErrorMessage('E001')
                 },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,8);
+                    },
+                    'message': generateErrorMessage('E002')
+                }
+            ]
+        },
+        'newPassword': {
+            'element': document.getElementById('newPassword'),
+            'error': document.getElementById('newPassword_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E001')
+                },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,8);
+                    },
+                    'message': generateErrorMessage('E002')
+                }
+            ]
+        },
+        'confirmPassword': {
+            'element': document.getElementById('confirmPassword'),
+            'error': document.getElementById('confirmPassword_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E001')
+                },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,8);
+                    },
+                    'message': generateErrorMessage('E002')
+                }
             ]
         },
     }
@@ -333,7 +361,42 @@
             document.getElementById('changePasswordFields').submit();
         }
     }
+    // function changeImage(event) {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         document.getElementById('btn-upload').submit();
+    //     }
+    // }
+    function changeImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('_token', '{{ csrf_token() }}'); // Thêm CSRF token để bảo mật
+
+        $.ajax({
+            url: '{{ route("file.upload") }}', // Thay đổi URL đến route của bạn
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    $('#uploadResult').html('<p>File uploaded successfully: ' + response.file + '</p>');
+                } else {
+                    $('#uploadResult').html('<p>Error: ' + response.error + '</p>');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#uploadResult').html('<p>An error occurred: ' + textStatus + '</p>');
+            }
+        });
+    }
+}
+
+
 </script>
+
 <style>
     .modal-dialog {
         display: flex;
