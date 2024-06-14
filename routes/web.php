@@ -21,7 +21,7 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 
-Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload');
+
 
 
 Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
@@ -55,9 +55,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');
     Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::get('category/add', function () {
-        return view('admin.category.addcategory');
-    })->name('category.add');
+    Route::get('category/add',[CategoryController::class,'viewCategory'])->name('category.add');
     Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // Order routes
     Route::get('order/list', function () {
@@ -66,4 +64,5 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     // user
     Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
     Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
+    Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 });

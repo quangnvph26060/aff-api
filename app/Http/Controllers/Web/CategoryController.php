@@ -98,4 +98,7 @@ class CategoryController extends Controller
             return ApiResponse::error('Failed to update category', 500);
         }
     }
+    public function viewCategory()  {
+        return view('admin.category.addcategory');
+    }
 }

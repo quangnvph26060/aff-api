@@ -107,9 +107,11 @@
         src="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
     <!-- dashboard init -->
 
-
-    <script src="https://quanlycongviec.site/libs/assets/js/app.js"></script>
+    <script src="{{asset('ckeditor5-build-classic/ckeditor.js')}}"></script>
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script> -->
+     <script src="https://quanlycongviec.site/libs/assets/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @yield('js')
     <script>
         $(function () {
             $('.confirm').click(function (e) {
