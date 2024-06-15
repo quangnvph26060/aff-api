@@ -49,7 +49,7 @@ class OrderController extends Controller
     {
         try{
             $order = $this->orderService->createOrder($request->all());
-            return ApiResponse::success($order, 'Order created successfully', 201);
+            return ApiResponse::success('Order created successfully', 201);
         }
         catch(ModelNotFoundException $e){
             $exception = new UserNotFoundException();

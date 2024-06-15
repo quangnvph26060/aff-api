@@ -28,12 +28,7 @@
                                 </div>
                             @endforeach
 
-{{--                            <div class="form-group row">--}}
-{{--                                <label class="col-sm-4 col-form-label">Ví thưởng </label>--}}
-{{--                                <div class="col-sm-8">--}}
-{{--                                    <input type="text" class="form-control bg-white" disabled value="{{ $admin->wallet == '[]' ? 0 : number_format($admin->wallet[1]['total_revenue'])}}đ">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+
                             <!-- <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví tri ân 2</label>
                                 <div class="col-sm-8">
@@ -67,7 +62,7 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <label for="avatarInput">
-                                <img id="userAvatar" src="{{ config('app.url') . '/' . $admin->user_info[0]['img_url'] }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;">
+                                <img id="userAvatar" src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;">
                             </label>
                             <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
                                 @csrf

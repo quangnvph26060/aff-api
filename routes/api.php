@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\v1\OrderController;
 |
 */
 
-Route::post('/createorder', [OrderController::class, 'createOrder']);
+
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         'middleware' => 'api',
         'prefix' => 'auth'
     ], function ($router) {
-//        Route::post('login', [AuthController::class, 'login']);
+        //Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
@@ -76,5 +76,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::get('/', [CartController::class, 'getToCart']);
         Route::delete('/{id}', [CartController::class, 'deleteCart']);
         Route::post('update/{id}', [CartController::class, 'updateToCart']);
+        Route::post('clear-cart',[CartController::class,'clearCartUser']);
     });
+    Route::post('/createorder', [OrderController::class, 'createOrder']);
 });
