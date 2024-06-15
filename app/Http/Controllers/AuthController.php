@@ -183,10 +183,15 @@ class AuthController extends Controller
         }
     }
 
+     /**
+     * Thay đổi mật khẩu
+     */
+
     public function ChangePassword(Request $request)
     {
         if ($request->session()->has('authUser')) {
             $user = $request->session()->get('authUser');
+            dd($user);
             $id = $user['user']->id;
             $result = $this->userService->changePassword(
                 $id,
@@ -208,15 +213,15 @@ class AuthController extends Controller
      * hàm upload ảnh  user
      */
     public function uploadImageUserInfo(Request $request)
-    {   
+    {
         $user = $this->getUser($request);
         if ($request->file()) {
             $file = $request->file('file');
             $filePath = uploadFile('User', $file);
             $filename = 'storage/images/' . $filePath;
-            
+
             $result = UserInfo::where('user_id', $user['user']->id)->first();
-            
+
             if (!$result) {
                 $user_info = new UserInfo();
                 $user_info->img_url = $filename;
@@ -233,5 +238,5 @@ class AuthController extends Controller
         return response()->json(['error' => 'No file uploaded.'], 400);
     }
 
-        
+
 }

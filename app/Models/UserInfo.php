@@ -16,6 +16,9 @@ class UserInfo extends Model
         "bank",
         "branch",
         'user_id',
+        'citizen_id_number',
+        'front_image',
+        'back_image'
     ];
     public function user()
     {

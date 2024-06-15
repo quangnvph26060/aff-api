@@ -66,4 +66,5 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     // user
     Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
     Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
+    Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
 });

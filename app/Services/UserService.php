@@ -9,9 +9,11 @@ use App\Jobs\SendMail;
 use App\Models\Commission;
 use Exception;
 use App\Models\User;
+use App\Models\UserInfo;
 use App\Models\Wallet;
 use Faker\Generator as Faker;
 use Illuminate\http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
@@ -21,19 +23,26 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+
+/**
+ * Summary of UserService
+ */
 class UserService
 {
     protected $user;
     protected $faker;
     protected $wallet;
+    protected $userInfo;
 
-    public function __construct(User $user, Faker $faker, Wallet $wallet)
+    public function __construct(User $user, Faker $faker, Wallet $wallet, UserInfo $userInfo)
     {
         $this->user = $user;
         $this->faker = $faker;
         $this->wallet = $wallet;
+        $this->userInfo = $userInfo;
     }
 
     /**
@@ -61,49 +70,46 @@ class UserService
      * UpdatedBy: youngbachhh (27/05/2024)
      */
     public function getAllTeamMember(): \Illuminate\Database\Eloquent\Collection
-{
-    try {
-        Log::info('Fetching all users');
-        $currentUser = Auth::user();
-        $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->with('userwallet')->get();
-        $result = new \Illuminate\Database\Eloquent\Collection;
+    {
+        try {
+            Log::info('Fetching all users');
+            $currentUser = Auth::user();
+            $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->with('userwallet')->get();
+            $result = new \Illuminate\Database\Eloquent\Collection;
 
-        foreach ($teamMembersB as $memberB) {
-            $level = Commission::where('id', $memberB->commission_id)->value('level');
-            // Lấy tổng doanh số cá nhân của thành viên B
-            $personalRevenue = $memberB->userwallet->sum('total_revenue');
+            foreach ($teamMembersB as $memberB) {
+                $level = Commission::where('id', $memberB->commission_id)->value('level');
+                // Lấy tổng doanh số cá nhân của thành viên B
+                $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-            // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
-            $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
-                ->with('userwallet')
-                ->get()
-                ->sum(function ($user) {
-                    return $user->userwallet->sum('total_revenue');
-                });
+                // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+                $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                    ->with('userwallet')
+                    ->get()
+                    ->sum(function ($user) {
+                        return $user->userwallet->sum('total_revenue');
+                    });
 
-            // Tạo đối tượng kết quả và thêm vào Collection
-            $result->push((object)[
-                'id' => $memberB->id,
-                'name' => $memberB->name,
-                'email' => $memberB->email,
-                'phone' => $memberB->phone,
-                'referral_code'=> $memberB->referral_code,
-                'personalRevenue' => $personalRevenue,
-                'teamRevenue' => $teamRevenue,
-                'level' => $level,
-            ]);
+                // Tạo đối tượng kết quả và thêm vào Collection
+                $result->push((object)[
+                    'id' => $memberB->id,
+                    'name' => $memberB->name,
+                    'email' => $memberB->email,
+                    'phone' => $memberB->phone,
+                    'referral_code' => $memberB->referral_code,
+                    'personalRevenue' => $personalRevenue,
+                    'teamRevenue' => $teamRevenue,
+                    'level' => $level,
+                ]);
+            }
+
+            // dd($result);
+            return $result;
+        } catch (Exception $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            throw new Exception('Failed to fetch users');
         }
-
-        // dd($result);
-        return $result;
-    } catch (Exception $e) {
-        Log::error('Failed to fetch users: ' . $e->getMessage());
-        throw new Exception('Failed to fetch users');
     }
-}
-
-
-
 
 
     /**
@@ -139,9 +145,9 @@ class UserService
     {
 
         try {
-            Log::info("Creating a new user with phone: {$data['phone'] }");
+            Log::info("Creating a new user with phone: {$data['phone']}");
             $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $findUser = $this->user->where('referrer_id', $referral_id)->get();
             $is_result = $findUser->toArray();
             $user = [
                 'name' => @$data['name'],
@@ -155,15 +161,15 @@ class UserService
                 'referrer_id' => $this->randomReferalCode(),
                 'role_id' => 3,
                 'status' => 'active',
-                'otp'=> @$data['otp'],
+                'otp' => @$data['otp'],
             ];
-                $arrSendMail = [
-                    'type' => 'send_otp',
-                    'user' => $user,
-                    'otp'=>$data['otp'],
-                ];
-                SendMail::dispatch($arrSendMail);
-           //  event(new EventRegister($user,@$data['otp']));
+            $arrSendMail = [
+                'type' => 'send_otp',
+                'user' => $user,
+                'otp' => $data['otp'],
+            ];
+            SendMail::dispatch($arrSendMail);
+            //  event(new EventRegister($user,@$data['otp']));
             return $user;
         } catch (Exception $e) {
             Log::error("Failed to create user: {$e->getMessage()}");
@@ -174,10 +180,11 @@ class UserService
     {
         DB::beginTransaction();
         try {
-            Log::info("Creating a new user with phone: {$data['phone'] }");
+            Log::info("Creating a new user with phone: {$data['phone']}");
             $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $findUser = $this->user->where('referrer_id', $referral_id)->get();
             $is_result = $findUser->toArray();
+
             $user = $this->user->create([
                 'name' => @$data['name'],
                 'email' => @$data['email'],
@@ -276,15 +283,15 @@ class UserService
 
         return $rand;
     }
-     /**
+    /**
      * Hàm lấy check thông tin user đăng nhập
      */
     public function authenticateUser($credentials)
     {
         // Tìm user theo email hoặc số điện thoại
         $user = User::where('phone', $credentials['phone'])
-                    ->orWhere('email', $credentials['phone'])
-                    ->first();
+            ->orWhere('email', $credentials['phone'])
+            ->first();
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw new Exception('Unauthorized');
@@ -340,5 +347,85 @@ class UserService
             'message' => 'Đổi mật khẩu thành công !'
         ];
     }
+    public function getUserInfoById(int $userId): UserInfo
+    {
+        $userInfo = UserInfo::where('user_id', $userId)->first();
+        dd($userInfo);
+        if (!$userInfo) {
+            Log::warning("User with ID: $userId not found");
+            throw new Exception('User information not found.');
+        }
 
+        return $userInfo;
+    }
+
+    /**
+     * Summary of createUserById
+     * @param int $id
+     * @param array $data
+     * @return UserInfo
+     */
+    public function updateUserInfoById(int $id, array $data)
+    {
+        // dd($data);
+        DB::beginTransaction();
+        try {
+            $userinfo = UserInfo::where('user_id', $id)->first();
+            $fontImagePath = '';
+            $backImagePath = '';
+
+            //Handle font image upload
+            if (isset($data['font-image']) && $data['font-image'] instanceof UploadedFile && $data['font-image']->isValid()) {
+                $imageFont = $data['font-image'];
+                $fontImageName = 'image_'.$imageFont->getClientOriginalName();
+                $fontImagePath = 'storage/cccd/cccd'.$id . '/' . $fontImageName;
+
+                if (!Storage::exists($fontImagePath)) {
+                    $imageFont->storeAs('public/cccd/cccd'.$id, $fontImageName);
+                }
+            }
+
+            // Handle back image upload
+            if (isset($data['back-image']) && $data['back-image'] instanceof UploadedFile && $data['back-image']->isValid()) {
+                $imageBack = $data['back-image'];
+                $backImageName = 'image_'.$imageBack->getClientOriginalName();
+                $backImagePath = 'storage/cccd/cccd'.$id . '/' . $backImageName;
+
+                if (!Storage::exists($backImagePath)) {
+                    $imageBack->storeAs('public/cccd/cccd'. $id, $backImageName);
+                }
+            }
+
+
+            if ($userinfo) {
+                // dd($userinfo);
+
+                $userinfo->update([
+                    "front_image" => isset($data['font-image']) ? $fontImagePath : $userinfo->front_image,
+                    "back_image" =>  isset($data['back-image'])?  $backImagePath : $userinfo->back_image,
+                    "citizen_id_number" =>  @$data['citizen_id_number'],
+                    "bank" => "MB",
+                    "idnumber" =>  @$data['idnumber'],
+                    "bank_name" =>  @$data['bank_name'],
+                ]);
+            } else {
+                $userinfo = UserInfo::create([
+                    'user_id' => $id,
+                    "front_image" => $fontImagePath,
+                    "back_image" =>   $backImagePath,
+                    "citizen_id_number" =>  @$data['citizen_id_number'],
+                    "bank" => "MB",
+                    "idnumber" =>  @$data['idnumber'],
+                    "bank_name" =>  @$data['bank_name'],
+                ]);
+            }
+
+            DB::commit();
+            return $userinfo;
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error("Failed to create user: {$e->getMessage()}");
+            throw $e;
+        }
+    }
 }
