@@ -49,7 +49,6 @@ class AdminService
 
         try {
             $admin = $this->getUserById($id);
-
             Log::info("Updating user with ID: $id");
             $admin->update($data);
 
@@ -61,5 +60,7 @@ class AdminService
             throw $e;
         }
     }
+
+
 
 }
