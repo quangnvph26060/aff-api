@@ -9,11 +9,11 @@ use App\Models\Order;
 class OrderDetail extends Model
 {
     use HasFactory;
-    protected $table = "order_detail";
+    protected $table = "order_details";
     protected $fillable = [
         "quantity",
-        "price",
-        "total_money",
+        // "price",
+        // "total_money",
         "order_id",
         "product_id",
     ];

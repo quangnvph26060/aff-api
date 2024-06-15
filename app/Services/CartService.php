@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
-
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
@@ -19,11 +19,12 @@ class CartService
         $this->cart = $cart;
     }
 
-//   all cart
+    //   all cart
     public function getAllCart()
     {
         try {
-            $cart = $this->cart->all();
+            $user_id = Auth::user()->id;
+            $cart = $this->cart->where('user_id', $user_id)->get();
             return $cart;
         } catch (Exception $e) {
             Log::error('Failed to fetch cart: ' . $e->getMessage());
@@ -31,19 +32,19 @@ class CartService
         }
     }
 
-//    add to cart
+    //    add to cart
     public function addCart($data)
     {
         DB::beginTransaction();
         try {
             Log::info('Creating new cart');
-            $cart = Cart::where('product_id',$data['product_id'])->where('user_id',$data['user_id'])->first();
-            if(!$cart){
+            $cart = Cart::where('product_id', $data['product_id'])->where('user_id', $data['user_id'])->first();
+            if (!$cart) {
                 $data['amount'] = 1;
                 $cart = $this->cart->create($data);
                 DB::commit();
                 return $cart;
-            }else{
+            } else {
                 $cart->amount = $data['amount'] + $cart->amount ?? 1;
                 $cart->save();
                 DB::commit();
@@ -80,13 +81,13 @@ class CartService
             throw new Exception('Failed to update category');
         }
     }
-    public function updateCart($id,$data)
+    public function updateCart($id, $data)
     {
         DB::beginTransaction();
         try {
             $cart = Cart::find($id);
-            if(!$cart){
-                return ApiResponse::error('Update to cart Error');
+            if (!$cart) {
+                return ApiResponse::error('Update to cart Error',400);
             }
             $cart->update(
                 [
@@ -112,6 +113,30 @@ class CartService
             DB::rollBack();
             Log::error('Failed to delete cart: ' . $e->getMessage());
             throw new Exception('Failed to delete cart');
+        }
+    }
+    /**
+     * clear the user's shopping cart upon successful order placement
+     */
+    public function clearCartUser()
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                throw new Exception('User not authenticated');
+            }
+            $user_id = $user->id;
+
+            $deletedRows = $this->cart->where('user_id', $user_id)->delete();
+
+            if ($deletedRows) {
+                return ApiResponse::success('Cart cleared successfully',200);
+            } else {
+                return ApiResponse::error('No items in cart',400);
+            }
+        } catch (Exception $e) {
+            Log::error('Failed to delete cart: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete cart'], 500);
         }
     }
 }

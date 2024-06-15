@@ -17,6 +17,7 @@ class Order extends Model
         "user_id",
         'name',
         'phone',
+        'zip_code',
     ];
     public function orderDetail()
     {
