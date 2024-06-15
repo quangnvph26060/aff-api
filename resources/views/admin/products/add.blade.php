@@ -77,7 +77,7 @@
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Mô tả <span
                                                         class="text text-danger">*</span></label>
-                                                <textarea class="form-control" id="example-url-input" name="description"
+                                                <textarea class="form-control" id="description" name="description"
                                                     rows="2" ></textarea>
                                             </div>
 
@@ -111,4 +111,13 @@
 
         </div> <!-- container-fluid -->
     </div>
+    @endsection
+    @section('js')
+        <script>
+                ClassicEditor
+                    .create(document.getElementById('#description'))
+                    .catch(error =>{
+                        console.log(error);
+                    })
+        </script>
     @endsection

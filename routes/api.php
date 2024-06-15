@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CartController;
 use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TransactionController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Api\v1\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         'middleware' => 'api',
         'prefix' => 'auth'
     ], function ($router) {
-//        Route::post('login', [AuthController::class, 'login']);
+        //Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
@@ -68,7 +68,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     // Route::group(['prefix' => 'team'],function($router){
     //     Route::get('/', [TeamController::cl])
     // });
-    Route::post('/createorder', [OrderController::class, 'createOrder']);
+
     Route::get('/teammember', [TeamController::class, 'index']);
     Route::post('/transaction', [TransactionController::class, 'store']);
     Route::group(['prefix' => 'cart'], function ($router) {
@@ -76,5 +76,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::get('/', [CartController::class, 'getToCart']);
         Route::delete('/{id}', [CartController::class, 'deleteCart']);
         Route::post('update/{id}', [CartController::class, 'updateToCart']);
+        Route::post('clear-cart',[CartController::class,'clearCartUser']);
     });
+    Route::post('/createorder', [OrderController::class, 'createOrder']);
 });

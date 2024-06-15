@@ -58,7 +58,16 @@ class CartController extends Controller
     {
         try {
             $this->cartService->deleteCart($id);
-            return ApiResponse::success("","Success delete cart");
+            return ApiResponse::success("Success delete cart",200);
+        }catch(\Exception $e){
+            Log::error('Failed to fetch cart: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete cart', 500);
+        }
+    }
+    public function clearCartUser() {
+        try {
+            $this->cartService->clearCartUser();
+            return ApiResponse::success("Success delete cart",200);
         }catch(\Exception $e){
             Log::error('Failed to fetch cart: ' . $e->getMessage());
             return ApiResponse::error('Failed to delete cart', 500);

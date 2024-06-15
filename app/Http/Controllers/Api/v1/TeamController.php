@@ -18,10 +18,11 @@ class TeamController extends Controller
         $this->userService = $userService;
     }
 
-    public function index()
+    public function index(Request $request)
 {
     try {
-        $data = $this->userService->getAllTeamMember();
+        $data = $this->userService->getAllTeamMember($request);
+        // dd($data);
         // dd($data);
         // Trích xuất thông tin cần thiết từ dữ liệu
         $teamMembers = $data->map(function ($member) {

@@ -89,6 +89,7 @@ function generateErrorMessage(code, values = []) {
     const errorMessages = {
         E001: 'Mật khẩu không để trống',
         E002: 'Mật khẩu ít nhất 8 ký tự',
+        E003: 'Vui lòng nhập tìm kiếm',
     };
     const errorMessage = errorMessages[code];
     if (typeof errorMessage === 'function') {

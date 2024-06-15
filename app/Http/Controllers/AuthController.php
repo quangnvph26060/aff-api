@@ -11,6 +11,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\Array_;
 
 class AuthController extends Controller
@@ -218,8 +219,13 @@ class AuthController extends Controller
         if ($request->file()) {
             $file = $request->file('file');
             $filePath = uploadFile('User', $file);
-            $filename = 'storage/images/' . $filePath;
 
+
+
+            $filename = 'storage/' . $filePath;
+            if (!Storage::disk('public')->exists('User/' . $filePath)) {
+                $filePath = uploadFile('User', $file);
+            }
             $result = UserInfo::where('user_id', $user['user']->id)->first();
 
             if (!$result) {
@@ -232,9 +238,8 @@ class AuthController extends Controller
                     'img_url' => $filename
                 ]);
             }
-            return redirect()->back();
+            return response()->json(['success' => 'File uploaded successfully.', 'file' => $filename]);
         }
-
         return response()->json(['error' => 'No file uploaded.'], 400);
     }
 
