@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\EventOrder;
 use App\Events\EventRegister;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SendMail implements ShouldQueue
 {
@@ -34,10 +36,11 @@ class SendMail implements ShouldQueue
     {
         
         $data = $this->request;
-       
+      //  Log::info($data['order']);
         if ($data['type'] && $data['type'] == 'send_otp') {
-          
             event(new EventRegister($data['user'],$data['otp']));
+        } else  if ($data['type'] && $data['type'] == 'send_order') {
+            event(new EventOrder($data['user'],$data['order']));
         }
     }
 }
