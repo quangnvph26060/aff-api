@@ -21,7 +21,7 @@ class Order extends Model
     ];
     public function orderDetail()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class)->with('product');
     }
     public function ship()
     {

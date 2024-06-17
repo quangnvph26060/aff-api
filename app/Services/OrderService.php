@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Responses\ApiResponse;
+use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,8 @@ class OrderService{
         DB::beginTransaction();
         try{
             Log::info('Create new order');
-            $user_id = Auth::user()->id;
+            $user = Auth::user();
+            $user_id = $user->id;
             $receive_address = $data['receive_address'];
             $total_money = $data['total_money'];
             $order = $this->order->create([
@@ -48,6 +50,12 @@ class OrderService{
                     'quantity' => $detail['amount'],
                 ]);
             }
+            $arrSendMail = [
+                'type' => 'send_order',
+                'user' => $user,
+                'order'=>$order->orderDetail,
+            ];
+            SendMail::dispatch($arrSendMail);
             DB::commit();
             return $order;
         }

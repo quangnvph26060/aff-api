@@ -21,6 +21,9 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 
+Route::get('ad',function(){
+    return view('emails.order');
+});
 
 
 
