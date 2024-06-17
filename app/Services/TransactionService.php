@@ -46,9 +46,9 @@ class TransactionService
         try {
             Log::info("Createing new transaction request");
             $user_id = Auth::user()->id;
-            $wallet_id = Wallet::where('name', $data['wallet_type'])->value('id');
-            $amount = $data['amount'];
-            $method_id = Method::where('name', $data['method'])->value('id');
+            $wallet_id = Wallet::where('id', $data['formData']['wallet_type'])->value('id');
+            $amount = $data['formData']['amount'];
+            $method_id = Method::where('id', (int)$data['formData']['method'])->value('id');
             // dd($method_id);
             $transaction = $this->transaction->create([
                 'wallet_id' => $wallet_id,
