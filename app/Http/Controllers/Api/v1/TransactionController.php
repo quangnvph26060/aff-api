@@ -25,7 +25,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-
+        try {
+            $transaction = $this->transactionService->getAllTransaction();
+            return ApiResponse::success($transaction);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch transaction: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch transaction', 500);
+        }
     }
 
     /**
