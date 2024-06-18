@@ -19,6 +19,10 @@ class Order extends Model
         'phone',
         'zip_code',
     ];
+    protected $appends = ['order_detail'];
+    public function getOrderDetailAttribute(){
+        return OrderDetail::where('order_id', $this->attributes['id'])->with('product')->get();
+    }
     public function orderDetail()
     {
         return $this->hasMany(OrderDetail::class)->with('product');
