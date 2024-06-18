@@ -19,34 +19,34 @@ class TeamController extends Controller
     }
 
     public function index(Request $request)
-{
-    try {
-        $data = $this->userService->getAllTeamMember($request);
-        // dd($data);
-        // dd($data);
-        // Trích xuất thông tin cần thiết từ dữ liệu
-        $teamMembers = $data->map(function ($member) {
-            return [
-                'id' => $member->id,
-                'name' => $member->name,
-                'email' => $member->email,
-                'phone' => $member->phone,
-                'personal_sale' => $member->personalRevenue,
-                'team_sale' => $member->teamRevenue,
-                'level' => $member ->level
-            ];
-        });
-        // dd($teamMembers);
-        // Trả về dữ liệu dưới dạng JSON
-        return response()->json([
-            'status' => 'success',
-            'data' => $teamMembers,
-        ]);
-    } catch (\Exception $e) {
-        Log::error('Failed to fetch users: ' . $e->getMessage());
-        return response()->json(['status' => 'error', 'message' => 'Failed to fetch users'], 500);
+    {
+        try {
+            $data = $this->userService->getAllTeamMember($request);
+            // dd($data);
+            // dd($data);
+            // Trích xuất thông tin cần thiết từ dữ liệu
+            $teamMembers = $data->map(function ($member) {
+                return [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'email' => $member->email,
+                    'phone' => $member->phone,
+                    'personal_sale' => $member->personalRevenue,
+                    'team_sale' => $member->teamRevenue,
+                    'level' => $member ->level
+                ];
+            });
+            // dd($teamMembers);
+            // Trả về dữ liệu dưới dạng JSON
+            return response()->json([
+                'status' => 'success',
+                'data' => $teamMembers,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Failed to fetch users'], 500);
+        }
     }
-}
 
 
 

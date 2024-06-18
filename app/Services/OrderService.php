@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\RequestApi;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
 use App\Models\Order;
@@ -65,9 +66,14 @@ class OrderService
             throw new Exception('Failed to create new order');
         }
     }
-    public function getAllOrder()
+    public function getAllOrder($type)
     {
         try {
+            if($type == RequestApi::API){
+                $user_id = Auth::user()->id;
+                $orders = $this->order->where('user_id',$user_id)->get();
+                return $orders;
+            }
             $orders = $this->order->all();
             return $orders;
         } catch (\Exception $e) {

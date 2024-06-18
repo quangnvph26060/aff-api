@@ -21,12 +21,11 @@ class TransactionService
     {
         $this->transaction = $transaction;
     }
-    public function getAllTransaction(): \Illuminate\Database\Eloquent\Collection
+    public function getAllTransaction()
     {
         try {
-            $user=Auth::user();
-            Log::info('Fetching all transactions');
-               $transaction = $this->transaction->all()->where('user_id', $user->id);
+            $user = Auth::user();
+            $transaction = $this->transaction->where('user_id', $user->id)->with('method', 'wallet')->get();
             return $transaction;
         } catch (Exception $e) {
             Log::error('Failed to fetch transactions: ' . $e->getMessage());
