@@ -90,6 +90,13 @@ function generateErrorMessage(code, values = []) {
         E001: 'Mật khẩu không để trống',
         E002: 'Mật khẩu ít nhất 8 ký tự',
         E003: 'Vui lòng nhập tìm kiếm',
+        E004: 'Vui lòng nhập họ tên',
+        E005: 'Địa chỉ không được để trống',
+        E006: 'Vui lòng chọn thành phố',
+        E007: 'Vui lòng chọn quận/huyện',
+        E008: 'Vui lòng chọn phường/xã',
+        E009: 'Điện thoại không để trống',
+        E010: 'Email không được để trống',
     };
     const errorMessage = errorMessages[code];
     if (typeof errorMessage === 'function') {
