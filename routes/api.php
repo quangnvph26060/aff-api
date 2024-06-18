@@ -70,8 +70,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     // });
 
     Route::get('/teammember', [TeamController::class, 'index']);
-    Route::post('/transaction', [TransactionController::class, 'store']);
+
+    Route::post('/responseWallet', [TransactionController::class, 'store']);
+
     Route::get('/transactionlist', [TransactionController::class, 'index']);
+
     Route::group(['prefix' => 'cart'], function ($router) {
         Route::post('/', [CartController::class, 'addToCart']);
         Route::get('/', [CartController::class, 'getToCart']);

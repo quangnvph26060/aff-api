@@ -88,7 +88,9 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to update product', 500);
         }
     }
-
+    /**
+     * hàm xóa sản phẩm 
+     */
     public function delete($id){
         try {
             $this->productService->deleteProduct($id);

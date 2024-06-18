@@ -38,7 +38,7 @@
                                         <div class="col-lg-5">
                                             <div class="form-group">
                                                 <label for="">Tên sản phẩm</label>
-                                                <input autocomplete="off" name="name" type="text" class="form-control"  required>
+                                                <input autocomplete="off" name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm"  required>
                                                     <div id="name_error" class="error"></div>
                                             </div>
 
@@ -99,10 +99,11 @@
                                                 <th>Đơn giá</th>
                                                 <th>Hoa Hồng</th>
                                                 <th>Loại danh mục</th>
+                                                <th>Trạng thái</th>
                                                 <th style="text-align: center">Hành động</th>
                                             </tr>
                                         </thead>
-                                        @if ($products->count()>0)
+                                        @if ($products->count() > 0)
                                         <tbody>
 
                                                 @foreach($products as $key => $value)
@@ -121,6 +122,7 @@
                                                     <td>{{ $value->price }}</td>
                                                     <td>{{ $value->commission_rate }}%</td>
                                                     <td>{{ $value->category->name }}</td>
+                                                    <td>{{$value->status}}</td>
                                                     <td align="center">
                                                         <a class="btn btn-warning"
                                                             href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
