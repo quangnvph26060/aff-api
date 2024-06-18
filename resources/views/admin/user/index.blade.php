@@ -111,7 +111,11 @@
                                             value="{{$admin->name}}">
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                            style="font-weight: 500" id="name_error"></span> </div>
+                                </div>
                                 <div class="form-group row mt-2 mb-2">
                                     <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                                     <div class="col-sm-10">
@@ -124,7 +128,13 @@
                                                         'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="row">
+                                                    <div class="col-lg-2"></div>
+                                                    <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                            style="font-weight: 500" id="city_error"></span> </div>
+                                                </div>
                                             </div>
+
                                             <div class="col-sm-4">
                                                 <select class="form-control" name="district_id" id="district">
                                                     <option value="">Chọn quận/huyện</option>
@@ -133,6 +143,11 @@
                                                         'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="row">
+                                                    <div class="col-lg-2"></div>
+                                                    <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                            style="font-weight: 500" id="district_error"></span> </div>
+                                                </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <select class="form-control" name="wards_id" id="ward">
@@ -142,6 +157,11 @@
                                                         'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="row">
+                                                    <div class="col-lg-2"></div>
+                                                    <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                            style="font-weight: 500" id="ward_error"></span> </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -152,12 +172,22 @@
                                         <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ"
                                             id="address" name="address" value="{{$admin->address}}">
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                style="font-weight: 500" id="address_error"></span> </div>
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="phone" name="phone"
                                             value="{{$admin->phone}}">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                style="font-weight: 500" id="phone_error"></span> </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2 mt-2">
@@ -166,8 +196,13 @@
                                         <input type="email" class="form-control" id="email" name="email"
                                             value="{{$admin->email}}">
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                style="font-weight: 500" id="email_error"></span> </div>
+                                    </div>
                                 </div>
-                                <button type="submit" id="update-info-btn" class="btn btn-outline-primary">Cập nhật
+                                <button type="submit" id="update-info-btn" class="btn btn-outline-primary" onclick="submitEditForm(event)">Cập nhật
                                     thông tin</button>
                                 <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal"
                                     data-target="#kycModal">Định danh cá nhân</button>
@@ -352,7 +387,99 @@
                 this.style.display = 'none';
         });
     }
+    var formInfoEdit = {
+        'name': {
+            'element': document.getElementById('name'),
+            'error': document.getElementById('name_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E004')
+                },
+            ]
+        },
+        'city': {
+            'element': document.getElementById('city'),
+            'error': document.getElementById('city_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                    return value !== "";
+                },
+                    'message': generateErrorMessage('E006')
+                },
+            ]
+        },
+        'district': {
+            'element': document.getElementById('district'),
+            'error': document.getElementById('district_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                    return value !== "";
+                },
+                    'message': generateErrorMessage('E007')
+                },
+            ]
+        },
+        'ward': {
+            'element': document.getElementById('ward'),
+            'error': document.getElementById('ward_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                    return value !== "";
+                },
+                    'message': generateErrorMessage('E008')
+                },
+            ]
+        },
+        'address': {
+            'element': document.getElementById('address'),
+            'error': document.getElementById('address_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E005')
+                },
+            ]
+        },
+        'phone': {
+            'element': document.getElementById('phone'),
+            'error': document.getElementById('phone_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E009')
+                },
+            ]
+        },
+        'email': {
+            'element': document.getElementById('email'),
+            'error': document.getElementById('email_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E010')
+                },
+            ]
+        },
 
+    }
+    function submitEditForm(event) {
+         event.preventDefault();
+        if (validateAllFields(formInfoEdit)){
+            document.getElementById('user-info-form').submit();
+        }
+    }
     var formEconomyEdit = {
         'password': {
             'element': document.getElementById('password'),
