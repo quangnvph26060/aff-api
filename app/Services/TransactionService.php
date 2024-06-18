@@ -21,7 +21,17 @@ class TransactionService
     {
         $this->transaction = $transaction;
     }
-
+    public function getAllTransaction(): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            Log::info('Fetching all transactions');
+               $transaction = $this->transaction->all();
+            return $transaction;
+        } catch (Exception $e) {
+            Log::error('Failed to fetch transactions: ' . $e->getMessage());
+            throw new Exception('Failed to fetch transactions');
+        }
+    }
 //   all cart
     // public function getAllCart()
     // {
