@@ -24,8 +24,9 @@ class TransactionService
     public function getAllTransaction(): \Illuminate\Database\Eloquent\Collection
     {
         try {
+            $user=Auth::user();
             Log::info('Fetching all transactions');
-               $transaction = $this->transaction->all();
+               $transaction = $this->transaction->all()->where('user_id', $user->id);
             return $transaction;
         } catch (Exception $e) {
             Log::error('Failed to fetch transactions: ' . $e->getMessage());
