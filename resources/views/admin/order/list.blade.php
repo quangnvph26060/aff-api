@@ -25,7 +25,6 @@ $orderStatuses = [
                 </div>
             </div>
             <!-- end page title -->
-
             <div class="row">
                 <div class="col-12">
                     <div class="card-body">
@@ -39,6 +38,7 @@ $orderStatuses = [
                                             <th>Tên sản phẩm</th>
                                             <th>Số lượng</th>
                                             <th>Đơn giá </th>
+                                            <th>Mã người đặt hàng</th>
                                             <th>Tên khách hàng</th>
                                             <th>Địa chỉ giao hàng</th>
                                             <th>Số điện thoại</th>
@@ -72,8 +72,9 @@ $orderStatuses = [
                                                 {{ number_format($k->product['price']) }} đ<br>
                                                 @endforeach
                                             </td>
+                                            <td>{{$item->user_id[0]['referral_code']}}</td>
                                             <td>{{$item->name}}</td>
-                                            <td>{{$item->receive_address}}</td>
+                                            <td style="width:150px">{{$item->receive_address}}</td>
                                             <td>{{$item->phone}}</td>
                                             <td>
                                                 <div class="form-group">
