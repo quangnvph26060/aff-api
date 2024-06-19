@@ -72,7 +72,12 @@ class OrderService
             if($type == RequestApi::API){
                 $user_id = Auth::user()->id;
                 $orders = $this->order->where('user_id',$user_id)->get();
-                return $orders;
+                $orderCount = $this->order->where('user_id',$user_id)->where('status', 3)->count();
+                $data = [
+                    'orders' => $orders,
+                    'orderCount' =>$orderCount,
+                ];
+                return $data;
             }
             $orders = $this->order->all();
             return $orders;
