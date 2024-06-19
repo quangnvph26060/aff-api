@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index()
     {
         try {
-            $orders = $this->orderService->getAllOrder();
+            $orders = $this->orderService->getAllOrder($type = 'web');
             Log::info($orders);
             return view('admin.order.list', compact('orders'));
         } catch (\Exception $e) {

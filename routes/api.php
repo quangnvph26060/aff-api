@@ -83,4 +83,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('clear-cart',[CartController::class,'clearCartUser']);
     });
     Route::post('/createorder', [OrderController::class, 'createOrder']);
+    Route::get('/get-order', [OrderController::class, 'index']);
 });

@@ -8,6 +8,7 @@ use App\Http\Responses\ApiResponse;
 use App\Services\OrderService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -26,7 +27,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $orders = $this->orderService->getAllOrder($type = 'api');
+            Log::info($orders);
+            return ApiResponse::success($orders, 'Get Orders successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch orders: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch orders', 500);
+        }
     }
 
     /**
