@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
-
+use GuzzleHttp\Psr7\Request;
 
 class CategoryService
 {
@@ -29,18 +29,7 @@ class CategoryService
     {
         try {
             Log::info('Fetching all categories');
-               $categories = $this->category->all();
-        //     $categories = $this->category::withCount('products')
-        //         ->leftJoin('products', 'categories.id', '=', 'products.category_id')
-        //         ->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
-        //         ->select(
-        //             'categories.*',
-        //             DB::raw('COALESCE(SUM(products.price * order_details.quantity), 0) as revenue'),
-        //             DB::raw('COUNT(products.id) as products_count')
-        //         )
-        //         ->groupBy('categories.id')
-        //         ->get();
-        // dd($categories);
+            $categories = $this->category->all();   
             return $categories;
         } catch (Exception $e) {
             Log::error('Failed to fetch categories: ' . $e->getMessage());
@@ -111,6 +100,10 @@ class CategoryService
             $category = $this->category->findOrFail($id);
             $category->delete();
             DB::commit();
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            Log::error('Category not found: ' . $e->getMessage());
+            throw new ModelNotFoundException('Category not found');
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Failed to delete category: ' . $e->getMessage());
@@ -118,7 +111,7 @@ class CategoryService
         }
     }
      /**
-     * Hàm lấy ra  một danh mục
+     * Hàm lấy ra  một danh mục (edit)
      *
      * @param array $data
      * @return Category
@@ -133,6 +126,23 @@ class CategoryService
             return $category;
         } catch (Exception $e) {
 
+            Log::error('Failed to find category: ' . $e->getMessage());
+            throw new Exception('Failed to find category');
+        }
+    }
+    /***
+     * 
+     * hàm tìm kiếm danh mục theo name
+     */
+    public function findCategory($name)  {
+        try{
+            $category = $this->category->where('name', 'LIKE', '%' . $name . '%')->get();
+            if ($category->isEmpty()) {
+                throw new Exception('Category not found');
+            }
+            Log::info($category );
+            return $category;
+        }catch(\Exception $e){
             Log::error('Failed to find category: ' . $e->getMessage());
             throw new Exception('Failed to find category');
         }

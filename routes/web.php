@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\OrderController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
 
@@ -20,9 +22,14 @@ use Predis\Configuration\Option\Prefix;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
+// demo 
+Route::get('ad',function(){
+    return view('emails.order');
+});
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
+// end demo
 
 Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
 Route::group(['prefix' => 'admin'], function () {
@@ -56,14 +63,16 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('category/add',[CategoryController::class,'viewCategory'])->name('category.add');
-    Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::get('category-search-name', [CategoryController::class, 'search'])->name('category.search');
     // Order routes
-    Route::get('order/list', function () {
-        return view('admin.order.list');
-    })->name('order.list');
+    Route::get('order/list',[OrderController::class,'index'])->name('order.list');
+    Route::post('order/updateStatus',[OrderController::class, "updateStatus"])->name('order.updateStatus');
     // user
     Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
     Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
+
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
 });

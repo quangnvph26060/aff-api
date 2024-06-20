@@ -22,7 +22,7 @@
 
 
                         <div class="card-body p-4">
-                            <form action="{{ route('admin.product.add.submit') }}" method="POST" id="submitAddProduct"
+                            <form action="{{ route('admin.product.add.submit') }}" method="POST" id="submitfrom"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -129,119 +129,112 @@
 
         </div> <!-- container-fluid -->
     </div>
-    @endsection
-    @section('js')
+
+
     <script>
-        ClassicEditor
-            .create(document.getElementById('#description'))
-            .catch(error =>{
-                console.log(error);
-        })
-
-    var validateaddproduct= {
-        'name': {
-            'element': document.getElementById('name'),
-            'error': document.getElementById('name_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+        var validateaddproduct = {
+            'name': {
+                'element': document.getElementById('name'),
+                'error': document.getElementById('name_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0010')
                     },
-                    'message': generateErrorMessage('E0010')
-                },
-            ]
-        },
-        'images': {
-            'element': document.getElementById('images'),
-            'error': document.getElementById('images_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'images': {
+                'element': document.getElementById('images'),
+                'error': document.getElementById('images_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0011')
                     },
-                    'message': generateErrorMessage('E0011')
-                },
-            ]
-        },
-        'price': {
-            'element': document.getElementById('price'),
-            'error': document.getElementById('price_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'price': {
+                'element': document.getElementById('price'),
+                'error': document.getElementById('price_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0012')
                     },
-                    'message': generateErrorMessage('E0012')
-                },
-            ]
-        },
-        'quantity': {
-            'element': document.getElementById('quantity'),
-            'error': document.getElementById('quantity_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'quantity': {
+                'element': document.getElementById('quantity'),
+                'error': document.getElementById('quantity_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0013')
                     },
-                    'message': generateErrorMessage('E0013')
-                },
-            ]
-        },
-        'commission_rate': {
-            'element': document.getElementById('commission_rate'),
-            'error': document.getElementById('commission_rate_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'commission_rate': {
+                'element': document.getElementById('commission_rate'),
+                'error': document.getElementById('commission_rate_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0014')
                     },
-                    'message': generateErrorMessage('E0014')
-                },
-            ]
-        },
-        'category_id': {
-            'element': document.getElementById('category_id'),
-            'error': document.getElementById('category_id_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'category_id': {
+                'element': document.getElementById('category_id'),
+                'error': document.getElementById('category_id_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0015')
                     },
-                    'message': generateErrorMessage('E0015')
-                },
-            ]
-        },
-        'description': {
-            'element': document.getElementById('description'),
-            'error': document.getElementById('description_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'description': {
+                'element': document.getElementById('description'),
+                'error': document.getElementById('description_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0016')
                     },
-                    'message': generateErrorMessage('E0016')
-                },
-            ]
-        },
-        'status': {
-            'element': document.getElementById('status'),
-            'error': document.getElementById('status_error'),
-            'validations': [
-                {
-                    'func': function(value){
-                        return checkRequired(value);
+                ]
+            },
+            'status': {
+                'element': document.getElementById('status'),
+                'error': document.getElementById('status_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0017')
                     },
-                    'message': generateErrorMessage('E0017')
-                },
-            ]
-        },
-    }
-
-    function submitaddProduct(event){
-        event.preventDefault();
-            if (validateAllFields(validateaddproduct)){
-                document.getElementById('submitAddProduct').submit();
-            }
-    }
+                ]
+            },
+        }
+        function submitaddProduct(event){
+            event.preventDefault();
+                if (validateAllFields(validateaddproduct)){
+                    document.getElementById('submitfrom').submit();
+                }
+        }
     </script>
     @endsection

@@ -52,12 +52,12 @@ class CategoryController extends Controller
     hàm xóa danh mục theo id
     @pram $id
     */
-    public function destroy($id)
+    public function delete($id)
     {
         try {
             $this->categoryService->deleteCategory($id);
             session()->flash('success', 'Xóa danh mục thành công.');
-            return redirect()->back();
+           return redirect()->route('admin.category.index');
         } catch (ModelNotFoundException $e) {
             $exception = new CategoryNotFoundException();
             return $exception->render(request());
@@ -66,6 +66,7 @@ class CategoryController extends Controller
             return ApiResponse::error('Failed to delete category', 500);
         }
     }
+   
     /**
      * hàm hiển thị ra form edit
      */
@@ -100,5 +101,24 @@ class CategoryController extends Controller
     }
     public function viewCategory()  {
         return view('admin.category.addcategory');
+    }
+    /**
+     * hàm tìm kiếm 
+     */
+    public function search(Request $request){
+       
+        try {
+            $data = $this->categoryService->findCategory($request->name);
+            if (!$data) {
+                throw new CategoryNotFoundException();
+            }
+            return view('admin.category.category', compact('data'));
+        } catch (ModelNotFoundException $e) {
+            $exception = new CategoryNotFoundException();
+            return $exception->render(request());
+        }  catch (\Exception $e) {
+            Log::error('Failed to delete product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete product', 500);
+        }
     }
 }

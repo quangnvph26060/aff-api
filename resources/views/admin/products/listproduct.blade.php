@@ -2,15 +2,13 @@
 @section('content')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('loc_category').addEventListener('change', function() {
-                var selectedValue = this.value;
-                if (selectedValue) {
-                    window.location.href = selectedValue;
-                }
-            });
+        document.getElementById('loc_category').addEventListener('change', function() {
+            var selectedValue = this.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
         });
-
-
+    });
 </script>
 
 <div class="main-content">
@@ -32,8 +30,7 @@
                     <div class="card">
                         <div class="card-header" style="">
                             <div class="row ">
-                                <form class="col-lg-5" method="get" action="{{ route('admin.product.search') }}"
-                                    id="productSearchForm">
+                                <form class="col-lg-5" method="get" action="{{ route('admin.product.search') }}" id="productSearchForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-lg-5">
@@ -63,9 +60,8 @@
                                             <select class="form-select" id="loc_category" name="category">
                                                 <option value="}">--- Loại sản phẩm ---</option>
                                                 @foreach ($category as $item)
-                                                <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">
-                                                    {{
-                                                    $item->name }}</option>
+                                                <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">{{
+                                                $item->name }}</option>
                                                 @endforeach
                                                 <option value="{{ route('admin.product.store')}}"> Danh sách tất cả các
                                                     sản phẩm</option>
@@ -104,10 +100,11 @@
                                                 <th>Đơn giá</th>
                                                 <th>Hoa Hồng</th>
                                                 <th>Loại danh mục</th>
+                                                <th>Trạng thái</th>
                                                 <th style="text-align: center">Hành động</th>
                                             </tr>
                                         </thead>
-                                        @if ($products->count()>0)
+                                        @if ($products->count() > 0)
                                         <tbody>
 
                                             @foreach($products as $key => $value)
@@ -117,8 +114,7 @@
                                                 <td>
 
                                                     @if (isset($value->images[0]))
-                                                    <img style="width: 100px; height: 75px;"
-                                                        src="{{asset($value->images[0]->image_path )}}" alt="">
+                                                    <img style="width: 100px; height: 75px;" src="{{asset($value->images[0]->image_path )}}" alt="">
                                                     @endif
 
                                                 </td>
@@ -126,12 +122,10 @@
                                                 <td>{{ $value->price }}</td>
                                                 <td>{{ $value->commission_rate }}%</td>
                                                 <td>{{ $value->category->name }}</td>
+                                                <td>{{$value->status}}</td>
                                                 <td align="center">
-                                                    <a class="btn btn-warning"
-                                                        href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
-                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                        class="btn btn-danger"
-                                                        href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
+                                                    <a class="btn btn-warning" href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
+                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger" href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -148,6 +142,9 @@
                                                         --}}
                                                         {{--
                                                     </svg>--}}
+                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 2048 2048">--}}
+                                                    {{-- <path fill="currentColor" d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z"/>--}}
+                                                    {{-- </svg>--}}
                                                     Không có sản phẩm cần tìm
                                                 </div>
                                             </td>
@@ -189,4 +186,4 @@
     }
     </script>
 
-    @endsection
+@endsection

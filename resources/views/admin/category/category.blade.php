@@ -19,13 +19,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="row ">
-                            <form class="col-lg-5" action="" id="categorySearchForm">
+                            <form class="col-lg-5"  method="GET" action="{{ route('admin.category.search') }}"  id="categorySearchForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label for="">Tên danh mục</label>
-                                            <input autocomplete="off" name="category" id="category" type="text" class="form-control " placeholder="Nhập tìm kiếm">
+                                            <input autocomplete="off" name="name" id="category" type="text" class="form-control " placeholder="Nhập tìm kiếm">
                                             <div id="category_error" class="invalid-feedback d-block"></div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                             <th>STT</th>
                                             <th>Tên danh mục</th>
                                             <th>Mô tả</th>
-                                            <th>Tổng sản phẩm</th>
+                                            <!-- <th>Tổng sản phẩm</th> -->
                                             <th style="text-align: center">Hành động</th>
                                         </tr>
                                     </thead>
@@ -70,14 +70,12 @@
                                             <td> {{ $index + 1 }}</td>
                                             <td>{{$item->name}}</td>
                                             <td class="text-black">{{$item->description}}</td>
-                                            <td>{{$item->products_count}}</td>
+                                            <!-- <td>{{$item->products_count}}</td> -->
                                             <td align="center">
                                                 <a class="btn btn-warning" href="{{ route('admin.category.edit', ['id' => $item->id]) }}">Sửa</a>
-                                                <form class="mt-3" action="{{ route('admin.category.destroy', ['id' => $item->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Xóa</button>
-                                                </form>
+                                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"  class="btn btn-danger"
+                                                    href="{{ route('admin.category.delete', ['id' => $item->id]) }}">Xóa</a>
+                                               
                                             </td>
                                         </tr>
                                         @endforeach

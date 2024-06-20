@@ -21,7 +21,17 @@ class TransactionService
     {
         $this->transaction = $transaction;
     }
-
+    public function getAllTransaction()
+    {
+        try {
+            $user = Auth::user();
+            $transaction = $this->transaction->where('user_id', $user->id)->with('method', 'wallet')->get();
+            return $transaction;
+        } catch (Exception $e) {
+            Log::error('Failed to fetch transactions: ' . $e->getMessage());
+            throw new Exception('Failed to fetch transactions');
+        }
+    }
 //   all cart
     // public function getAllCart()
     // {
@@ -46,9 +56,9 @@ class TransactionService
         try {
             Log::info("Createing new transaction request");
             $user_id = Auth::user()->id;
-            $wallet_id = Wallet::where('name', $data['wallet_type'])->value('id');
-            $amount = $data['amount'];
-            $method_id = Method::where('name', $data['method'])->value('id');
+            $wallet_id = Wallet::where('id', $data['formData']['wallet_type'])->value('id');
+            $amount = $data['formData']['amount'];
+            $method_id = Method::where('id', (int)$data['formData']['method'])->value('id');
             // dd($method_id);
             $transaction = $this->transaction->create([
                 'wallet_id' => $wallet_id,

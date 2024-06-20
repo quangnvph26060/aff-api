@@ -40,19 +40,18 @@
                                 <label class="col-sm-4 col-form-label">{{$item->wallet_id == 1 ? "Ví chính" :"Ví
                                     thưởng"}}</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control bg-white" disabled
-                                        value="{{  number_format($item->total_revenue)}}đ">
+                                    <input type="text" class="form-control bg-white" disabled value="{{  number_format($item->total_revenue)}}đ">
                                 </div>
                             </div>
                             @endforeach
 
                             {{-- <div class="form-group row">--}}
-                                {{-- <label class="col-sm-4 col-form-label">Ví thưởng </label>--}}
-                                {{-- <div class="col-sm-8">--}}
-                                    {{-- <input type="text" class="form-control bg-white" disabled
+                            {{-- <label class="col-sm-4 col-form-label">Ví thưởng </label>--}}
+                            {{-- <div class="col-sm-8">--}}
+                            {{-- <input type="text" class="form-control bg-white" disabled
                                         value="{{ $admin->wallet == '[]' ? 0 : number_format($admin->wallet[1]['total_revenue'])}}đ">--}}
-                                    {{-- </div>--}}
-                                {{-- </div>--}}
+                            {{-- </div>--}}
+                            {{-- </div>--}}
 
                             <!-- <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Ví tri ân 2</label>
@@ -95,8 +94,7 @@
                             <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;"
-                                    onchange="changeImage(event)">
+                                <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
                             </form>
                             <h4>{{$admin->name}}</h4>
                             <p>{{$admin->email}}</p>
@@ -106,81 +104,113 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <form id="user-info-form" action="{{route('admin.profile.update')}}" method="POST">
-                                @csrf
-                                <div class="form-group row">
-                                    <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="{{$admin->name}}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mt-2 mb-2">
-                                    <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
-                                    <div class="col-sm-10">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <select class="form-control" name="city_id" id="city">
-                                                    <option value="">Chọn thành phố</option>
-                                                    @foreach($city as $item)
-                                                    <option value="{{$item->id}}" {{$item->id == $admin->city_id ?
-                                                        'selected' : ''}}>{{$item->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <select class="form-control" name="district_id" id="district">
-                                                    <option value="">Chọn quận/huyện</option>
-                                                    @foreach($districts as $item)
-                                                    <option value="{{$item->id}}" {{$item->id == $admin->district_id ?
-                                                        'selected' : ''}}>{{$item->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <select class="form-control" name="wards_id" id="ward">
-                                                    <option value="">Chọn xã/phường/thị trấn</option>
-                                                    @foreach($wards as $item)
-                                                    <option value="{{$item->id}}" {{$item->id == $admin->wards_id ?
-                                                        'selected' : ''}}>{{$item->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <form id="user-info-form" action="{{route('admin.profile.update')}}" method="POST">
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-2 col-form-label">Họ và tên</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="name" name="name" value="{{$admin->name}}">
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="name_error"></span> </div>
+                                        </div>
+                                        <div class="form-group row mt-2 mb-2">
+                                            <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
+                                            <div class="col-sm-10">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <select class="form-control" name="city_id" id="city">
+                                                            <option value="">Chọn thành phố</option>
+                                                            @foreach($city as $item)
+                                                            <option value="{{$item->id}}" {{$item->id == $admin->city_id ?
+                                                            'selected' : ''}}>{{$item->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="row">
+                                                            <div class="col-lg-2"></div>
+                                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="city_error"></span> </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <select class="form-control" name="district_id" id="district">
+                                                            <option value="">Chọn quận/huyện</option>
+                                                            @foreach($districts as $item)
+                                                            <option value="{{$item->id}}" {{$item->id == $admin->district_id ?
+                                                            'selected' : ''}}>{{$item->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="row">
+                                                            <div class="col-lg-2"></div>
+                                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="district_error"></span> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <select class="form-control" name="wards_id" id="ward">
+                                                            <option value="">Chọn xã/phường/thị trấn</option>
+                                                            @foreach($wards as $item)
+                                                            <option value="{{$item->id}}" {{$item->id == $admin->wards_id ?
+                                                            'selected' : ''}}>{{$item->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="row">
+                                                            <div class="col-lg-2"></div>
+                                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="ward_error"></span> </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="address" class="col-sm-2 col-form-label"></label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ" id="address" name="address" value="{{$admin->address}}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2"></div>
+                                                <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="address_error"></span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="phone" name="phone" value="{{$admin->phone}}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2"></div>
+                                                <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="phone_error"></span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2 mt-2">
+                                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                            <div class="col-sm-10">
+                                                <input type="email" class="form-control" id="email" name="email" value="{{$admin->email}}">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2"></div>
+                                                <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="email_error"></span> </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" id="update-info-btn" class="btn btn-outline-primary" onclick="submitEditForm(event)">Cập nhật
+                                            thông tin</button>
+                                        <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal" data-target="#kycModal">Định danh cá nhân</button>
+                                    </form>
+                                @if (session('dinhdanh'))
+                                <div class="alert alert-success mt-2">
+                                    {{ session('dinhdanh') }}
                                 </div>
-                                <div class="form-group row">
-                                    <label for="address" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control mb-2" placeholder="Nhập địa chỉ"
-                                            id="address" name="address" value="{{$admin->address}}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="phone" name="phone"
-                                            value="{{$admin->phone}}">
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-2 mt-2">
-                                    <label for="email" class="col-sm-2 col-form-label">Email</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            value="{{$admin->email}}">
-                                    </div>
-                                </div>
-                                <button type="submit" id="update-info-btn" class="btn btn-outline-primary">Cập nhật
-                                    thông tin</button>
-                                <button type="button" id="openKycModalBtn" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#kycModal">Định danh cá nhân</button>
-                            </form>
-                            @if (session('dinhdanh'))
-                            <div class="alert alert-success mt-2">
-                                {{ session('dinhdanh') }}
-                            </div>
-                            @endif
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -204,15 +234,13 @@
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Tên đăng nhập</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control bg-white" id="username"
-                                        value="{{$admin->email}}" disabled>
+                                    <input type="text" class="form-control bg-white" id="username" value="{{$admin->email}}" disabled>
                                 </div>
                             </div>
                             <div class="form-group row mt-2">
                                 <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
                                 <div class="col-sm-10 mb-2">
-                                    <input type="password" class="form-control bg-white" id="password1"
-                                        value="*********" disabled>
+                                    <input type="password" class="form-control bg-white" id="password1" value="*********" disabled>
                                 </div>
                             </div>
                             <button type="button" id="changePasswordBtn" class="btn btn-outline-primary btn-sm">Đổi mật
@@ -220,52 +248,43 @@
 
                             <!-- Thêm input mật khẩu mới và xác nhận mật khẩu -->
 
-                            <form action="{{ route('admin.ChangePassword') }}" method="post"
-                                class="changePasswordFields" id="changePasswordFields" style="display: none;">
+                            <form action="{{ route('admin.ChangePassword') }}" method="post" class="changePasswordFields" id="changePasswordFields" style="display: none;">
                                 @csrf
                                 <div>
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện
                                             tại</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control  " id="password" name="password"
-                                                placeholder="Mật khẩu hiện tại">
+                                            <input type="password" class="form-control  " id="password" name="password" placeholder="Mật khẩu hiện tại">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
-                                            <div class="col-lg-9"><span class="invalid-feedback d-block"
-                                                    style="font-weight: 500" id="password_error"></span> </div>
+                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="password_error"></span> </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" name="newPassword" class="form-control  "
-                                                placeholder="Mật khẩu mới" id="newPassword">
+                                            <input type="password" name="newPassword" class="form-control  " placeholder="Mật khẩu mới" id="newPassword">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
-                                            <div class="col-lg-9"><span class="invalid-feedback d-block"
-                                                    style="font-weight: 500" id="newPassword_error"></span> </div>
+                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="newPassword_error"></span> </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật
                                             khẩu</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control  "
-                                                placeholder="Xác nhận mật khẩu" name="confirmPassword"
-                                                id="confirmPassword">
+                                            <input type="password" class="form-control  " placeholder="Xác nhận mật khẩu" name="confirmPassword" id="confirmPassword">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
-                                            <div class="col-lg-9"><span class="invalid-feedback d-block"
-                                                    style="font-weight: 500" id="confirmPassword_error"></span> </div>
+                                            <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500" id="confirmPassword_error"></span> </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                    onclick="submitForm(event)">Lưu</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="submitForm(event)">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -277,10 +296,9 @@
 </div>
 
 <!-- Modal -->
-<!-- Modal -->
 
-<div class="modal fade" id="kycModal" tabindex="-1" role="dialog" aria-labelledby="kycModalLabel" aria-hidden="true"
-    style="margin-top: 20px">
+
+<div class="modal fade" id="kycModal" tabindex="-1" role="dialog" aria-labelledby="kycModalLabel" aria-hidden="true" style="margin-top: 20px">
     <div class="modal-dialog modal-dialog-centered " role="document">
         <form action="{{ route('admin.infoAdmin.update') }}" method="POST" id="personalIdentification"
             enctype="multipart/form-data">
@@ -291,8 +309,7 @@
                     <div class="form-group">
                         <label for="cccdFrontImage">Ảnh CCCD mặt trước</label> <br>
 
-                        <img style="width: 60px; height: 50px"
-                            src="{{ $userInfor != null ? asset($userInfor->front_image):'' }}" alt="">
+                        <img style="width: 60px; height: 50px" src="{{ $userInfor != null ? asset($userInfor->front_image):'' }}" alt="">
                     </div>
                 </div>
                 <div class="form-group">
@@ -300,8 +317,7 @@
                     <input type="file" class="form-control-file" id="cccdBackImage" name='back-image'>
                     <div class="form-group">
                         <label for="cccdFrontImage">Ảnh CCCD mặt sau</label> <br>
-                        <img style="width: 60px; height: 50px" src="{{ $userInfor? asset($userInfor->back_image) :'' }}"
-                            alt="">
+                        <img style="width: 60px; height: 50px" src="{{ $userInfor? asset($userInfor->back_image) :'' }}" alt="">
                     </div>
 
                 </div>
@@ -352,36 +368,114 @@
     const kyc = document.getElementById('kyc-btn');
     if (kyc) {
         kyc.addEventListener('click', function() {
-        $('#kycModal').modal('show');
-    });
+            $('#kycModal').modal('show');
+        });
     }
 
     //change password
     const changePassword = document.getElementById('changePasswordBtn');
 
-    if(changePassword){
+    if (changePassword) {
         changePassword.addEventListener('click', function() {
             var changePasswordForm = document.getElementById('changePasswordFields');
-                changePasswordForm.style.display = 'block';
-                // Ẩn nút đổi mật khẩu
-                this.style.display = 'none';
+            changePasswordForm.style.display = 'block';
+            // Ẩn nút đổi mật khẩu
+            this.style.display = 'none';
         });
     }
+    var formInfoEdit = {
+        'name': {
+            'element': document.getElementById('name'),
+            'error': document.getElementById('name_error'),
+            'validations': [{
+                'func': function(value) {
+                    return checkRequired(value);
+                },
+                'message': generateErrorMessage('E019')
+            }, ]
+        },
+        'city': {
+            'element': document.getElementById('city'),
+            'error': document.getElementById('city_error'),
+            'validations': [{
+                'func': function(value) {
+                    return value !== "";
+                },
+                'message': generateErrorMessage('E021')
+            }, ]
+        },
+        'district': {
+            'element': document.getElementById('district'),
+            'error': document.getElementById('district_error'),
+            'validations': [{
+                'func': function(value) {
+                    return value !== "";
+                },
+                'message': generateErrorMessage('E022')
+            }, ]
+        },
+        'ward': {
+            'element': document.getElementById('ward'),
+            'error': document.getElementById('ward_error'),
+            'validations': [{
+                'func': function(value) {
+                    return value !== "";
+                },
+                'message': generateErrorMessage('E023')
+            }, ]
+        },
+        'address': {
+            'element': document.getElementById('address'),
+            'error': document.getElementById('address_error'),
+            'validations': [{
+                'func': function(value) {
+                    return checkRequired(value);
+                },
+                'message': generateErrorMessage('E020')
+            }, ]
+        },
+        'phone': {
+            'element': document.getElementById('phone'),
+            'error': document.getElementById('phone_error'),
+            'validations': [{
+                'func': function(value) {
+                    return checkRequired(value);
+                },
+                'message': generateErrorMessage('E024')
+            }, ]
+        },
+        'email': {
+            'element': document.getElementById('email'),
+            'error': document.getElementById('email_error'),
+            'validations': [{
+                'func': function(value) {
+                    return checkRequired(value);
+                },
+                'message': generateErrorMessage('E025')
+            }, ]
+        },
 
+    }
+
+    function submitEditForm(event) {
+        event.preventDefault();
+        if (validateAllFields(formInfoEdit)) {
+            document.getElementById('user-info-form').submit();
+        }
+    }
     var formEconomyEdit = {
         'password': {
             'element': document.getElementById('password'),
             'error': document.getElementById('password_error'),
-            'validations': [
-                {
-                    'func': function(value){
+            'validations': [{
+                    'func': function(value) {
                         return checkRequired(value);
                     },
                     'message': generateErrorMessage('E001')
                 },
                 {
-                    'func':function(value){
-                        return  checkLength(value ,8);
+                    'func': function(value) {
+                        return checkLength(value, 8);
                     },
                     'message': generateErrorMessage('E002')
                 }
@@ -390,16 +484,15 @@
         'newPassword': {
             'element': document.getElementById('newPassword'),
             'error': document.getElementById('newPassword_error'),
-            'validations': [
-                {
-                    'func': function(value){
+            'validations': [{
+                    'func': function(value) {
                         return checkRequired(value);
                     },
                     'message': generateErrorMessage('E001')
                 },
                 {
-                    'func':function(value){
-                        return  checkLength(value ,8);
+                    'func': function(value) {
+                        return checkLength(value, 8);
                     },
                     'message': generateErrorMessage('E002')
                 }
@@ -408,16 +501,15 @@
         'confirmPassword': {
             'element': document.getElementById('confirmPassword'),
             'error': document.getElementById('confirmPassword_error'),
-            'validations': [
-                {
-                    'func': function(value){
+            'validations': [{
+                    'func': function(value) {
                         return checkRequired(value);
                     },
                     'message': generateErrorMessage('E001')
                 },
                 {
-                    'func':function(value){
-                        return  checkLength(value ,8);
+                    'func': function(value) {
+                        return checkLength(value, 8);
                     },
                     'message': generateErrorMessage('E002')
                 }
@@ -426,8 +518,8 @@
     }
 
     function submitForm(event) {
-         event.preventDefault();
-        if (validateAllFields(formEconomyEdit)){
+        event.preventDefault();
+        if (validateAllFields(formEconomyEdit)) {
             document.getElementById('changePasswordFields').submit();
         }
     }

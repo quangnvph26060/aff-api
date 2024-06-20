@@ -6,3 +6,5 @@ chạy 1 bảng migrate
    php artisan migrate --path=/database/migrations/2024_06_03_031437_create_phan_quyen_table_name.php 
 
 
+-- 6/18/2024
+composer require bensampo/laravel-enum

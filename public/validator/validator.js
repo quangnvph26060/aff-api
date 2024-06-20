@@ -106,6 +106,15 @@ function generateErrorMessage(code, values = []) {
         E0016: 'Mô tả không được để trống',
         E0017: 'Trạng thái không được để trống',
         E0018: ' Không được để trống ',
+        E019: 'Vui lòng nhập họ tên',
+        E020: 'Địa chỉ không được để trống',
+        E021: 'Vui lòng chọn thành phố',
+        E022: 'Vui lòng chọn quận/huyện',
+        E023: 'Vui lòng chọn phường/xã',
+        E024: 'Điện thoại không để trống',
+        E025: 'Email không được để trống',
+        E026: 'Tài khoản không để trống',
+
 
     };
     const errorMessage = errorMessages[code];

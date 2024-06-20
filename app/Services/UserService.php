@@ -148,7 +148,7 @@ class UserService
                     $currentUser = $user;
                     $teamMembersB = User::where('referrer_id', $currentUser->referral_code)->get();
 
-                    Log::info($teamMembersB);
+                    // Log::info($teamMembersB);
                     $result = new \Illuminate\Database\Eloquent\Collection;
                     foreach ($teamMembersB as $memberB) {
                         $level = Commission::where('id', $memberB->commission_id)->value('level');
@@ -174,9 +174,9 @@ class UserService
                             'teamRevenue' => $teamRevenue,
                             'level' => $level,
                         ]);
-                        Log::info('Fetching all users');
-                        return $result;
                     }
+                    Log::info($result);
+                    return $result;
                 } else {
                     $currentUser = $request->session()->get('authUser');
                     $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
