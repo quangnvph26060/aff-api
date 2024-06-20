@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
@@ -73,7 +74,5 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 
-    Route::get('dashboard',function(){
-        return view('admin.dashboard.dashboard');
-    });
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
 });

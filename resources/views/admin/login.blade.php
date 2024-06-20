@@ -1,28 +1,26 @@
-
 <!doctype html>
 <html lang="vi">
 
 <head>
     <meta charset="utf-8" />
-    <title>
-        Đăng nhập Admin </title>
+    <title>Đăng nhập Admin </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
-  
+
     <!-- preloader css -->
     <link rel="stylesheet" href="{{asset('css/preloader.min.css')}}" type="text/css" />
     <!-- Bootstrap Css -->
-    <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"
-    type="text/css" />
+    <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
     <!-- <link href="https://quanlycongviec.site/libs/assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->
     <!-- App Css-->
-    <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet"
-    type="text/css" />
+    <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- validator -->
+    <script src="{{asset('validator/validator.js')}}"></script>
 </head>
 
 <body>
-   
+
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
@@ -40,13 +38,13 @@
                                     <div class="text-center">
                                         <h5 class="mb-0">Đăng nhập Admin</h5>
                                     </div>
-                                    <form method="POST" class="mt-4 pt-2"
-                                        action="{{ route('login') }}">
+                                    <form method="POST" class="mt-4 pt-2" action="{{ route('login') }}" id="submitformlogin">
                                         @csrf
                                         <input name="type" type="hidden" class="form-control" id="username" value=" web">
                                         <div class="mb-3">
-                                            <label class="form-label">Username hoặc Email</label>
-                                            <input name="phone" type="text" class="form-control" id="username">
+                                            <label class="form-label">Email hoặc số điện thoại</label>
+                                            <input name="phone" type="text" class="form-control" id="phone">
+                                            <span class="invalid-feedback d-block" style="font-weight: 500" id="phone_error"></span>
                                         </div>
                                         <div class="mb-3">
                                             <div class="d-flex align-items-start">
@@ -55,21 +53,19 @@
                                                 </div>
                                             </div>
                                             <div class="input-group auth-pass-inputgroup">
-                                                <input type="password" name="password" class="form-control"
-                                                    aria-label="Password" aria-describedby="password-addon">
-                                                <button class="btn btn-light shadow-none ms-0" type="button"
-                                                    id="password-addon">
+                                                <input type="password" name="password" class="form-control" aria-label="Password" id="password" aria-describedby="password-addon">
+                                                <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
-                                                        <path fill="currentColor" d="M8 6.003a2.667 2.667 0 1 1 0 5.334a2.667 2.667 0 0 1 0-5.334Zm0 1a1.667 1.667 0 1 0 0 3.334a1.667 1.667 0 0 0 0-3.334Zm0-3.336c3.076 0 5.73 2.1 6.467 5.043a.5.5 0 1 1-.97.242a5.67 5.67 0 0 0-10.995.004a.5.5 0 0 1-.97-.243A6.669 6.669 0 0 1 8 3.667Z"/>
+                                                        <path fill="currentColor" d="M8 6.003a2.667 2.667 0 1 1 0 5.334a2.667 2.667 0 0 1 0-5.334Zm0 1a1.667 1.667 0 1 0 0 3.334a1.667 1.667 0 0 0 0-3.334Zm0-3.336c3.076 0 5.73 2.1 6.467 5.043a.5.5 0 1 1-.97.242a5.67 5.67 0 0 0-10.995.004a.5.5 0 0 1-.97-.243A6.669 6.669 0 0 1 8 3.667Z" />
                                                     </svg>
                                                 </button>
+                                                <span class="invalid-feedback d-block" style="font-weight: 500" id="password_error"></span>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col">
                                                 <div class="form-check">
-                                                    <input name="remember" class="form-check-input" type="checkbox"
-                                                        id="remember-check">
+                                                    <input name="remember" class="form-check-input" type="checkbox" id="remember-check">
                                                     <label class="form-check-label" for="remember-check">
                                                         Ghi nhớ
                                                     </label>
@@ -77,8 +73,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <button class="btn btn-primary w-100 waves-effect waves-light"
-                                                type="submit">Đăng nhập</button>
+                                            <button class="btn btn-primary w-100 waves-effect waves-light" type="submit" onclick="submitForm(event)">Đăng nhập</button>
                                         </div>
                                     </form>
                                 </div>
@@ -111,15 +106,10 @@
                             <div class="col-xl-7">
                                 <div class="p-0 p-sm-4 px-xl-0">
                                     <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                                        <div
-                                            class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
-                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
-                                                data-bs-slide-to="0" class="active" aria-current="true"
-                                                aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
-                                                data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
-                                                data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <!-- end carouselIndicators -->
                                         <div class="carousel-inner">
@@ -137,9 +127,7 @@
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src=""
-                                                                    class="avatar-md img-fluid rounded-circle"
-                                                                    alt="...">
+                                                                <img src="" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
                                                                 <h5 class="font-size-18 text-white">Richard Drews
@@ -164,9 +152,7 @@
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="#"
-                                                                    class="avatar-md img-fluid rounded-circle"
-                                                                    alt="...">
+                                                                <img src="#" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
                                                                 <h5 class="font-size-18 text-white">Rosanna French
@@ -190,8 +176,7 @@
                                                         feel.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
-                                                            <img src="#"
-                                                                class="avatar-md img-fluid rounded-circle" alt="...">
+                                                            <img src="#" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             <div class="flex-1 ms-3 mb-4">
                                                                 <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
                                                                 <p class="mb-0 text-white-50">Manager
@@ -216,17 +201,67 @@
         </div>
         <!-- end container fluid -->
     </div>
-    <!-- JAVASCRIPT -->
-    <script src="https://quanlycongviec.site/libs/assets/libs/jquery/jquery.min.js"></script>
+    <script>
+        const formlogin = {
+            'phone': {
+                'element': document.getElementById('phone'),
+                'error': document.getElementById('phone_error'),
+                'validations': [{
+                        'func': function(value) {
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E011')
+                    },
+                    // {
+                    //     'func': function(value) {
+                    //         return checkEmail(value);
+                    //     },
+                    //     'message': generateErrorMessage('E012')
+                    // },
+                    // {
+                    //     'func': function(value) {
+                    //         return checkCharacterPhone(value);
+                    //     },
+                    //     'message': generateErrorMessage('E012')
+                    // },
+                ]
+            },
+            'password': {
+                'element': document.getElementById('password'),
+                'error': document.getElementById('password_error'),
+                'validations': [{
+                        'func': function(value) {
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E001')
+                    },
+                    {
+                        'func': function(value) {
+                            return checkLength(value, 8);
+                        },
+                        'message': generateErrorMessage('E002')
+                    }
+                ]
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            if (validateAllFields(formlogin)) {
+                document.getElementById('submitformlogin').submit();
+            }
+        }
+    </script>
+    <!-- <script src="https://quanlycongviec.site/libs/assets/libs/jquery/jquery.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/node-waves/waves.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/feather-icons/feather.min.js"></script>
-    <!-- pace js -->
+  
     <script src="https://quanlycongviec.site/libs/assets/libs/pace-js/pace.min.js"></script>
-    <!-- password addon init -->
-    <script src="https://quanlycongviec.site/libs/assets/js/pages/pass-addon.init.js"></script>
+  
+    <script src="https://quanlycongviec.site/libs/assets/js/pages/pass-addon.init.js"></script> -->
 </body>
 
 </html>
