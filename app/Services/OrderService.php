@@ -7,6 +7,7 @@ use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -46,6 +47,9 @@ class OrderService
                 return response()->json('error', 'Order error');
             }
             foreach ($data['list_product'] as $detail) {
+                $product = Product::where('id', $detail['product_id'])->first();
+                $product->quantity = $product->quantity - $detail['amount'];
+                $product->save();
                 $this->orderDetail->create([
                     'order_id' => $order->id,
                     'product_id' => $detail['product_id'],

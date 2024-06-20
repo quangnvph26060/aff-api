@@ -433,12 +433,12 @@ class UserService
         $userRoleId = $user->role_id;
         // dd($userRoleId);
         if ($request->type === RequestApi::WEB) {
-            if($userRoleId != 2)
+            if($userRoleId != 1)
             {
                 throw new Exception('Not an admin');
             }
         } elseif ($request->type === RequestApi::API) {
-            if($userRoleId != 1)
+            if($userRoleId != 2)
             {
                 throw new Exception('Not a user');
             }
