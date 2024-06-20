@@ -12,16 +12,15 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- Layout config Js -->
-    <script src="{{asset('js/layout.js')}}"></script>
+    <script src="assets/js/layout.js"></script>
     <!-- Bootstrap Css -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="{{asset('css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <!-- <link href="{{asset('css/app.min.css')}}" rel="stylesheet" type="text/css" /> -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
-    <!-- <link href="{{asset('css/custom.min.css')}}" rel="stylesheet" type="text/css" /> -->
-
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -29,7 +28,15 @@
 
     <div class="auth-page-wrapper pt-5">
         <!-- auth page bg -->
+        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+            <div class="bg-overlay"></div>
 
+            <div class="shape">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                </svg>
+            </div>
+        </div>
 
         <!-- auth page content -->
         <div class="auth-page-content">
@@ -44,13 +51,7 @@
                                 <h1 class="display-1 fw-medium">404</h1>
                                 <h3 class="text-uppercase">Sorry, Page not Found 😭</h3>
                                 <p class="text-muted mb-4">The page you are looking for not available!</p>
-                                <a href="{{route('login')}}" class="btn btn-success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M5 12.76c0-1.358 0-2.037.274-2.634c.275-.597.79-1.038 1.821-1.922l1-.857C9.96 5.75 10.89 4.95 12 4.95c1.11 0 2.041.799 3.905 2.396l1 .857c1.03.884 1.546 1.325 1.82 1.922c.275.597.275 1.276.275 2.634V17c0 1.886 0 2.828-.586 3.414C17.828 21 16.886 21 15 21H9c-1.886 0-2.828 0-3.414-.586C5 19.828 5 18.886 5 17z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.5 21v-5a1 1 0 0 0-1-1h-3a1 1 0 0 0-1 1v5" />
-                                        </g>
-                                    </svg></i>Back to home</a>
+                                <a href="{{route('login')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to home</a>
                             </div>
                         </div>
                     </div>
@@ -69,9 +70,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0 text-muted">&copy;
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script> Affilate
+                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
                             </p>
                         </div>
                     </div>
@@ -84,17 +83,17 @@
     <!-- end auth-page-wrapper -->
 
     <!-- JAVASCRIPT -->
-    <!-- <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('js/simplebar.min.js')}}"></script>
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
     <script src="assets/libs/node-waves/waves.min.js"></script>
-    <script src="{{asset('js/feather.min.js')}}"></script>
+    <script src="assets/libs/feather-icons/feath.1.0.js"></script>
     <script src="assets/js/pluginer.min.js"></script>
-    <script src="{{asset('js/lord-icon-2s.js')}}"></script> -->
+    <script src="assets/js/pages/plugins/lord-icon-2s.js"></script>
 
     <!-- particles js -->
-    <!-- <script src="{{asset('js/particles.js')}}"></script> -->
+    <script src="assets/libs/particles.js/particles.js"></script>
     <!-- particles app js -->
-    <!-- <script src="{{asset('js/particles.app.js')}}"></script> -->
+    <script src="assets/js/pages/particles.app.js"></script>
 
 </body>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UpdateAdminRequest;
 use App\Http\Responses\ApiResponse;
 use App\Models\City;
 use App\Models\Districts;
@@ -13,6 +14,7 @@ use App\Services\AdminService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Summary of AdminController
@@ -57,7 +59,25 @@ class AdminController extends Controller
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
                 $adminId = User::find($user['user']['id'])->id;
-                $admin = $this->adminService->updateAdmin($adminId, $request->all());
+                
+                // Validate dữ liệu
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|string|max:255',
+                    'city_id' => 'required|integer',
+                    'district_id' => 'required|integer',
+                    'wards_id' => 'required|integer',
+                    'address' => 'required|string|max:255',
+                    'phone' => 'required|string|regex:/^(\d{10,11})$/',
+                    'email' => 'required|string|email|max:255|unique:users,email,' . $adminId,
+                ]);
+                
+                // Kiểm tra lỗi xác thực
+                if ($validator->fails()) {
+                    Log::error('Validation errors: ' . json_encode($validator->errors()->all()));
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+                $validatedData = $validator->validated();
+                 $this->adminService->updateAdmin($adminId, $validatedData);
                 return redirect()->route('admin.user-info');
             }
         } catch(\Exception $e) {

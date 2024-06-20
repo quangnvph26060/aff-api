@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 //use http\Env\Request;
+
+use App\Enums\RequestApi;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
@@ -36,22 +38,6 @@ class AuthController extends Controller
      */
 
 
-    // public function login(Request $request)
-    // {
-    //     $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
-    //     if ($user && Hash::check($request->get('password'), $user->password)) {
-    //         if (!$token = Auth::login($user)) {
-    //             // return ApiResponse::error('Unauthorized', 401);
-    //             return redirect()->back();
-    //         }
-    //         if ($request->type === 'loginadmin') {
-    //             session()->put('authUser', true);
-    //             return redirect()->route('product.store');
-    //         }
-    //         return $this->respondWithToken($token);
-    //     }
-    //     return ApiResponse::error('Error', 401);
-    // }
     public function login(Request $request)
     {
         try {
@@ -59,10 +45,10 @@ class AuthController extends Controller
             $credentials = $request->only(['phone', 'password']);
             $result = $this->userService->authenticateUser($credentials);
             // Kiểm tra loại đăng nhập và thực hiện hành động phù hợp
-            if ($request->type === 'loginadmin') {
+            if ($request->type === RequestApi::WEB) {
                 session()->put('authUser', $result);
                 return redirect()->route('admin.product.store');
-            } elseif ($request->type === 'fe') {
+            } elseif ($request->type === RequestApi::API) {
                 return $this->respondWithToken($result['token']);
             }
         } catch (\Exception $e) {
@@ -81,7 +67,7 @@ class AuthController extends Controller
     }
     protected function handleLoginError($request, \Exception $e)
     {
-        if ($request->type === 'loginadmin') {
+        if ($request->type === RequestApi::WEB) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         } else {
             return response()->json(['error' => $e->getMessage()], 401);

@@ -19,9 +19,12 @@ class Order extends Model
         'phone',
         'zip_code',
     ];
-    protected $appends = ['order_detail'];
+    protected $appends = ['order_detail','user_id'];
     public function getOrderDetailAttribute(){
         return OrderDetail::where('order_id', $this->attributes['id'])->with('product')->get();
+    }
+    public function getUserIdAttribute(){
+        return User::where('id', $this->attributes['user_id'])->get();
     }
     public function orderDetail()
     {

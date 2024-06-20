@@ -26,7 +26,7 @@ Route::get('ad',function(){
     return view('emails.order');
 });
 Route::fallback(function () {
-    return view('errors.404');
+    return response()->view('errors.404', [], 404);
 });
 // end demo
 
@@ -72,4 +72,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
+
+    Route::get('dashboard',function(){
+        return view('admin.dashboard.dashboard');
+    });
 });
