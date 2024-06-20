@@ -178,7 +178,6 @@ class AuthController extends Controller
     {
         if ($request->session()->has('authUser')) {
             $user = $request->session()->get('authUser');
-            dd($user);
             $id = $user['user']->id;
             $result = $this->userService->changePassword(
                 $id,
@@ -206,8 +205,6 @@ class AuthController extends Controller
             $file = $request->file('file');
             $filePath = uploadFile('User', $file);
 
-
-
             $filename = 'storage/' . $filePath;
             if (!Storage::disk('public')->exists('User/' . $filePath)) {
                 $filePath = uploadFile('User', $file);
@@ -228,6 +225,8 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'No file uploaded.'], 400);
     }
+
+
 
 
 }

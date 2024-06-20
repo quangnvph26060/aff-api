@@ -36,15 +36,17 @@
                                         <div class="col-lg-5">
                                             <div class="form-group">
                                                 <label for="">Tên sản phẩm</label>
-                                                <input autocomplete="off" name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm" required>
-                                                <div id="name_error" class="error"></div>
+                                                <input autocomplete="off" name="name" type="text" class="form-control"
+                                                    placeholder="Tên sản phẩm" required id="name">
+                                                <div style="color: red;" id="name_error" class="name_error"></div>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="" style="opacity: 0">1</label> <br>
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="button" onclick="searchProduct(event)"
+                                                    class="btn btn-primary">
                                                     <i class="fas fa-search"></i> Tìm kiếm</button>
                                             </div>
                                         </div>
@@ -61,7 +63,8 @@
                                                 <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">{{
                                                 $item->name }}</option>
                                                 @endforeach
-                                                <option value="{{ route('admin.product.store')}}"> Danh sách tất cả các sản phẩm</option>
+                                                <option value="{{ route('admin.product.store')}}"> Danh sách tất cả các
+                                                    sản phẩm</option>
                                             </select>
                                         </div>
                                     </form>
@@ -131,6 +134,14 @@
                                         <tbody>
                                             <td class="text-center" colspan="10">
                                                 <div class="">
+                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                                                        viewBox="0 0 2048 2048">--}}
+                                                        {{--
+                                                        <path fill="currentColor"
+                                                            d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
+                                                        --}}
+                                                        {{--
+                                                    </svg>--}}
                                                     {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 2048 2048">--}}
                                                     {{-- <path fill="currentColor" d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z"/>--}}
                                                     {{-- </svg>--}}
@@ -152,5 +163,27 @@
 
         </div> <!-- container-fluid -->
     </div>
+    <script>
+        var validateaddproduct = {
+            'name': {
+            'element': document.getElementById('name'),
+            'error': document.getElementById('name_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E0018')
+                },
+            ]
+        },
+        };
+        function searchProduct(event){
+        event.preventDefault();
+            if (validateAllFields(validateaddproduct)){
+                document.getElementById('productSearchForm').submit();
+            }
+    }
+    </script>
 
 @endsection

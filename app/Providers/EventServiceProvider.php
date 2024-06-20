@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\EventRegister' => [
             'App\Listeners\SendMailRegister',
         ],
+        'App\Events\EventForgetPass' => [
+            'App\Listeners\SendMailForgetPass',
+        ],
         'App\Events\EventOrder' => [
             'App\Listeners\SendMailOrder',
         ],

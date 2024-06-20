@@ -86,9 +86,13 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <label for="avatarInput">
-                                <img id="userAvatar" src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;">
+                                <img id="userAvatar"
+                                    src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}"
+                                    alt="User Avatar" class="rounded-circle mb-3" width="150" height="150"
+                                    style="cursor: pointer;">
                             </label>
-                            <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
+                            <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;" onchange="changeImage(event)">
                             </form>
@@ -296,7 +300,8 @@
 
 <div class="modal fade" id="kycModal" tabindex="-1" role="dialog" aria-labelledby="kycModalLabel" aria-hidden="true" style="margin-top: 20px">
     <div class="modal-dialog modal-dialog-centered " role="document">
-        <form action="{{ route('admin.infoAdmin.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.infoAdmin.update') }}" method="POST" id="personalIdentification"
+            enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="form-group">
@@ -319,7 +324,10 @@
 
                 <div class="form-group">
                     <label for="cccdNumber">Số CCCD</label>
-                    <input type="text" class="form-control" id="cccdNumber" name="citizen_id_number" value="{{ $userInfor? $userInfor->citizen_id_number :''}}">
+                    <input type="text" class="form-control" id="cccdNumber" name="citizen_id_number"
+                        value="{{ $userInfor? $userInfor->citizen_id_number :''}}" oninput="validateInput(this)">
+                    <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="cccdNumber_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="bank">Chọn ngân hàng</label>
@@ -327,19 +335,28 @@
                         <option value="MB">Ngân hàng Quân Đội (MB Bank, MB)</option>
 
                     </select>
+                    <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                        id="bank_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="accountNumber">Số tài khoản</label>
-                    <input type="text" class="form-control" id="accountNumber" name="idnumber" value="{{ $userInfor? $userInfor->idnumber:'' }}">
+                    <input type="text" class="form-control" id="accountNumber" name="idnumber"
+                        value="{{ $userInfor? $userInfor->idnumber:'' }}" oninput="validateInput(this)">
+                        <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="accountNumber_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="accountHolderName">Tên chủ tài khoản</label>
-                    <input type="text" class="form-control" id="accountHolderName" name="bank_name" value="{{ $userInfor? $userInfor->bank_name:'' }}">
+                    <input type="text" class="form-control" id="accountHolderName" name="bank_name"
+                        value="{{ $userInfor? $userInfor->bank_name:'' }}">
+                        <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="accountHolderName_error"></span> </div>
                 </div>
 
 
 
-                <button type="submit" class="btn btn-primary btn-sm" style="width: 100px;">Lưu</button>
+                <button type="button" onclick="Submutidentification(event)" class="btn btn-primary btn-sm"
+                    style="width: 100px;">Lưu</button>
 
             </div>
         </form>
@@ -374,7 +391,7 @@
                 'func': function(value) {
                     return checkRequired(value);
                 },
-                'message': generateErrorMessage('E004')
+                'message': generateErrorMessage('E019')
             }, ]
         },
         'city': {
@@ -384,7 +401,7 @@
                 'func': function(value) {
                     return value !== "";
                 },
-                'message': generateErrorMessage('E006')
+                'message': generateErrorMessage('E021')
             }, ]
         },
         'district': {
@@ -394,7 +411,7 @@
                 'func': function(value) {
                     return value !== "";
                 },
-                'message': generateErrorMessage('E007')
+                'message': generateErrorMessage('E022')
             }, ]
         },
         'ward': {
@@ -404,7 +421,7 @@
                 'func': function(value) {
                     return value !== "";
                 },
-                'message': generateErrorMessage('E008')
+                'message': generateErrorMessage('E023')
             }, ]
         },
         'address': {
@@ -414,7 +431,7 @@
                 'func': function(value) {
                     return checkRequired(value);
                 },
-                'message': generateErrorMessage('E005')
+                'message': generateErrorMessage('E020')
             }, ]
         },
         'phone': {
@@ -424,7 +441,7 @@
                 'func': function(value) {
                     return checkRequired(value);
                 },
-                'message': generateErrorMessage('E009')
+                'message': generateErrorMessage('E024')
             }, ]
         },
         'email': {
@@ -434,7 +451,7 @@
                 'func': function(value) {
                     return checkRequired(value);
                 },
-                'message': generateErrorMessage('E010')
+                'message': generateErrorMessage('E025')
             }, ]
         },
 
@@ -506,43 +523,121 @@
             document.getElementById('changePasswordFields').submit();
         }
     }
+    /// dinh danh cá nhân
 
-    function changeImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('_token', '{{ csrf_token() }}');
-            $.ajax({
-                url: '{{ route("admin.file.upload") }}',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.success) {
-                        $('#uploadResult').html('<p>File uploaded successfully: ' + response.file + '</p>');
-                        $('#userAvatar').attr('src', '{{ config("app.url") }}/' + response.file);
-                    } else {
-                        $('#uploadResult').html('<p>Error: ' + response.error + '</p>');
-                    }
+    var identification ={
+        'cccdNumber': {
+            'element': document.getElementById('cccdNumber'),
+            'error': document.getElementById('cccdNumber_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E004')
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $('#uploadResult').html('<p>An error occurred: ' + textStatus + '</p>');
+                {
+                    'func':function(value){
+                        return  checkLength(value ,12);
+                    },
+                    'message': generateErrorMessage('E006')
                 }
-            });
+            ]
+        },
+        'bank': {
+            'element': document.getElementById('bank'),
+            'error': document.getElementById('bank_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E006')
+                },
+            ]
+        },
+        'accountNumber': {
+            'element': document.getElementById('accountNumber'),
+            'error': document.getElementById('accountNumber_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E007')
+                },
+
+            ]
+        },
+        'accountHolderName': {
+            'element': document.getElementById('accountHolderName'),
+            'error': document.getElementById('accountHolderName_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E008')
+                },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,4);
+                    },
+                    'message': generateErrorMessage('E008')
+                }
+            ]
+        },
+    }
+
+    function Submutidentification(event){
+    event.preventDefault();
+        if (validateAllFields(identification)){
+            document.getElementById('personalIdentification').submit();
         }
     }
-    document.getElementById('copyBtn').addEventListener('click', function() {
-        const textToCopy = document.getElementById('customerId').innerText;
-        navigator.clipboard.writeText(textToCopy).then(function() {
-            // Hiển thị thông báo khi sao chép thành công
-            document.getElementById('copyResult').innerText = 'Copied: ' + textToCopy;
-        }, function(err) {
-            console.error('Error copying text: ', err);
-            document.getElementById('copyResult').innerText = 'Failed to copy text';
+    function changeImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('_token', '{{ csrf_token() }}');
+        $.ajax({
+            url: '{{ route("admin.file.upload") }}',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    $('#uploadResult').html('<p>File uploaded successfully: ' + response.file + '</p>');
+                    $('#userAvatar').attr('src', '{{ config("app.url") }}/' + response.file);
+                } else {
+                    $('#uploadResult').html('<p>Error: ' + response.error + '</p>');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#uploadResult').html('<p>An error occurred: ' + textStatus + '</p>');
+            }
         });
+    }
+}
+document.getElementById('copyBtn').addEventListener('click', function() {
+    const textToCopy = document.getElementById('customerId').innerText;
+    navigator.clipboard.writeText(textToCopy).then(function() {
+        // Hiển thị thông báo khi sao chép thành công
+        document.getElementById('copyResult').innerText = 'Copied: ' + textToCopy;
+    }, function(err) {
+        console.error('Error copying text: ', err);
+        document.getElementById('copyResult').innerText = 'Failed to copy text';
     });
+});
+
+/////
+function validateInput(input) {
+        // Replace any non-numeric character with an empty string
+        input.value = input.value.replace(/\D/g, '');
+    }
+
 </script>
 
 <style>

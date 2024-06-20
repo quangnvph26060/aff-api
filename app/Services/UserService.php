@@ -287,7 +287,33 @@ class UserService
             Log::error("Failed to create user: {$e->getMessage()}");
             throw $e;
         }
+
+
     }
+
+    public function resetPassword($email)
+    {
+        $userdn = Auth::user();
+
+        if ($email == $userdn->email) {
+            return false;
+        }
+        $newPassword = $this->generatePassword();
+        $user = User::where('email', $email)->first();
+        // Cập nhật mật khẩu mới
+        $user->password = bcrypt($newPassword);
+        $user->save();
+        // Gửi email mật khẩu mới
+        $arrSendMail = [
+            'type' => 'password_new',
+            'user' => $user,
+            'newPassWord' =>  $newPassword,
+        ];
+        SendMail::dispatch($arrSendMail);
+        return true;
+    }
+
+
     public function createUser(array $data)
     {
         DB::beginTransaction();
@@ -474,8 +500,7 @@ class UserService
 
     public function getUserInfoById(int $userId): UserInfo
     {
-        $userInfo = UserInfo::where('user_id', $userId)->first();
-        dd($userInfo);
+        $userInfo = UserInfo::where('user_id', $userId)->first();;
         if (!$userInfo) {
             Log::warning("User with ID: $userId not found");
             throw new Exception('User information not found.');

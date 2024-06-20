@@ -210,7 +210,7 @@
                         'func': function(value) {
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E011')
+                        'message': generateErrorMessage('E026')
                     },
                     // {
                     //     'func': function(value) {
@@ -258,9 +258,9 @@
     <script src="https://quanlycongviec.site/libs/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/node-waves/waves.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/feather-icons/feather.min.js"></script>
-  
+
     <script src="https://quanlycongviec.site/libs/assets/libs/pace-js/pace.min.js"></script>
-  
+
     <script src="https://quanlycongviec.site/libs/assets/js/pages/pass-addon.init.js"></script> -->
 </body>
 
