@@ -113,7 +113,10 @@
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                                    <i class="bx bx-dollar-circle text-success"></i>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                                                        <path fill="currentColor" d="M2 22h28v2H2zm0 4h28v2H2zm22-16a2 2 0 1 0 2 2a2 2 0 0 0-2-2zm-8 6a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4zm0-6a2 2 0 1 0 2 2a2.002 2.002 0 0 0-2-2zm-8 0a2 2 0 1 0 2 2a2 2 0 0 0-2-2z" />
+                                                                        <path fill="currentColor" d="M28 20H4a2.005 2.005 0 0 1-2-2V6a2.005 2.005 0 0 1 2-2h24a2.005 2.005 0 0 1 2 2v12a2.003 2.003 0 0 1-2 2Zm0-14H4v12h24Z" />
+                                                                    </svg>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -144,7 +147,9 @@
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                                    <i class="bx bx-shopping-bag text-info"></i>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                                        <path fill="currentColor" d="m17.371 19.827l2.84-2.796l-.626-.627l-2.214 2.183l-.956-.975l-.627.632l1.583 1.583ZM6.77 8.73h10.462v-1H6.769v1ZM18 22.115q-1.671 0-2.836-1.164T14 18.115q0-1.67 1.164-2.835T18 14.115q1.671 0 2.836 1.165T22 18.115q0 1.672-1.164 2.836Q19.67 22.115 18 22.115ZM4 20.77V4h16v7.56q-.244-.09-.485-.154q-.24-.064-.515-.1V5H5v14.05h6.344q.068.41.176.802q.109.392.303.748l-.035.035l-1.134-.827l-1.346.961l-1.346-.961l-1.347.961l-1.346-.961L4 20.769Zm2.77-4.5h4.709q.056-.275.138-.515q.083-.24.193-.485H6.77v1Zm0-3.769h7.31q.49-.387 1.05-.645q.56-.259 1.197-.355H6.769v1ZM5 19.05V5v14.05Z" />
+                                                                    </svg>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -163,7 +168,7 @@
                                                             </div>
                                                             <div class="flex-shrink-0">
                                                                 <h5 class="text-success fs-14 mb-0">
-                                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+
                                                                     +29.08 %
                                                                 </h5>
                                                             </div>
@@ -176,7 +181,9 @@
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                                    <i class="bx bx-user-circle text-warning"></i>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                                                        <path fill="currentColor" d="M26 30h-2v-5a5.006 5.006 0 0 0-5-5h-6a5.006 5.006 0 0 0-5 5v5H6v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7v5zM22 6v4c0 1.103-.897 2-2 2h-1a1 1 0 0 0 0 2h1c2.206 0 4-1.794 4-4V6h-2zm-6 10c-3.86 0-7-3.14-7-7s3.14-7 7-7c1.988 0 3.89.85 5.217 2.333l-1.49 1.334A5.008 5.008 0 0 0 16 4c-2.757 0-5 2.243-5 5s2.243 5 5 5v2z" />
+                                                                    </svg>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -353,7 +360,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="assets/images/products/img-1.png" alt="" class="img-fluid d-block" />
+                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="img-fluid d-block" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Branded
@@ -383,7 +390,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="assets/images/products/img-2.png" alt="" class="img-fluid d-block" />
+                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="img-fluid d-block" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Bentwood
@@ -414,7 +421,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="assets/images/products/img-3.png" alt="" class="img-fluid d-block" />
+                                                                                    <img src="{{asset('assets/images/products/img-3.png')}}" alt="" class="img-fluid d-block" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Borosil Paper
@@ -444,7 +451,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="assets/images/products/img-4.png" alt="" class="img-fluid d-block" />
+                                                                                    <img src="{{asset('assets/images/products/img-4.png')}}" alt="" class="img-fluid d-block" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">One Seater
@@ -475,7 +482,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="assets/images/products/img-5.png" alt="" class="img-fluid d-block" />
+                                                                                    <img src="{{asset('assets/images/products/img-5.png')}}" alt="" class="img-fluid d-block" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Stillbird
@@ -562,7 +569,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/companies/img-1.png" alt="" class="avatar-sm p-2" />
+                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}" alt="" class="avatar-sm p-2" />
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1 fw-medium">
@@ -591,7 +598,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/companies/img-2.png" alt="" class="avatar-sm p-2" />
+                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}" alt="" class="avatar-sm p-2" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">
                                                                                     <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Digitech
@@ -619,7 +626,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/companies/img-3.png" alt="" class="avatar-sm p-2" />
+                                                                                    <img src="{{asset('assets/images/products/img-5.png')}}" alt="" class="avatar-sm p-2" />
                                                                                 </div>
                                                                                 <div class="flex-gow-1">
                                                                                     <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Nesta
@@ -648,7 +655,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/companies/img-8.png" alt="" class="avatar-sm p-2" />
+                                                                                    <img src="{{asset('assets/images/companies/img-8.png')}}" alt="" class="avatar-sm p-2" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">
                                                                                     <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Zoetic
@@ -676,7 +683,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/companies/img-5.png" alt="" class="avatar-sm p-2" />
+                                                                                    <img src="{{asset('assets/images/companies/img-5.png')}}" alt="" class="avatar-sm p-2" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">
                                                                                     <h5 class="fs-14 my-1 fw-medium">
@@ -795,7 +802,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                                                    <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="" class="avatar-xs rounded-circle" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">Alex Smith</div>
                                                                             </div>
@@ -820,7 +827,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                                                    <img src="{{asset('assets/images/users/avatar-2.jpg')}}" alt="" class="avatar-xs rounded-circle" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">Jansh Brown</div>
                                                                             </div>
@@ -845,7 +852,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                                                    <img src="{{asset('assets/images/users/avatar-3.jpg')}}" alt="" class="avatar-xs rounded-circle" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">Ayaan Bowen</div>
                                                                             </div>
@@ -870,7 +877,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/users/avatar-4.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                                                    <img src="{{asset('assets/images/users/avatar-4.jpg')}}" alt="" class="avatar-xs rounded-circle" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">Prezy Mark</div>
                                                                             </div>
@@ -895,7 +902,7 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="flex-shrink-0 me-2">
-                                                                                    <img src="assets/images/users/avatar-6.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                                                    <img src="{{asset('assets/images/users/avatar-6.jpg')}}" alt="" class="avatar-xs rounded-circle" />
                                                                                 </div>
                                                                                 <div class="flex-grow-1">Vihan Hudda</div>
                                                                             </div>
@@ -958,13 +965,13 @@
                                                                 <p class="text-muted mb-1">By Nesta Technologies</p>
                                                                 <div class="d-inline-flex gap-2 border border-dashed p-2 mb-2">
                                                                     <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                                                        <img src="assets/images/products/img-8.png" alt="" class="img-fluid d-block" />
+                                                                        <img src="{{asset('assets/images/products/img-8.png')}}" alt="" class="img-fluid d-block" />
                                                                     </a>
                                                                     <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                                                        <img src="assets/images/products/img-2.png" alt="" class="img-fluid d-block" />
+                                                                        <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="img-fluid d-block" />
                                                                     </a>
                                                                     <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                                                        <img src="assets/images/products/img-10.png" alt="" class="img-fluid d-block" />
+                                                                        <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="img-fluid d-block" />
                                                                     </a>
                                                                 </div>
                                                                 <p class="mb-0 text-muted"><small>9:47 PM Yesterday</small></p>
@@ -972,7 +979,7 @@
                                                         </div>
                                                         <div class="acitivity-item py-3 d-flex">
                                                             <div class="flex-shrink-0">
-                                                                <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-circle acitivity-avatar">
+                                                                <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-xs rounded-circle acitivity-avatar">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
                                                                 <h6 class="mb-1 lh-base">Natasha Carey have liked the products
@@ -1045,7 +1052,7 @@
                                                         </div>
                                                         <div class="acitivity-item d-flex">
                                                             <div class="flex-shrink-0">
-                                                                <img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-circle acitivity-avatar" />
+                                                                <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-xs rounded-circle acitivity-avatar" />
                                                             </div>
                                                             <div class="flex-grow-1 ms-3">
                                                                 <h6 class="mb-1 lh-base">Frank Hook Commented</h6>
@@ -1108,7 +1115,7 @@
                                                                         <div class="d-flex">
                                                                             <div class="flex-shrink-0 avatar-sm">
                                                                                 <div class="avatar-title bg-light rounded">
-                                                                                    <img src="assets/images/companies/img-1.png" alt="" height="30">
+                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}" alt="" height="30">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="flex-grow-1 ms-3">
@@ -1138,7 +1145,7 @@
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
                                                                             <div class="flex-shrink-0">
-                                                                                <img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-sm rounded">
+                                                                                <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-sm rounded">
                                                                             </div>
                                                                             <div class="flex-grow-1 ms-3">
                                                                                 <div>
@@ -1168,7 +1175,7 @@
                                                                         <div class="d-flex">
                                                                             <div class="flex-shrink-0 avatar-sm">
                                                                                 <div class="avatar-title bg-light rounded">
-                                                                                    <img src="assets/images/companies/img-8.png" alt="" height="30">
+                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}" alt="" height="30">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="flex-grow-1 ms-3">
@@ -1198,7 +1205,7 @@
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
                                                                             <div class="flex-shrink-0">
-                                                                                <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded">
+                                                                                <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-sm rounded">
                                                                             </div>
                                                                             <div class="flex-grow-1 ms-3">
                                                                                 <div>
@@ -1359,7 +1366,7 @@
 
                                                 <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
                                                     <div class="card-body">
-                                                        <img src="assets/images/giftbox.png" alt="">
+                                                        <img src="{{asset('assets/images/giftbox.png')}}" alt="">
                                                         <div class="mt-4">
                                                             <h5>Invite New Seller</h5>
                                                             <p class="text-muted lh-base">Refer a new seller to us and earn $100
@@ -2058,26 +2065,26 @@
                                     <div class="form-check sidebar-setting card-radio">
                                         <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-01" value="img-1">
                                         <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-01">
-                                            <img src="assets/images/sidebar/img-1.jpg" alt="" class="avatar-md w-auto object-fit-cover">
+                                            <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-md w-auto object-fit-cover">
                                         </label>
                                     </div>
 
                                     <div class="form-check sidebar-setting card-radio">
                                         <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-02" value="img-2">
                                         <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-02">
-                                            <img src="assets/images/sidebar/img-2.jpg" alt="" class="avatar-md w-auto object-fit-cover">
+                                            <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-md w-auto object-fit-cover">
                                         </label>
                                     </div>
                                     <div class="form-check sidebar-setting card-radio">
                                         <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-03" value="img-3">
                                         <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-03">
-                                            <img src="assets/images/sidebar/img-3.jpg" alt="" class="avatar-md w-auto object-fit-cover">
+                                            <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-md w-auto object-fit-cover">
                                         </label>
                                     </div>
                                     <div class="form-check sidebar-setting card-radio">
                                         <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-04" value="img-4">
                                         <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-04">
-                                            <img src="assets/images/sidebar/img-4.jpg" alt="" class="avatar-md w-auto object-fit-cover">
+                                            <img src="{{asset('assets/images/products/img-2.png')}}" alt="" class="avatar-md w-auto object-fit-cover">
                                         </label>
                                     </div>
                                 </div>

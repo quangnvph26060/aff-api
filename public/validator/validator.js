@@ -97,6 +97,8 @@ function generateErrorMessage(code, values = []) {
         E008: 'Vui lòng chọn phường/xã',
         E009: 'Điện thoại không để trống',
         E010: 'Email không được để trống',
+        E011: 'Tài khoản không để trống',
+       
     };
     const errorMessage = errorMessages[code];
     if (typeof errorMessage === 'function') {
