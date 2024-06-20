@@ -21,7 +21,7 @@ class EventForgetPass
      */
     public $user;
     public $newPassword;
-    public function __construct(array $user, $newPassword)
+    public function __construct( $user, $newPassword)
     {
         $this->user = $user;
         $this->newPassword = $newPassword;

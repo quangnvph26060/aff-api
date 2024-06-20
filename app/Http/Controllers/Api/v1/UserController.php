@@ -103,8 +103,10 @@ class UserController extends Controller
 
     public function resetPassword(StoreUserRequest $request)
     {
-         try {
-        $request->validated();
+        try {
+        $request->validate([
+            'email' =>'required'
+        ]);
 
         $success = $this->userService->resetPassword($request->email);
             return ApiResponse::success($success, 'User created successfully', 201);
