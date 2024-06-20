@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 //use http\Env\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 use App\Enums\RequestApi;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
@@ -43,7 +43,7 @@ class AuthController extends Controller
         try {
             // $credentials = $this->filterUserData($request->all());
             $credentials = $request->only(['phone', 'password']);
-            $result = $this->userService->authenticateUser($credentials);
+            $result = $this->userService->authenticateUser($credentials, $request);
             // Kiểm tra loại đăng nhập và thực hiện hành động phù hợp
             if ($request->type === RequestApi::WEB) {
                 session()->put('authUser', $result);

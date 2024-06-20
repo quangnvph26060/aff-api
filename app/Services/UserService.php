@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use App\Enums\RequestApi;
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
@@ -174,7 +174,7 @@ class UserService
                             'teamRevenue' => $teamRevenue,
                             'level' => $level,
                         ]);
-                    }  
+                    }
                     Log::info($result);
                     return $result;
                 } else {
@@ -398,13 +398,25 @@ class UserService
     /**
      * Hàm lấy check thông tin user đăng nhập
      */
-    public function authenticateUser($credentials)
+    public function authenticateUser($credentials, Request $request)
     {
         // Tìm user theo email hoặc số điện thoại
         $user = User::where('phone', $credentials['phone'])
             ->orWhere('email', $credentials['phone'])
             ->first();
-
+        $userRoleId = $user->role_id;
+        // dd($userRoleId);
+        if ($request->type === RequestApi::WEB) {
+            if($userRoleId != 2)
+            {
+                throw new Exception('Not an admin');
+            }
+        } elseif ($request->type === RequestApi::API) {
+            if($userRoleId != 1)
+            {
+                throw new Exception('Not a user');
+            }
+        }
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw new Exception('Unauthorized');
         }

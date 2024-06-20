@@ -22,12 +22,12 @@ use Predis\Configuration\Option\Prefix;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// demo 
+// demo
 Route::get('ad',function(){
     return view('emails.order');
 });
 Route::fallback(function () {
-    return response()->view('errors.404', [], 404);
+    return view('errors.404');
 });
 // end demo
 
