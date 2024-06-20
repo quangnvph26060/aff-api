@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\EventForgetPass;
 use App\Events\EventRegister;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -32,12 +33,15 @@ class SendMail implements ShouldQueue
      */
     public function handle()
     {
-        
+
         $data = $this->request;
-       
+
         if ($data['type'] && $data['type'] == 'send_otp') {
-          
             event(new EventRegister($data['user'],$data['otp']));
+        }
+
+        if($data['type'] && $data['type'] == 'password_new'){
+            event(new EventForgetPass($data['user'], $data['newPassWord']));
         }
     }
 }

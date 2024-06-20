@@ -90,6 +90,23 @@ function generateErrorMessage(code, values = []) {
         E001: 'Mật khẩu không để trống',
         E002: 'Mật khẩu ít nhất 8 ký tự',
         E003: 'Vui lòng nhập tìm kiếm',
+        E004: 'Số CCCD không được để trống',
+        E005: 'Số CCCD  it nhất 10 ký tự',
+        E006: 'Ngân hàng không được để trống',
+        E007: 'Số tài khoản ngân hàng không được để trống',
+        E008: 'Tên chủ tài khoản không được để trống',
+        E009: 'Tên chủ tài khoản it nhât 4 ký tự',
+        // sản phẩm
+        E0010: 'Tên sản phẩm không được để trống',
+        E0011: 'Ảnh không được để trống',
+        E0012: 'Giá sản phẩm không được dể trông',
+        E0013: 'Số lượng sản phẩm không được dể trông',
+        E0014: 'Hoa hồng không được để sống',
+        E0015: 'Loại danh mục không dược để trống',
+        E0016: 'Mô tả không được để trống',
+        E0017: 'Trạng thái không được để trống',
+        E0018: ' Không được để trống ',
+
     };
     const errorMessage = errorMessages[code];
     if (typeof errorMessage === 'function') {

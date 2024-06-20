@@ -100,4 +100,17 @@ class UserController extends Controller
             return ApiResponse::error('Failed to delete user', 500);
         }
     }
+
+    public function resetPassword(StoreUserRequest $request)
+    {
+         try {
+        $request->validated();
+
+        $success = $this->userService->resetPassword($request->email);
+            return ApiResponse::success($success, 'User created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to send pass: ' . $e->getMessage());
+            return ApiResponse::error('Failed to send pass ', 500);
+        }
+    }
 }

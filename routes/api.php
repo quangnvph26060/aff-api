@@ -37,6 +37,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
         Route::get('get-user', [AuthController::class, 'getUser']);
+        Route::post('find-password', [AuthController::class, 'resetPassword'])->name('findPass');
+
     });
 
     Route::group([
@@ -54,6 +56,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('/', [CategoryController::class, 'store']);
         Route::put('/{id}', [CategoryController::class, 'update']);
         Route::delete('/{id}', [CategoryController::class, 'destroy']);
+
     });
 
     Route::group(['prefix' => 'products'], function ($router) {

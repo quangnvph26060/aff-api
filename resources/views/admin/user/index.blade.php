@@ -87,9 +87,13 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <label for="avatarInput">
-                                <img id="userAvatar" src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}" alt="User Avatar" class="rounded-circle mb-3" width="150" height="150" style="cursor: pointer;">
+                                <img id="userAvatar"
+                                    src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}"
+                                    alt="User Avatar" class="rounded-circle mb-3" width="150" height="150"
+                                    style="cursor: pointer;">
                             </label>
-                            <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload" enctype="multipart/form-data">
+                            <form action="{{ route('admin.file.upload') }}" method="post" id="btn-upload"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input id="avatarInput" type="file" name="file" style="display: none; cursor: pointer;"
                                     onchange="changeImage(event)">
@@ -224,8 +228,8 @@
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu hiện
                                             tại</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control  " id="password"
-                                                name="password" placeholder="Mật khẩu hiện tại">
+                                            <input type="password" class="form-control  " id="password" name="password"
+                                                placeholder="Mật khẩu hiện tại">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
@@ -236,8 +240,8 @@
                                     <div class="form-group row">
                                         <label for="newPassword" class="col-sm-2 col-form-label">Mật khẩu mới</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" name="newPassword" class="form-control  " placeholder="Mật khẩu mới"
-                                                id="newPassword">
+                                            <input type="password" name="newPassword" class="form-control  "
+                                                placeholder="Mật khẩu mới" id="newPassword">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
@@ -249,8 +253,9 @@
                                         <label for="confirmPassword" class="col-sm-2 col-form-label">Xác nhận mật
                                             khẩu</label>
                                         <div class="col-sm-10 mb-2">
-                                            <input type="password" class="form-control  " placeholder="Xác nhận mật khẩu"
-                                                name="confirmPassword" id="confirmPassword">
+                                            <input type="password" class="form-control  "
+                                                placeholder="Xác nhận mật khẩu" name="confirmPassword"
+                                                id="confirmPassword">
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2"></div>
@@ -277,7 +282,8 @@
 <div class="modal fade" id="kycModal" tabindex="-1" role="dialog" aria-labelledby="kycModalLabel" aria-hidden="true"
     style="margin-top: 20px">
     <div class="modal-dialog modal-dialog-centered " role="document">
-        <form action="{{ route('admin.infoAdmin.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.infoAdmin.update') }}" method="POST" id="personalIdentification"
+            enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="form-group">
@@ -303,7 +309,9 @@
                 <div class="form-group">
                     <label for="cccdNumber">Số CCCD</label>
                     <input type="text" class="form-control" id="cccdNumber" name="citizen_id_number"
-                        value="{{ $userInfor? $userInfor->citizen_id_number :''}}">
+                        value="{{ $userInfor? $userInfor->citizen_id_number :''}}" oninput="validateInput(this)">
+                    <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="cccdNumber_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="bank">Chọn ngân hàng</label>
@@ -311,21 +319,28 @@
                         <option value="MB">Ngân hàng Quân Đội (MB Bank, MB)</option>
 
                     </select>
+                    <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                        id="bank_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="accountNumber">Số tài khoản</label>
                     <input type="text" class="form-control" id="accountNumber" name="idnumber"
-                        value="{{ $userInfor? $userInfor->idnumber:'' }}">
+                        value="{{ $userInfor? $userInfor->idnumber:'' }}" oninput="validateInput(this)">
+                        <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="accountNumber_error"></span> </div>
                 </div>
                 <div class="form-group">
                     <label for="accountHolderName">Tên chủ tài khoản</label>
                     <input type="text" class="form-control" id="accountHolderName" name="bank_name"
                         value="{{ $userInfor? $userInfor->bank_name:'' }}">
+                        <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"
+                            id="accountHolderName_error"></span> </div>
                 </div>
 
 
 
-                <button type="submit" class="btn btn-primary btn-sm" style="width: 100px;">Lưu</button>
+                <button type="button" onclick="Submutidentification(event)" class="btn btn-primary btn-sm"
+                    style="width: 100px;">Lưu</button>
 
             </div>
         </form>
@@ -409,10 +424,83 @@
             ]
         },
     }
+
     function submitForm(event) {
          event.preventDefault();
         if (validateAllFields(formEconomyEdit)){
             document.getElementById('changePasswordFields').submit();
+        }
+    }
+    /// dinh danh cá nhân
+
+    var identification ={
+        'cccdNumber': {
+            'element': document.getElementById('cccdNumber'),
+            'error': document.getElementById('cccdNumber_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E004')
+                },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,12);
+                    },
+                    'message': generateErrorMessage('E006')
+                }
+            ]
+        },
+        'bank': {
+            'element': document.getElementById('bank'),
+            'error': document.getElementById('bank_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E006')
+                },
+            ]
+        },
+        'accountNumber': {
+            'element': document.getElementById('accountNumber'),
+            'error': document.getElementById('accountNumber_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E007')
+                },
+
+            ]
+        },
+        'accountHolderName': {
+            'element': document.getElementById('accountHolderName'),
+            'error': document.getElementById('accountHolderName_error'),
+            'validations': [
+                {
+                    'func': function(value){
+                        return checkRequired(value);
+                    },
+                    'message': generateErrorMessage('E008')
+                },
+                {
+                    'func':function(value){
+                        return  checkLength(value ,4);
+                    },
+                    'message': generateErrorMessage('E008')
+                }
+            ]
+        },
+    }
+
+    function Submutidentification(event){
+    event.preventDefault();
+        if (validateAllFields(identification)){
+            document.getElementById('personalIdentification').submit();
         }
     }
     function changeImage(event) {
@@ -451,6 +539,12 @@ document.getElementById('copyBtn').addEventListener('click', function() {
         document.getElementById('copyResult').innerText = 'Failed to copy text';
     });
 });
+
+/////
+function validateInput(input) {
+        // Replace any non-numeric character with an empty string
+        input.value = input.value.replace(/\D/g, '');
+    }
 
 </script>
 
