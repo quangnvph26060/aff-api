@@ -101,13 +101,15 @@ class UserController extends Controller
         }
     }
 
-    public function resetPassword(StoreUserRequest $request)
+    public function resetPassword(Request $request)
     {
-         try {
-        $request->validated();
+        try {
+        // $request->validate([
+        //     'phone' => 'required|string|max:255',
+        // ]);
 
-        $success = $this->userService->resetPassword($request->email);
-            return ApiResponse::success($success, 'User created successfully', 201);
+        $success = $this->userService->resetPassword($request->all());
+            return ApiResponse::success($success, 'Forget Password success', 201);
         } catch (\Exception $e) {
             Log::error('Failed to send pass: ' . $e->getMessage());
             return ApiResponse::error('Failed to send pass ', 500);

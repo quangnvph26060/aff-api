@@ -30,7 +30,7 @@ class ProductService
     {
         try {
             Log::info('Fetching all products');
-
+            
             return $this->product->all();
         } catch (Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());

@@ -295,7 +295,7 @@ class UserService
     {
         $userdn = Auth::user();
 
-        if ($email == $userdn->email) {
+        if ($email == $userdn->phone) {
             return false;
         }
         $newPassword = $this->generatePassword();
