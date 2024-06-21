@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewOrderEvent;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CategoryController;
@@ -24,6 +25,10 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 // demo
+
+Route::get('/event',function(){
+    event(new NewOrderEvent('demo noti message'));
+});
 Route::get('ad',function(){
     return view('emails.order');
 });
