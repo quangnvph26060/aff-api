@@ -101,7 +101,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="#">
+                            <a href="{{route('admin.transaction.index')}}">
                                 <span data-key="t-chat">Danh sách</span>
                             </a>
                         </li>

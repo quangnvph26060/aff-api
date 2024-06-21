@@ -140,7 +140,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <select class="form-select status" id="status">
+                                                        <select class="form-select status trang-thai" id="status">
                                                             <option {{ $value->status == 'published' ? 'selected' : ''
                                                                 }}
                                                                 data-idProduct="{{ $value->id }}" value="published">Được
@@ -282,5 +282,9 @@
         })
     })
     </script>
-
+    <style scoped>
+        .trang-thai{
+            display: block !important;
+        }
+    </style>
     @endsection

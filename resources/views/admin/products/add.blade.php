@@ -101,7 +101,7 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Trạng thái<span
                                                         class="text text-danger">*</span></label>
-                                                <select class="form-control" name="status" id="status">
+                                                <select class="form-control trang-thai" name="status" id="status">
                                                     <option value="">Chọn trạng thái</option>
                                                     <option value="published">Được phát hành</option>
                                                     <option value="inactive">Không hoạt động</option>
@@ -237,4 +237,9 @@
                 }
         }
     </script>
+     <style scoped>
+        .trang-thai{
+            display: block !important;
+        }
+    </style>
     @endsection
