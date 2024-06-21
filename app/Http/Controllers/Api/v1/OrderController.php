@@ -37,6 +37,8 @@ class OrderController extends Controller
         }
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -67,6 +69,19 @@ class OrderController extends Controller
             Log::error('Failed to create order: ' .$e ->getMessage());
             return ApiResponse::error('Failed to create order', 500);
         }
+    }
+
+    public function getOrderNew(){
+
+        try{
+            $order = $this->orderService->getOrderNew();
+            return ApiResponse::success($order,'success', 201);
+        }
+        catch(\Exception $e){
+            Log::error('Lỗi thông tin đơn hàng: ' .$e ->getMessage());
+            return ApiResponse::error('Lỗi thông tin đơn hàng', 500);
+        }
+
     }
     // private function saveOrder($data)
     // {
