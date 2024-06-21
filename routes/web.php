@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\TransactionController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
 
@@ -77,4 +78,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 
     Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+
+    // transaction 
+     Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
 });

@@ -47,14 +47,15 @@ class OrderService
                 return response()->json('error', 'Order error');
             }
             foreach ($data['list_product'] as $detail) {
-                $product = Product::where('id', $detail['product_id'])->first();
-                $product->quantity = $product->quantity - $detail['amount'];
-                $product->save();
                 $this->orderDetail->create([
                     'order_id' => $order->id,
                     'product_id' => $detail['product_id'],
                     'quantity' => $detail['amount'],
                 ]);
+                $product = Product::where('id', $detail['product_id'])->first();
+                $product->quantity = $product->quantity - $detail['amount'];
+                $product->save();
+              
             }
             $arrSendMail = [
                 'type' => 'send_order',

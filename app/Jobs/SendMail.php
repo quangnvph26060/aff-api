@@ -1,6 +1,7 @@
 <?php
 namespace App\Jobs;
 
+
 use App\Events\EventForgetPass;
 
 use App\Events\EventOrder;
@@ -41,12 +42,14 @@ class SendMail implements ShouldQueue
 
       //  Log::info($data['order']);
 
+
+      //  Log::info($data['order']);
+
         if ($data['type'] && $data['type'] == 'send_otp') {
             event(new EventRegister($data['user'],$data['otp']));
         } else  if ($data['type'] && $data['type'] == 'send_order') {
             event(new EventOrder($data['user'],$data['order']));
         }
-
         if($data['type'] && $data['type'] == 'password_new'){
             event(new EventForgetPass($data['user'], $data['newPassWord']));
         }
