@@ -89,7 +89,7 @@ class ProductController extends Controller
         }
     }
     /**
-     * hàm xóa sản phẩm 
+     * hàm xóa sản phẩm
      */
     public function delete($id){
         try {
@@ -135,5 +135,26 @@ class ProductController extends Controller
         $productImages->delete();
         session()->flash('success', 'Xóa thành công ảnh !');
         return redirect()->back();
+    }
+
+    public function Changecategory(Request $request){
+        $product_id = $request->productId;
+        $product = $this->productService->getProductById($product_id);
+        $category = $this->categoryService->findOrFailCategory($request->category);
+        $update = $product->update(['category_id' => $request->category]);
+        if(!$update){
+            return response()->json(['fail' => true]);
+        }
+        return response()->json(['success' => true, 'data'=> $category->name]);
+    }
+
+    public function Changestatus(Request $request){
+        $product_id = $request->productId;
+        $product = $this->productService->getProductById($product_id);
+        $update = $product->update(['status' => $request->status]);
+        if(!$update){
+            return response()->json(['fail' => true]);
+        }
+        return response()->json(['success' => true, 'data'=> $request->status]);
     }
 }

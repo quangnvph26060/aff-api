@@ -7,25 +7,25 @@ use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
 use App\Models\Commission;
-use Exception;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Wallet;
-use Faker\Generator as Faker;
-use Illuminate\http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 //use Illuminate\Support\Facades\Log;
 //use Exception;
 use Carbon\Carbon;
+use Exception;
+use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 /**
@@ -293,13 +293,12 @@ class UserService
 
     public function resetPassword($email)
     {
-        $userdn = Auth::user();
 
-        if ($email == $userdn->phone) {
+        $user = User::where('email', $email)->first();
+        if (!$user) {
             return false;
         }
         $newPassword = $this->generatePassword();
-        $user = User::where('email', $email)->first();
         // Cập nhật mật khẩu mới
         $user->password = bcrypt($newPassword);
         $user->save();

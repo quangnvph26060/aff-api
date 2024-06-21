@@ -107,6 +107,7 @@ class UserController extends Controller
         // $request->validate([
         //     'phone' => 'required|string|max:255',
         // ]);
+       
 
         $success = $this->userService->resetPassword($request->all());
             return ApiResponse::success($success, 'Forget Password success', 201);

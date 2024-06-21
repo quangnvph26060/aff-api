@@ -34,6 +34,7 @@
     <!-- validator -->
      <script src="{{asset('validator/validator.js')}}"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -105,7 +106,7 @@
     <script
         src="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
     <!-- dashboard init -->
-  
+
      <script src="https://quanlycongviec.site/libs/assets/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')

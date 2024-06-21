@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Jobs;
 
 
@@ -40,7 +39,12 @@ class SendMail implements ShouldQueue
     {
 
         $data = $this->request;
+
       //  Log::info($data['order']);
+
+
+      //  Log::info($data['order']);
+
         if ($data['type'] && $data['type'] == 'send_otp') {
             event(new EventRegister($data['user'],$data['otp']));
         } else  if ($data['type'] && $data['type'] == 'send_order') {

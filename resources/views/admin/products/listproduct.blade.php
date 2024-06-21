@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('loc_category').addEventListener('change', function() {
@@ -30,7 +31,8 @@
                     <div class="card">
                         <div class="card-header" style="">
                             <div class="row ">
-                                <form class="col-lg-5" method="get" action="{{ route('admin.product.search') }}" id="productSearchForm">
+                                <form class="col-lg-5" method="get" action="{{ route('admin.product.search') }}"
+                                    id="productSearchForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-lg-5">
@@ -60,8 +62,9 @@
                                             <select class="form-select" id="loc_category" name="category">
                                                 <option value="}">--- Loại sản phẩm ---</option>
                                                 @foreach ($category as $item)
-                                                <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">{{
-                                                $item->name }}</option>
+                                                <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">
+                                                    {{
+                                                    $item->name }}</option>
                                                 @endforeach
                                                 <option value="{{ route('admin.product.store')}}"> Danh sách tất cả các
                                                     sản phẩm</option>
@@ -114,18 +117,51 @@
                                                 <td>
 
                                                     @if (isset($value->images[0]))
-                                                    <img style="width: 100px; height: 75px;" src="{{asset($value->images[0]->image_path )}}" alt="">
+                                                    <img style="width: 100px; height: 75px;"
+                                                        src="{{asset($value->images[0]->image_path )}}" alt="">
                                                     @endif
 
                                                 </td>
                                                 <td>{{ $value->quantity }}</td>
                                                 <td>{{ $value->price }}</td>
                                                 <td>{{ $value->commission_rate }}%</td>
-                                                <td>{{ $value->category->name }}</td>
-                                                <td>{{$value->status}}</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select class="form-select category" name="category">
+                                                            @foreach ($category as $item)
+                                                            <option {{ $value->category_id == $item->id ? 'selected' :
+                                                                ''}}
+                                                                data-idProduct="{{ $value->id }}" value="{{ $item->id
+                                                                }}">
+                                                                {{$item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select class="form-select status" id="status">
+                                                            <option {{ $value->status == 'published' ? 'selected' : ''
+                                                                }}
+                                                                data-idProduct="{{ $value->id }}" value="published">Được
+                                                                phát hành</option>
+                                                            <option {{ $value->status == 'inactive' ? 'selected' : '' }}
+                                                                data-idProduct="{{ $value->id }}" value="inactive">Không
+                                                                hoạt động</option>
+                                                            <option {{ $value->status == 'scheduled' ? 'selected' : ''
+                                                                }}
+                                                                data-idProduct="{{ $value->id }}" value="scheduled">Lên
+                                                                kế
+                                                                hoạch</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
                                                 <td align="center">
-                                                    <a class="btn btn-warning" href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
-                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger" href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
+                                                    <a class="btn btn-warning"
+                                                        href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
+                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                        class="btn btn-danger"
+                                                        href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -142,9 +178,14 @@
                                                         --}}
                                                         {{--
                                                     </svg>--}}
-                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 2048 2048">--}}
-                                                    {{-- <path fill="currentColor" d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z"/>--}}
-                                                    {{-- </svg>--}}
+                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                                                        viewBox="0 0 2048 2048">--}}
+                                                        {{--
+                                                        <path fill="currentColor"
+                                                            d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
+                                                        --}}
+                                                        {{--
+                                                    </svg>--}}
                                                     Không có sản phẩm cần tìm
                                                 </div>
                                             </td>
@@ -184,6 +225,62 @@
                 document.getElementById('productSearchForm').submit();
             }
     }
+
+    $(document).ready(function(){
+        $('.category').change(function(){
+            var category = $(this).val();
+            var selectedOption = $(this).find('option:selected');
+            var productId = selectedOption.data('idproduct');
+
+            $.ajax({
+                    url: '{{ route('admin.changecategory') }}',
+                    type: 'POST',
+                    data: {
+                        category: category,
+                        productId: productId,
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            alert('Đã chuyển đổi sang loại danh mục : ' + response.data);
+                        } else {
+                            alert('Thay đổi thất bại');
+                        }
+                    }
+                });
+        })
+
+
+        $('.status').change(function(){
+            var status = $(this).val();
+            var selectedOption = $(this).find('option:selected');
+            var productId = selectedOption.data('idproduct');
+            $.ajax({
+                    url: '{{ route('admin.changestatus') }}',
+                    type: 'POST',
+                    data: {
+                        status: status,
+                        productId: productId,
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            $thongbao = '';
+                            if(response.data == 'published' ){
+                                $thongbao = 'Được phát hành ';
+                            }else if(response.data == 'inactive'){
+                                $thongbao = "Không hoạt động";
+                            }else{
+                                $thongbao = "Lập kế hoạch";
+                            }
+                            alert('Đã chuyển đổi trạng thái thành : ' + $thongbao);
+                        } else {
+                            alert('Thay đổi thất bại');
+                        }
+                    }
+                });
+        })
+    })
     </script>
 
-@endsection
+    @endsection
