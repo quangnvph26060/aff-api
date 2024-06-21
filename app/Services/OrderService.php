@@ -105,4 +105,27 @@ class OrderService
             return ApiResponse::error('Failed to change  order status', 500);
         }
     }
+
+    public function getOrderNew()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $order = $this->order->where('user_id', $user_id)->orderBy('created_at', 'desc')->first();
+            return $order;
+        } catch (\Exception $e) {
+            Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
+            throw new Exception('Lỗi không lấy ra đơn hàng');
+        }
+    }
+
+    // public function getOrderDetail($order_id)
+    // {
+    //     try {
+    //        $orderDetail = $this->orderDetail->where('order_id', $order_id)->get();
+    //         return $orderDetail;
+    //     } catch (\Exception $e) {
+    //         Log::error('Lỗi không lấy ra chi đơn hàng: ' . $e->getMessage());
+    //         throw new Exception('Lỗi không lấy ra đơn hàng');
+    //     }
+    // }
 }
