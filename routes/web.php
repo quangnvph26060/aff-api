@@ -25,9 +25,13 @@ use Predis\Configuration\Option\Prefix;
 |
 */
 // demo
+Route::get('test', function () {
+    event(new App\Events\NewOrderEvent('Someone'));
+    return "Event has been sent!";
+});
 
-Route::get('/event',function(){
-    event(new NewOrderEvent('demo noti message'));
+Route::get('wel', function(){
+    return view('welcome');
 });
 Route::get('ad',function(){
     return view('emails.order');

@@ -14,16 +14,24 @@ class NewOrderEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
-     */
-    public function __construct($message)
-    {
-        $this->message = $message;
-    }
+     */ 
+    // public $message;
+    // public function __construct($message)
+    // {
+    //     $this->message = $message;
+    // }
+    public $username;
+
+	public $message;
+    public function __construct($username)
+	{
+		$this->username = $username;
+		$this->message  = "{$username} liked your status";
+	}
 
     /**
      * Get the channels the event should broadcast on.
