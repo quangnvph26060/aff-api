@@ -313,7 +313,7 @@
         // button.addEventListener('click', () => {
         //     button.closest('.notification-item').style.display = 'none';
         // });
-        alert('ẩn đi ');
+        // alert('ẩn đi ');
     });
     
     
