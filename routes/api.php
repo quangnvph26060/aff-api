@@ -70,7 +70,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
     // Route::group(['prefix' => 'team'],function($router){
     //     Route::get('/', [TeamController::cl])
-    // });
+    // });\
+    Route::get('/memberlist/{id}', [TeamController::class, 'getTeamMember']);
 
     Route::get('/teammember', [TeamController::class, 'index']);
 
