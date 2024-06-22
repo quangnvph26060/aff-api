@@ -30,10 +30,10 @@ Route::get('test', function () {
     return "Event has been sent!";
 });
 
-Route::get('wel', function(){
+Route::get('wel', function () {
     return view('welcome');
 });
-Route::get('ad',function(){
+Route::get('ad', function () {
     return view('emails.order');
 });
 Route::fallback(function () {
@@ -41,17 +41,17 @@ Route::fallback(function () {
 });
 // end demo
 
-Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
+Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', [AuthController::class,'viewLogin'])->name('admin.login');
-    Route::get('/', [AuthController::class,'viewLogin'])->name('admin.login');
+    Route::get('/login', [AuthController::class, 'viewLogin'])->name('admin.login');
+    Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
 });
 Route::get('demo', [AuthController::class, 'getUser']);
 
 Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::post('logout', [AuthController::class,'logout'])->name('logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('ChangePassword', [AuthController::class, 'ChangePassword'])->name('ChangePassword');
     // Product routes
     Route::get('product', [ProductController::class, 'store'])->name('product.store');
@@ -74,20 +74,24 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/add-category', [CategoryController::class, 'store'])->name('category.store');
     Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::get('category/add',[CategoryController::class,'viewCategory'])->name('category.add');
+    Route::get('category/add', [CategoryController::class, 'viewCategory'])->name('category.add');
     Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
     Route::get('category-search-name', [CategoryController::class, 'search'])->name('category.search');
     // Order routes
-    Route::get('order/list',[OrderController::class,'index'])->name('order.list');
-    Route::post('order/updateStatus',[OrderController::class, "updateStatus"])->name('order.updateStatus');
+    Route::get('order/list', [OrderController::class, 'index'])->name('order.list');
+    Route::post('order/updateStatus', [OrderController::class, "updateStatus"])->name('order.updateStatus');
     // user
     Route::get('/user-info', [AdminController::class, 'index'])->name('user-info');
     Route::post('/updateadmin', [AdminController::class, 'editAdmin'])->name('profile.update');
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // transaction 
-     Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
+    Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
+    // notifycation
+    Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
+   
+   
 });

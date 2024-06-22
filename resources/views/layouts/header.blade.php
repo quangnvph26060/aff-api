@@ -179,24 +179,72 @@
                         <path fill="currentColor"
                             d="M11.997 21.385q-.668 0-1.14-.475q-.472-.474-.472-1.14h3.23q0 .67-.475 1.142q-.476.473-1.143.473M5 18.769v-1h1.615V9.846q0-1.96 1.24-3.447Q9.097 4.912 11 4.546V3h2v1.075q-.217.338-.38.683q-.164.344-.255.732l-.178-.02Q12.1 5.462 12 5.462q-1.823 0-3.104 1.28q-1.28 1.281-1.28 3.104v7.923h8.769V11.69q.238.047.49.073q.254.025.51.006v6H19v1zm11.964-9.365q-1.04 0-1.772-.729q-.73-.728-.73-1.769q0-1.04.728-1.771q.729-.731 1.77-.731q1.04 0 1.77.728t.732 1.77q0 1.04-.729 1.771q-.728.73-1.77.73" />
                     </svg>
-                    <span class="badge bg-danger rounded-pill">2512</span>
+                    <span class="badge bg-danger rounded-pill">{{ $orderCount ?? 0}}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                    aria-labelledby="page-header-notifications-dropdown">
-                    <div class="p-3">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-0"> Thông báo </h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
-                            <i class="mdi mdi-arrow-right-circle me-1"></i> <span>View More..</span>
-                        </a>
-                    </div>
+    aria-labelledby="page-header-notifications-dropdown">
+    <div class="p-3">
+        <div class="row align-items-center">
+            <div class="col">
+                <h6 class="m-0"> Thông báo </h6>
+            </div>
+        </div>
+    </div>
+    <div class="custom-scroll">
+        <div class="d-flex p-3 notification-item">
+            <div class="flex-grow-1">
+                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
+                <div class="font-size-13 text-muted">
+                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
                 </div>
+            </div>
+            <div class="ml-auto">
+                <button type="button" class="btn-close" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                        <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
+                        </svg>
+                </button>
+            </div>
+        </div>
+        <div class="d-flex p-3 notification-item">
+            <div class="flex-grow-1">
+                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
+                <div class="font-size-13 text-muted">
+                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
+                </div>
+            </div>
+            <div class="ml-auto">
+                <button type="button" class="btn-close" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                    <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="d-flex p-3 notification-item">
+            <div class="flex-grow-1">
+                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
+                <div class="font-size-13 text-muted">
+                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
+                </div>
+            </div>
+            <div class="ml-auto">
+                <button type="button" class="btn-close" aria-label="Close">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                        <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
+                        </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Thêm nhiều thông báo hơn ở đây -->
+    </div>
+    <div class="p-2 border-top d-grid">
+        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+            <i class="mdi mdi-arrow-right-circle me-1"></i> <span>View More..</span>
+        </a>
+    </div>
+</div>
             </div>
 
             <div class="dropdown d-inline-block">
@@ -259,3 +307,34 @@
         </div>
     </div>
 </header>
+<script>
+   
+    document.querySelectorAll('.btn-close').forEach(button => {
+        // button.addEventListener('click', () => {
+        //     button.closest('.notification-item').style.display = 'none';
+        // });
+        alert('ẩn đi ');
+    });
+    
+    
+</script>
+    
+<style scoped>
+    .custom-scroll {
+    max-height: 200px; 
+    overflow-y: auto; 
+}
+.notification-item {
+    position: relative;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    color: #000;
+}
+</style>

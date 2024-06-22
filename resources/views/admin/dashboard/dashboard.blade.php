@@ -686,174 +686,32 @@
                                                             <table
                                                                 class="table table-centered table-hover align-middle table-nowrap mb-0">
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
-                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}"
-                                                                                        alt="" class="avatar-sm p-2" />
+                                                                    @foreach($bestseller as $product)
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <div class="flex-shrink-0 me-2">
+                                                                                        <img src="{{asset('assets/images/products/default.png')}}" alt="" class="avatar-sm p-2" />
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <h5 class="fs-14 my-1 fw-medium">
+                                                                                            <a href="#" class="text-reset">{{ $product->product_name }}</a>
+                                                                                        </h5>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1 fw-medium">
-                                                                                        <a href="apps-ecommerce-seller-details.html"
-                                                                                            class="text-reset">iTest
-                                                                                            Factory</a>
-                                                                                    </h5>
-                                                                                    <span class="text-muted">Oliver
-                                                                                        Tyler</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">Bags and
-                                                                                Wallets</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="mb-0">8547</p>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">$541200</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 mb-0">32%<i
-                                                                                    class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                                            </h5>
-                                                                        </td>
-                                                                    </tr><!-- end -->
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
-                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}"
-                                                                                        alt="" class="avatar-sm p-2" />
-                                                                                </div>
-                                                                                <div class="flex-grow-1">
-                                                                                    <h5 class="fs-14 my-1 fw-medium"><a
-                                                                                            href="apps-ecommerce-seller-details.html"
-                                                                                            class="text-reset">Digitech
-                                                                                            Galaxy</a></h5>
-                                                                                    <span class="text-muted">John
-                                                                                        Roberts</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">Watches</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="mb-0">895</p>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">$75030</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 mb-0">79%<i
-                                                                                    class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                                            </h5>
-                                                                        </td>
-                                                                    </tr><!-- end -->
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-5.png')}}"
-                                                                                        alt="" class="avatar-sm p-2" />
-                                                                                </div>
-                                                                                <div class="flex-gow-1">
-                                                                                    <h5 class="fs-14 my-1 fw-medium"><a
-                                                                                            href="apps-ecommerce-seller-details.html"
-                                                                                            class="text-reset">Nesta
-                                                                                            Technologies</a></h5>
-                                                                                    <span class="text-muted">Harley
-                                                                                        Fuller</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">Bike
-                                                                                Accessories</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="mb-0">3470</p>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">$45600</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 mb-0">90%<i
-                                                                                    class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                                            </h5>
-                                                                        </td>
-                                                                    </tr><!-- end -->
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
-                                                                                    <img src="{{asset('assets/images/companies/img-8.png')}}"
-                                                                                        alt="" class="avatar-sm p-2" />
-                                                                                </div>
-                                                                                <div class="flex-grow-1">
-                                                                                    <h5 class="fs-14 my-1 fw-medium"><a
-                                                                                            href="apps-ecommerce-seller-details.html"
-                                                                                            class="text-reset">Zoetic
-                                                                                            Fashion</a></h5>
-                                                                                    <span class="text-muted">James
-                                                                                        Bowen</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">Clothes</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="mb-0">5488</p>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">$29456</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 mb-0">40%<i
-                                                                                    class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                                            </h5>
-                                                                        </td>
-                                                                    </tr><!-- end -->
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
-                                                                                    <img src="{{asset('assets/images/companies/img-5.png')}}"
-                                                                                        alt="" class="avatar-sm p-2" />
-                                                                                </div>
-                                                                                <div class="flex-grow-1">
-                                                                                    <h5 class="fs-14 my-1 fw-medium">
-                                                                                        <a href="apps-ecommerce-seller-details.html"
-                                                                                            class="text-reset">Meta4Systems</a>
-                                                                                    </h5>
-                                                                                    <span class="text-muted">Zoe
-                                                                                        Dennis</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">Furniture</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="mb-0">4100</p>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="text-muted">$11260</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 mb-0">57%<i
-                                                                                    class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                                            </h5>
-                                                                        </td>
-                                                                    </tr><!-- end -->
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="text-muted">{{ $product->category_name }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="text-muted">{{ $product->total_sold_amount }}</span>
+                                                                                <span class="text-muted">Sold</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="text-muted">${{ number_format($product->total_cost, 2) }}</span>
+                                                                            </td>
+                                                                        </tr><!-- end -->
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table><!-- end table -->
                                                         </div>
@@ -862,35 +720,17 @@
                                                             class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
                                                             <div class="col-sm">
                                                                 <div class="text-muted">
-                                                                    Showing <span class="fw-semibold">5</span> of <span
-                                                                        class="fw-semibold">25</span> Results
+                                                                    Showing <span class="fw-semibold">{{ $bestseller->count() }}</span> of <span class="fw-semibold">6</span> Results
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-auto  mt-3 mt-sm-0">
-                                                                <ul
-                                                                    class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
-                                                                    <li class="page-item disabled">
-                                                                        <a href="#" class="page-link">←</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">1</a>
-                                                                    </li>
-                                                                    <li class="page-item active">
-                                                                        <a href="#" class="page-link">2</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">3</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">→</a>
-                                                                    </li>
-                                                                </ul>
+                                                                <!-- Pagination if needed -->
                                                             </div>
                                                         </div>
-
                                                     </div> <!-- .card-body-->
                                                 </div> <!-- .card-->
                                             </div> <!-- .col-->
+
                                         </div> <!-- end row-->
 
                                         <div class="row">
