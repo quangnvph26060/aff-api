@@ -17,7 +17,19 @@ class TeamController extends Controller
     {
         $this->userService = $userService;
     }
-
+    public function getTeamMember($id)
+    {
+        try {
+            if (!$id) {
+                return ApiResponse::error('ID not provided', 400);
+            }
+            $member = $this->userService->getTeamMember($id);
+            return ApiResponse::success($member);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch product', 500);
+        }
+    }
     public function index(Request $request)
     {
         try {
