@@ -55,7 +55,7 @@ class OrderService
                 $product = Product::where('id', $detail['product_id'])->first();
                 $product->quantity = $product->quantity - $detail['amount'];
                 $product->save();
-              
+
             }
             $arrSendMail = [
                 'type' => 'send_order',
@@ -129,4 +129,17 @@ class OrderService
     //         throw new Exception('Lỗi không lấy ra đơn hàng');
     //     }
     // }
+
+
+    public function orderNew()
+    {
+        try {
+
+            $order = $this->order->orderBy('created_at', 'desc')->take(5)->get();
+            return $order;
+        } catch (\Exception $e) {
+            Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
+            throw new Exception('Lỗi không lấy ra đơn hàng');
+        }
+    }
 }
