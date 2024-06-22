@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use Tymon\JWTAuth\Providers\Auth\Illuminate;
 
 /**
  * Summary of UserService
@@ -138,6 +139,48 @@ class UserService
     //         return $result;
     //     }
     // }
+    public function getTeamMember($id): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            Log::info("Getting team member of member: $id");
+            $currentMember = $this->user->find($id);
+            if ($currentMember) {
+                $currentUser = $currentMember;
+                $teamMember = User::where('referrer_id', $currentUser->referral_code)->get();
+                $result = new Collection;
+                foreach ($teamMember as $member) {
+                    $personalRevenue = $member->userwallet->sum('total_revenue');
+                    $teamRevenue = User::whereIn('referrer_id', [$member->referral_code])
+                    ->with('userwallet')
+                    ->get()
+                    ->sum(function ($user) {
+                        return $user->userwallet->sum('total_revenue');
+                    });
+                    $result->push((object)[
+                        'id' => $member->id,
+                        'name' => $member->name,
+                        'email' => $member->email,
+                        'phone' => $member->phone,
+                        'referral_code' => $member->referral_code,
+                        'personalRevenue' => $personalRevenue,
+                        'teamRevenue' => $teamRevenue,
+                        'level' => 'F1',
+                    ]);
+                }
+                Log::info($result);
+                return $result;
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'failed to get team member'
+                ]);
+            }
+        } catch (Exception $e) {
+            Log::error('Failed to get member from users: ' . $e->getMessage());
+            throw new Exception('Failed to get member from');
+        }
+    }
+
     public function getAllTeamMember(Request $request): \Illuminate\Database\Eloquent\Collection
     {
         try {
@@ -151,7 +194,7 @@ class UserService
                     // Log::info($teamMembersB);
                     $result = new \Illuminate\Database\Eloquent\Collection;
                     foreach ($teamMembersB as $memberB) {
-                        $level = Commission::where('id', $memberB->commission_id)->value('level');
+                        // $level = Commission::where('id', $memberB->commission_id)->value('level');
                         // Lấy tổng doanh số cá nhân của thành viên B
                         $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
@@ -172,43 +215,43 @@ class UserService
                             'referral_code' => $memberB->referral_code,
                             'personalRevenue' => $personalRevenue,
                             'teamRevenue' => $teamRevenue,
-                            'level' => $level,
+                            'level' => 'F1',
                         ]);
                     }
                     Log::info($result);
                     return $result;
-                } else {
-                    $currentUser = $request->session()->get('authUser');
-                    $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
-                    $result = new \Illuminate\Database\Eloquent\Collection;
+                }
+            }else {
+                $currentUser = $request->session()->get('authUser');
+                $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
+                $result = new \Illuminate\Database\Eloquent\Collection;
 
-                    foreach ($teamMembersB as $memberB) {
-                        $level = Commission::where('id', $memberB->commission_id)->value('level');
-                        // Lấy tổng doanh số cá nhân của thành viên B
-                        $personalRevenue = $memberB->userwallet->sum('total_revenue');
+                foreach ($teamMembersB as $memberB) {
+                    $level = Commission::where('id', $memberB->commission_id)->value('level');
+                    // Lấy tổng doanh số cá nhân của thành viên B
+                    $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-                        // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
-                        $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
-                            ->with('userwallet')
-                            ->get()
-                            ->sum(function ($user) {
-                                return $user->userwallet->sum('total_revenue');
-                            });
+                    // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+                    $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
+                        ->with('userwallet')
+                        ->get()
+                        ->sum(function ($user) {
+                            return $user->userwallet->sum('total_revenue');
+                        });
 
-                        // Tạo đối tượng kết quả và thêm vào Collection
-                        $result->push((object)[
-                            'id' => $memberB->id,
-                            'name' => $memberB->name,
-                            'email' => $memberB->email,
-                            'phone' => $memberB->phone,
-                            'referral_code' => $memberB->referral_code,
-                            'personalRevenue' => $personalRevenue,
-                            'teamRevenue' => $teamRevenue,
-                            'level' => $level,
-                        ]);
-                        Log::info('Fetching all users');
-                        return $result;
-                    }
+                    // Tạo đối tượng kết quả và thêm vào Collection
+                    $result->push((object)[
+                        'id' => $memberB->id,
+                        'name' => $memberB->name,
+                        'email' => $memberB->email,
+                        'phone' => $memberB->phone,
+                        'referral_code' => $memberB->referral_code,
+                        'personalRevenue' => $personalRevenue,
+                        'teamRevenue' => $teamRevenue,
+                        'level' => $level,
+                    ]);
+                    Log::info('Fetching all users');
+                    return $result;
                 }
             }
 
