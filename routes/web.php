@@ -77,8 +77,9 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
-
-    // transaction 
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/bestseller', [DashboardController::class, 'BestSeller'])->name('bestseller');
+    // Route:get('bestseller', [])
+    // transaction
      Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
 });
