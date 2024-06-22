@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Responses\ApiResponse;
 use App\Models\Cart;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
