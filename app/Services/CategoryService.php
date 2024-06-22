@@ -29,7 +29,7 @@ class CategoryService
     {
         try {
             Log::info('Fetching all categories');
-            $categories = $this->category->all();   
+            $categories = $this->category->all();
             return $categories;
         } catch (Exception $e) {
             Log::error('Failed to fetch categories: ' . $e->getMessage());
@@ -131,12 +131,27 @@ class CategoryService
         }
     }
     /***
-     * 
+     *
      * hàm tìm kiếm danh mục theo name
      */
     public function findCategory($name)  {
         try{
             $category = $this->category->where('name', 'LIKE', '%' . $name . '%')->get();
+            if ($category->isEmpty()) {
+                throw new Exception('Category not found');
+            }
+            Log::info($category );
+            return $category;
+        }catch(\Exception $e){
+            Log::error('Failed to find category: ' . $e->getMessage());
+            throw new Exception('Failed to find category');
+        }
+    }
+
+    public function productCategory(){
+
+        try{
+            $category = $this->category->withCount('products')->orderBy('products_count', 'desc')->take(10)->get();
             if ($category->isEmpty()) {
                 throw new Exception('Category not found');
             }

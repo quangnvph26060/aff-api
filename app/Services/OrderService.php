@@ -154,4 +154,17 @@ class OrderService
     //         throw new Exception('Lỗi không lấy ra đơn hàng');
     //     }
     // }
+
+
+    public function orderNew()
+    {
+        try {
+
+            $order = $this->order->orderBy('created_at', 'desc')->take(5)->get();
+            return $order;
+        } catch (\Exception $e) {
+            Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
+            throw new Exception('Lỗi không lấy ra đơn hàng');
+        }
+    }
 }
