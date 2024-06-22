@@ -190,55 +190,31 @@
             </div>
         </div>
     </div>
-    <div class="custom-scroll">
-        <div class="d-flex p-3 notification-item">
-            <div class="flex-grow-1">
-                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
-                <div class="font-size-13 text-muted">
-                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
+        <div class="custom-scroll">
+          
+            @foreach($dataOrder as $order)
+                <div class="d-flex p-3 notification-item">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">{{$order->name}} đã đặt 1 đơn hàng mới </h6>
+                        <div class="font-size-13 text-muted">
+                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>{{$order->created_at}}</span></p>
+                        </div>
+                    </div>
+                    <div class="ml-auto">
+                        <button type="button" class="btn-close" aria-label="Close" data-id="{{$order->id}}"
+                                onclick="showOrderId(this.getAttribute('data-id'))">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                <path fill="currentColor"
+                                      d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
                 </div>
-            </div>
-            <div class="ml-auto">
-                <button type="button" class="btn-close" aria-label="Close">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                        <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
-                        </svg>
-                </button>
-            </div>
+            @endforeach
+          
+            <!-- Thêm nhiều thông báo hơn ở đây -->
         </div>
-        <div class="d-flex p-3 notification-item">
-            <div class="flex-grow-1">
-                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
-                <div class="font-size-13 text-muted">
-                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
-                </div>
-            </div>
-            <div class="ml-auto">
-                <button type="button" class="btn-close" aria-label="Close">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                    <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="d-flex p-3 notification-item">
-            <div class="flex-grow-1">
-                <h6 class="mb-1">Từ khóa <b>thua 1</b> đã được cập nhật url</h6>
-                <div class="font-size-13 text-muted">
-                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>03:18 14/04/2023</span></p>
-                </div>
-            </div>
-            <div class="ml-auto">
-                <button type="button" class="btn-close" aria-label="Close">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                        <path fill="currentColor" d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"/>
-                        </svg>
-                </button>
-            </div>
-        </div>
-        <!-- Thêm nhiều thông báo hơn ở đây -->
-    </div>
     <div class="p-2 border-top d-grid">
         <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
             <i class="mdi mdi-arrow-right-circle me-1"></i> <span>View More..</span>
@@ -309,12 +285,9 @@
 </header>
 <script>
    
-    document.querySelectorAll('.btn-close').forEach(button => {
-        // button.addEventListener('click', () => {
-        //     button.closest('.notification-item').style.display = 'none';
-        // });
-        // alert('ẩn đi ');
-    });
+    function showOrderId(orderId) {
+        alert("Order ID: " + orderId);
+    }
     
     
 </script>
