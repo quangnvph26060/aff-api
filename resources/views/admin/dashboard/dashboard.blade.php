@@ -124,9 +124,8 @@
                                                         <div
                                                             class="d-flex align-items-end justify-content-between mt-4">
                                                             <div>
-                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                                        class="counter-value"
-                                                                        data-target="{{ $statistic['total'] }}">0</span>đ
+                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+                                                                    <span class="counter-value" data-target="{{ $statistic['total'] }}">0</span>đ
                                                                 </h4>
                                                                 <a href="" class="text-decoration-underline">dsafdasdfsad</a>
                                                             </div>
@@ -2231,60 +2230,84 @@
     </div>
 </div>
 
-<script>
-    // Column Chart for Revenue
-    var revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    var revenueChart = new Chart(revenueCtx, {
-        type: 'bar',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                label: 'Revenue',
-                data: [12000, 15000, 13000, 17000, 16000, 19000, 21000, 18000, 22000, 24000, 23000, 25000],
-                backgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                },
-                y: {
-                    beginAtZero: true
+ <script>
+        // Column Chart for Revenue
+        var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(revenueCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [12000, 15000, 13000, 17000, 16000, 19000, 21000, 18000, 22000, 24000, 23000, 25000],
+                    backgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // Pie Chart for Sales by Locations
-    var locationsCtx = document.getElementById('salesByLocationsChart').getContext('2d');
-    var salesByLocationsChart = new Chart(locationsCtx, {
-        type: 'pie',
-        data: {
-            labels: ['Canada', 'Greenland', 'Russia'],
-            datasets: [{
-                data: [75, 47, 82],
-                backgroundColor: ['#007bff', '#28a745', '#17a2b8']
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            let label = context.label || '';
-                            let value = context.raw || 0;
-                            return `${label}: ${value}%`;
+        // Pie Chart for Sales by Locations
+        var locationsCtx = document.getElementById('salesByLocationsChart').getContext('2d');
+        var salesByLocationsChart = new Chart(locationsCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Canada', 'Greenland', 'Russia'],
+                datasets: [{
+                    data: [75, 47, 82],
+                    backgroundColor: ['#007bff', '#28a745', '#17a2b8']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                let value = context.raw || 0;
+                                return `${label}: ${value}%`;
+                            }
                         }
                     }
                 }
             }
-        }
+        });
+
+        $(document).ready(function() {
+    // Function to animate the counter
+    function animateCounter(element) {
+        var target = parseInt(element.attr('data-target'));
+        var count = 0;
+        var step = Math.ceil(target / 100); // Adjust the step for smooth animation
+
+        var counter = setInterval(function() {
+            count += step;
+            if (count >= target) {
+                count = target;
+                clearInterval(counter);
+            }
+            element.text(count.toLocaleString()); // Update the element text with comma-separated format
+        }, 10); // Adjust the interval as needed for smoother animation
+    }
+
+    // Trigger the animation on page load
+    $('.counter-value').each(function() {
+        animateCounter($(this));
     });
-</script>
+});
+
+    </script>
 @endsection
