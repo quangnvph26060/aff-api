@@ -747,7 +747,6 @@
                                                                     <tr>
                                                                         <th scope="col">Mã đơn hàng</th>
                                                                         <th scope="col">Khách hàng</th>
-                                                                        <th scope="col">Sản phẩm</th>
                                                                         <th scope="col">Số lượng</th>
                                                                         <th scope="col">Trạng thái</th>
 
