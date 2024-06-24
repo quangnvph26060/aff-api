@@ -97,6 +97,4 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
     // notifycation
     Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
-
-
 });
