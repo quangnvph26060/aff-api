@@ -9,8 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Services\CategoryService;
 use App\Services\OrderService;
-
-
+use App\Services\UserService;
 use Exception;
 
 use Illuminate\Http\Request;
@@ -21,18 +20,29 @@ class DashboardController extends Controller
 
     protected $orderService;
     protected $categoryService;
+    protected $userService;
 
-    public function __construct(OrderService $orderService, CategoryService $categoryService)
+    public function __construct(OrderService $orderService, CategoryService $categoryService, UserService $userService)
     {
         $this->orderService = $orderService;
         $this->categoryService = $categoryService;
+        $this->userService = $userService;
     }
     public function index(){
         $order = $this->orderService->orderNew();
         $category = $this->categoryService->productCategory();
         $bestseller = $this->BestSeller();
+        $useramount = $this->userService->countAllUser();
+        $orderamount = $this->orderService->getOrderAmount();
+        $statistic = $orderamount -> map(function($amount){
+            return[
+                'number' => $amount->number,
+                'total' => $amount->total,
+            ];
+        })->first();
+
         // dd($order[0]);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller'));
+        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount'));
     }
     public function BestSeller()
     {
