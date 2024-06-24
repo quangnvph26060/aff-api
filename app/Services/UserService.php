@@ -55,6 +55,18 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
+    public function countAllUser(){
+        try{
+            $amount = $this->user->where('role_id', 2)
+                     ->orWhere('role_id', 3)
+                     ->count();
+            return $amount;
+        }
+        catch (Exception $e) {
+            Log::error('Failed to count users: ' . $e->getMessage());
+            throw new Exception('Failed to count users');
+        }
+    }
     public function getAllUsers(): \Illuminate\Database\Eloquent\Collection
     {
         try {
@@ -151,11 +163,11 @@ class UserService
                 foreach ($teamMember as $member) {
                     $personalRevenue = $member->userwallet->sum('total_revenue');
                     $teamRevenue = User::whereIn('referrer_id', [$member->referral_code])
-                    ->with('userwallet')
-                    ->get()
-                    ->sum(function ($user) {
-                        return $user->userwallet->sum('total_revenue');
-                    });
+                        ->with('userwallet')
+                        ->get()
+                        ->sum(function ($user) {
+                            return $user->userwallet->sum('total_revenue');
+                        });
                     $result->push((object)[
                         'id' => $member->id,
                         'name' => $member->name,
@@ -221,9 +233,11 @@ class UserService
                     Log::info($result);
                     return $result;
                 }
-            }else {
+            } else {
                 $currentUser = $request->session()->get('authUser');
+                // dd($currentUser);
                 $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
+                // dd($teamMembersB);
                 $result = new \Illuminate\Database\Eloquent\Collection;
 
                 foreach ($teamMembersB as $memberB) {
@@ -250,11 +264,11 @@ class UserService
                         'teamRevenue' => $teamRevenue,
                         'level' => $level,
                     ]);
-                    Log::info('Fetching all users');
-                    return $result;
                 }
+                Log::info('Fetching all users');
+                // dd($result);
+                return $result;
             }
-
         } catch (Exception $e) {
             Log::error('Failed to fetch users: ' . $e->getMessage());
             throw new Exception('Failed to fetch users');
@@ -330,8 +344,6 @@ class UserService
             Log::error("Failed to create user: {$e->getMessage()}");
             throw $e;
         }
-
-
     }
 
     public function resetPassword($email)
@@ -475,13 +487,11 @@ class UserService
         $userRoleId = $user->role_id;
         // dd($userRoleId);
         if ($request->type === RequestApi::WEB) {
-            if($userRoleId != 1)
-            {
+            if ($userRoleId != 1) {
                 throw new Exception('Not an admin');
             }
         } elseif ($request->type === RequestApi::API) {
-            if($userRoleId != 2)
-            {
+            if ($userRoleId != 2) {
                 throw new Exception('Not a user');
             }
         }
@@ -569,22 +579,22 @@ class UserService
             //Handle font image upload
             if (isset($data['font-image']) && $data['font-image'] instanceof UploadedFile && $data['font-image']->isValid()) {
                 $imageFont = $data['font-image'];
-                $fontImageName = 'image_'.$imageFont->getClientOriginalName();
-                $fontImagePath = 'storage/cccd/cccd'.$id . '/' . $fontImageName;
+                $fontImageName = 'image_' . $imageFont->getClientOriginalName();
+                $fontImagePath = 'storage/cccd/cccd' . $id . '/' . $fontImageName;
 
                 if (!Storage::exists($fontImagePath)) {
-                    $imageFont->storeAs('public/cccd/cccd'.$id, $fontImageName);
+                    $imageFont->storeAs('public/cccd/cccd' . $id, $fontImageName);
                 }
             }
 
             // Handle back image upload
             if (isset($data['back-image']) && $data['back-image'] instanceof UploadedFile && $data['back-image']->isValid()) {
                 $imageBack = $data['back-image'];
-                $backImageName = 'image_'.$imageBack->getClientOriginalName();
-                $backImagePath = 'storage/cccd/cccd'.$id . '/' . $backImageName;
+                $backImageName = 'image_' . $imageBack->getClientOriginalName();
+                $backImagePath = 'storage/cccd/cccd' . $id . '/' . $backImageName;
 
                 if (!Storage::exists($backImagePath)) {
-                    $imageBack->storeAs('public/cccd/cccd'. $id, $backImageName);
+                    $imageBack->storeAs('public/cccd/cccd' . $id, $backImageName);
                 }
             }
 
@@ -594,7 +604,7 @@ class UserService
 
                 $userinfo->update([
                     "front_image" => isset($data['font-image']) ? $fontImagePath : $userinfo->front_image,
-                    "back_image" =>  isset($data['back-image'])?  $backImagePath : $userinfo->back_image,
+                    "back_image" =>  isset($data['back-image']) ?  $backImagePath : $userinfo->back_image,
                     "citizen_id_number" =>  @$data['citizen_id_number'],
                     "bank" => "MB",
                     "idnumber" =>  @$data['idnumber'],
@@ -627,7 +637,5 @@ class UserService
      */
     public function uploadImageUserInfo($data)
     {
-
     }
 }
-

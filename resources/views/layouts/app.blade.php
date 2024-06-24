@@ -37,6 +37,18 @@
      <meta name="csrf-token" content="{{ csrf_token() }}">
      <link rel="stylesheet" type="text/css" href="/css/bootstrap-notifications.min.css">
  
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .progress-bar-striped {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, .15),
+                rgba(255, 255, 255, .15) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+    </style>
 </head>
 
 <body>
