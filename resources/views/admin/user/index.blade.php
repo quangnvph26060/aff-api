@@ -332,7 +332,12 @@
                 <div class="form-group">
                     <label for="bank">Chọn ngân hàng</label>
                     <select class="form-control" id="bank" name="bank">
-                        <option value="MB">Ngân hàng Quân Đội (MB Bank, MB)</option>
+                        <option  value="">Chọn ngân hàng</option>
+                        @foreach ($bank as $item )
+                        <option {{ $userInfor && $userInfor->bank == $item->code ? 'selected' : '' }}
+                            value="{{ $item->code }}">{{ $item->name.'-'.$item->shortName }}</option>
+                        @endforeach
+
 
                     </select>
                     <div class="col-lg-9"><span class="invalid-feedback d-block" style="font-weight: 500"

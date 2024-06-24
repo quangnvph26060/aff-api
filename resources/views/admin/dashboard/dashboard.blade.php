@@ -732,10 +732,10 @@
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Đơn hàng gần đây</h4>
                                                         <div class="flex-shrink-0">
-                                                            <button type="button" class="btn btn-soft-info btn-sm">
+                                                            {{-- <button type="button" class="btn btn-soft-info btn-sm">
                                                                 <i class="ri-file-list-3-line align-middle"></i> Xem chi
                                                                 tiết
-                                                            </button>
+                                                            </button> --}}
                                                         </div>
                                                     </div><!-- end card header -->
 
@@ -757,8 +757,8 @@
                                                                     @foreach ($order as $item )
                                                                     <tr>
                                                                         <td>
-                                                                            <a href="apps-ecommerce-order-details.html"
-                                                                                class="fw-medium link-primary">#{{
+                                                                            <a href="{{ route('admin.order.list') }}"
+                                                                                class="fw-medium link-primary">{{
                                                                                 $item->zip_code }}</a>
                                                                         </td>
                                                                         <td>
@@ -773,13 +773,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                        <td>
-                                                                            @foreach ($item->order_detail as $value )
-                                                                                <div>
-                                                                                    <p>{{ $value->product->name }}</p>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        </td>
+
                                                                         <td>
                                                                             <span class="text-success">{{
                                                                                 number_format($item->total_money) }}đ</span>
