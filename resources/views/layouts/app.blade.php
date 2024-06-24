@@ -35,6 +35,18 @@
      <script src="{{asset('validator/validator.js')}}"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <meta name="csrf-token" content="{{ csrf_token() }}">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .progress-bar-striped {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, .15),
+                rgba(255, 255, 255, .15) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+    </style>
 </head>
 
 <body>
