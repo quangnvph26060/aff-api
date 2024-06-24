@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Responses\ApiResponse;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,31 @@ class TeamController extends Controller
     {
         $this->userService = $userService;
     }
-
+    public function getTeamMember($id)
+    {
+        try {
+            if (!$id) {
+                return ApiResponse::error('ID not provided', 400);
+            }
+            $data = $this->userService->getTeamMember($id);
+            $teamMembers = $data->map(function ($member) {
+                return [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'email' => $member->email,
+                    'phone' => $member->phone,
+                    'personal_sale' => $member->personalRevenue,
+                    'team_sale' => $member->teamRevenue,
+                    'level' => $member ->level
+                ];
+            });
+            // dd($teamMembers);
+            return view('admin.team.member', compact('teamMembers'));
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch member: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch member', 500);
+        }
+    }
     public function index(Request $request)
     {
         try {
