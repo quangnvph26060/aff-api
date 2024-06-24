@@ -71,6 +71,22 @@ class OrderService
             throw new Exception('Failed to create new order');
         }
     }
+    public function getOrderAmount(){
+        try{
+            $number = $this->order->count();
+            $total = $this->order->sum('total_money');
+            $result = new \Illuminate\Database\Eloquent\Collection;
+            $result->push((object)[
+                'number' => $number,
+                'total' => $total,
+            ]);
+            return $result;
+        }
+        catch (\Exception $e) {
+            Log::error('Failed to count order: ' . $e->getMessage());
+            throw new Exception('Failed to count orders');
+        }
+    }
     public function getBestSeller(){
         try{
 

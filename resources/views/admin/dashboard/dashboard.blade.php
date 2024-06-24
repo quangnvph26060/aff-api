@@ -58,12 +58,10 @@
                                             <div class="col-12">
                                                 <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                                     <div class="flex-grow-1">
-                                                        <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
-                                                        <p class="text-muted mb-0">Here's what's happening with your
-                                                            store
-                                                            today.</p>
+                                                        <h4 class="fs-16 mb-1">Xin chào, {{$loggedInUser['name']}}!</h4>
+                                                        <p class="text-muted mb-0">Đây là thống kê của trang web</p>
                                                     </div>
-                                                    <div class="mt-3 mt-lg-0">
+                                                    {{-- <div class="mt-3 mt-lg-0">
                                                         <form action="javascript:void(0);">
                                                             <div class="row g-3 mb-0 align-items-center">
                                                                 <div class="col-sm-auto">
@@ -97,7 +95,7 @@
                                                             </div>
                                                             <!--end row-->
                                                         </form>
-                                                    </div>
+                                                    </div> --}}
                                                 </div><!-- end card header -->
                                             </div>
                                             <!--end col-->
@@ -105,7 +103,7 @@
                                         <!--end row-->
 
                                         <div class="row">
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -126,12 +124,11 @@
                                                         <div
                                                             class="d-flex align-items-end justify-content-between mt-4">
                                                             <div>
-                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
+                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                                         class="counter-value"
-                                                                        data-target="559.25">0</span>k
+                                                                        data-target="{{ $statistic['total'] }}">0</span>đ
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">View net
-                                                                    earnings</a>
+                                                                <a href="" class="text-decoration-underline">dsafdasdfsad</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -150,15 +147,17 @@
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
                                                         <div class="d-flex align-items-center">
                                                             <div class="flex-grow-1 overflow-hidden">
-                                                                <p
+                                                                <a href="/admin/order/list">
+                                                                    <p
                                                                     class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                                     Đơn hàng</p>
+                                                                </a>
                                                             </div>
                                                             <div class="flex-shrink-0">
                                                                 <h5 class="text-danger fs-14 mb-0">
@@ -173,9 +172,8 @@
                                                             <div>
                                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                                         class="counter-value"
-                                                                        data-target="36894">0</span></h4>
-                                                                <a href="" class="text-decoration-underline">View all
-                                                                    orders</a>
+                                                                        data-target="{{ $statistic['number'] }}">0</span></h4>
+                                                                <a href="/admin/order/list" class="text-decoration-underline">Xem tất cả</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -191,7 +189,7 @@
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -213,10 +211,9 @@
                                                             <div>
                                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                                         class="counter-value"
-                                                                        data-target="183.35">0</span>M
+                                                                        data-target="{{$useramount}}">0</span>
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">See
-                                                                    details</a>
+                                                                <a href="" class="text-decoration-underline">dsafsfsfs</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -233,7 +230,7 @@
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-3 col-md-6">
+                                            {{-- <div class="col-xl-3 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -272,7 +269,7 @@
                                                         </div>
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->
-                                            </div><!-- end col -->
+                                            </div><!-- end col --> --}}
                                         </div> <!-- end row-->
 
                                         <div class="row">
@@ -281,18 +278,10 @@
                                                     <div class="card-header border-0 align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Doanh thu</h4>
                                                         <div>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                                ALL
-                                                            </button>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                                1M
-                                                            </button>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                                6M
-                                                            </button>
-                                                            <button type="button" class="btn btn-soft-primary btn-sm">
-                                                                1Y
-                                                            </button>
+                                                            <button type="button" class="btn btn-soft-secondary btn-sm">ALL</button>
+                                                            <button type="button" class="btn btn-soft-secondary btn-sm">1M</button>
+                                                            <button type="button" class="btn btn-soft-secondary btn-sm">6M</button>
+                                                            <button type="button" class="btn btn-soft-primary btn-sm">1Y</button>
                                                         </div>
                                                     </div><!-- end card header -->
 
@@ -300,35 +289,29 @@
                                                         <div class="row g-0 text-center">
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1"><span class="counter-value"
-                                                                            data-target="7585">0</span></h5>
-                                                                    <p class="text-muted mb-0">Orders</p>
+                                                                    <h5 class="mb-1"><span class="counter-value" data-target="7585">0</span></h5>
+                                                                    <p class="text-muted mb-0">Đơn hàng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1">$<span class="counter-value"
-                                                                            data-target="22.89">0</span>k</h5>
-                                                                    <p class="text-muted mb-0">Earnings</p>
+                                                                    <h5 class="mb-1">$<span class="counter-value" data-target="22.89">0</span>k</h5>
+                                                                    <p class="text-muted mb-0">Thu nhập</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1"><span class="counter-value"
-                                                                            data-target="367">0</span></h5>
-                                                                    <p class="text-muted mb-0">Refunds</p>
+                                                                    <h5 class="mb-1"><span class="counter-value" data-target="367">0</span></h5>
+                                                                    <p class="text-muted mb-0">Hoàn tiền</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
-                                                                <div
-                                                                    class="p-3 border border-dashed border-start-0 border-end-0">
-                                                                    <h5 class="mb-1 text-success"><span
-                                                                            class="counter-value"
-                                                                            data-target="18.92">0</span>%</h5>
-                                                                    <p class="text-muted mb-0">Conversation Ratio</p>
+                                                                <div class="p-3 border border-dashed border-start-0 border-end-0">
+                                                                    <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">0</span>%</h5>
+                                                                    <p class="text-muted mb-0">Tăng trưởng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -337,9 +320,7 @@
 
                                                     <div class="card-body p-0 pb-2">
                                                         <div class="w-100">
-                                                            <div id="customer_impression_charts"
-                                                                data-colors='["--vz-primary", "--vz-success", "--vz-danger"]'
-                                                                class="apex-charts" dir="ltr"></div>
+                                                            <canvas id="revenueChart" style="height: 269px"></canvas>
                                                         </div>
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->
@@ -349,48 +330,30 @@
                                                 <!-- card -->
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
-                                                        <h4 class="card-title mb-0 flex-grow-1">Sales by Locations</h4>
+                                                        <h4 class="card-title mb-0 flex-grow-1">Chi nhánh bán hàng</h4>
                                                         <div class="flex-shrink-0">
-                                                            <button type="button" class="btn btn-soft-primary btn-sm">
-                                                                Export Report
-                                                            </button>
+                                                            <button type="button" class="btn btn-soft-primary btn-sm">Xuất báo cáo</button>
                                                         </div>
                                                     </div><!-- end card header -->
 
                                                     <!-- card body -->
                                                     <div class="card-body">
-
-                                                        <div id="sales-by-locations"
-                                                            data-colors='["--vz-light", "--vz-success", "--vz-primary"]'
-                                                            style="height: 269px" dir="ltr"></div>
+                                                        <canvas id="salesByLocationsChart" style="height: 269px"></canvas>
 
                                                         <div class="px-2 py-2 mt-1">
-                                                            <p class="mb-1">Canada <span class="float-end">75%</span>
-                                                            </p>
+                                                            <p class="mb-1">Canada <span class="float-end">75%</span></p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 75%"
-                                                                    aria-valuenow="75" aria-valuemin="0"
-                                                                    aria-valuemax="75"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
 
-                                                            <p class="mt-3 mb-1">Greenland <span
-                                                                    class="float-end">47%</span>
-                                                            </p>
+                                                            <p class="mt-3 mb-1">Greenland <span class="float-end">47%</span></p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 47%"
-                                                                    aria-valuenow="47" aria-valuemin="0"
-                                                                    aria-valuemax="47"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
 
-                                                            <p class="mt-3 mb-1">Russia <span
-                                                                    class="float-end">82%</span></p>
+                                                            <p class="mt-3 mb-1">Russia <span class="float-end">82%</span></p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 82%"
-                                                                    aria-valuenow="82" aria-valuemin="0"
-                                                                    aria-valuemax="82"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -402,7 +365,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-xl-6">
+                                            {{-- <div class="col-xl-6">
                                                 <div class="card">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Best Selling Products
@@ -657,9 +620,9 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
-                                            <div class="col-xl-6">
+                                            <div class="">
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Bán chạy nhất</h4>
@@ -668,14 +631,13 @@
                                                                 <a class="text-reset dropdown-btn" href="#"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
-                                                                    <span class="text-muted">Report<i
+                                                                    <span class="text-muted">Báo cáo<i
                                                                             class="mdi mdi-chevron-down ms-1"></i></span>
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#">Download
-                                                                        Report</a>
-                                                                    <a class="dropdown-item" href="#">Export</a>
-                                                                    <a class="dropdown-item" href="#">Import</a>
+                                                                    <a class="dropdown-item" href="#">Tải báo cáo</a>
+                                                                    <a class="dropdown-item" href="#">Xuất</a>
+                                                                    <a class="dropdown-item" href="#">Nhập</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -705,10 +667,10 @@
                                                                             </td>
                                                                             <td>
                                                                                 <span class="text-muted">{{ $product->total_sold_amount }}</span>
-                                                                                <span class="text-muted">Sold</span>
+                                                                                <span class="text-muted">Đã bán</span>
                                                                             </td>
                                                                             <td>
-                                                                                <span class="text-muted">${{ number_format($product->total_cost, 2) }}</span>
+                                                                                <span class="text-muted">{{ number_format($product->total_cost) }} đ</span>
                                                                             </td>
                                                                         </tr><!-- end -->
                                                                     @endforeach
@@ -720,7 +682,7 @@
                                                             class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
                                                             <div class="col-sm">
                                                                 <div class="text-muted">
-                                                                    Showing <span class="fw-semibold">{{ $bestseller->count() }}</span> of <span class="fw-semibold">6</span> Results
+                                                                    Hiển thị <span class="fw-semibold">{{ $bestseller->count() }}</span> / <span class="fw-semibold">6</span> kết quả
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-auto  mt-3 mt-sm-0">
@@ -734,7 +696,7 @@
                                         </div> <!-- end row-->
 
                                         <div class="row">
-                                            <div class="col-xl-4">
+                                            {{-- <div class="col-xl-4">
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source
@@ -763,9 +725,9 @@
                                                             class="apex-charts" dir="ltr"></div>
                                                     </div>
                                                 </div> <!-- .card-->
-                                            </div> <!-- .col-->
+                                            </div> <!-- .col--> --}}
 
-                                            <div class="col-xl-8">
+                                            <div class="">
                                                 <div class="card">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Đơn hàng gần đây</h4>
@@ -783,11 +745,11 @@
                                                                 class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                                 <thead class="text-muted table-light">
                                                                     <tr>
-                                                                        <th scope="col">Order ID</th>
-                                                                        <th scope="col">Customer</th>
-                                                                        <th scope="col">Product</th>
-                                                                        <th scope="col">Amount</th>
-                                                                        <th scope="col">Status</th>
+                                                                        <th scope="col">Mã đơn hàng</th>
+                                                                        <th scope="col">Khách hàng</th>
+                                                                        <th scope="col">Sản phẩm</th>
+                                                                        <th scope="col">Số lượng</th>
+                                                                        <th scope="col">Trạng thái</th>
 
                                                                     </tr>
                                                                 </thead>
@@ -849,8 +811,7 @@
                                         <div class="card h-100 rounded-0">
                                             <div class="card-body p-0">
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Recent
-                                                        Activity</h6>
+                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Hoạt động gần đây</h6>
                                                 </div>
                                                 <div data-simplebar style="max-height: 410px;" class="p-3 pt-0">
                                                     <div class="acitivity-timeline acitivity-main">
@@ -1029,14 +990,12 @@
 
                                                     </ol>
                                                     <div class="mt-3 text-center">
-                                                        <a href="javascript:void(0);"
-                                                            class="text-muted text-decoration-underline">View all
-                                                            Categories</a>
+                                                        <a href="{{route('admin.category.index')}}"
+                                                            class="text-muted text-decoration-underline">Xem tất cả danh mục</a>
                                                     </div>
                                                 </div>
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Products
-                                                        Reviews</h6>
+                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản phẩm</h6>
                                                     <!-- Swiper -->
                                                     <div class="swiper vertical-swiper" style="height: 250px;">
                                                         <div class="swiper-wrapper">
@@ -1111,7 +1070,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="swiper-slide">
+                                                            <div class="swiper-slide" style="display: none">
                                                                 <div class="card border border-dashed shadow-none">
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
@@ -1148,7 +1107,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="swiper-slide">
+                                                            <div class="swiper-slide" style="display: none">
                                                                 <div class="card border border-dashed shadow-none">
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
@@ -1340,14 +1299,14 @@
                                                     <div class="card-body">
                                                         <img src="{{asset('assets/images/giftbox.png')}}" alt="">
                                                         <div class="mt-4">
-                                                            <h5>Invite New Seller</h5>
+                                                            <h5>Mời người dùng mới</h5>
                                                             <p class="text-muted lh-base">Refer a new seller to us and
                                                                 earn $100
                                                                 per refer.</p>
                                                             <button type="button"
                                                                 class="btn btn-primary btn-label rounded-pill"><i
                                                                     class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
-                                                                Invite Now</button>
+                                                                Mời ngay</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2279,5 +2238,60 @@
     </div>
 </div>
 
+<script>
+    // Column Chart for Revenue
+    var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [{
+                label: 'Revenue',
+                data: [12000, 15000, 13000, 17000, 16000, 19000, 21000, 18000, 22000, 24000, 23000, 25000],
+                backgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
+    // Pie Chart for Sales by Locations
+    var locationsCtx = document.getElementById('salesByLocationsChart').getContext('2d');
+    var salesByLocationsChart = new Chart(locationsCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Canada', 'Greenland', 'Russia'],
+            datasets: [{
+                data: [75, 47, 82],
+                backgroundColor: ['#007bff', '#28a745', '#17a2b8']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            return `${label}: ${value}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
 @endsection
