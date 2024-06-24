@@ -33,11 +33,11 @@ class TeamController extends Controller
                     'level' => $member ->level
                 ];
             });
-            // dd($teamMembers);
-            return view('admin.team.member', compact('teamMembers'));
+            // dd($teamm);
+            return view('admin.team.team', compact('teamMembers'));
         } catch (\Exception $e) {
-            Log::error('Failed to fetch member: ' . $e->getMessage());
-            return ApiResponse::error('Failed to fetch member', 500);
+            Log::error('Failed to fetch product: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch product', 500);
         }
     }
     public function index(Request $request)
