@@ -152,11 +152,12 @@
                         </div>
                         <div class="info-item">
                             <span class="label"><strong>Số tài khoản:</strong></span>
-                            <span class="value">{{ $item->user->user_info[0]->idnumber }}</span>
+                            <span class="value">{{ $item->user->user_info[0]->idnumber? $item->user->user_info[0]->idnumber : '' }}</span>
                         </div>
+                        <hr>
                         <div class="text-center">
-                            <p><strong>Mã QR:</strong></p>
-                            <img style="width:300px ; height: auto;" src="{{ $item->user->user_info[0]->branch }}"
+
+                            <img style="width:250px ; height: auto;" src="{{ $item->user->user_info[0]->branch?$item->user->user_info[0]->branch : '' }}"
                                 alt="QR Code" class="img-fluid">
                         </div>
                     </div>
