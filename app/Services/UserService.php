@@ -57,7 +57,9 @@ class UserService
      */
     public function countAllUser(){
         try{
-            $amount = $this->user->count();
+            $amount = $this->user->where('role_id', 2)
+                     ->orWhere('role_id', 3)
+                     ->count();
             return $amount;
         }
         catch (Exception $e) {

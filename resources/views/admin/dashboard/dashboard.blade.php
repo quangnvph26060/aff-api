@@ -58,12 +58,10 @@
                                             <div class="col-12">
                                                 <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                                     <div class="flex-grow-1">
-                                                        <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
-                                                        <p class="text-muted mb-0">Here's what's happening with your
-                                                            store
-                                                            today.</p>
+                                                        <h4 class="fs-16 mb-1">Xin chào, {{$loggedInUser['name']}}!</h4>
+                                                        <p class="text-muted mb-0">Đây là thống kê của trang web</p>
                                                     </div>
-                                                    <div class="mt-3 mt-lg-0">
+                                                    {{-- <div class="mt-3 mt-lg-0">
                                                         <form action="javascript:void(0);">
                                                             <div class="row g-3 mb-0 align-items-center">
                                                                 <div class="col-sm-auto">
@@ -97,7 +95,7 @@
                                                             </div>
                                                             <!--end row-->
                                                         </form>
-                                                    </div>
+                                                    </div> --}}
                                                 </div><!-- end card header -->
                                             </div>
                                             <!--end col-->
@@ -130,10 +128,10 @@
                                                                         class="counter-value"
                                                                         data-target="{{ $statistic['total'] }}">0</span>đ
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">View net
-                                                                    earnings</a>
+                                                                {{-- <a href="" class="text-decoration-underline">View net
+                                                                    earnings</a> --}}
                                                             </div>
-                                                            <div class="avatar-sm flex-shrink-0">
+                                                            {{-- <div class="avatar-sm flex-shrink-0">
                                                                 <span
                                                                     class="avatar-title bg-success-subtle rounded fs-3">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -144,7 +142,7 @@
                                                                             d="M28 20H4a2.005 2.005 0 0 1-2-2V6a2.005 2.005 0 0 1 2-2h24a2.005 2.005 0 0 1 2 2v12a2.003 2.003 0 0 1-2 2Zm0-14H4v12h24Z" />
                                                                     </svg>
                                                                 </span>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->
@@ -174,8 +172,7 @@
                                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                                         class="counter-value"
                                                                         data-target="{{ $statistic['number'] }}">0</span></h4>
-                                                                <a href="" class="text-decoration-underline">View all
-                                                                    orders</a>
+                                                                <a href="/admin/order/list" class="text-decoration-underline">Xem tất cả</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -215,8 +212,8 @@
                                                                         class="counter-value"
                                                                         data-target="{{$useramount}}">0</span>
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">See
-                                                                    details</a>
+                                                                {{-- <a href="" class="text-decoration-underline">See
+                                                                    details</a> --}}
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -302,7 +299,7 @@
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1"><span class="counter-value"
                                                                             data-target="7585">0</span></h5>
-                                                                    <p class="text-muted mb-0">Orders</p>
+                                                                    <p class="text-muted mb-0">Đơn hàng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -310,7 +307,7 @@
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1">$<span class="counter-value"
                                                                             data-target="22.89">0</span>k</h5>
-                                                                    <p class="text-muted mb-0">Earnings</p>
+                                                                    <p class="text-muted mb-0">Thu nhập</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -318,7 +315,7 @@
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1"><span class="counter-value"
                                                                             data-target="367">0</span></h5>
-                                                                    <p class="text-muted mb-0">Refunds</p>
+                                                                    <p class="text-muted mb-0">Hoàn tiền</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -328,7 +325,7 @@
                                                                     <h5 class="mb-1 text-success"><span
                                                                             class="counter-value"
                                                                             data-target="18.92">0</span>%</h5>
-                                                                    <p class="text-muted mb-0">Conversation Ratio</p>
+                                                                    <p class="text-muted mb-0">Tỉ số tăng trưởng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -349,10 +346,10 @@
                                                 <!-- card -->
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
-                                                        <h4 class="card-title mb-0 flex-grow-1">Sales by Locations</h4>
+                                                        <h4 class="card-title mb-0 flex-grow-1">Chi nhánh bán hàng</h4>
                                                         <div class="flex-shrink-0">
                                                             <button type="button" class="btn btn-soft-primary btn-sm">
-                                                                Export Report
+                                                                Xuất báo cáo
                                                             </button>
                                                         </div>
                                                     </div><!-- end card header -->
@@ -402,7 +399,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-xl-6">
+                                            {{-- <div class="col-xl-6">
                                                 <div class="card">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Best Selling Products
@@ -657,9 +654,9 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
-                                            <div class="col-xl-6">
+                                            <div class="">
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Bán chạy nhất</h4>
@@ -668,14 +665,13 @@
                                                                 <a class="text-reset dropdown-btn" href="#"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
-                                                                    <span class="text-muted">Report<i
+                                                                    <span class="text-muted">Báo cáo<i
                                                                             class="mdi mdi-chevron-down ms-1"></i></span>
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#">Download
-                                                                        Report</a>
-                                                                    <a class="dropdown-item" href="#">Export</a>
-                                                                    <a class="dropdown-item" href="#">Import</a>
+                                                                    <a class="dropdown-item" href="#">Tải báo cáo</a>
+                                                                    <a class="dropdown-item" href="#">Xuất</a>
+                                                                    <a class="dropdown-item" href="#">Nhập</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -705,10 +701,10 @@
                                                                             </td>
                                                                             <td>
                                                                                 <span class="text-muted">{{ $product->total_sold_amount }}</span>
-                                                                                <span class="text-muted">Sold</span>
+                                                                                <span class="text-muted">Đã bán</span>
                                                                             </td>
                                                                             <td>
-                                                                                <span class="text-muted">${{ number_format($product->total_cost, 2) }}</span>
+                                                                                <span class="text-muted">{{ number_format($product->total_cost) }} đ</span>
                                                                             </td>
                                                                         </tr><!-- end -->
                                                                     @endforeach
@@ -720,7 +716,7 @@
                                                             class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
                                                             <div class="col-sm">
                                                                 <div class="text-muted">
-                                                                    Showing <span class="fw-semibold">{{ $bestseller->count() }}</span> of <span class="fw-semibold">6</span> Results
+                                                                    Hiển thị <span class="fw-semibold">{{ $bestseller->count() }}</span> / <span class="fw-semibold">6</span> kết quả
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-auto  mt-3 mt-sm-0">
@@ -734,7 +730,7 @@
                                         </div> <!-- end row-->
 
                                         <div class="row">
-                                            <div class="col-xl-4">
+                                            {{-- <div class="col-xl-4">
                                                 <div class="card card-height-100">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source
@@ -763,9 +759,9 @@
                                                             class="apex-charts" dir="ltr"></div>
                                                     </div>
                                                 </div> <!-- .card-->
-                                            </div> <!-- .col-->
+                                            </div> <!-- .col--> --}}
 
-                                            <div class="col-xl-8">
+                                            <div class="">
                                                 <div class="card">
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Đơn hàng gần đây</h4>
@@ -783,11 +779,11 @@
                                                                 class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                                 <thead class="text-muted table-light">
                                                                     <tr>
-                                                                        <th scope="col">Order ID</th>
-                                                                        <th scope="col">Customer</th>
-                                                                        <th scope="col">Product</th>
-                                                                        <th scope="col">Amount</th>
-                                                                        <th scope="col">Status</th>
+                                                                        <th scope="col">Mã đơn hàng</th>
+                                                                        <th scope="col">Khách hàng</th>
+                                                                        <th scope="col">Sản phẩm</th>
+                                                                        <th scope="col">Số lượng</th>
+                                                                        <th scope="col">Trạng thái</th>
 
                                                                     </tr>
                                                                 </thead>
@@ -849,8 +845,7 @@
                                         <div class="card h-100 rounded-0">
                                             <div class="card-body p-0">
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Recent
-                                                        Activity</h6>
+                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Hoạt động gần đây</h6>
                                                 </div>
                                                 <div data-simplebar style="max-height: 410px;" class="p-3 pt-0">
                                                     <div class="acitivity-timeline acitivity-main">
@@ -1029,14 +1024,12 @@
 
                                                     </ol>
                                                     <div class="mt-3 text-center">
-                                                        <a href="javascript:void(0);"
-                                                            class="text-muted text-decoration-underline">View all
-                                                            Categories</a>
+                                                        <a href="{{route('admin.category.index')}}"
+                                                            class="text-muted text-decoration-underline">Xem tất cả danh mục</a>
                                                     </div>
                                                 </div>
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Products
-                                                        Reviews</h6>
+                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản </h6>
                                                     <!-- Swiper -->
                                                     <div class="swiper vertical-swiper" style="height: 250px;">
                                                         <div class="swiper-wrapper">
@@ -1340,14 +1333,14 @@
                                                     <div class="card-body">
                                                         <img src="{{asset('assets/images/giftbox.png')}}" alt="">
                                                         <div class="mt-4">
-                                                            <h5>Invite New Seller</h5>
+                                                            <h5>Mời người dùng mới</h5>
                                                             <p class="text-muted lh-base">Refer a new seller to us and
                                                                 earn $100
                                                                 per refer.</p>
                                                             <button type="button"
                                                                 class="btn btn-primary btn-label rounded-pill"><i
                                                                     class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
-                                                                Invite Now</button>
+                                                                Mời ngay</button>
                                                         </div>
                                                     </div>
                                                 </div>
