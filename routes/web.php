@@ -26,7 +26,7 @@ use Predis\Configuration\Option\Prefix;
 */
 // demo
 Route::get('test', function () {
-    event(new App\Events\NewOrderEvent('Someone'));
+    event(new App\Events\NewOrderEvent());
     return "Event has been sent!";
 });
 

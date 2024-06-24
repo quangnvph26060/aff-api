@@ -28,7 +28,7 @@ class OrderComposer
             if (!$orderCount) {
                 throw new OrderNotFoundException();
             }
-            $dataOrder = $this->order->get();
+            $dataOrder = $this->order->where('notify', 0)->get();
 
             // Gán dữ liệu cho view
             $view->with([

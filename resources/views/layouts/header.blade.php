@@ -179,7 +179,7 @@
                         <path fill="currentColor"
                             d="M11.997 21.385q-.668 0-1.14-.475q-.472-.474-.472-1.14h3.23q0 .67-.475 1.142q-.476.473-1.143.473M5 18.769v-1h1.615V9.846q0-1.96 1.24-3.447Q9.097 4.912 11 4.546V3h2v1.075q-.217.338-.38.683q-.164.344-.255.732l-.178-.02Q12.1 5.462 12 5.462q-1.823 0-3.104 1.28q-1.28 1.281-1.28 3.104v7.923h8.769V11.69q.238.047.49.073q.254.025.51.006v6H19v1zm11.964-9.365q-1.04 0-1.772-.729q-.73-.728-.73-1.769q0-1.04.728-1.771q.729-.731 1.77-.731q1.04 0 1.77.728t.732 1.77q0 1.04-.729 1.771q-.728.73-1.77.73" />
                     </svg>
-                    <span class="badge bg-danger rounded-pill">{{ $orderCount ?? 0}}</span>
+                    <span class="badge bg-danger rounded-pill " id="order-count-badge"> {{ $orderCount ?? 0}}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
     aria-labelledby="page-header-notifications-dropdown">
@@ -233,7 +233,6 @@
                 <button type="button" class="btn header-item bg-soft-light border-start border-end"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                    
-                  
                     <img class="rounded-circle header-profile-user" 
                     src="{{ isset($loggedInUser['images']) ? asset($loggedInUser['images']) : asset('/users/avatar-1.jpg') }}"
                     alt="Image">
@@ -284,12 +283,7 @@
     </div>
 </header>
 <script>
-   
-    function showOrderId(orderId) {
-        alert("Order ID: " + orderId);
-    }
-    
-    
+  
 </script>
     
 <style scoped>

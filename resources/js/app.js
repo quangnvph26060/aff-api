@@ -38,9 +38,4 @@ app.component('example-component', ExampleComponent);
  */
 
 
-app.mount('#app',
-    Echo.channel('new-order')
-            .listen('NewOrderEvent',(e)=>{
-                alert('đúng');
-            })
-);
+app.mount('#app');
