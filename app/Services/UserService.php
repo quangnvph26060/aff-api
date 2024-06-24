@@ -10,6 +10,7 @@ use App\Models\Commission;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Wallet;
+use Baileyherbert\BankQr\BankQr;
 //use Illuminate\Support\Facades\Log;
 //use Exception;
 use Carbon\Carbon;
@@ -24,9 +25,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 use Tymon\JWTAuth\Providers\Auth\Illuminate;
 
 /**
@@ -559,9 +561,9 @@ class UserService
      */
     public function updateUserInfoById(int $id, array $data)
     {
-        // dd($data);
         DB::beginTransaction();
         try {
+            $img = "https://img.vietqr.io/image/";
             $userinfo = UserInfo::where('user_id', $id)->first();
             $fontImagePath = '';
             $backImagePath = '';
@@ -571,13 +573,11 @@ class UserService
                 $imageFont = $data['font-image'];
                 $fontImageName = 'image_'.$imageFont->getClientOriginalName();
                 $fontImagePath = 'storage/cccd/cccd'.$id . '/' . $fontImageName;
-
                 if (!Storage::exists($fontImagePath)) {
                     $imageFont->storeAs('public/cccd/cccd'.$id, $fontImageName);
                 }
             }
 
-            // Handle back image upload
             if (isset($data['back-image']) && $data['back-image'] instanceof UploadedFile && $data['back-image']->isValid()) {
                 $imageBack = $data['back-image'];
                 $backImageName = 'image_'.$imageBack->getClientOriginalName();
@@ -588,27 +588,27 @@ class UserService
                 }
             }
 
-
             if ($userinfo) {
-                // dd($userinfo);
-
                 $userinfo->update([
                     "front_image" => isset($data['font-image']) ? $fontImagePath : $userinfo->front_image,
                     "back_image" =>  isset($data['back-image'])?  $backImagePath : $userinfo->back_image,
                     "citizen_id_number" =>  @$data['citizen_id_number'],
-                    "bank" => "MB",
+                    "bank" => @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
+                    'branch' => $img."MB-".$data['idnumber'].'-qr_only.png'
                 ]);
+
             } else {
                 $userinfo = UserInfo::create([
                     'user_id' => $id,
                     "front_image" => $fontImagePath,
                     "back_image" =>   $backImagePath,
                     "citizen_id_number" =>  @$data['citizen_id_number'],
-                    "bank" => "MB",
+                    "bank" =>  @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
+                    'branch' => $img."MB-".$data['idnumber'].'-qr_only.png'
                 ]);
             }
 

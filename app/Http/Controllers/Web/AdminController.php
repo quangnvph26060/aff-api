@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateAdminRequest;
 use App\Http\Responses\ApiResponse;
+use App\Models\Bank;
 use App\Models\City;
 use App\Models\Districts;
 use App\Models\User;
@@ -40,11 +41,12 @@ class AdminController extends Controller
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
                 $userInfor = UserInfo::where('user_id', $user['user']['id'])->first();
+                $bank = Bank::all();
                 $admin = User::find($user['user']['id']);
                 $city = City::all();
                 $districts = Districts::all();
                 $wards = Wards::all();
-                return view('admin.user.index', compact('admin','wards','city','districts','userInfor'));
+                return view('admin.user.index', compact('admin','wards','city','districts','userInfor', 'bank'));
             }
         }
         catch(\Exception $e)
@@ -59,7 +61,7 @@ class AdminController extends Controller
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
                 $adminId = User::find($user['user']['id'])->id;
-                
+
                 // Validate dữ liệu
                 $validator = Validator::make($request->all(), [
                     'name' => 'required|string|max:255',
@@ -70,7 +72,7 @@ class AdminController extends Controller
                     'phone' => 'required|string|regex:/^(\d{10,11})$/',
                     'email' => 'required|string|email|max:255|unique:users,email,' . $adminId,
                 ]);
-                
+
                 // Kiểm tra lỗi xác thực
                 if ($validator->fails()) {
                     Log::error('Validation errors: ' . json_encode($validator->errors()->all()));

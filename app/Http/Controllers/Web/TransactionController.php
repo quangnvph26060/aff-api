@@ -10,7 +10,7 @@ class TransactionController extends Controller
 {
     public function __construct()
     {
-        
+
     }
     public function index(){
         $data = Transaction::with('user','wallet','method')->get();
@@ -18,5 +18,11 @@ class TransactionController extends Controller
     }
     public function getTransacTion(){
 
+    }
+
+    public function xulytransaction($id){
+        $transaction = Transaction::find($id);
+        $transaction->update(['status' => 'completed']);
+        return redirect()->route('admin.transaction.index');
     }
 }

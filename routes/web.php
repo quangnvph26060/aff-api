@@ -88,10 +88,11 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // transaction 
+    // transaction
     Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::post('transaction/{id}', [TransactionController::class, 'xulytransaction'])->name('xulytransaction');
     // notifycation
     Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
-   
-   
+
+
 });
