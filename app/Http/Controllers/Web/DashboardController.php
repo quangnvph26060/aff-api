@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $this->categoryService = $categoryService;
         $this->userService = $userService;
     }
-    public function index(){
+    public function index(Request $request){
         $order = $this->orderService->orderNew();
         $category = $this->categoryService->productCategory();
         $bestseller = $this->BestSeller();
@@ -40,9 +40,12 @@ class DashboardController extends Controller
                 'total' => $amount->total,
             ];
         })->first();
-
-        // dd($order[0]);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount'));
+        if ($request->session()->has('authUser')) {
+            $loggedInUser = $request->session()->get('authUser');
+            
+        }
+        // dd($loggedInUser);
+        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser'));
     }
     public function BestSeller()
     {

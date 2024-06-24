@@ -35,6 +35,8 @@
      <script src="{{asset('validator/validator.js')}}"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <meta name="csrf-token" content="{{ csrf_token() }}">
+     <link rel="stylesheet" type="text/css" href="/css/bootstrap-notifications.min.css">
+ 
      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .progress-bar-striped {
@@ -54,7 +56,7 @@
     <!-- <body data-layout="horizontal"> -->
     <!-- Begin page -->
     <div id="layout-wrapper">
-    @include('layouts.header')
+        @include('layouts.header')
 
         <!-- ========== Left Sidebar Start ========== -->
         @include('layouts.siderbar-menu')
@@ -120,7 +122,9 @@
     <!-- dashboard init -->
 
      <script src="https://quanlycongviec.site/libs/assets/js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
     @yield('js')
     <script>
         $(function () {
@@ -226,7 +230,7 @@
     <!-- choices js -->
     <script src="https://quanlycongviec.site/libs/assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/js/pages/form-advanced.init.js"></script>
-    <script>
+    {{-- <script>
         function openModel(id, keyword) {
             $('#keyword').html(keyword);
             $('.modal-comment').html("<center><img width='50px' src='/images/loading-waiting.gif'></center>");
@@ -288,6 +292,57 @@
                 })
             }
         });
+    </script> --}}
+    <script>
+        Pusher.logToConsole = true;
+       var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
+           cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
+           encrypted: true
+       });
+       var channel = pusher.subscribe('new-orders');
+        channel.bind('App\\Events\\NewOrderEvent', function(data) {
+            $.ajax({
+                url: '{{ route("count.order") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    
+                    if (response.hasOwnProperty('orderCount')) {
+                        var orderCount = response.orderCount;
+                        $('#order-count-badge').text(orderCount);
+                    } else {
+                        console.error('Order count not found in response');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching order count:', error);
+                }
+            });
+        });
+        function showOrderId(orderId) {
+            const formData = new FormData();
+            formData.append('id', orderId);
+            formData.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: '{{ route("status.notify") }}',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false, 
+                success: function(response) {
+                    var orderCount = response.orderCount.original.orderCount;
+                    $('#order-count-badge').text(orderCount);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching order details:', error);
+                }
+            });
+        }
     </script>
 </body>
 

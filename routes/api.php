@@ -86,7 +86,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('update/{id}', [CartController::class, 'updateToCart']);
         Route::post('clear-cart',[CartController::class,'clearCartUser']);
     });
-    Route::post('/createorder', [OrderController::class, 'createOrder']);
+    Route::post('/createorder', [OrderController::class, 'createOrder'])->name('create.order');
     Route::get('/get-order', [OrderController::class, 'index']);
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
 });
+
+Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');
+Route::post('/update-status-notify',[OrderController::class,'updateNotify'])->name('status.notify');

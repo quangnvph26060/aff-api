@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Enums\RequestApi;
+use App\Events\NewOrderEvent;
+use App\Exceptions\OrderNotFoundException;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
 use App\Models\Order;
@@ -28,7 +30,6 @@ class OrderService
     {
         DB::beginTransaction();
         try {
-            Log::info('Create new order');
             $user = Auth::user();
             $user_id = $user->id;
             $receive_address = $data['receive_address'];
@@ -42,6 +43,7 @@ class OrderService
                 'name' => $data['name'],
                 'phone' => $data['phone'],
                 'zip_code' => $data['zip_code'],
+                'notify' => 0,
             ]);
             if (!$order) {
                 return response()->json('error', 'Order error');
@@ -62,7 +64,9 @@ class OrderService
                 'user' => $user,
                 'order' => $order->orderDetail,
             ];
-            SendMail::dispatch($arrSendMail);
+            SendMail::dispatch($arrSendMail); // send email to  user order
+            event(new NewOrderEvent()); // notify to admin
+           
             DB::commit();
             return $order;
         } catch (Exception $e) {
@@ -181,6 +185,25 @@ class OrderService
         } catch (\Exception $e) {
             Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
             throw new Exception('Lỗi không lấy ra đơn hàng');
+        }
+    }
+    public function updateNotify($id){
+        DB::beginTransaction();
+        try {
+            $order = $this->order->where('id',$id)->first();
+            $order->update([
+                'notify'=> 1,
+            ]);
+            DB::commit();
+            return $order;
+        } catch(ModelNotFoundException $e){
+            DB::rollBack();
+            $exception = new OrderNotFoundException();
+            return $exception -> render(request());
+        }catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('ERROR: ' . $e->getMessage());
+            throw new Exception('ERROR');
         }
     }
 }

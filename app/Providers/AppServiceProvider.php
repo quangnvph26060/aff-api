@@ -26,7 +26,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', UserComposer::class);
-        View::composer('*', OrderComposer::class);
+        // View::composer('*', UserComposer::class);
+        // View::composer('*', OrderComposer::class);
+        View::composer('*', function ($view) {
+            // Kiểm tra nếu route hiện tại không phải là 'create.order'
+            if (!request()->routeIs('create.order')) {
+                View::composer('*', UserComposer::class);
+                View::composer('*', OrderComposer::class);
+            }
+        });
     }
 }

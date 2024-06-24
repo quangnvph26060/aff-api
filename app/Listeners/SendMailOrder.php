@@ -32,7 +32,6 @@ class SendMailOrder implements ShouldQueue
     {
         $user = $event->user;
         $order = $event->order;
-       
         $this->mailer->send('emails.order', ['user' => $user, 'order' => $order], function ($message) use ($user) {
             $message->to($user['email'])
                 ->subject('Đơn hàng của bạn đã được đặt thành công');

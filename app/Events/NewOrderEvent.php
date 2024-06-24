@@ -27,10 +27,9 @@ class NewOrderEvent implements ShouldBroadcast
     public $username;
 
 	public $message;
-    public function __construct($username)
+    public function __construct()
 	{
-		$this->username = $username;
-		$this->message  = "{$username} liked your status";
+		
 	}
 
     /**

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Exceptions\OrderNotFoundException;
 use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class OrderController extends Controller
 {
@@ -131,5 +134,32 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * hàm đếm order
+     */
+    public function orderCount()
+    {
+        try {
+            $orderCount = Order::where('notify', 0)->count();
+            return response()->json(['orderCount' => $orderCount]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    /**
+     * change  status notify order
+     */
+    public function updateNotify(Request $request)  {
+        try {
+            $this->orderService->updateNotify($request->id);
+            $orderCount =   $this->orderCount();
+            return response()->json(['orderCount' => $orderCount]);
+        } catch(ModelNotFoundException $e){
+            $exception = new OrderNotFoundException();
+            return $exception -> render(request());
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
