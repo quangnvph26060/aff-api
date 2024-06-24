@@ -1029,7 +1029,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản </h6>
+                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản phẩm</h6>
                                                     <!-- Swiper -->
                                                     <div class="swiper vertical-swiper" style="height: 250px;">
                                                         <div class="swiper-wrapper">
@@ -1104,7 +1104,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="swiper-slide">
+                                                            <div class="swiper-slide" style="display: none">
                                                                 <div class="card border border-dashed shadow-none">
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
@@ -1141,7 +1141,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="swiper-slide">
+                                                            <div class="swiper-slide" style="display: none">
                                                                 <div class="card border border-dashed shadow-none">
                                                                     <div class="card-body">
                                                                         <div class="d-flex">
