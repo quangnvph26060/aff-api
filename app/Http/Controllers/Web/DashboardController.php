@@ -29,6 +29,8 @@ class DashboardController extends Controller
         $this->userService = $userService;
     }
     public function index(Request $request){
+        $getMonthlyRevenue = $this->orderService->getMonthlyRevenue();
+        //   dd($getMonthlyRevenue);
         $order = $this->orderService->orderNew();
         $category = $this->categoryService->productCategory();
         $bestseller = $this->BestSeller();
@@ -42,10 +44,10 @@ class DashboardController extends Controller
         })->first();
         if ($request->session()->has('authUser')) {
             $loggedInUser = $request->session()->get('authUser');
-            
+
         }
         // dd($loggedInUser);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser'));
+        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue'));
     }
     public function BestSeller()
     {

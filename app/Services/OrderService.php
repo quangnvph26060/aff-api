@@ -10,8 +10,10 @@ use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\UserWallet;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -77,6 +79,7 @@ class OrderService
             throw new Exception('Failed to create new order');
         }
     }
+
     /**
      * hàm lấy ra user trong team
      */
@@ -162,6 +165,7 @@ class OrderService
 
         return true;
     }
+
 
     public function getOrderAmount()
     {
@@ -294,5 +298,29 @@ class OrderService
             Log::error('ERROR: ' . $e->getMessage());
             throw new Exception('ERROR');
         }
+    }
+
+    public function getMonthlyRevenue()
+    {
+        $currentYear = date('Y');
+
+        $monthlyRevenue = Order::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_money) as total')
+        )
+        ->whereYear('created_at', $currentYear)
+        ->groupBy('year', 'month')
+        ->orderBy('month')
+        ->get()
+        ->keyBy('month');
+
+        $months = range(1, 12);
+        $monthlyRevenueWithZeroes = [];
+        foreach ($months as $month) {
+            $monthlyRevenueWithZeroes[$month] = isset($monthlyRevenue[$month]) ? $monthlyRevenue[$month]->total : 0;
+        }
+
+        return array_values($monthlyRevenueWithZeroes);
     }
 }
