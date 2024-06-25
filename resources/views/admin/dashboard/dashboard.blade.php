@@ -58,7 +58,8 @@
                                             <div class="col-12">
                                                 <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                                     <div class="flex-grow-1">
-                                                        <h4 class="fs-16 mb-1">Xin chào, {{$loggedInUser['user']['name']}}!</h4>
+                                                        <h4 class="fs-16 mb-1">Xin chào,
+                                                            {{$loggedInUser['user']['name']}}! </h4>
                                                         <p class="text-muted mb-0">Đây là thống kê của trang web</p>
                                                     </div>
                                                     {{-- <div class="mt-3 mt-lg-0">
@@ -128,7 +129,8 @@
                                                                         class="counter-value"
                                                                         data-target="{{ $statistic['total'] }}">0</span>đ
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">dsafdasdfsad</a>
+                                                                <a href=""
+                                                                    class="text-decoration-underline">dsafdasdfsad</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -155,8 +157,8 @@
                                                             <div class="flex-grow-1 overflow-hidden">
                                                                 <a href="/admin/order/list">
                                                                     <p
-                                                                    class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                                                    Đơn hàng</p>
+                                                                        class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                                                                        Đơn hàng</p>
                                                                 </a>
                                                             </div>
                                                             <div class="flex-shrink-0">
@@ -172,8 +174,10 @@
                                                             <div>
                                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                                         class="counter-value"
-                                                                        data-target="{{ $statistic['number'] }}">0</span></h4>
-                                                                <a href="/admin/order/list" class="text-decoration-underline">Xem tất cả</a>
+                                                                        data-target="{{ $statistic['number'] }}">0</span>
+                                                                </h4>
+                                                                <a href="/admin/order/list"
+                                                                    class="text-decoration-underline">Xem tất cả</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -213,7 +217,8 @@
                                                                         class="counter-value"
                                                                         data-target="{{$useramount}}">0</span>
                                                                 </h4>
-                                                                <a href="" class="text-decoration-underline">dsafsfsfs</a>
+                                                                <a href=""
+                                                                    class="text-decoration-underline">dsafsfsfs</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -278,10 +283,14 @@
                                                     <div class="card-header border-0 align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Doanh thu</h4>
                                                         <div>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">ALL</button>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">1M</button>
-                                                            <button type="button" class="btn btn-soft-secondary btn-sm">6M</button>
-                                                            <button type="button" class="btn btn-soft-primary btn-sm">1Y</button>
+                                                            <button type="button"
+                                                                class="btn btn-soft-secondary btn-sm">ALL</button>
+                                                            <button type="button"
+                                                                class="btn btn-soft-secondary btn-sm">1M</button>
+                                                            <button type="button"
+                                                                class="btn btn-soft-secondary btn-sm">6M</button>
+                                                            <button type="button"
+                                                                class="btn btn-soft-primary btn-sm">1Y</button>
                                                         </div>
                                                     </div><!-- end card header -->
 
@@ -289,28 +298,34 @@
                                                         <div class="row g-0 text-center">
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1"><span class="counter-value" data-target="7585">0</span></h5>
+                                                                    <h5 class="mb-1"><span class="counter-value"
+                                                                            data-target="7585">0</span></h5>
                                                                     <p class="text-muted mb-0">Đơn hàng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1">$<span class="counter-value" data-target="22.89">0</span>k</h5>
+                                                                    <h5 class="mb-1">$<span class="counter-value"
+                                                                            data-target="22.89">0</span>k</h5>
                                                                     <p class="text-muted mb-0">Thu nhập</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1"><span class="counter-value" data-target="367">0</span></h5>
+                                                                    <h5 class="mb-1"><span class="counter-value"
+                                                                            data-target="367">0</span></h5>
                                                                     <p class="text-muted mb-0">Hoàn tiền</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-6 col-sm-3">
-                                                                <div class="p-3 border border-dashed border-start-0 border-end-0">
-                                                                    <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">0</span>%</h5>
+                                                                <div
+                                                                    class="p-3 border border-dashed border-start-0 border-end-0">
+                                                                    <h5 class="mb-1 text-success"><span
+                                                                            class="counter-value"
+                                                                            data-target="18.92">0</span>%</h5>
                                                                     <p class="text-muted mb-0">Tăng trưởng</p>
                                                                 </div>
                                                             </div>
@@ -332,28 +347,43 @@
                                                     <div class="card-header align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Chi nhánh bán hàng</h4>
                                                         <div class="flex-shrink-0">
-                                                            <button type="button" class="btn btn-soft-primary btn-sm">Xuất báo cáo</button>
+                                                            <button type="button"
+                                                                class="btn btn-soft-primary btn-sm">Xuất báo
+                                                                cáo</button>
                                                         </div>
                                                     </div><!-- end card header -->
 
                                                     <!-- card body -->
                                                     <div class="card-body">
-                                                        <canvas id="salesByLocationsChart" style="height: 269px"></canvas>
+                                                        <canvas id="salesByLocationsChart"
+                                                            style="height: 269px"></canvas>
 
                                                         <div class="px-2 py-2 mt-1">
-                                                            <p class="mb-1">Canada <span class="float-end">75%</span></p>
+                                                            <p class="mb-1">Canada <span class="float-end">75%</span>
+                                                            </p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary"
+                                                                    role="progressbar" style="width: 75%"
+                                                                    aria-valuenow="75" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
                                                             </div>
 
-                                                            <p class="mt-3 mb-1">Greenland <span class="float-end">47%</span></p>
+                                                            <p class="mt-3 mb-1">Greenland <span
+                                                                    class="float-end">47%</span></p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary"
+                                                                    role="progressbar" style="width: 47%"
+                                                                    aria-valuenow="47" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
                                                             </div>
 
-                                                            <p class="mt-3 mb-1">Russia <span class="float-end">82%</span></p>
+                                                            <p class="mt-3 mb-1">Russia <span
+                                                                    class="float-end">82%</span></p>
                                                             <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div class="progress-bar progress-bar-striped bg-primary"
+                                                                    role="progressbar" style="width: 82%"
+                                                                    aria-valuenow="82" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -649,30 +679,38 @@
                                                                 class="table table-centered table-hover align-middle table-nowrap mb-0">
                                                                 <tbody>
                                                                     @foreach($bestseller as $product)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <div class="flex-shrink-0 me-2">
-                                                                                        <img src="{{asset('assets/images/products/default.png')}}" alt="" class="avatar-sm p-2" />
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <h5 class="fs-14 my-1 fw-medium">
-                                                                                            <a href="#" class="text-reset">{{ $product->product_name }}</a>
-                                                                                        </h5>
-                                                                                    </div>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="flex-shrink-0 me-2">
+                                                                                    <img src="{{asset('assets/images/products/default.png')}}"
+                                                                                        alt="" class="avatar-sm p-2" />
                                                                                 </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <span class="text-muted">{{ $product->category_name }}</span>
-                                                                            </td>
-                                                                            <td>
-                                                                                <span class="text-muted">{{ $product->total_sold_amount }}</span>
-                                                                                <span class="text-muted">Đã bán</span>
-                                                                            </td>
-                                                                            <td>
-                                                                                <span class="text-muted">{{ number_format($product->total_cost) }} đ</span>
-                                                                            </td>
-                                                                        </tr><!-- end -->
+                                                                                <div>
+                                                                                    <h5 class="fs-14 my-1 fw-medium">
+                                                                                        <a href="#"
+                                                                                            class="text-reset">{{
+                                                                                            $product->product_name
+                                                                                            }}</a>
+                                                                                    </h5>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-muted">{{
+                                                                                $product->category_name }}</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-muted">{{
+                                                                                $product->total_sold_amount }}</span>
+                                                                            <span class="text-muted">Đã bán</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-muted">{{
+                                                                                number_format($product->total_cost) }}
+                                                                                đ</span>
+                                                                        </td>
+                                                                    </tr><!-- end -->
                                                                     @endforeach
                                                                 </tbody>
                                                             </table><!-- end table -->
@@ -682,7 +720,9 @@
                                                             class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
                                                             <div class="col-sm">
                                                                 <div class="text-muted">
-                                                                    Hiển thị <span class="fw-semibold">{{ $bestseller->count() }}</span> / <span class="fw-semibold">6</span> kết quả
+                                                                    Hiển thị <span class="fw-semibold">{{
+                                                                        $bestseller->count() }}</span> / <span
+                                                                        class="fw-semibold">6</span> kết quả
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-auto  mt-3 mt-sm-0">
@@ -775,7 +815,8 @@
 
                                                                         <td>
                                                                             <span class="text-success">{{
-                                                                                number_format($item->total_money) }}đ</span>
+                                                                                number_format($item->total_money)
+                                                                                }}đ</span>
                                                                         </td>
 
                                                                         <td>
@@ -804,7 +845,8 @@
                                         <div class="card h-100 rounded-0">
                                             <div class="card-body p-0">
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Hoạt động gần đây</h6>
+                                                    <h6 class="text-muted mb-0 text-uppercase fw-semibold">Hoạt động gần
+                                                        đây</h6>
                                                 </div>
                                                 <div data-simplebar style="max-height: 410px;" class="p-3 pt-0">
                                                     <div class="acitivity-timeline acitivity-main">
@@ -984,11 +1026,13 @@
                                                     </ol>
                                                     <div class="mt-3 text-center">
                                                         <a href="{{route('admin.category.index')}}"
-                                                            class="text-muted text-decoration-underline">Xem tất cả danh mục</a>
+                                                            class="text-muted text-decoration-underline">Xem tất cả danh
+                                                            mục</a>
                                                     </div>
                                                 </div>
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản phẩm</h6>
+                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản
+                                                        phẩm</h6>
                                                     <!-- Swiper -->
                                                     <div class="swiper vertical-swiper" style="height: 250px;">
                                                         <div class="swiper-wrapper">
@@ -2230,31 +2274,33 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Column Chart for Revenue
+    var revenueData = {!! json_encode($getMonthlyRevenue) !!};
     var revenueCtx = document.getElementById('revenueChart').getContext('2d');
     var revenueChart = new Chart(revenueCtx, {
         type: 'bar',
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
-                label: 'Revenue',
-                data: [12000, 15000, 13000, 17000, 16000, 19000, 21000, 18000, 22000, 24000, 23000, 25000],
-                backgroundColor: '#007bff'
-            }]
+                    label: 'Revenue',
+                    data: revenueData,
+                    backgroundColor: '#007bff',
+                    skipNull: false  // Cho phép hiển thị các giá trị bằng 0
+                }]
         },
         options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                },
-                y: {
-                    beginAtZero: true
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
     });
 
     // Pie Chart for Sales by Locations

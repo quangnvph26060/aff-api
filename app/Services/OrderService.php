@@ -10,6 +10,7 @@ use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -57,7 +58,6 @@ class OrderService
                 $product = Product::where('id', $detail['product_id'])->first();
                 $product->quantity = $product->quantity - $detail['amount'];
                 $product->save();
-
             }
             $arrSendMail = [
                 'type' => 'send_order',
@@ -66,7 +66,7 @@ class OrderService
             ];
             SendMail::dispatch($arrSendMail); // send email to  user order
             event(new NewOrderEvent()); // notify to admin
-           
+
             DB::commit();
             return $order;
         } catch (Exception $e) {
@@ -75,8 +75,9 @@ class OrderService
             throw new Exception('Failed to create new order');
         }
     }
-    public function getOrderAmount(){
-        try{
+    public function getOrderAmount()
+    {
+        try {
             $number = $this->order->count();
             $total = $this->order->sum('total_money');
             $result = new \Illuminate\Database\Eloquent\Collection;
@@ -85,47 +86,46 @@ class OrderService
                 'total' => $total,
             ]);
             return $result;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Failed to count order: ' . $e->getMessage());
             throw new Exception('Failed to count orders');
         }
     }
-    public function getBestSeller(){
-        try{
+    public function getBestSeller()
+    {
+        try {
 
             $bestseller = $this->orderDetail
-            ->select(
-                'products.name as product_name',
-                'categories.name as category_name',
-                DB::raw('SUM(order_details.quantity *products.price) as total_cost'),
-                DB::raw('Sum(order_details.quantity) as total_sold_amount')
-            )
-            ->join('products', 'order_details.product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->groupBy('products.id', 'products.name', 'categories.name')
-            ->orderBy('total_sold_amount', 'desc')
-            ->limit(6)
-            ->get();
+                ->select(
+                    'products.name as product_name',
+                    'categories.name as category_name',
+                    DB::raw('SUM(order_details.quantity *products.price) as total_cost'),
+                    DB::raw('Sum(order_details.quantity) as total_sold_amount')
+                )
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->groupBy('products.id', 'products.name', 'categories.name')
+                ->orderBy('total_sold_amount', 'desc')
+                ->limit(6)
+                ->get();
             // dd($bestseller);
             return $bestseller;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Failed to retrieve orders: ' . $e->getMessage());
             throw new Exception('Failed to retrieve orders');
         }
-    // dd($result);
+        // dd($result);
     }
     public function getAllOrder($type)
     {
         try {
-            if($type == RequestApi::API){
+            if ($type == RequestApi::API) {
                 $user_id = Auth::user()->id;
-                $orders = $this->order->where('user_id',$user_id)->get();
-                $orderCount = $this->order->where('user_id',$user_id)->where('status', 3)->count();
+                $orders = $this->order->where('user_id', $user_id)->get();
+                $orderCount = $this->order->where('user_id', $user_id)->where('status', 3)->count();
                 $data = [
                     'orders' => $orders,
-                    'orderCount' =>$orderCount,
+                    'orderCount' => $orderCount,
                 ];
                 return $data;
             }
@@ -187,23 +187,48 @@ class OrderService
             throw new Exception('Lỗi không lấy ra đơn hàng');
         }
     }
-    public function updateNotify($id){
+    public function updateNotify($id)
+    {
         DB::beginTransaction();
         try {
-            $order = $this->order->where('id',$id)->first();
+            $order = $this->order->where('id', $id)->first();
             $order->update([
-                'notify'=> 1,
+                'notify' => 1,
             ]);
             DB::commit();
             return $order;
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             DB::rollBack();
             $exception = new OrderNotFoundException();
-            return $exception -> render(request());
-        }catch (\Exception $e) {
+            return $exception->render(request());
+        } catch (\Exception $e) {
             DB::rollBack();
             Log::error('ERROR: ' . $e->getMessage());
             throw new Exception('ERROR');
         }
+    }
+
+    public function getMonthlyRevenue()
+    {
+        $currentYear = date('Y');
+
+        $monthlyRevenue = Order::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_money) as total')
+        )
+        ->whereYear('created_at', $currentYear)
+        ->groupBy('year', 'month')
+        ->orderBy('month')
+        ->get()
+        ->keyBy('month');
+
+        $months = range(1, 12);
+        $monthlyRevenueWithZeroes = [];
+        foreach ($months as $month) {
+            $monthlyRevenueWithZeroes[$month] = isset($monthlyRevenue[$month]) ? $monthlyRevenue[$month]->total : 0;
+        }
+
+        return array_values($monthlyRevenueWithZeroes);
     }
 }
