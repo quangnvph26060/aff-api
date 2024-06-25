@@ -611,7 +611,7 @@ class UserService
                     "bank" => @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
-                    'branch' => $img."MB-".$data['idnumber'].'-qr_only.png'
+                    'branch' => $img.$data['bank']."-".$data['idnumber'].'-qr_only.png'
                 ]);
 
             } else {
@@ -623,7 +623,7 @@ class UserService
                     "bank" =>  @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
-                    'branch' => $img."MB-".$data['idnumber'].'-qr_only.png'
+                    'branch' => $img.$data['bank']."-".$data['idnumber'].'-qr_only.png'
                 ]);
             }
 
