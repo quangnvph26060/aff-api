@@ -152,7 +152,7 @@
                         </div>
                         <div class="info-item">
                             <span class="label"><strong>Số tài khoản:</strong></span>
-                            <span class="value">{{ count($item->user->user_info) > 0 ? $item->user->user_info[0]->idnumber : "" }} </span> 
+                            <span class="value">{{ count($item->user->user_info) > 0 ? $item->user->user_info[0]->idnumber : "" }} </span>
                         </div>
                         <hr>
                         <div class="text-center">
