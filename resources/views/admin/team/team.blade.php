@@ -60,8 +60,8 @@
                                                         </a>
                                                     </td>
                                                     <td>{{ $item['email'] }}</td>
-                                                    <td>{{ $item['personal_sale'] }}</td>
-                                                    <td>{{ $item['team_sale'] }}</td>
+                                                    <td>{{ number_format($item['personal_sale']) }}</td>
+                                                    <td>{{  number_format($item['team_sale']) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
