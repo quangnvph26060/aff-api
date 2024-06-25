@@ -148,16 +148,16 @@
                         </div>
                         <div class="info-item">
                             <span class="label"><strong>Ngân hàng:</strong></span>
-                            <span class="value">Ngân hàng MB Banks</span>
+                            <span class="value">{{ count($item->user->user_info) > 0 ? $item->user->user_info[0]->bank : "" }}</span>
                         </div>
                         <div class="info-item">
                             <span class="label"><strong>Số tài khoản:</strong></span>
-                            <span class="value">{{ $item->user->user_info[0]->idnumber? $item->user->user_info[0]->idnumber : '' }}</span>
+                            <span class="value">{{ count($item->user->user_info) > 0 ? $item->user->user_info[0]->idnumber : "" }} </span> 
                         </div>
                         <hr>
                         <div class="text-center">
 
-                            <img style="width:250px ; height: auto;" src="{{ $item->user->user_info[0]->branch?$item->user->user_info[0]->branch : '' }}"
+                            <img style="width:250px ; height: auto;" src="{{  count($item->user->user_info) > 0 ? $item->user->user_info[0]->branch : "" }}"
                                 alt="QR Code" class="img-fluid">
                         </div>
                     </div>
