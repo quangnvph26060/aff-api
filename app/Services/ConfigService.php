@@ -45,18 +45,18 @@ class ConfigService
             // Handle logo update
             if (isset($data['logo'])) {
                 $logo = $data['logo']; // Single file
-                $logoFileName = 'image_' . time() . '_' . $logo->getClientOriginalName();
-                $logoFilePath = 'public/images/' . $logoFileName; // Storage path
-                Storage::putFileAs('public/images', $logo, $logoFileName); // Store image
+                $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
+                $logoFilePath = 'public/config/' . $logoFileName; // Storage path
+                Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
                 $config->logo = $logoFilePath; // Update logo path in database
             }
 
             // Handle login banner update
             if (isset($data['login_banner'])) {
                 $banner = $data['login_banner']; // Single file
-                $bannerFileName = 'image_' . time() . '_' . $banner->getClientOriginalName();
-                $bannerFilePath = 'public/images/' . $bannerFileName; // Storage path
-                Storage::putFileAs('public/images', $banner, $bannerFileName); // Store image
+                $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
+                $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
+                Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
                 $config->login_banner = $bannerFilePath; // Update banner path in database
             }
 
