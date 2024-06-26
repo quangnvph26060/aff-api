@@ -22,7 +22,7 @@
 
 
                         <div class="card-body p-4">
-                            <form action="" method="POST" id="submitfrom"
+                            <form action="{{ route('admin.brand.add') }}" method="POST" id="submitfrom"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -41,8 +41,8 @@
                                                 <label for="example-text-input" class="form-label">Logo  <span
                                                         class="text text-danger">*</span></label>
 
-                                                <input id="images" class="form-control" type="file" name="images[]"
-                                                    multiple accept="image/*" required>
+                                                <input id="images" class="form-control" type="file" name="images"
+                                                     required>
                                                 <div class="col-lg-9"><span class="invalid-feedback d-block"
                                                         style="font-weight: 500" id="images_error"></span> </div>
 
@@ -103,7 +103,7 @@
                         'func': function(value){
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E0010')
+                        'message': generateErrorMessage('E027')
                     },
                 ]
             },
@@ -116,7 +116,7 @@
                         'func': function(value){
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E0011')
+                        'message': generateErrorMessage('E028')
                     },
                 ]
             },
@@ -128,7 +128,7 @@
                         'func': function(value){
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E0012')
+                        'message': generateErrorMessage('E029')
                     },
                 ]
             },
@@ -140,7 +140,7 @@
                         'func': function(value){
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E0013')
+                        'message': generateErrorMessage('E031')
                     },
                 ]
             },
@@ -152,7 +152,7 @@
                         'func': function(value){
                             return checkRequired(value);
                         },
-                        'message': generateErrorMessage('E0014')
+                        'message': generateErrorMessage('E030')
                     },
                 ]
             },

@@ -57,7 +57,7 @@ class ProductController extends Controller
         try {
             $category = $this->categoryService->getAllCategories();
             $brand = $this->brandService->getAllBrand();
-            return view('admin.products.add', compact('category', 'brand'));
+            return view('admin.products.add', compact('category','brand'));
         } catch (\Exception $e) {
             Log::error('Failed to create category: ' . $e->getMessage());
             return ApiResponse::error('Failed to create category', 500);
@@ -80,8 +80,10 @@ class ProductController extends Controller
 
         $product = $this->productService->getProductById($id);
         $category = $this->categoryService->getAllCategories();
+        $brand = $this->brandService->getAllBrand();
+
         // dd($product);
-        return view('admin.products.edit', compact('product', 'category'));
+        return view('admin.products.edit', compact('product', 'category', 'brand'));
     }
     public function editSubmit(Request $request, $id){
         try {

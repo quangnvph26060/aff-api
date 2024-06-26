@@ -101,5 +101,10 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
 
     Route::get('brand', [BrandController::class, 'index'])->name('brand.index');
-    Route::get('brand/add', [BrandController::class, 'addForm'])->name('brand.add');
+    Route::get('brand/add', [BrandController::class, 'addForm'])->name('brand.addForm');
+    Route::post('brand/add', [BrandController::class, 'add'])->name('brand.add');
+    Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+    Route::post('brand/edit/{id}', [BrandController::class, 'update'])->name('brand.update');
+    Route::get('brand/delete/{id}', [BrandController::class, 'deltee'])->name('brand.delete');
+    Route::get('brand/search', [BrandController::class, 'search'])->name('brand.search');
 });

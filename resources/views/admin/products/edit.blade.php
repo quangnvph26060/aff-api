@@ -58,6 +58,18 @@
                                             </div>
 
                                             <div class="mb-3">
+                                                <label for="example-text-input" class="form-label">Loại thương
+                                                    hiệu<span class="text text-danger">*</span></label>
+                                                <select class="form-control" name="category_id" id="" required>
+                                                    <option value="">Chọn thương hiệu</option>
+                                                    @foreach ($brand as $item )
+                                                    <option {{ $product->brands->id == $item->id ? 'selected' : ''
+                                                        }} value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger"></span></label>
 
@@ -116,8 +128,8 @@
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Mô tả <span
                                                         class="text text-danger">*</span></label>
-                                                <textarea class="form-control" id="example-url-input" name="description"
-                                                    rows="2" required> {{ $product->description }}</textarea>
+                                                <textarea class="form-control"  id="description" name="description"
+                                                    rows="2" > {{ $product->description }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Trạng thái<span

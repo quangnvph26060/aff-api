@@ -232,18 +232,18 @@
                     },
                 ]
             },
-            'description': {
-                'element': document.getElementById('description'),
-                'error': document.getElementById('description_error'),
-                'validations': [
-                    {
-                        'func': function(value){
-                            return checkRequired(value);
-                        },
-                        'message': generateErrorMessage('E0016')
-                    },
-                ]
-            },
+            // 'description': {
+            //     'element': document.getElementById('description'),
+            //     'error': document.getElementById('description_error'),
+            //     'validations': [
+            //         {
+            //             'func': function(value){
+            //                 return checkRequired(value);
+            //             },
+            //             'message': generateErrorMessage('E0016')
+            //         },
+            //     ]
+            // },
             'status': {
                 'element': document.getElementById('status'),
                 'error': document.getElementById('status_error'),
