@@ -27,12 +27,12 @@
                                                 <input value="{{ $data->name }}" required class="form-control" name="name" type="text" id="name">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-text-input" class="form-label">Logo công ty</label>
-                                                <input id="logo" class="form-control" type="file" name="logo[]" multiple accept="image/*" required>
+                                                <label for="logo" class="form-label">Logo công ty</label>
+                                                <input id="logo" class="form-control" type="file" name="logo" accept="image/*">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-text-input" class="form-label">Banner đăng nhập</label>
-                                                <input id="banner" class="form-control" type="file" name="login_banner[]" multiple accept="image/*" required>
+                                                <label for="banner" class="form-label">Banner đăng nhập</label>
+                                                <input id="banner" class="form-control" type="file" name="login_banner" accept="image/*">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Chính sách</label>

@@ -10,6 +10,10 @@ use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\UserWallet;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -34,6 +38,7 @@ class OrderService
             $user_id = $user->id;
             $receive_address = $data['receive_address'];
             $total_money = $data['total_money'];
+            $this->getUserTeam($total_money);
             $order = $this->order->create([
                 'user_id' => $user_id,
                 'receive_address' => $receive_address,
@@ -57,7 +62,6 @@ class OrderService
                 $product = Product::where('id', $detail['product_id'])->first();
                 $product->quantity = $product->quantity - $detail['amount'];
                 $product->save();
-
             }
             $arrSendMail = [
                 'type' => 'send_order',
@@ -66,7 +70,7 @@ class OrderService
             ];
             SendMail::dispatch($arrSendMail); // send email to  user order
             event(new NewOrderEvent()); // notify to admin
-           
+
             DB::commit();
             return $order;
         } catch (Exception $e) {
@@ -75,8 +79,97 @@ class OrderService
             throw new Exception('Failed to create new order');
         }
     }
-    public function getOrderAmount(){
-        try{
+
+    /**
+     * hàm lấy ra user trong team
+     */
+    // public function getUserTeam($total_money)
+    // {
+    //     $user = Auth::user();
+    //     $referr1 = $user->referrer_id;
+    //     if ($referr1) {
+    //         $referr2 = User::where('referral_code', $referr1)->first();
+    //         $result =  UserWallet::where('user_id', $referr2->id)->where('wallet_id', 2)->first();
+    //         $result->update([
+    //             'total_revenue' => $result->total_revenue + ($total_money * 0.25),
+    //         ]);
+    //         if ($referr2) {
+    //             $referr3 = User::where('referral_code', $referr2->referrer_id)->first();
+    //             $result =  UserWallet::where('user_id', $referr3->id)->where('wallet_id', 2)->first();
+    //             if(!$result){
+    //                 return false;
+    //             }
+    //             $result->update([
+    //                 'total_revenue' => $result->total_revenue + ($total_money * 0.10),
+    //             ]);
+    //             if ($referr3) {
+    //                 $referr4 = User::where('referral_code', $referr3->referrer_id)->first();
+    //                 $result =  UserWallet::where('user_id', $referr4->id)->where('wallet_id', 2)->first();
+    //                 if(!$result){
+    //                     return false;
+    //                 }
+    //                 $result->update([
+    //                     'total_revenue' => $result->total_revenue + ($total_money * 0.07),
+    //                 ]);
+    //                 if ($referr4) {
+    //                     $referr5 = User::where('referral_code', $referr4->referrer_id)->first();
+    //                     $result =  UserWallet::where('user_id', $referr5->id)->where('wallet_id', 2)->first();
+    //                     if(!$result){
+    //                         return false;
+    //                     }
+    //                     $result->update([
+    //                         'total_revenue' => $result->total_revenue + ($total_money * 0.05),
+    //                     ]);
+    //                     if ($referr5) {
+    //                         $referr6 = User::where('referral_code', $referr5->referrer_id)->first();
+    //                         $result =  UserWallet::where('user_id', $referr6->id)->where('wallet_id', 2)->first();
+    //                         if(!$result){
+    //                             return false;
+    //                         }
+    //                         $result->update([
+    //                             'total_revenue' => $result->total_revenue + ($total_money * 0.03),
+    //                         ]);
+    //                     }
+
+    //                 }
+
+    //             }
+    //         }
+    //     }
+    //     return true;
+    // }
+    public function getUserTeam($total_money)
+    {
+        $user = Auth::user();
+        $currentReferrerId = $user->referrer_id;
+
+        $percentages = [0.25, 0.10, 0.07, 0.05, 0.03]; // Các phần trăm tương ứng cho F1 đến F5
+
+        for ($i = 0; $i < 5 && $currentReferrerId; $i++) {
+            $referrer = User::where('referral_code', $currentReferrerId)->first();
+            if ($referrer) {
+                $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 2)->first();
+                if ($result) {
+                    $result->update([
+                        'total_revenue' => $result->total_revenue + ($total_money * $percentages[$i])
+                    ]);
+                } else {
+                    // Dừng vòng lặp nếu không tìm thấy UserWallet
+                    break;
+                }
+                $currentReferrerId = $referrer->referrer_id;
+            } else {
+                break;
+            }
+        }
+
+        return true;
+    }
+
+
+    public function getOrderAmount()
+    {
+        try {
             $number = $this->order->count();
             $total = $this->order->sum('total_money');
             $result = new \Illuminate\Database\Eloquent\Collection;
@@ -85,47 +178,46 @@ class OrderService
                 'total' => $total,
             ]);
             return $result;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Failed to count order: ' . $e->getMessage());
             throw new Exception('Failed to count orders');
         }
     }
-    public function getBestSeller(){
-        try{
+    public function getBestSeller()
+    {
+        try {
 
             $bestseller = $this->orderDetail
-            ->select(
-                'products.name as product_name',
-                'categories.name as category_name',
-                DB::raw('SUM(order_details.quantity *products.price) as total_cost'),
-                DB::raw('Sum(order_details.quantity) as total_sold_amount')
-            )
-            ->join('products', 'order_details.product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->groupBy('products.id', 'products.name', 'categories.name')
-            ->orderBy('total_sold_amount', 'desc')
-            ->limit(6)
-            ->get();
+                ->select(
+                    'products.name as product_name',
+                    'categories.name as category_name',
+                    DB::raw('SUM(order_details.quantity *products.price) as total_cost'),
+                    DB::raw('Sum(order_details.quantity) as total_sold_amount')
+                )
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->groupBy('products.id', 'products.name', 'categories.name')
+                ->orderBy('total_sold_amount', 'desc')
+                ->limit(6)
+                ->get();
             // dd($bestseller);
             return $bestseller;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Failed to retrieve orders: ' . $e->getMessage());
             throw new Exception('Failed to retrieve orders');
         }
-    // dd($result);
+        // dd($result);
     }
     public function getAllOrder($type)
     {
         try {
-            if($type == RequestApi::API){
+            if ($type == RequestApi::API) {
                 $user_id = Auth::user()->id;
-                $orders = $this->order->where('user_id',$user_id)->get();
-                $orderCount = $this->order->where('user_id',$user_id)->where('status', 3)->count();
+                $orders = $this->order->where('user_id', $user_id)->get();
+                $orderCount = $this->order->where('user_id', $user_id)->where('status', 3)->count();
                 $data = [
                     'orders' => $orders,
-                    'orderCount' =>$orderCount,
+                    'orderCount' => $orderCount,
                 ];
                 return $data;
             }
@@ -187,23 +279,48 @@ class OrderService
             throw new Exception('Lỗi không lấy ra đơn hàng');
         }
     }
-    public function updateNotify($id){
+    public function updateNotify($id)
+    {
         DB::beginTransaction();
         try {
-            $order = $this->order->where('id',$id)->first();
+            $order = $this->order->where('id', $id)->first();
             $order->update([
-                'notify'=> 1,
+                'notify' => 1,
             ]);
             DB::commit();
             return $order;
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             DB::rollBack();
             $exception = new OrderNotFoundException();
-            return $exception -> render(request());
-        }catch (\Exception $e) {
+            return $exception->render(request());
+        } catch (\Exception $e) {
             DB::rollBack();
             Log::error('ERROR: ' . $e->getMessage());
             throw new Exception('ERROR');
         }
+    }
+
+    public function getMonthlyRevenue()
+    {
+        $currentYear = date('Y');
+
+        $monthlyRevenue = Order::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_money) as total')
+        )
+        ->whereYear('created_at', $currentYear)
+        ->groupBy('year', 'month')
+        ->orderBy('month')
+        ->get()
+        ->keyBy('month');
+
+        $months = range(1, 12);
+        $monthlyRevenueWithZeroes = [];
+        foreach ($months as $month) {
+            $monthlyRevenueWithZeroes[$month] = isset($monthlyRevenue[$month]) ? $monthlyRevenue[$month]->total : 0;
+        }
+
+        return array_values($monthlyRevenueWithZeroes);
     }
 }
