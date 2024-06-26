@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\ConfigController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\TeamController as WebTeamController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
+use PSpell\Config;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,4 +100,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('transaction/{id}', [TransactionController::class, 'xulytransaction'])->name('xulytransaction');
     // notifycation
     Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
+
+    Route::get('/config', [ConfigController::class, 'index'])->name('config');
+    Route::post('/updateconfig', [ConfigController::class, 'updateConfig'])->name('updateconfig');
 });
