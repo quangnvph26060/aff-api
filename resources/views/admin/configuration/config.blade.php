@@ -24,7 +24,7 @@
                                         <div>
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Tên công ty</label>
-                                                <input value="{{ $data->name }}" required class="form-control" name="name" type="text" id="name">
+                                                <input value="{{ $data->name ?? ""}}" required class="form-control" name="name" type="text" id="name">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="logo" class="form-label">Logo công ty</label>
@@ -36,15 +36,15 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Chính sách</label>
-                                                <input value="{{ $data->policy }}" required class="form-control" name="policy" type="text" id="policy">
+                                                <input value="{{ $data->policy ?? ""}}" required class="form-control" name="policy" type="text" id="policy">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Số điện thoại công ty</label>
-                                                <input value="{{ $data->phone }}" required class="form-control" name="phone" type="text" id="phone">
+                                                <input value="{{ $data->phone ?? ""}}" required class="form-control" name="phone" type="text" id="phone">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-url-input" class="form-label">Email</label>
-                                                <input value="{{ $data->email }}" required class="form-control" name="email" type="text" id="email">
+                                                <input value="{{ $data->email ?? ""}}" required class="form-control" name="email" type="text" id="email">
                                             </div>
                                         </div>
                                     </div>

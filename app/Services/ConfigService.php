@@ -29,60 +29,67 @@ class ConfigService
     }
 
     public function updateConfig(array $data): Config
-{
-    try {
-        // Fetch the configuration record (assuming there's only one)
-        $config = Config::first();
-
-        if (!$config) {
-            throw new Exception('Configuration record not found.');
-        }
-
-        // Begin transaction for database operations
-        DB::beginTransaction();
-
+    {
         try {
-            // Handle logo update
-            if (isset($data['logo'])) {
-                $logo = $data['logo']; // Single file
-                $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
-                $logoFilePath = 'public/config/' . $logoFileName; // Storage path
-                Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
-                $config->logo = $logoFilePath; // Update logo path in database
+            $config = Config::first();
+            if (!$config) {
+                $result = new Config();
+                DB::beginTransaction();
+                if (isset($data['logo'])) {
+                    $logo = $data['logo']; 
+                    $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
+                    $logoFilePath = 'public/config/' . $logoFileName; // Storage path
+                    Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
+                     $result->logo = $logoFilePath; 
+                }
+            
+                if (isset($data['login_banner'])) {
+                    $banner = $data['login_banner']; 
+                    $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
+                    $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
+                    Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
+                     $result->login_banner = $bannerFilePath; 
+                }
+               
+                $result->name = $data['name'];
+                $result->email = $data['email'];
+                $result->phone = $data['phone'];
+                $result->policy = $data['policy'];
+                $result->save();
+                DB::commit();
+                return $result;
+            } else {
+                DB::beginTransaction();
+                if (isset($data['logo'])) {
+                    $logo = $data['logo']; // Single file
+                    $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
+                    $logoFilePath = 'public/config/' . $logoFileName; // Storage path
+                    Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
+                    $config->logo = $logoFilePath; // Update logo path in database
+                }
+            
+                if (isset($data['login_banner'])) {
+                    $banner = $data['login_banner']; // Single file
+                    $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
+                    $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
+                    Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
+                    $config->login_banner = $bannerFilePath; // Update banner path in database
+                }
+              
+                $config->name = $data['name'];
+                $config->email = $data['email'];
+                $config->phone = $data['phone'];
+                $config->policy = $data['policy'];
+
+                $config->save();
+
+                DB::commit();
+
+                return $config;
             }
-
-            // Handle login banner update
-            if (isset($data['login_banner'])) {
-                $banner = $data['login_banner']; // Single file
-                $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
-                $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
-                Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
-                $config->login_banner = $bannerFilePath; // Update banner path in database
-            }
-
-            // Update other fields in the configuration record
-            $config->name = $data['name'];
-            $config->email = $data['email'];
-            $config->phone = $data['phone'];
-            $config->policy = $data['policy'];
-
-            // Save the updated configuration record
-            $config->save();
-
-            // Commit the transaction
-            DB::commit();
-
-            return $config;
         } catch (Exception $e) {
-            // Rollback the transaction on error
-            DB::rollback();
-            Log::error("Failed to update configuration: {$e->getMessage()}");
-            throw new Exception('Failed to update configuration: ' . $e->getMessage());
+            Log::error('Failed to fetch configuration: ' . $e->getMessage());
+            throw new Exception('Failed to fetch configuration');
         }
-    } catch (Exception $e) {
-        Log::error('Failed to fetch configuration: ' . $e->getMessage());
-        throw new Exception('Failed to fetch configuration');
     }
-}
-
 }
