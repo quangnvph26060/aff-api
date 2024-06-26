@@ -26,7 +26,7 @@ class OrderComposer
             $orderCount = $this->order->where('notify', 0)->count();
 
             if (!$orderCount) {
-                throw new OrderNotFoundException();
+                // throw new OrderNotFoundException();
             }
             $dataOrder = $this->order->where('notify', 0)->get();
 
