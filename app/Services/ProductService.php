@@ -30,7 +30,7 @@ class ProductService
     {
         try {
             Log::info('Fetching all products');
-            
+
             return $this->product->all();
         } catch (Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());
@@ -87,6 +87,7 @@ class ProductService
                 'reviews' => @$data['reviews'],
                 'commission_rate' => @$data['commission_rate'],
                 'discount_id' => @$data['discount_id'],
+                'brands_id' => @$data['brand_id'],
             ]);
             if ($product) {
                 foreach ($data['images'] as $item) {

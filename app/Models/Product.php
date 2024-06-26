@@ -22,14 +22,18 @@ class Product extends Model
         "category_id",
         "discount_id",
         "status",
+        'brands_id'
     ];
 
-    protected $appends = ['category','images'];
+    protected $appends = ['category','images','brands'];
     public function getImagesAttribute(){
         return ProductImage::where('product_id',$this->attributes['id'])->get();
     }
     public function getCategoryAttribute(){
         return Category::where('id',$this->attributes['category_id'])->first();
+    }
+    public function getBrandsAttribute(){
+         return Brand::where('id',$this->attributes['brands_id'])->first();
     }
     public function discount()
     {
