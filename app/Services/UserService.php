@@ -303,6 +303,17 @@ class UserService
         return $user;
     }
 
+    public function getUserByRole(int $role): User
+    {
+        Log::info("Fetching user with Role: $role");
+        $user = $this->user->where('role_id', $role)->first();
+        if (!$user) {
+            Log::warning("User with Role: $role not found");
+            throw new ModelNotFoundException("User not found");
+        }
+        return $user;
+    }
+
     /**
      * Hàm tạo mới người dùng
      *
@@ -586,7 +597,7 @@ class UserService
                 $fontImagePath = 'storage/cccd/cccd' . $id . '/' . $fontImageName;
 
 
-            
+
 
                 if (!Storage::exists($fontImagePath)) {
                     $imageFont->storeAs('public/cccd/cccd' . $id, $fontImageName);

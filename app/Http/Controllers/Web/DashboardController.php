@@ -29,8 +29,9 @@ class DashboardController extends Controller
         $this->userService = $userService;
     }
     public function index(Request $request){
-        $getMonthlyRevenue = $this->orderService->getMonthlyRevenue();
-        //   dd($getMonthlyRevenue);
+        $getMonth = $this->orderService->getMonthlyRevenue();
+        $getMonthlyRevenue = $getMonth['monthlyRevenue'];
+        $totalAnnualRevenue = $getMonth['totalAnnualRevenue'];
         $order = $this->orderService->orderNew();
         $category = $this->categoryService->productCategory();
         $bestseller = $this->BestSeller();
@@ -47,7 +48,7 @@ class DashboardController extends Controller
 
         }
         // dd($loggedInUser);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue'));
+        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue', 'totalAnnualRevenue'));
     }
     public function BestSeller()
     {

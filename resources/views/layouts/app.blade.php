@@ -9,7 +9,6 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="https://quanlycongviec.site/libs/assets/images/favicon.ico">
-
     <!-- plugin css -->
     <link
         href="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css"
@@ -36,7 +35,7 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <meta name="csrf-token" content="{{ csrf_token() }}">
      <link rel="stylesheet" type="text/css" href="/css/bootstrap-notifications.min.css">
- 
+
      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .progress-bar-striped {
@@ -311,7 +310,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    
+
                     if (response.hasOwnProperty('orderCount')) {
                         var orderCount = response.orderCount;
                         $('#order-count-badge').text(orderCount);
@@ -333,7 +332,7 @@
                 type: 'POST',
                 data: formData,
                 contentType: false,
-                processData: false, 
+                processData: false,
                 success: function(response) {
                     var orderCount = response.orderCount.original.orderCount;
                     $('#order-count-badge').text(orderCount);
@@ -343,6 +342,10 @@
                 }
             });
         }
+    </script>
+    <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('description');
     </script>
 </body>
 

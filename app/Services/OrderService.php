@@ -320,7 +320,11 @@ class OrderService
         foreach ($months as $month) {
             $monthlyRevenueWithZeroes[$month] = isset($monthlyRevenue[$month]) ? $monthlyRevenue[$month]->total : 0;
         }
+        $totalAnnualRevenue = array_sum($monthlyRevenueWithZeroes);
 
-        return array_values($monthlyRevenueWithZeroes);
+        return [
+            'monthlyRevenue' => array_values($monthlyRevenueWithZeroes),
+            'totalAnnualRevenue' => $totalAnnualRevenue,
+        ];
     }
 }

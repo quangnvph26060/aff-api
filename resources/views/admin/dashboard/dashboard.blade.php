@@ -128,8 +128,8 @@
                                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">
                                                                     <span class="counter-value" data-target="{{ $statistic['total'] }}">0</span>đ
                                                                 </h4>
-                                                                <a href=""
-                                                                    class="text-decoration-underline">dsafdasdfsad</a>
+                                                                <a style="text-decoration: none !important"
+                                                                    class="text-decoration-underline">Tổng thu nhập</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -216,8 +216,8 @@
                                                                         class="counter-value"
                                                                         data-target="{{$useramount}}">0</span>
                                                                 </h4>
-                                                                <a href=""
-                                                                    class="text-decoration-underline">dsafsfsfs</a>
+                                                                <a style="text-decoration: none !important"
+                                                                    class="text-decoration-underline">Khách hàng</a>
                                                             </div>
                                                             <div class="avatar-sm flex-shrink-0">
                                                                 <span
@@ -277,11 +277,11 @@
                                         </div> <!-- end row-->
 
                                         <div class="row">
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-12" style="width:100%">
                                                 <div class="card">
                                                     <div class="card-header border-0 align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Doanh thu</h4>
-                                                        <div>
+                                                        {{-- <div>
                                                             <button type="button"
                                                                 class="btn btn-soft-secondary btn-sm">ALL</button>
                                                             <button type="button"
@@ -290,28 +290,28 @@
                                                                 class="btn btn-soft-secondary btn-sm">6M</button>
                                                             <button type="button"
                                                                 class="btn btn-soft-primary btn-sm">1Y</button>
-                                                        </div>
+                                                        </div> --}}
                                                     </div><!-- end card header -->
 
                                                     <div class="card-header p-0 border-0 bg-light-subtle">
                                                         <div class="row g-0 text-center">
-                                                            <div class="col-6 col-sm-3">
+                                                            <div class="col-6 col-sm-6">
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1"><span class="counter-value"
-                                                                            data-target="7585">0</span></h5>
+                                                                            data-target="{{ $statistic['number'] }}">0</span></h5>
                                                                     <p class="text-muted mb-0">Đơn hàng</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
-                                                            <div class="col-6 col-sm-3">
+                                                            <div class="col-6 col-sm-6">
                                                                 <div class="p-3 border border-dashed border-start-0">
-                                                                    <h5 class="mb-1">$<span class="counter-value"
-                                                                            data-target="22.89">0</span>k</h5>
+                                                                    <h5 class="mb-1"><span class="counter-value"
+                                                                            data-target="{{ $totalAnnualRevenue }}">0</span>đ</h5>
                                                                     <p class="text-muted mb-0">Thu nhập</p>
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
-                                                            <div class="col-6 col-sm-3">
+                                                            {{-- <div class="col-6 col-sm-3">
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1"><span class="counter-value"
                                                                             data-target="367">0</span></h5>
@@ -327,70 +327,20 @@
                                                                             data-target="18.92">0</span>%</h5>
                                                                     <p class="text-muted mb-0">Tăng trưởng</p>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                             <!--end col-->
                                                         </div>
                                                     </div><!-- end card header -->
 
                                                     <div class="card-body p-0 pb-2">
                                                         <div class="w-100">
-                                                            <canvas id="revenueChart" style="height: 269px"></canvas>
+                                                            <canvas class="revenueChart" id="revenueChart" style="height: 269px; width: 100% !important"></canvas>
                                                         </div>
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-4">
-                                                <!-- card -->
-                                                <div class="card card-height-100">
-                                                    <div class="card-header align-items-center d-flex">
-                                                        <h4 class="card-title mb-0 flex-grow-1">Chi nhánh bán hàng</h4>
-                                                        <div class="flex-shrink-0">
-                                                            <button type="button"
-                                                                class="btn btn-soft-primary btn-sm">Xuất báo
-                                                                cáo</button>
-                                                        </div>
-                                                    </div><!-- end card header -->
 
-                                                    <!-- card body -->
-                                                    <div class="card-body">
-                                                        <canvas id="salesByLocationsChart"
-                                                            style="height: 269px"></canvas>
-
-                                                        <div class="px-2 py-2 mt-1">
-                                                            <p class="mb-1">Canada <span class="float-end">75%</span>
-                                                            </p>
-                                                            <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 75%"
-                                                                    aria-valuenow="75" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div>
-
-                                                            <p class="mt-3 mb-1">Greenland <span
-                                                                    class="float-end">47%</span></p>
-                                                            <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 47%"
-                                                                    aria-valuenow="47" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div>
-
-                                                            <p class="mt-3 mb-1">Russia <span
-                                                                    class="float-end">82%</span></p>
-                                                            <div class="progress mt-2" style="height: 6px;">
-                                                                <div class="progress-bar progress-bar-striped bg-primary"
-                                                                    role="progressbar" style="width: 82%"
-                                                                    aria-valuenow="82" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end card body -->
-                                                </div>
-                                                <!-- end card -->
-                                            </div>
-                                            <!-- end col -->
                                         </div>
 
                                         <div class="row">
@@ -1050,9 +1000,7 @@
                                                                                 <div>
                                                                                     <p
                                                                                         class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        " Great product and looks great,
-                                                                                        lots of
-                                                                                        features. "</p>
+                                                                                        " Sản phẩm tuyệt vời và trông rất đẹp, có nhiều tính năng. "</p>
                                                                                     <div
                                                                                         class="fs-11 align-middle text-warning">
                                                                                         <i class="ri-star-fill"></i>
@@ -1063,7 +1011,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="text-end mb-0 text-muted">
-                                                                                    - by <cite
+                                                                                    - Từ : <cite
                                                                                         title="Source Title">Force
                                                                                         Medicines</cite>
                                                                                 </div>
@@ -1084,8 +1032,7 @@
                                                                                 <div>
                                                                                     <p
                                                                                         class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        " Amazing template, very easy to
-                                                                                        understand and manipulate. "</p>
+                                                                                        " Mẫu tuyệt vời, rất dễ hiểu và dễ thao tác. "</p>
                                                                                     <div
                                                                                         class="fs-11 align-middle text-warning">
                                                                                         <i class="ri-star-fill"></i>
@@ -1097,7 +1044,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="text-end mb-0 text-muted">
-                                                                                    - by <cite
+                                                                                    - Từ : <cite
                                                                                         title="Source Title">Henry
                                                                                         Baird</cite>
                                                                                 </div>
@@ -1183,8 +1130,7 @@
                                                 </div>
 
                                                 <div class="p-3">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Customer
-                                                        Reviews</h6>
+                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">PHẢN HỒI KHÁCH HÀNG</h6>
                                                     <div class="bg-light px-3 py-2 rounded-2 mb-2">
                                                         <div class="d-flex align-items-center">
                                                             <div class="flex-grow-1">
@@ -1202,16 +1148,16 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-center">
-                                                        <div class="text-muted">Total <span
+                                                        <div class="text-muted">Tổng cộng  <span
                                                                 class="fw-medium">5.50k</span>
-                                                            reviews</div>
+                                                            đánh giá</div>
                                                     </div>
 
                                                     <div class="mt-3">
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
-                                                                    <h6 class="mb-0">5 star</h6>
+                                                                    <h6 class="mb-0">5 sao</h6>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1235,7 +1181,7 @@
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
-                                                                    <h6 class="mb-0">4 star</h6>
+                                                                    <h6 class="mb-0">4 sao</h6>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1259,7 +1205,7 @@
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
-                                                                    <h6 class="mb-0">3 star</h6>
+                                                                    <h6 class="mb-0">3 sao</h6>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1283,7 +1229,7 @@
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
-                                                                    <h6 class="mb-0">2 star</h6>
+                                                                    <h6 class="mb-0">2 sao</h6>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1308,7 +1254,7 @@
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
-                                                                    <h6 class="mb-0">1 star</h6>
+                                                                    <h6 class="mb-0">1 sao</h6>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1336,9 +1282,7 @@
                                                         <img src="{{asset('assets/images/giftbox.png')}}" alt="">
                                                         <div class="mt-4">
                                                             <h5>Mời người dùng mới</h5>
-                                                            <p class="text-muted lh-base">Refer a new seller to us and
-                                                                earn $100
-                                                                per refer.</p>
+                                                            <p class="text-muted lh-base">Giới thiệu người bán mới cho chúng tôi và kiếm 100 USD cho mỗi lượt giới thiệu.</p>
                                                             <button type="button"
                                                                 class="btn btn-primary btn-label rounded-pill"><i
                                                                     class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
@@ -2281,7 +2225,7 @@
     var revenueChart = new Chart(revenueCtx, {
         type: 'bar',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
             datasets: [{
                     label: 'Revenue',
                     data: revenueData,
@@ -2304,34 +2248,7 @@
 
 
         // Pie Chart for Sales by Locations
-        var locationsCtx = document.getElementById('salesByLocationsChart').getContext('2d');
-        var salesByLocationsChart = new Chart(locationsCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Canada', 'Greenland', 'Russia'],
-                datasets: [{
-                    data: [75, 47, 82],
-                    backgroundColor: ['#007bff', '#28a745', '#17a2b8']
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let label = context.label || '';
-                                let value = context.raw || 0;
-                                return `${label}: ${value}%`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
+
 
         $(document).ready(function() {
     // Function to animate the counter
@@ -2357,4 +2274,10 @@
 });
 
     </script>
+    <style>
+        .revenueChart{
+            width: 700px !important;
+            height: 350px !important;
+        }
+    </style>
 @endsection

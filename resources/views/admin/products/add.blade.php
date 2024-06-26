@@ -37,6 +37,21 @@
                                                 <div class="col-lg-9"><span class="invalid-feedback d-block"
                                                         style="font-weight: 500" id="name_error"></span> </div>
                                             </div>
+
+                                            <div class="mb-3">
+                                                <label for="example-text-input" class="form-label">Loại thương hiệu<span
+                                                        class="text text-danger">*</span></label>
+                                                <select class="form-control" name="brand_id" id="brand_id"
+                                                    required>
+                                                    <option value="">Chọn danh mục</option>
+                                                    @foreach ($brand as $item )
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                        style="font-weight: 500" id="brand_id_error"></span> </div>
+                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
                                                         class="text text-danger">*</span></label>
@@ -145,6 +160,18 @@
                     },
                 ]
             },
+            'brand_id': {
+                'element': document.getElementById('brand_id'),
+                'error': document.getElementById('brand_id_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E027')
+                    },
+                ]
+            },
             'images': {
                 'element': document.getElementById('images'),
                 'error': document.getElementById('images_error'),
@@ -205,18 +232,18 @@
                     },
                 ]
             },
-            'description': {
-                'element': document.getElementById('description'),
-                'error': document.getElementById('description_error'),
-                'validations': [
-                    {
-                        'func': function(value){
-                            return checkRequired(value);
-                        },
-                        'message': generateErrorMessage('E0016')
-                    },
-                ]
-            },
+            // 'description': {
+            //     'element': document.getElementById('description'),
+            //     'error': document.getElementById('description_error'),
+            //     'validations': [
+            //         {
+            //             'func': function(value){
+            //                 return checkRequired(value);
+            //             },
+            //             'message': generateErrorMessage('E0016')
+            //         },
+            //     ]
+            // },
             'status': {
                 'element': document.getElementById('status'),
                 'error': document.getElementById('status_error'),
