@@ -8,13 +8,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
+
 use App\Http\Controllers\Web\BrandController;
+
+use App\Http\Controllers\Web\ConfigController;
+
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\TeamController as WebTeamController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
+use PSpell\Config;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +105,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     // notifycation
     Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
 
+
     Route::get('brand', [BrandController::class, 'index'])->name('brand.index');
     Route::get('brand/add', [BrandController::class, 'addForm'])->name('brand.addForm');
     Route::post('brand/add', [BrandController::class, 'add'])->name('brand.add');
@@ -107,4 +113,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('brand/edit/{id}', [BrandController::class, 'update'])->name('brand.update');
     Route::get('brand/delete/{id}', [BrandController::class, 'deltee'])->name('brand.delete');
     Route::get('brand/search', [BrandController::class, 'search'])->name('brand.search');
+
+    Route::get('/config', [ConfigController::class, 'index'])->name('config');
+    Route::post('/updateconfig', [ConfigController::class, 'updateConfig'])->name('updateconfig');
+
 });
