@@ -56,8 +56,9 @@ $orderStatuses = [
                                             <td> {{$key + 1}}</td>
                                             <td>{{$item->zip_code}}</td>
                                             <td>
+                                               
                                                 @foreach($item->order_detail as $k )
-                                                {{$k->product['name']}} <br>
+                                                {{$k->product['name'] ?? ""}} <br>
                                                 @endforeach
                                             </td>
                                             <td>
@@ -69,7 +70,7 @@ $orderStatuses = [
 
                                             <td>
                                                 @foreach($item->order_detail as $k )
-                                                {{ number_format($k->product['price']) }} đ<br>
+                                                {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ
                                                 @endforeach
                                             </td>
                                             <td>{{$item->user_id[0]['referral_code']}}</td>

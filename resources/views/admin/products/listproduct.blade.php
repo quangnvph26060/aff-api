@@ -115,7 +115,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $value->name }}</td>
-                                                <td>{{ $value->brands ? $value->brands->name : '' }}</td>
+                                                <td>{{ $value->brands->name ?? ""}}</td>
                                                 <td>
 
                                                     @if (isset($value->images[0]))
@@ -125,7 +125,7 @@
 
                                                 </td>
                                                 <td>{{ $value->quantity }}</td>
-                                                <td>{{ $value->price }}</td>
+                                                <td>{{ number_format($value->price) }}đ</td>
                                                 <td>{{ $value->commission_rate }}%</td>
                                                 <td>
                                                     <div class="form-group">

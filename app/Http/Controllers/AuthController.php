@@ -151,9 +151,11 @@ class AuthController extends Controller
             // Xác định người dùng qua token (cho API)
             $user = Auth::user();
             if ($user) {
+                $admin = User::where('role_id',1)->first();
                 return response()->json([
                     'status' => 'success',
                     'data' => $user,
+                    'admin' => $admin,
                 ]);
             } else {
                 return response()->json([
