@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Services\ConfigService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,14 @@ class AuthController extends Controller
      *
      * @return void
      */
+    protected $configService;
     protected $userService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ConfigService $configService)
     {
         // $this->middleware('auth:api', ['except' => ['login']]);
         $this->userService = $userService;
+        $this->configService = $configService;
     }
 
     /**
@@ -195,7 +198,8 @@ class AuthController extends Controller
      * hàm hiển thị view login
      */
     public function viewLogin(){
-        return view('admin.login');
+        $config = $this->configService->getConfig();
+        return view('admin.login', compact('config'));
     }
     /*
      * hàm upload ảnh  user
