@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\ConfigController;
 
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\MlmController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\TeamController as WebTeamController;
 use App\Http\Controllers\Web\TransactionController;
@@ -116,5 +117,6 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
 
     Route::get('/config', [ConfigController::class, 'index'])->name('config');
     Route::post('/updateconfig', [ConfigController::class, 'updateConfig'])->name('updateconfig');
-
+    // MLM
+    Route::get('/mlm',[MlmController::class,'index'])->name('mlm');
 });
