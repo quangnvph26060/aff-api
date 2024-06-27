@@ -115,7 +115,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $value->name }}</td>
-                                                <td>{{ $value->brands->name }}</td>
+                                                <td>{{ $value->brands ? $value->brands->name : '' }}</td>
                                                 <td>
 
                                                     @if (isset($value->images[0]))

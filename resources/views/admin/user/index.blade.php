@@ -87,7 +87,7 @@
                         <div class="card-body">
                             <label for="avatarInput">
                                 <img id="userAvatar"
-                                    src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? config('app.url') . '/' . $admin->user_info[0]['img_url'] : asset('/users/avatar-1.jpg') }}"
+                                    src="{{  $admin->user_info && count($admin->user_info) > 0 && isset($admin->user_info[0]['img_url']) ? asset($admin->user_info[0]['img_url']): asset('/users/avatar-1.jpg') }}"
                                     alt="User Avatar" class="rounded-circle mb-3" width="150" height="150"
                                     style="cursor: pointer;">
                             </label>
