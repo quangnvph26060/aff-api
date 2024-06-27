@@ -36,21 +36,21 @@ class ConfigService
                 $result = new Config();
                 DB::beginTransaction();
                 if (isset($data['logo'])) {
-                    $logo = $data['logo']; 
+                    $logo = $data['logo'];
                     $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
                     $logoFilePath = 'public/config/' . $logoFileName; // Storage path
                     Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
-                     $result->logo = $logoFilePath; 
+                     $result->logo = $logoFilePath;
                 }
-            
+
                 if (isset($data['login_banner'])) {
-                    $banner = $data['login_banner']; 
+                    $banner = $data['login_banner'];
                     $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
                     $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
                     Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
-                     $result->login_banner = $bannerFilePath; 
+                     $result->login_banner = $bannerFilePath;
                 }
-               
+
                 $result->name = $data['name'];
                 $result->email = $data['email'];
                 $result->phone = $data['phone'];
@@ -62,20 +62,20 @@ class ConfigService
                 DB::beginTransaction();
                 if (isset($data['logo'])) {
                     $logo = $data['logo']; // Single file
-                    $logoFileName = 'image_' . '_' . $logo->getClientOriginalName();
-                    $logoFilePath = 'public/config/' . $logoFileName; // Storage path
+                    $logoFileName = 'image_' . $logo->getClientOriginalName();
+                    $logoFilePath = 'storage/config/' . $logoFileName; // Storage path
                     Storage::putFileAs('public/config', $logo, $logoFileName); // Store image
                     $config->logo = $logoFilePath; // Update logo path in database
                 }
-            
+
                 if (isset($data['login_banner'])) {
                     $banner = $data['login_banner']; // Single file
-                    $bannerFileName = 'image_' . '_' . $banner->getClientOriginalName();
-                    $bannerFilePath = 'public/config/' . $bannerFileName; // Storage path
+                    $bannerFileName = 'image_' . $banner->getClientOriginalName();
+                    $bannerFilePath = 'storage/config/' . $bannerFileName; // Storage path
                     Storage::putFileAs('public/config', $banner, $bannerFileName); // Store image
                     $config->login_banner = $bannerFilePath; // Update banner path in database
                 }
-              
+
                 $config->name = $data['name'];
                 $config->email = $data['email'];
                 $config->phone = $data['phone'];

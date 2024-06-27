@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\ConfigComposer;
 use App\Http\View\Composers\OrderComposer;
 use App\Http\View\Composers\UserComposer;
 use Illuminate\Support\Facades\View;
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             if (!request()->routeIs('create.order')) {
                 View::composer('*', UserComposer::class);
                 View::composer('*', OrderComposer::class);
+                View::composer('*', ConfigComposer::class);
             }
         });
     }
