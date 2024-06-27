@@ -5,11 +5,10 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="#" alt="" height="24">
+                        <img src="{{ asset($config->logo) }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="#" alt="" height="24"> <span class="logo-txt">Affilate</span>
-                    </span>
+                        <img src="{{ asset($config->logo) }}" alt="Logo" height="24">
                 </a>
 
                 <!-- <a href="index.html" class="logo logo-light">
@@ -75,30 +74,30 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
 
-                   
+
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="en">
                         <img src="https://quanlycongviec.site/libs/assets/images/flags/us.jpg" alt="user-image"
                             class="me-1" height="12"> <span class="align-middle">English</span>
                     </a>
-                  
+
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
                         <img src="https://quanlycongviec.site/libs/assets/images/flags/spain.jpg" alt="user-image"
                             class="me-1" height="12"> <span class="align-middle">Spanish</span>
                     </a>
 
-                   
+
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
                         <img src="https://quanlycongviec.site/libs/assets/images/flags/germany.jpg" alt="user-image"
                             class="me-1" height="12"> <span class="align-middle">German</span>
                     </a>
 
-                   
+
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
                         <img src="https://quanlycongviec.site/libs/assets/images/flags/italy.jpg" alt="user-image"
                             class="me-1" height="12"> <span class="align-middle">Italian</span>
                     </a>
 
-                  
+
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
                         <img src="https://quanlycongviec.site/libs/assets/images/flags/russia.jpg" alt="user-image"
                             class="me-1" height="12"> <span class="align-middle">Russian</span>
@@ -191,7 +190,7 @@
         </div>
     </div>
         <div class="custom-scroll">
-          
+
             @foreach($dataOrder as $order)
                 <div class="d-flex p-3 notification-item">
                     <div class="flex-grow-1">
@@ -209,10 +208,10 @@
                             </svg>
                         </button>
                     </div>
-                    
+
                 </div>
             @endforeach
-          
+
             <!-- Thêm nhiều thông báo hơn ở đây -->
         </div>
     <div class="p-2 border-top d-grid">
@@ -232,14 +231,14 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item bg-soft-light border-start border-end"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   
-                    <img class="rounded-circle header-profile-user" 
+
+                    <img class="rounded-circle header-profile-user"
                     src="{{ isset($loggedInUser['images']) ? asset($loggedInUser['images']) : asset('/users/avatar-1.jpg') }}"
                     alt="Image">
-               
-                    
 
-                    
+
+
+
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">
 
                     </span>
@@ -260,7 +259,7 @@
                                     class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock Screen</a>
                             <div class="dropdown-divider"></div> -->
                             <form action="{{ route('admin.logout') }}" method="POST">
-                                @csrf 
+                                @csrf
                                 <input type="hidden" value="web" name="type">
                                   <button class="btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -272,10 +271,10 @@
                                         </svg>
                                         Đăng xuất
                                   </button>
-                               
-                            </form>    
-            
-                       
+
+                            </form>
+
+
                 </div>
             </div>
 
@@ -283,13 +282,13 @@
     </div>
 </header>
 <script>
-  
+
 </script>
-    
+
 <style scoped>
     .custom-scroll {
-    max-height: 200px; 
-    overflow-y: auto; 
+    max-height: 200px;
+    overflow-y: auto;
 }
 .notification-item {
     position: relative;
