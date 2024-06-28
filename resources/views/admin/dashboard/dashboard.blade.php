@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="main-content">
+<div class="main-content" >
     <div class="page-content">
         <div class="container-fluid">
             <!-- Begin page -->
@@ -45,7 +45,7 @@
                 <!-- ============================================================== -->
                 <!-- Start right Content here -->
                 <!-- ============================================================== -->
-                <div class="main-content">
+                <div class="main-content " style="margin-left: 10px;">
 
                     <div class="page-content">
                         <div class="container-fluid">
@@ -334,7 +334,7 @@
 
                                                     <div class="card-body p-0 pb-2">
                                                         <div class="w-100">
-                                                            <canvas class="revenueChart" id="revenueChart" style="height: 269px; width: 100% !important"></canvas>
+                                                            <canvas class="revenueChart demo" id="revenueChart"></canvas>
                                                         </div>
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->

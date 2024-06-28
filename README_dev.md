@@ -8,3 +8,7 @@ chạy 1 bảng migrate
 
 -- 6/18/2024
 composer require bensampo/laravel-enum
+--6/27/2024
+php artisan storage:link
+
+lệnh tạo key check auth : php artisan jwt:secret 
