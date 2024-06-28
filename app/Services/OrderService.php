@@ -6,6 +6,7 @@ use App\Enums\RequestApi;
 use App\Events\NewOrderEvent;
 use App\Exceptions\OrderNotFoundException;
 use App\Http\Responses\ApiResponse;
+use App\Jobs\SendEmailJob;
 use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -53,15 +54,31 @@ class OrderService
             if (!$order) {
                 return response()->json('error', 'Order error');
             }
+            $arrMail = []; // mail
             foreach ($data['list_product'] as $detail) {
                 $this->orderDetail->create([
                     'order_id' => $order->id,
                     'product_id' => $detail['product_id'],
                     'quantity' => $detail['amount'],
                 ]);
+                
+                $email = $detail['product']['brands']['email'];
+                if (!in_array($email, $arrMail)) {
+                    $arrMail[] = $email;
+                }
+
                 $product = Product::where('id', $detail['product_id'])->first();
                 $product->quantity = $product->quantity - $detail['amount'];
                 $product->save();
+            }
+            
+            foreach ($arrMail as $email) {
+                $arrSendMail = [
+                    'type' => 'send_brands',
+                    'email' => $email,
+                    'order' => $order->orderDetail,
+                ];
+                SendMail::dispatch($arrSendMail); // send email to  brand
             }
             $arrSendMail = [
                 'type' => 'send_order',

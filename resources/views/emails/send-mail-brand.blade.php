@@ -17,9 +17,10 @@
     </style>
 </head>
 <body>
-    <p>Chào {{$user['name']}},</p>
-    <p>Tôi hy vọng bạn đang có một ngày tốt lành. Tôi viết email này để thông báo về một đơn đặt hàng mới.</p>
+    <p>Chào nhà cung cấp,</p>
+    <p>Tôi hy vọng bạn đang có một ngày tốt lành. Tôi viết email này để thông báo về một đơn đặt hàng mới từ một khách hàng của chúng tôi.</p>
     <p>Thông tin đơn hàng:</p>
+
     <table>
         <thead>
             <tr>
@@ -53,8 +54,8 @@
             </tr>
         </tfoot>
     </table>
-{{-- 
+
     <p>Trân trọng,</p>
-    <p>[Tên của bạn]</p> --}}
+    <p>[Tên của bạn]</p>
 </body>
 </html>

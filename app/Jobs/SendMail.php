@@ -7,6 +7,7 @@ use App\Events\EventForgetPass;
 use App\Events\EventOrder;
 
 use App\Events\EventRegister;
+use App\Events\EventSendMailBrand;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,14 +40,21 @@ class SendMail implements ShouldQueue
     {
 
         $data = $this->request;
-        Log::info($data['type']);
         if ($data['type'] && $data['type'] == 'send_otp') {
-            event(new EventRegister($data['user'],$data['otp']));
+            
+            event(new EventRegister($data['user'], $data['otp']));
+
         } else  if ($data['type'] && $data['type'] == 'send_order') {
-            event(new EventOrder($data['user'],$data['order']));
+
+            event(new EventOrder($data['user'], $data['order']));
+
         }else if   ($data['type'] && $data['type'] == 'password_new'){
+
             event(new EventForgetPass($data['user'], $data['newPassWord']));
+
+        }else if ($data['type'] && $data['type'] === 'send_brands'){
+
+            event(new EventSendMailBrand($data['email'], $data['order']));
         }
-        
     }
 }

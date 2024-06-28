@@ -39,7 +39,7 @@ class SendMailForgetPass
         $newPassword = $event->newPassword;
         $this->mailer->send('emails.forgetpass', ['user' => $user, 'newPassword' => $newPassword], function ($message) use ($user) {
             $message->to($user['email'])
-                ->subject('Mật khẩu mới của bạn là gì');
+                ->subject('Mật khẩu mới của bạn');
         });
     }
 }

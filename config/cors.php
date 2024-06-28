@@ -32,21 +32,21 @@ return [
     // 'supports_credentials' => true,
     
 
-        'paths' => ['api/*'],
-    
-        'allowed_methods' => ['*'],
-    
-        'allowed_origins' => ['*'], // Chỉ định miền gốc của bạn hoặc sử dụng '*' để cho phép tất cả
-    
-        'allowed_origins_patterns' => [],
-    
-        'allowed_headers' => ['*'],
-    
-        'exposed_headers' => false,
-    
-        'max_age' => false,
-    
-        'supports_credentials' => false,
+    'paths' => ['api/*'],
+
+    'allowed_methods' => ['*'],
+
+    'allowed_origins' => ['*'],
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => false,
+
+    'max_age' => false,
+
+    'supports_credentials' => false,
     
     
 ];
