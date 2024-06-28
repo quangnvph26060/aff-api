@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Responses\ApiResponse;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -14,10 +15,14 @@ use Illuminate\Support\Facades\Auth;
 class CartService
 {
     protected $cart;
+    protected $category;
+    protected $product;
 
-    public function __construct(Cart $cart)
+    public function __construct(Cart $cart, Category $category, Product $product)
     {
         $this->cart = $cart;
+        $this->category = $category;
+        $this->product = $product;
     }
 
     //   all cart
@@ -40,12 +45,18 @@ class CartService
         try {
             Log::info('Creating new cart');
             $cart = Cart::where('product_id', $data['product_id'])->where('user_id', $data['user_id'])->first();
+            $product = Product::find($data['product_id']);
+            if ($product->quantity < 1) {
+                return response()->json(['error' => 'Product is out of stock'], 400);
+            }
             if (!$cart) {
+
                 $data['amount'] = 1;
                 $cart = $this->cart->create($data);
                 DB::commit();
                 return $cart;
             } else {
+
                 $cart->amount = $data['amount'] + $cart->amount ?? 1;
                 $cart->save();
                 DB::commit();
@@ -88,7 +99,7 @@ class CartService
         try {
             $cart = Cart::find($id);
             if (!$cart) {
-                return ApiResponse::error('Update to cart Error',400);
+                return ApiResponse::error('Update to cart Error', 400);
             }
             $cart->update(
                 [
@@ -131,9 +142,9 @@ class CartService
             $deletedRows = $this->cart->where('user_id', $user_id)->delete();
 
             if ($deletedRows) {
-                return ApiResponse::success('Cart cleared successfully',200);
+                return ApiResponse::success('Cart cleared successfully', 200);
             } else {
-                return ApiResponse::error('No items in cart',400);
+                return ApiResponse::error('No items in cart', 400);
             }
         } catch (Exception $e) {
             Log::error('Failed to delete cart: ' . $e->getMessage());
