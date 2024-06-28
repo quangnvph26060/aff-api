@@ -15,22 +15,40 @@ return [
     |
     */
 
-    'paths' => ['*'],
+    // 'paths' => ['*'],
 
-    'allowed_methods' => ['*'],
+    // 'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://qtland.site', 'http://123.31.31.39'],
+    // 'allowed_origins' => ['http://qtland.site', 'http://123.31.31.39'],
 
-    'allowed_origins_patterns' => ["*localhost*"],
+    // 'allowed_origins_patterns' => ["*localhost*"],
 
-    'allowed_headers' => ['*'],
+    // 'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    // 'exposed_headers' => [],
 
-    'max_age' => 0,
+    // 'max_age' => 0,
 
-    'supports_credentials' => true,
+    // 'supports_credentials' => true,
+    
 
+        'paths' => ['api/*'],
+    
+        'allowed_methods' => ['*'],
+    
+        'allowed_origins' => ['*'], // Chỉ định miền gốc của bạn hoặc sử dụng '*' để cho phép tất cả
+    
+        'allowed_origins_patterns' => [],
+    
+        'allowed_headers' => ['*'],
+    
+        'exposed_headers' => false,
+    
+        'max_age' => false,
+    
+        'supports_credentials' => false,
+    
+    
 ];
 // 'paths' => ['*'],
 

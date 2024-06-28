@@ -22,8 +22,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         // \Barryvdh\Cors\HandleCors::class,
-        //\App\Http\Middleware\Cors::class,
+        \App\Http\Middleware\Cors::class,
         \App\Http\Middleware\ForceHttps::class,
+        \Fruitcake\Cors\HandleCors::class,
     ];
 
     /**
@@ -75,7 +76,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
-        // 'cors' => \Barryvdh\Cors\HandleCors::class,
+         'cors' => \App\Http\Middleware\Cors::class,
         'auth.user' => \App\Http\Middleware\CheckLogin::class,
     ];
 }

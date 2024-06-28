@@ -27,9 +27,10 @@ Route::post('find-password', [UserController::class, 'resetPassword'])->name('fi
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('cors');
     Route::group([
-        'middleware' => 'api',
+        'middleware' => ['api','cors'],
+
         'prefix' => 'auth'
     ], function ($router) {
         //Route::post('login', [AuthController::class, 'login']);
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
 
     Route::group([
-        'middleware' => ['api', 'jwt.auth'],
+        'middleware' => ['api', 'jwt.auth','cors'],
         'prefix' => 'user'
     ], function ($router) {
         Route::get('/', [UserController::class, 'index']);
