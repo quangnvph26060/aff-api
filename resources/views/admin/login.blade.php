@@ -263,11 +263,12 @@
 
     <script src="https://quanlycongviec.site/libs/assets/js/pages/pass-addon.init.js"></script> -->
 </body>
-<style>
+<style scoped>
     .bg-primary {
         background-image: url('{{ asset($config->login_banner) }}');
-    background-repeat: no-repeat;
-    background-size: cover; /* Adjust sizing as needed */
-    background-position: center; /* Adjust positioning as needed */
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
 </style>
 </html>
