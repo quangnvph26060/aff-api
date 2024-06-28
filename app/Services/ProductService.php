@@ -38,6 +38,19 @@ class ProductService
         }
     }
 
+    public function getProductsByStatus(): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            Log::info('Fetching all products by published');
+
+            return $this->product->where('status', 'published')->where('quantity','>', 0)->get();
+        } catch (Exception $e) {
+            Log::error('Failed to fetch products: ' . $e->getMessage());
+            throw new Exception('Failed to fetch products');
+        }
+    }
+
+
     /**
      * Hàm lấy ra thông tin của sản phẩm theo id
      *

@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = $this->productService->getAllProducts();
+            $products = $this->productService->getProductsByStatus();
             return ApiResponse::success($products);
         }catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
@@ -101,5 +101,5 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to fetch products', 500);
         }
     }
-    
+
 }
