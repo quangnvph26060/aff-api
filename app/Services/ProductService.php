@@ -90,6 +90,7 @@ class ProductService
             $product = $this->product->create([
                 'name' => $data['name'],
                 'price' => $data['price'],
+                'purchase_price' => $data['purchase_price'],
                 'quantity' => $data['quantity'],
                 'product_unit' => @$data['product_unit'],
                 'category_id' => $data['category_id'],

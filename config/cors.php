@@ -36,7 +36,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['http://123.31.31.39:100'],
 
     'allowed_origins_patterns' => [],
 

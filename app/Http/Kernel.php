@@ -24,7 +24,7 @@ class Kernel extends HttpKernel
         // \Barryvdh\Cors\HandleCors::class,
         \App\Http\Middleware\Cors::class,
         \App\Http\Middleware\ForceHttps::class,
-        \Fruitcake\Cors\HandleCors::class,
+      //  \Fruitcake\Cors\HandleCors::class,
     ];
 
     /**

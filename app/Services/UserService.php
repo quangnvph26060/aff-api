@@ -328,8 +328,8 @@ class UserService
 
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
-            $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id', $referral_id)->get();
+            $referral_code = $data['referral_code'];
+            $findUser = $this->user->where('referral_code', $referral_code)->get();
             $is_result = $findUser->toArray();
             $user = [
                 'name' => @$data['name'],

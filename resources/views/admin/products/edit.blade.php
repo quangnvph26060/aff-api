@@ -69,49 +69,8 @@
                                                 </select>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
-                                                        class="text text-danger"></span></label>
-
-                                                <input id="images" class="form-control" type="file" name="images[]"
-                                                    multiple accept="image/*">
-                                                <div style="display: flex">
-                                                    @foreach($product->images as $key => $item)
-                                                    <div
-                                                        style="position: relative; margin-top: 10px; margin-right: 10px;">
-                                                        <img title="{{ $item->image_path }}"
-                                                            style="width: 100px; height: 75px;"
-                                                            src="{{ asset($item->image_path) }}" alt="">
-                                                        <a title="Xóa"
-                                                            href="{{ route('admin.deleteImagesProduct', ['id'=>$item->id]) }}"
-                                                            class="close-icon">
-                                                            <i class="fas fa-minus-square"></i>
-                                                        </a>
-                                                    </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="example-search-input" class="form-label">Giá sản phẩm
-                                                    <span class="text text-danger">*</span></label>
-                                                <input required class="form-control" name="price" type="number"
-                                                    id="example-search-input" value="{{ $product->price }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="example-url-input" class="form-label">Số lượng <span
-                                                        class="text text-danger">*</span></label>
-                                                <input required class="form-control" name="quantity" type="number"
-                                                    id="example-email-input" value="{{ $product->quantity }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="example-url-input" class="form-label">Hoa Hồng <span
-                                                        class="text text-danger">*</span></label>
-                                                <input required class="form-control" name="commission_rate"
-                                                    type="number" id="example-email-input" max="100"
-                                                    value="{{ $product->commission_rate }}">
-                                            </div>
-
+                                          
+                                           
 
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Loại Danh
@@ -145,6 +104,58 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="example-search-input" class="form-label">Giá nhập sản phẩm
+                                                <span class="text text-danger">*</span></label>
+                                            <input required class="form-control" name="purchase_price" type="number"
+                                                id="example-search-input" value="{{ $product->purchase_price }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="example-search-input" class="form-label">Giá bán sản phẩm
+                                                <span class="text text-danger">*</span></label>
+                                            <input required class="form-control" name="price" type="number"
+                                                id="example-search-input" value="{{ $product->price }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="example-url-input" class="form-label">Số lượng <span
+                                                    class="text text-danger">*</span></label>
+                                            <input required class="form-control" name="quantity" type="number"
+                                                id="example-email-input" value="{{ $product->quantity }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="example-url-input" class="form-label">Hoa Hồng <span
+                                                    class="text text-danger">*</span></label>
+                                            <input required class="form-control" name="commission_rate"
+                                                type="number" id="example-email-input" max="100"
+                                                value="{{ $product->commission_rate }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="example-text-input" class="form-label">Ảnh sản phẩm <span
+                                                    class="text text-danger"></span></label>
+
+                                            <input id="images" class="form-control" type="file" name="images[]"
+                                                multiple accept="image/*">
+                                            <div style="display: flex">
+                                                @foreach($product->images as $key => $item)
+                                                <div
+                                                    style="position: relative; margin-top: 10px; margin-right: 10px;">
+                                                    <img title="{{ $item->image_path }}"
+                                                        style="width: 100px; height: 75px;"
+                                                        src="{{ asset($item->image_path) }}" alt="">
+                                                    <a title="Xóa"
+                                                        href="{{ route('admin.deleteImagesProduct', ['id'=>$item->id]) }}"
+                                                        class="close-icon">
+                                                        <i class="fas fa-minus-square"></i>
+                                                    </a>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        
                                     </div>
                                     <div class="col-lg-12">
                                         <div>

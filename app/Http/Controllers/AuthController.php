@@ -50,7 +50,7 @@ class AuthController extends Controller
             // Kiểm tra loại đăng nhập và thực hiện hành động phù hợp
             if ($request->type === RequestApi::WEB) {
                 session()->put('authUser', $result);
-                return redirect()->route('admin.product.store');
+                return redirect()->route('admin.dashboard');
             } elseif ($request->type === RequestApi::API) {
                 return $this->respondWithToken($result['token']);
             }

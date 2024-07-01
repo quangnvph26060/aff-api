@@ -27,6 +27,6 @@ class Cors
         // $response->headers->set('Access-Control-Allow-Headers', '*');
         
         // return $response;
-        
+
     }
 }

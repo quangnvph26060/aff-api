@@ -101,7 +101,8 @@
                                                 <th>Thương hiệu</th>
                                                 <th>Ảnh sản phẩm</th>
                                                 <th>Số lượng</th>
-                                                <th>Đơn giá</th>
+                                                <th>Giá nhập</th>
+                                                <th>Giá bán</th>
                                                 <th>Hoa Hồng</th>
                                                 <th>Loại danh mục</th>
                                                 <th>Trạng thái</th>
@@ -125,6 +126,7 @@
 
                                                 </td>
                                                 <td>{{ $value->quantity }}</td>
+                                                <td>{{ number_format($value->purchase_price) }}đ</td>
                                                 <td>{{ number_format($value->price) }}đ</td>
                                                 <td>{{ $value->commission_rate }}%</td>
                                                 <td>
