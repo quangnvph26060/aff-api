@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\ConfigController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\MlmController;
 use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\PackageController;
 use App\Http\Controllers\Web\TeamController as WebTeamController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Middleware\checklogin;
@@ -94,8 +95,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/updateInfoAdmin', [AdminController::class, 'editInfoAdmin'])->name('infoAdmin.update');
     Route::post('/upload', [AuthController::class, 'uploadImageUserInfo'])->name('file.upload'); // ảnh user info
 
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-    Route::get('/teammember', [WebTeamController::class,'index'])->name('team');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/teammember', [WebTeamController::class, 'index'])->name('team');
     Route::get('/memberlist/{id}', [WebTeamController::class, 'getTeamMember'])->name('member');
     Route::get('/bestseller', [DashboardController::class, 'BestSeller'])->name('bestseller');
     // Route:get('bestseller', [])
@@ -118,5 +119,11 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/config', [ConfigController::class, 'index'])->name('config');
     Route::post('/updateconfig', [ConfigController::class, 'updateConfig'])->name('updateconfig');
     // MLM
-    Route::get('/mlm',[MlmController::class,'index'])->name('mlm');
+    Route::get('/mlm', [MlmController::class, 'index'])->name('mlm');
+    // pakage
+    Route::get('/package', [PackageController::class, 'index'])->name('package');
+    Route::get('/package-add', [PackageController::class, 'viewAdd'])->name('package.view');
+    Route::post('/package-add', [PackageController::class, 'store'])->name('package.add');
+    Route::get('/package-edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
+    Route::post('/package-update/{id}', [PackageController::class, 'update'])->name('package.update');
 });

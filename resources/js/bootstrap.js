@@ -9,7 +9,9 @@ window._ = _;
 
 import axios from 'axios';
 window.axios = axios;
-
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: *');
+// header('Access-Control-Allow-Headers: *');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

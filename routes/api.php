@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DemoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redis;
@@ -22,12 +23,18 @@ use App\Http\Controllers\Api\v1\OrderController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// Route::options('/{any}', function () {
+//     return response('OK', 200)
+//         ->header('Access-Control-Allow-Origin', '*')
+//         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+//         ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// })->where('any', '.*');
 Route::post('find-password', [UserController::class, 'resetPassword'])->name('findPass');
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
+    Route::post('demo-cors',[DemoController::class,'demoCors']);
     Route::group([
         'middleware' => ['api'],
 

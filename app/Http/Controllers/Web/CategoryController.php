@@ -26,7 +26,7 @@ class CategoryController extends Controller
      * hàm lấy danh tât cả danh mục
      */
     public function index()  {
-       try{
+        try{
             $data = $this->categoryService->getAllCategories();
             return view('admin.category.category',compact('data'));
         }catch(\Exception $e){

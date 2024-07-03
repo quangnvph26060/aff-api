@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-       require('tailwindcss')
-    ]);
+ mix.js('resources/js/app.js', 'public/js')
+ .vue() // Cần phải có .vue() để biên dịch các file Vue
+ .postCss('resources/css/app.css', 'public/css', [
+     // Đưa vào các plugin PostCSS nếu cần
+ ]);

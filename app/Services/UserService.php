@@ -387,7 +387,7 @@ class UserService
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
             $referral_id = $data['referral_code'];
-            $findUser = $this->user->where('referrer_id', $referral_id)->get();
+            $findUser = $this->user->where('referral_code', $referral_id)->get();
             $is_result = $findUser->toArray();
 
             $user = $this->user->create([
@@ -395,9 +395,9 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $this->randomReferalCode(),
+                'referral_code' => "",
                 'phone' => @$data['phone'],
-                'referrer_id' => $is_result[0]['referrer_id'],
+                'referrer_id' => $is_result[0]['referral_code'],
                 'role_id' => 3,
                 'status' => 'active',
             ]);

@@ -16,9 +16,13 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import SomeView from './views/SomeView.vue';
 import { create } from 'lodash';
+import router from './router/index';
 app.component('example-component', ExampleComponent);
 
+
+app.use(router);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

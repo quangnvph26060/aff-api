@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +11,12 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    @vite('resources/css/app.css')
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+    <div id="app"></div>
+    @vite('resources/js/app.js')
+    {{-- <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
@@ -109,6 +112,6 @@
             notificationsWrapper.find('.notif-count').text(notificationsCount);
             notificationsWrapper.show();
         });
-    </script>
+    </script> --}}
 </body>
 </html>
