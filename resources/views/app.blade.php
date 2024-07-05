@@ -6,12 +6,10 @@
         <title>Laravel with Vue Router</title>
         <meta name="csrf-token" content={{ csrf_token() }}>
         @vite(['resources/js/app.js'])
+       
     </head>
     <body>
-        <div id="app">
-            <router-view></router-view>
+        <div id="app" class="vue">
         </div>
-
-        <script type="module" src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>

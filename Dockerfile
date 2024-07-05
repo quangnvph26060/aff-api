@@ -1,35 +1,37 @@
-FROM php:8.2-fpm
+# Sử dụng PHP-FPM làm base image
+FROM php:7.4-fpm
 
-# Copy composer.lock and composer.json into the working directory
-COPY composer.lock composer.json /var/www/html/
-
-# Set working directory
-WORKDIR /var/www/html/
-
-# Install dependencies for the operating system software
+# Cài đặt các dependencies cần thiết
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    zip \
-    vim \
     git \
-    curl
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip pdo_mysql
 
-# Install extensions for php
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install gd
-
-# Install composer (php package manager)
+# Cài đặt Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copy existing application directory contents to the working directory
-COPY . /var/www/html
+# Đặt thư mục làm việc
+WORKDIR /var/www/html
 
-# Assign permissions of the working directory to the www-data user
-RUN chown -R www-data:www-data \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+# Copy mã nguồn Laravel vào container
+COPY . .
 
-# Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
-EXPOSE 9000
-CMD ["php-fpm"]
+# Cài đặt các dependencies của Laravel thông qua Composer
+# RUN composer install --no-interaction --no-plugins --no-scripts
+
+# Thiết lập quyền cho thư mục storage và bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache
+
+# Copy cấu hình Nginx vào container
+# COPY docker/nginx/default.conf /etc/nginx/sites-available/default
+
+# Mở cổng cho Nginx
+# EXPOSE 80
+
+# CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+CMD ["nginx", "-g", "daemon off;"]

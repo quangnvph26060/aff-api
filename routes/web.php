@@ -34,6 +34,8 @@ use PSpell\Config;
 |
 */
 // demo
+
+
 Route::get('test', function () {
     event(new App\Events\NewOrderEvent());
     return "Event has been sent!";
@@ -45,9 +47,9 @@ Route::get('wel', function () {
 Route::get('ad', function () {
     return view('emails.order');
 });
-Route::fallback(function () {
-    return view('errors.404');
-});
+// Route::fallback(function () {
+//     return view('errors.404');
+// });
 // end demo
 
 Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
@@ -55,7 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AuthController::class, 'viewLogin'])->name('admin.login');
     Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
 });
-Route::get('demo', [AuthController::class, 'getUser']);
+// Route::get('demo', [AuthController::class, 'getUser']);
 
 Route::post('admin/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(function () {
@@ -127,3 +129,9 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/package-edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package-update/{id}', [PackageController::class, 'update'])->name('package.update');
 });
+
+
+// vue
+Route::view('/{any?}', 'app')->where('any', '.*');
+  
+  
