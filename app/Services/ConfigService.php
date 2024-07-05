@@ -20,7 +20,7 @@ class ConfigService
     public function getConfig()
     {
         try {
-            return Config::first();
+            return Config::first() ?? "";
         } catch (Exception $e) {
             Log::error('Failed to fetch configuration: ' . $e->getMessage());
             throw new Exception('Failed to fetch configuration');
