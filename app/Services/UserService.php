@@ -361,20 +361,19 @@ class UserService
     }
     public function sendCodeUserOtp($data){
         try {
-            Log::info("Send OTP code to user mail/phone");
-            
-            if ($type == 'mail') {
-                $findUser = $this->user->where('mail', $condition)->first();
-            } elseif ($type == 'phone') {
-                $findUser = $this->user->where('phone', $condition)->first();
+            Log::info("Send OTP code to user mail ");
+            $findUser = $this->user->where('email', $data['email'])->first();
+            if ($findUser) {
+                $data['otp'] = mt_rand(100000, 999999);
+                $arrSendMail = [
+                    'email' => $data['email'],
+                    'otp' =>$data['otp'],
+                ];
+                SendOTP::dispatch($arrSendMail);
             } else {
                 return response()->json(['message' => 'Người dùng không tồn tại'], 400);
             }
-
-            if ($findUser) {
-                $otp = mt_rand(100000, 999999);
-                SendOTP::dispatch($type, $otp);
-            }
+ 
         } catch (Exception $e) {
             Log::error("Failed to send OTP: {$e->getMessage()}");
             throw $e;

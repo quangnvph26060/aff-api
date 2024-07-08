@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\EventSendMailBrand' => [
             'App\Listeners\SendMailBrand',
         ],
+        'App\Events\EventSendOTP' => [
+            'App\Listeners\SendOTP',
+        ],
     ];
 
     /**

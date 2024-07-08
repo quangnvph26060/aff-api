@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\EventSendOTP;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +19,7 @@ class SendOTP implements ShouldQueue
      *
      * @return void
      */
+    protected $request;
     public function __construct($request)
     {
         $this->request = $request;
@@ -30,6 +32,12 @@ class SendOTP implements ShouldQueue
      */
     public function handle()
     {
-        $data = $this->request;
+        try {
+            $data = $this->request;
+            event(new EventSendOTP($data['email'], $data['otp']));
+        } catch (Exception $e) {
+            Log::error("Failed to send OTP: {$e->getMessage()}");
+            throw $e;
+        }
     }
 }
