@@ -6,6 +6,7 @@ use App\Enums\RequestApi;
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
+use App\Jobs\SendOTP;
 use App\Models\Commission;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -358,7 +359,29 @@ class UserService
             throw $e;
         }
     }
+    public function sendCodeUserOtp($data){
+        try {
+            Log::info("Send OTP code to user mail/phone");
+            
+            if ($type == 'mail') {
+                $findUser = $this->user->where('mail', $condition)->first();
+            } elseif ($type == 'phone') {
+                $findUser = $this->user->where('phone', $condition)->first();
+            } else {
+                return response()->json(['message' => 'Người dùng không tồn tại'], 400);
+            }
 
+            if ($findUser) {
+                $otp = mt_rand(100000, 999999);
+                SendOTP::dispatch($type, $otp);
+            }
+        } catch (Exception $e) {
+            Log::error("Failed to send OTP: {$e->getMessage()}");
+            throw $e;
+        }
+
+    }
+    
     public function resetPassword($email)
     {
 
@@ -380,6 +403,9 @@ class UserService
         return true;
     }
 
+    public function forgotPassword ($request){
+
+    }
 
     public function createUser(array $data)
     {

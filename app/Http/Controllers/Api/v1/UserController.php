@@ -45,6 +45,16 @@ class UserController extends Controller
             return ApiResponse::error('Failed to create user ', 500);
         }
     }
+    public function sendOtpUser(StoreUserRequest $request)
+    {
+        try {
+            $is_user_confirm = $this->userService->sendCodeUserOtp($request->validated());
+            return ApiResponse::success($is_user_confirm, 'Otp sent successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to send otp: ' . $e->getMessage());
+            return ApiResponse::error('Failed to send otp ', 500);
+        }
+    }
     public function store(Request $request)
     {
         try {
@@ -115,5 +125,16 @@ class UserController extends Controller
             Log::error('Failed to send pass: ' . $e->getMessage());
             return ApiResponse::error('Failed to send pass ', 500);
         }
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        try {
+            $success = $this->userService->forgotPassword($request->all());
+                return ApiResponse::success($success, 'Set New Password success', 201);
+            } catch (\Exception $e) {
+                Log::error('Failed to set new password: ' . $e->getMessage());
+                return ApiResponse::error('Failed to set new password ', 500);
+            }
     }
 }
