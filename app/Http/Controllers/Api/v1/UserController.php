@@ -48,14 +48,39 @@ class UserController extends Controller
     public function sendOtpUser(Request $request)
     {
         try {
-            $is_user_confirm = $this->userService->sendCodeUserOtp($request);
+            $is_otp_sent = $this->userService->sendCodeUserOtp($request);
             
-            return ApiResponse::success($is_user_confirm, 'Otp sent successfully', 201);
+            return ApiResponse::success($is_otp_sent, 'OTP sent successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to send otp: ' . $e->getMessage());
             return ApiResponse::error('Failed to send otp ', 500);
         }
     }
+
+    public function checkOtp(Request $request)
+    {
+        try {
+            $is_otp_check = $this->userService->checkOtp($request);
+            
+            return ApiResponse::success($is_otp_check, 'OTP checked successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to check otp: ' . $e->getMessage());
+            return ApiResponse::error('Failed to check otp ', 500);
+        }
+    }
+
+    public function setNewPassword(Request $request)
+    {
+        try {
+            $is_password_set = $this->userService->setNewPassword($request);
+            
+            return ApiResponse::success($is_password_set, 'Password Changed successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to change password: ' . $e->getMessage());
+            return ApiResponse::error('Failed to change password', 500);
+        }
+    }
+
     public function store(Request $request)
     {
         try {

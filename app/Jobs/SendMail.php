@@ -8,6 +8,7 @@ use App\Events\EventOrder;
 
 use App\Events\EventRegister;
 use App\Events\EventSendMailBrand;
+use App\Events\EventSendNewPassUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -55,6 +56,9 @@ class SendMail implements ShouldQueue
         }else if ($data['type'] && $data['type'] === 'send_brands'){
 
             event(new EventSendMailBrand($data['email'], $data['order']));
+        }else if ($data['type'] && $data['type'] === 'password_new_user'){
+
+            event(new EventSendNewPassUser($data['user']));
         }
     }
 }

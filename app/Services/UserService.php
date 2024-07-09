@@ -363,11 +363,16 @@ class UserService
         try {
             Log::info("Send OTP code to user mail ");
             $findUser = $this->user->where('email', $data['email'])->first();
+
             if ($findUser) {
-                $data['otp'] = mt_rand(100000, 999999);
+                $otp = mt_rand(100000, 999999);
+                $expiredAt = Carbon::now()->addMinutes(5);
+                $findUser->temp_otp = $otp;
+                $findUser->expired_at = $expiredAt;
+                $findUser->save();
                 $arrSendMail = [
                     'email' => $data['email'],
-                    'otp' =>$data['otp'],
+                    'otp' =>$otp,
                 ];
                 SendOTP::dispatch($arrSendMail);
             } else {
@@ -380,7 +385,43 @@ class UserService
         }
 
     }
-    
+
+    public function  checkOtp($data){
+        try {
+            Log::info("Check OTP processing");
+            $findUser = $this->user->where('email', $data['email'])->first();
+
+            if ($findUser && $findUser->temp_otp == $data['otp'] && Carbon::parse($findUser->expired_at)->isFuture()) {
+                return response()->json(['message' => 'Kiểm tra OTP thành công!'], 200);
+            } else {
+                return response()->json(['message' => 'OTP không đúng hoặc đã hết hạn'], 400);
+            }
+ 
+        } catch (Exception $e) {
+            Log::error("Failed to send OTP: {$e->getMessage()}");
+            throw $e;
+        }
+
+    }
+
+    public function setNewPassword($data)
+    {
+
+        $user = User::where('email', $data['email'])->first();
+        if (!$user) {
+            return false;
+        }
+        $newPassword = $data['password'];
+        $user->password = bcrypt($newPassword);
+        $user->save();
+        $arrSendMail = [
+            'type' => 'password_new_user',
+            'user' => $user,
+        ];
+        SendMail::dispatch($arrSendMail);
+        return true;
+    }
+
     public function resetPassword($email)
     {
 

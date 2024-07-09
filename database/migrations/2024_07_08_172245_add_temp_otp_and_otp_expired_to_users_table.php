@@ -10,7 +10,7 @@ class AddTempOtpAndOtpExpiredToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('temp_otp')->nullable()->after('email');
-            $table->timestamp('otp_expired')->nullable()->after('temp_otp');
+            $table->timestamp('expired_at')->nullable()->after('temp_otp');
         });
     }
 
@@ -18,7 +18,7 @@ class AddTempOtpAndOtpExpiredToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('temp_otp');
-            $table->dropColumn('otp_expired');
+            $table->dropColumn('expired_at');
         });
     }
 };

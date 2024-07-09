@@ -26,6 +26,8 @@ use App\Http\Controllers\Api\v1\OrderController;
 Route::post('find-password', [UserController::class, 'resetPassword'])->name('findPass');
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
+    Route::post('/check-otp', [UserController::class, 'checkOtp']);
+    Route::post('/new-password', [UserController::class, 'setNewPassword']);
     Route::post('/send-otp-user', [UserController::class, 'sendOtpUser']);    
     Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
     Route::post('/register', [UserController::class, 'store']);
