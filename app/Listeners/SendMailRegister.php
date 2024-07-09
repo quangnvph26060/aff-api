@@ -33,7 +33,7 @@ class SendMailRegister implements ShouldQueue
         $otp = $event->otp;
         $this->mailer->send('emails.register', ['user' => $user, 'otp' => $otp], function ($message) use ($user) {
             $message->to($user['email'])
-                ->subject('Your OTP Code');
+                ->subject('Mã OTP của bạn');
         });
     }
 }

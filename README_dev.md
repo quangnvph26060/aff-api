@@ -15,3 +15,18 @@ lệnh tạo key check auth : php artisan jwt:secret
 
 -- 06/28/2024
 php artisan queue:table
+
+
+
+-- 5/72024
+ npm install ant-design-vue
+npm install pinia-plugin-persistedstate
+npm install pinia
+npm install vue-sweetalert2
+npm install postcss
+npm install gsap
+npm install vue-data-ui
+npm install bootstrap
+npm install @vueuse/core
+npm install -g @vue/cli
+npm install vuex

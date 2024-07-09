@@ -52,11 +52,11 @@ Route::get('ad', function () {
 // });
 // end demo
 
-Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', [AuthController::class, 'viewLogin'])->name('admin.login');
-    Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
-});
+Route::get('/admin/login', [AuthController::class, 'viewLogin'])->name('admin.login');
+// Route::group(['prefix' => 'admin'], function () {
+//     Route::get('/login', [AuthController::class, 'viewLogin'])->name('admin.login');
+//     Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
+// });
 // Route::get('demo', [AuthController::class, 'getUser']);
 
 Route::post('admin/login', [AuthController::class, 'login'])->name('login');

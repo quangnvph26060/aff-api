@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+// Variables
+$primary: #F5F5F5;
+$secondary: #4fd1c5;
+$secondary-lighter: #76faed;
+$white: #fff;
+
+
+
+// Base styles
+a {
+    color: #a0aec0;
+
+    &:active,
+    &:focus {
+        color: black;
+    }
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #8c57ff !important;
+    border-color: #8c57ff !important;
+}
+
+.ant-form-item {
+    margin-bottom: 16px;
+}
+
+.container-item {
+    padding: 0 20px !important;
+}
+
+.icon-center {
+    display: inline-flex;
+    align-items: center;
+
+}
+
+// Background classes
+.bg-white {
+    background-color: $white;
+}
+
+.bg-primary {
+    background-color: $primary;
+}
+
+.bg-secondary {
+    background-color: $secondary !important;
+    color: white !important;
+}
+.bg-secondary-lighter {
+    background-color: $secondary-lighter !important;
+}
+
+.bg-dark {
+    background-color: #2d3748;
+}
+
+// Admin panel background classes
+.bg-admin-main {
+    background: #28243D;
+}
+
+.bg-admin-card {
+    background: #312D4B;
+}
+
+.btn-admin-primary  {
+    background-color: #8955f8 !important;
+}
+
+.btn-admin-primary:hover {
+    background-color: #8955f8 !important;
+    color: white !important;
+}
+
+.btn-admin {
+    background-color: #383451 !important;
+    color: #9ca3af !important;
+}
+.btn-admin:hover {
+    background-color: #383451 !important;
+    color: #9ca3af !important;
+    border: 1px solid #9ca3af !important;
+}
+
+
+// Text color classes
+.text-primary {
+    color: black;
+}
+
+.text-secondary {
+    color: #a0aec0;
+}
+
+// Color-specific classes
+.color-primary {
+    color: $primary;
+}
+
+.color-secondary {
+    color: $secondary;
+}
