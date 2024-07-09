@@ -31,7 +31,7 @@ use App\Http\Controllers\Api\v1\OrderController;
 // })->where('any', '.*');
 Route::post('find-password', [UserController::class, 'resetPassword'])->name('findPass');
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
-    Route::post('/send-otp', [UserController::class, 'sendOtp']);
+    Route::post('/send-otp', [UserController::class, 'sendOtp'])->name('send_otp');
     Route::post('/register', [UserController::class, 'store']);
     Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
     Route::post('demo-cors',[DemoController::class,'demoCors']);

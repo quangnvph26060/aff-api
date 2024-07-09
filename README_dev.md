@@ -15,6 +15,8 @@ lệnh tạo key check auth : php artisan jwt:secret
 
 -- 06/28/2024
 php artisan queue:table
+php artisan queue:failed-table
+để chạy: php artisan queue:work gưi mail
 
 
 

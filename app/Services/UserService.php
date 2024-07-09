@@ -341,7 +341,7 @@ class UserService
                 // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'referrer_id' => $this->randomReferalCode(),
-                'role_id' => 3,
+                'role_id' => 2,
                 'status' => 'active',
                 'otp' => @$data['otp'],
             ];
@@ -350,6 +350,7 @@ class UserService
                 'user' => $user,
                 'otp' => $data['otp'],
             ];
+        
             SendMail::dispatch($arrSendMail);
             //  event(new EventRegister($user,@$data['otp']));
             return $user;
@@ -398,7 +399,7 @@ class UserService
                 'referral_code' => "",
                 'phone' => @$data['phone'],
                 'referrer_id' => $is_result[0]['referral_code'],
-                'role_id' => 3,
+                'role_id' => 2,
                 'status' => 'active',
             ]);
 
