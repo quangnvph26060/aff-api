@@ -209,7 +209,7 @@ class OrderService
                     'products.name as product_name',
                     'categories.name as category_name',
                     DB::raw('SUM(order_details.quantity *products.price) as total_cost'),
-                    DB::raw('Sum(order_details.quantity) as total_sold_amount')
+                    DB::raw('Sum(order_details.quantity) as total_sold_amount'),'products.price as price'
                 )
                 ->join('products', 'order_details.product_id', '=', 'products.id')
                 ->join('categories', 'products.category_id', '=', 'categories.id')

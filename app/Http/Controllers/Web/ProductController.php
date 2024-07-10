@@ -113,7 +113,7 @@ class ProductController extends Controller
             $category = $this->categoryService->getAllCategories();
             $products = $this->productService->productByName($request->name);
 
-                return view('admin.products.listproduct', compact('products','category'));
+            return view('admin.products.listproduct', compact('products','category'));
 
         } catch (\Exception $e) {
             Log::error('Failed to delete product: ' . $e->getMessage());

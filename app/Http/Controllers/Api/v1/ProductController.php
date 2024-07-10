@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\ProductNotFoundException;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
@@ -93,6 +94,18 @@ class ProductController extends Controller
         try {
             $data = $this->productService->productByCategory($id);
             return ApiResponse::success($data, 'Product by category fetched successfully');
+        } catch (ModelNotFoundException $e) {
+            $exception = new ProductNotFoundException();
+            return $exception->render(request());
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch products: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch products', 500);
+        }
+    }
+    public function searchProduct(Request $request){
+        try {
+            $products = $this->productService->searchProduct($request->all());
+            return ApiResponse::success($products, 'Product by category fetched successfully');
         } catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
             return $exception->render(request());

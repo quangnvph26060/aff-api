@@ -104,7 +104,7 @@
                                         <!--end row-->
 
                                         <div class="row">
-                                            <div class="col-xl-4 col-md-6">
+                                            <div class="col-xl-3 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -148,7 +148,7 @@
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-4 col-md-6">
+                                            <div class="col-xl-3 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -192,7 +192,7 @@
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
 
-                                            <div class="col-xl-4 col-md-6">
+                                            <div class="col-xl-3 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
                                                     <div class="card-body">
@@ -233,7 +233,47 @@
                                                     </div><!-- end card body -->
                                                 </div><!-- end card -->
                                             </div><!-- end col -->
+                                            <div class="col-xl-3 col-md-6">
+                                                <!-- card -->
+                                                <div class="card card-animate">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <p
+                                                                    class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                                                                    CÔNG TÁC VIÊN</p>
+                                                            </div>
+                                                            <div class="flex-shrink-0">
+                                                                <h5 class="text-success fs-14 mb-0">
 
+                                                                    +29.08 %
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="d-flex align-items-end justify-content-between mt-4">
+                                                            <div>
+                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
+                                                                        class="counter-value"
+                                                                        data-target="{{$useramountAffliate}}">0</span>
+                                                                </h4>
+                                                                <a style="text-decoration: none !important"
+                                                                    class="text-decoration-underline">CÔNG TÁC VIÊN</a>
+                                                            </div>
+                                                            <div class="avatar-sm flex-shrink-0">
+                                                                <span
+                                                                    class="avatar-title bg-warning-subtle rounded fs-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                        height="20" viewBox="0 0 32 32">
+                                                                        <path fill="currentColor"
+                                                                            d="M26 30h-2v-5a5.006 5.006 0 0 0-5-5h-6a5.006 5.006 0 0 0-5 5v5H6v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7v5zM22 6v4c0 1.103-.897 2-2 2h-1a1 1 0 0 0 0 2h1c2.206 0 4-1.794 4-4V6h-2zm-6 10c-3.86 0-7-3.14-7-7s3.14-7 7-7c1.988 0 3.89.85 5.217 2.333l-1.49 1.334A5.008 5.008 0 0 0 16 4c-2.757 0-5 2.243-5 5s2.243 5 5 5v2z" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end card body -->
+                                                </div><!-- end card -->
+                                            </div>
                                             {{-- <div class="col-xl-3 col-md-6">
                                                 <!-- card -->
                                                 <div class="card card-animate">
@@ -631,10 +671,10 @@
                                                                     <tr>
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
-                                                                                <div class="flex-shrink-0 me-2">
+                                                                                {{-- <div class="flex-shrink-0 me-2">
                                                                                     <img src="{{asset('assets/images/products/default.png')}}"
                                                                                         alt="" class="avatar-sm p-2" />
-                                                                                </div>
+                                                                                </div> --}}
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1 fw-medium">
                                                                                         <a href="#"
@@ -647,7 +687,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <span class="text-muted">{{
-                                                                                $product->category_name }}</span>
+                                                                                number_format($product->price )}}đ</span>
                                                                         </td>
                                                                         <td>
                                                                             <span class="text-muted">{{
@@ -1284,9 +1324,9 @@
                                                             <h5>Mời người dùng mới</h5>
                                                             <p class="text-muted lh-base">Giới thiệu người bán mới cho chúng tôi và kiếm 100 USD cho mỗi lượt giới thiệu.</p>
                                                             <button type="button"
-                                                                class="btn btn-primary btn-label rounded-pill"><i
-                                                                    class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
+                                                                class="btn btn-primary btn-label rounded-pill" id="handleDashboard">
                                                                 Mời ngay</button>
+                                                                <p id="copy_link" hidden> {{config("app.url")}}/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2219,7 +2259,17 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Column Chart for Revenue
+    //
+  document.getElementById('handleDashboard').addEventListener('click', function() {
+    var copyText = document.getElementById('copy_link').innerText;
+    navigator.clipboard.writeText(copyText).then(function() {
+        console.log('Copied to clipboard: ' + copyText);
+    }).catch(function(error) {
+        console.error('Error copying text: ', error);
+    });
+    });
+
+    
     var revenueData = {!! json_encode($getMonthlyRevenue) !!};
     var revenueCtx = document.getElementById('revenueChart').getContext('2d');
     var revenueChart = new Chart(revenueCtx, {

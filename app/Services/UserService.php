@@ -59,9 +59,17 @@ class UserService
      */
     public function countAllUser(){
         try{
-            $amount = $this->user->where('role_id', 2)
-                     ->orWhere('role_id', 3)
-                     ->count();
+            $amount = $this->user->where('role_id', 3)->count();
+            return $amount;
+        }
+        catch (Exception $e) {
+            Log::error('Failed to count users: ' . $e->getMessage());
+            throw new Exception('Failed to count users');
+        }
+    }
+    public function countAllUserAffliate(){
+        try{
+            $amount = $this->user->where('role_id', 2)->count();
             return $amount;
         }
         catch (Exception $e) {

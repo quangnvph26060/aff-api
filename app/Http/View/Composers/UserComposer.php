@@ -15,9 +15,10 @@ class UserComposer
             $result = $request->session()->get('authUser');
             if (is_array($result)) {
                 $view->with('loggedInUser', [
-                    'name'     => $result['user']['name'],
-                    'email'    => $result['user']['email'],
-                    'images'   => $result['user']['user_info'][0]['img_url'] ?? '/users/avatar-1.jpg',
+                    'name'              => $result['user']['name'],
+                    'email'             => $result['user']['email'],
+                    'images'            => $result['user']['user_info'][0]['img_url'] ?? '/users/avatar-1.jpg',
+                    'referral_code'     => $result['user']['referral_code'],
                 ]);
 
             }

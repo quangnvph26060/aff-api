@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\v1\OrderController;
 //         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 //         ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 // })->where('any', '.*');
+
 Route::post('find-password', [UserController::class, 'resetPassword'])->name('findPass');
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp'])->name('send_otp');
@@ -67,15 +68,17 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
 
     });
 
-    Route::group(['prefix' => 'products'], function ($router) {
+    Route::group(['prefix' => 'products'], function ($router) { 
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);
         Route::post('/{id}', [ProductController::class, 'show']);
-        Route::get('/{id}', [ProductController::class, 'edit']);
+       // Route::get('/{id}', [ProductController::class, 'edit']);
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
         Route::post('/bycategory/{id}', [ProductController::class, 'getProductByCategory']);
+       
     });
+    Route::post('search-product',[ProductController::class,'searchProduct'])->name('search_product');
     // Route::group(['prefix' => 'team'],function($router){
     //     Route::get('/', [TeamController::cl])
     // });\

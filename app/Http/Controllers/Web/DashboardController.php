@@ -36,6 +36,7 @@ class DashboardController extends Controller
         $category = $this->categoryService->productCategory();
         $bestseller = $this->BestSeller();
         $useramount = $this->userService->countAllUser();
+        $useramountAffliate = $this->userService->countAllUserAffliate();
         $orderamount = $this->orderService->getOrderAmount();
         $statistic = $orderamount -> map(function($amount){
             return[
@@ -48,7 +49,7 @@ class DashboardController extends Controller
 
         }
         // dd($loggedInUser);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue', 'totalAnnualRevenue'));
+        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue', 'totalAnnualRevenue','useramountAffliate'));
     }
     public function BestSeller()
     {

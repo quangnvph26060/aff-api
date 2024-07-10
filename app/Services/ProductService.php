@@ -221,4 +221,15 @@ class ProductService
             throw new Exception('Failed to search products');
         }
     }
+    public function searchProduct($data) {
+        try {
+            $products = $this->product->where('name',$data['searchValues']['searchQuery'])
+                                        ->orwhere('category_id',$data['searchValues']['selectedCategory'])
+                                        ->get();
+            return $products;
+        } catch (Exception $e) {
+            Log::error("Failed to search products: {$e->getMessage()}");
+            throw new Exception('Failed to search products');
+        }
+    }
 }
