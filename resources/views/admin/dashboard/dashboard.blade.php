@@ -45,7 +45,7 @@
                 <!-- ============================================================== -->
                 <!-- Start right Content here -->
                 <!-- ============================================================== -->
-                <div class="main-content " style="margin-left: 10px;">
+                <div class="main-content ml-dasboard" >
 
                     <div class="page-content">
                         <div class="container-fluid">
@@ -2274,10 +2274,13 @@
 });
 
     </script>
-    <style>
+    <style scoped>
         .revenueChart{
             width: 700px !important;
             height: 350px !important;
+        }
+        .ml-dasboard{
+            margin-left: 10px;
         }
     </style>
 @endsection

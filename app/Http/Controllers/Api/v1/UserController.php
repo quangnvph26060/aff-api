@@ -35,11 +35,11 @@ class UserController extends Controller
         }
     }
 
-    public function sendOtp(StoreUserRequest $request)
+    public function sendOtp(Request $request)
     {
         try {
-            $is_user_confirm = $this->userService->sendCodeOtp($request->validated());
-            return ApiResponse::success($is_user_confirm, 'User created successfully', 201);
+            $is_user_confirm = $this->userService->sendCodeOtp($request->all());
+            return ApiResponse::success($is_user_confirm, 'SendOtp successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create user: ' . $e->getMessage());
             return ApiResponse::error('Failed to create user ', 500);

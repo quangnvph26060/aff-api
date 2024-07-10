@@ -5,8 +5,8 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-lg">
-                        <img src="{{ asset($config->logo) }}" alt="Logo" height="24" class="logo-img">
-                        <span class="logo-text">{{ $config->name }}</span>
+                        <img src="{{ asset($config->logo ?? "") }}" alt="Logo" height="24" class="logo-img">
+                        <span class="logo-text">{{ $config->name ?? "" }}</span>
                     </span>
                 </a>
             </div>
