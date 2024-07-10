@@ -30,15 +30,32 @@ class AppServiceProvider extends ServiceProvider
     {
         // View::composer('*', UserComposer::class);
         // View::composer('*', OrderComposer::class);
-        View::composer('*', function ($view) {
-            Log::info(request()->path());
-            // Kiểm tra nếu route hiện tại không phải là 'create.order' hoặc 'api.send-otp' && !request()->path() === "api/v1/send-otp"
+      
+        View::composer('*', function ($view) {  
+            $excludedRoutes = [
+                'admin/config',
+                'admin/dashboard',
+                'admin/product/add',
+                'admin/product',
+                'admin/category',
+                'admin/category/add',
+                'admin/user-info',
+                'admin/order/list',
+                'admin/teammember',
+                'admin/transaction',
+                'admin/mlm',
+                'admin/package',
+                'admin/brand/add',
+                'admin/brand',
+            ];
+            $path = request()->path();
+            Log::info("path:" . request()->path());
             if ( !request()->path() === 'api/v1/send-otp' ) {
                 View::composer('*', UserComposer::class);
                 View::composer('*', OrderComposer::class);
                 View::composer('*', ConfigComposer::class);
             }
-            if ( request()->path() === 'admin/dashboard' ) {
+            if ( in_array($path, $excludedRoutes) ) {
                 View::composer('*', UserComposer::class);
                 View::composer('*', OrderComposer::class);
                 View::composer('*', ConfigComposer::class);
