@@ -8,7 +8,7 @@ use App\Http\View\Composers\UserComposer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Route;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -33,23 +33,28 @@ class AppServiceProvider extends ServiceProvider
       
         View::composer('*', function ($view) {  
             $excludedRoutes = [
-                'admin/config',
-                'admin/dashboard',
-                'admin/product/add',
-                'admin/product',
-                'admin/category',
-                'admin/category/add',
-                'admin/user-info',
-                'admin/order/list',
-                'admin/teammember',
-                'admin/transaction',
-                'admin/mlm',
-                'admin/package',
-                'admin/brand/add',
-                'admin/brand',
+                'admin.login',
+                'admin.dashboard',
+                'admin.user-info',
+                'admin.config',
+                'admin.product.add',
+                'admin.product.store',
+                'admin.product.edit',
+                'admin.category.add',
+                'admin.category.index',
+                'admin.category.edit',
+                'admin.brand.addForm',
+                'admin.brand.index',
+                'admin.brand.edit',
+                'admin.order.list',
+                'admin.team',
+                'admin.transaction.index',
+                'admin.mlm',
+                'admin.package',
             ];
-            $path = request()->path();
-            Log::info("path:" . request()->path());
+            $path = Route::currentRouteName();
+            
+         
             if ( !request()->path() === 'api/v1/send-otp' ) {
                 View::composer('*', UserComposer::class);
                 View::composer('*', OrderComposer::class);
