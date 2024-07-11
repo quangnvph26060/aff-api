@@ -76,6 +76,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('product-images/{id}', [ProductController::class, 'deleteImagesProduct'])->name('deleteImagesProduct');
     Route::post('product-category', [ProductController::class, 'Changecategory'])->name('changecategory');
     Route::post('product-status', [ProductController::class, 'Changestatus'])->name('changestatus');
+     // update status featrud product
+    Route::post('/update-featured-product',[ProductController::class,'updateProductFeatured'])->name('product.featured');
     // Route::get('product/list', function () {
     //     return view('admin.products.listproduct');
     // })->name('product.list');

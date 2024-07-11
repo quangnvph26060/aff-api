@@ -32,3 +32,7 @@ npm install bootstrap
 npm install @vueuse/core
 npm install -g @vue/cli
 npm install vuex
+
+-- 7/11/2024
+UPDATE products
+SET is_featured = 0

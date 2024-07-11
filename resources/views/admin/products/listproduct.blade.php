@@ -106,6 +106,7 @@
                                                 <th>Hoa Hồng</th>
                                                 <th>Loại danh mục</th>
                                                 <th>Trạng thái</th>
+                                                <th>Đặc trưng</th>
                                                 <th style="text-align: center">Hành động</th>
                                             </tr>
                                         </thead>
@@ -160,6 +161,16 @@
                                                         </select>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <div class="toggle-container">
+                                                        <input type="checkbox" id="toggle{{$value->id}}" {{$value->is_featured == 1  ? "checked" : ""}} value="{{$value->id}}" class="toggle-checkbox">
+                                                        <label for="toggle{{$value->id}}" class="toggle-label">
+                                                            <span class="toggle-knob"></span>
+                                                        </label>
+                                                    </div>
+                                                    
+                                                   
+                                                </td>
                                                 <td align="center">
                                                     <a class="btn btn-warning"
                                                         href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
@@ -209,6 +220,35 @@
         </div> <!-- container-fluid -->
     </div>
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.toggle-checkbox');
+    checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function(event) {
+            const value = event.target.value;
+            const isChecked = this.checked ? 1 : 0;
+              // Gọi API với fetch
+              const formData = new FormData();
+                formData.append('id_product', value);
+                formData.append('status', isChecked);
+                formData.append('_token', '{{ csrf_token() }}');
+              $.ajax({
+                url: '{{ route("admin.product.featured") }}',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                
+            }   
+        });
+
+        });
+    });
+});
+
         var validateaddproduct = {
             'name': {
             'element': document.getElementById('name'),
@@ -290,5 +330,44 @@
         .trang-thai{
             display: block !important;
         }
+        .toggle-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .toggle-checkbox {
+        display: none;
+    }
+
+    .toggle-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        width: 60px;
+        height: 30px;
+        background-color: #ccc;
+        border-radius: 30px;
+        position: relative;
+        transition: background-color 0.3s ease;
+    }
+
+    .toggle-knob {
+        width: 26px;
+        height: 26px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.3s ease;
+    }
+
+    .toggle-checkbox:checked + .toggle-label {
+        background-color: #4caf50;
+    }
+
+    .toggle-checkbox:checked + .toggle-label .toggle-knob {
+        transform: translateX(30px);
+    }
     </style>
     @endsection

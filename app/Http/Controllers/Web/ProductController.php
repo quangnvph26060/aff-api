@@ -164,4 +164,9 @@ class ProductController extends Controller
         }
         return response()->json(['success' => true, 'data'=> $request->status]);
     }
+    public function updateProductFeatured(Request $request)  {
+        $id_product = $request->id_product;
+        $status     = $request->status;
+        return  $this->productService->updateProductFeatured($id_product, $status);
+    }
 }

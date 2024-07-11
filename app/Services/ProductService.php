@@ -95,7 +95,7 @@ class ProductService
                 'product_unit' => @$data['product_unit'],
                 'category_id' => $data['category_id'],
                 'description' => @$data['description'],
-                'is_featured' => @$data['is_featured'],
+                'is_featured' => @$data['is_featured'] ?? 0,
                 'is_new_arrival' => @$data['is_new_arrival'],
                 'status' =>  $data['status'],
                 'reviews' => @$data['reviews'],
@@ -230,6 +230,18 @@ class ProductService
         } catch (Exception $e) {
             Log::error("Failed to search products: {$e->getMessage()}");
             throw new Exception('Failed to search products');
+        }
+    }
+    public function updateProductFeatured($id_product, $status) {
+        try {
+            $product = $this->product->find($id_product);
+            if (!$product) {
+                throw new ModelNotFoundException("Find Product to update featured");
+            }
+            $product->update(['is_featured' => $status]);
+        } catch (Exception $e) {
+            Log::error("Error updating Product Featured: {$e->getMessage()}");
+            throw new Exception('Failed to update Product Featured');
         }
     }
 }
