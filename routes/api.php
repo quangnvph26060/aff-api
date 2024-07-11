@@ -76,7 +76,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
         Route::post('/bycategory/{id}', [ProductController::class, 'getProductByCategory']);
-       
+        Route::get('/get-product-top', [ProductController::class, 'getProductTop']);
     });
     Route::post('search-product',[ProductController::class,'searchProduct'])->name('search_product');
     // Route::group(['prefix' => 'team'],function($router){

@@ -114,5 +114,7 @@ class ProductController extends Controller
             return ApiResponse::error('Failed to fetch products', 500);
         }
     }
-
+    public function getProductTop() {
+        return $this->productService->getProductTop();
+    }
 }

@@ -244,4 +244,16 @@ class ProductService
             throw new Exception('Failed to update Product Featured');
         }
     }
+    public function getProductTop () {
+        try {
+            $product = $this->product->where('is_featured',1)->get();
+            if (!$product) {
+                throw new ModelNotFoundException("Find Product to update featured");
+            }
+            return $product;
+        } catch (Exception $e) {
+            Log::error("Error updating Product Featured: {$e->getMessage()}");
+            throw new Exception('Failed to update Product Featured');
+        }
+    }
 }
