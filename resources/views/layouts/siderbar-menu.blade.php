@@ -176,6 +176,30 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14">
+                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1.5 12h11a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1"/>
+                                <path d="M7 5.714a1.029 1.029 0 1 0 0-2.058a1.029 1.029 0 0 0 0 2.058"/>
+                                <path d="M8.8 7.514a1.8 1.8 0 1 0-3.6 0v.772h.771l.257 2.058h1.544l.257-2.058H8.8z"/>
+                            </g>
+                        </svg>
+                        <span data-key="t-apps">Quản lý thành viên</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li class="ms-3">
+                            <a href="{{route('admin.khach-hang')}}">
+                                <span data-key="t-chat">Khách hàng</span>
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a href="{{route('admin.cong-tac-vien')}}">
+                                <span data-key="t-chat">Công tác viên</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->

@@ -51,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
                 'admin.transaction.index',
                 'admin.mlm',
                 'admin.package',
+                'admin.khach-hang',
+                'admin.cong-tac-vien'
             ];
             $path = Route::currentRouteName();
             

@@ -11,9 +11,13 @@ use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\ConfigService;
 use App\Services\UserService;
+use Exception;
+use Http\Discovery\Exception\NotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\Array_;
 
@@ -231,8 +235,33 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'No file uploaded.'], 400);
     }
-
-
+    public function getCustomer () {
+        try {
+            $data = $this->userService->getCustomer();
+            $title = "Danh sách khách hàng";
+            if(!$data){
+                throw new ModelNotFoundException('Failed to customer');
+            }
+            return view('admin.customer.customer', ['data' => $data, 'title' => $title]);
+        } catch (Exception $e) {
+            Log::error('Failed to customer: ' . $e->getMessage());
+            throw new Exception('Failed to customer');
+        }
+    }
+    
+    public function getCustomerAffilate () {
+        try {
+            $data =  $this->userService->getCustomerAffilate();
+            $title = "Danh sách công tác viên";
+            if(!$data){
+                throw new ModelNotFoundException('Failed to customer');
+            }
+            return view('admin.customer.customer_affliate', ['data' => $data, 'title' => $title]);
+        }   catch (Exception $e) {
+            Log::error('Failed to customer: ' . $e->getMessage());
+            throw new Exception('Failed to customer affliate');
+        }
+    }
 
 
 }

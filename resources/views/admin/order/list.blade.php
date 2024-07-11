@@ -55,12 +55,12 @@ $orderStatuses = [
                                         <tr>
                                             <td> {{$key + 1}}</td>
                                             <td>{{$item->zip_code}}</td>
-                                            <td>
-                                               
-                                                @foreach($item->order_detail as $k )
-                                                {{$k->product['name'] ?? ""}} <br>
+                                            <td class="product-cell">
+                                                @foreach($item->order_detail as $k)
+                                                    <span class="product-name">{{$k->product['name'] ?? ""}}</span>
                                                 @endforeach
                                             </td>
+                                            
                                             <td>
                                               
                                                 @foreach($item->order_detail as $quantity )
@@ -70,7 +70,7 @@ $orderStatuses = [
 
                                             <td>
                                                 @foreach($item->order_detail as $k )
-                                                {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ
+                                                {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ<br>
                                                 @endforeach
                                             </td>
                                             <td>{{$item->user_id[0]['referral_code']}}</td>
@@ -167,3 +167,19 @@ $orderStatuses = [
         });
     }
 </script>
+<style scoped>
+.product-cell {
+   flex-direction: column;
+}
+
+.product-cell .product-name {    
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid gray;
+    line-height: 22px;
+}
+
+</style>

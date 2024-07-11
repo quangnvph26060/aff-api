@@ -284,13 +284,6 @@ class UserService
             throw new Exception('Failed to fetch users');
         }
     }
-
-
-
-
-
-
-
     /**
      * Hàm lấy ra thông tin của người dùng theo id
      *
@@ -604,10 +597,6 @@ class UserService
 
                 $fontImageName = 'image_' . $imageFont->getClientOriginalName();
                 $fontImagePath = 'storage/cccd/cccd' . $id . '/' . $fontImageName;
-
-
-
-
                 if (!Storage::exists($fontImagePath)) {
                     $imageFont->storeAs('public/cccd/cccd' . $id, $fontImageName);
                 }
@@ -662,5 +651,12 @@ class UserService
      */
     public function uploadImageUserInfo($data)
     {
+
+    }
+    public function getCustomer(){
+        return $this->user->where('role_id', 3)->get();
+    }
+    public function getCustomerAffilate(){
+        return $this->user->where('role_id', 2)->get();
     }
 }
