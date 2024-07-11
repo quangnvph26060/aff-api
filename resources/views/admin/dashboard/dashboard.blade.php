@@ -2260,14 +2260,26 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     //
-  document.getElementById('handleDashboard').addEventListener('click', function() {
+    document.getElementById('handleDashboard').addEventListener('click', function() {
     var copyText = document.getElementById('copy_link').innerText;
-    navigator.clipboard.writeText(copyText).then(function() {
-        console.log('Copied to clipboard: ' + copyText);
-    }).catch(function(error) {
-        console.error('Error copying text: ', error);
-    });
-    });
+
+ 
+    var textarea = document.createElement('textarea');
+    textarea.value = copyText;
+    document.body.appendChild(textarea);
+
+   
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // For mobile devices
+
+
+    document.execCommand('copy');
+
+   
+    document.body.removeChild(textarea);
+
+   
+});
 
     
     var revenueData = {!! json_encode($getMonthlyRevenue) !!};
