@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\SendMail;
 use App\Models\Brand;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,7 @@ class BrandService
                 $image->storeAs('public/brand', $filename);
             }
             Storage::putFileAs('public/brand', $image, $filename);
+            $is_password = $this->generatePassword();
             $brand = $this->brand->create([
                 'name' => $data['name'],
                 'logo' => $filePath,
@@ -62,9 +64,15 @@ class BrandService
                 'phone' => @$data['phone'],
                 'address' => $data['address'],
                 'role_id' => 4,
-                'password' => Hash::make($this->generatePassword()),
+                'password' => $is_password,
             ]);
-
+            // mail register brand
+            $arrSendMail = [
+                'type'              =>  'register_brand',
+                'data'              =>  $brand,
+                'password_mail'     =>  $is_password,
+            ];
+            SendMail::dispatch($arrSendMail)->afterCommit(); ; 
             DB::commit();
             return $brand;
         } catch (Exception $e) {
