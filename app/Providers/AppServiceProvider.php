@@ -52,10 +52,10 @@ class AppServiceProvider extends ServiceProvider
                 'admin.mlm',
                 'admin.package',
                 'admin.khach-hang',
-                'admin.cong-tac-vien'
+                'admin.cong-tac-vien',
             ];
             $path = Route::currentRouteName();
-            
+            //  Log::info('demo path: ' . $path);
          
             if ( !request()->path() === 'api/v1/send-otp' ) {
                 View::composer('*', UserComposer::class);

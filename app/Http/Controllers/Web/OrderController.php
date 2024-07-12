@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+
 class OrderController extends Controller
 {
     protected $orderService;
@@ -22,12 +23,17 @@ class OrderController extends Controller
     /**
      * hàm lấy ra thông tin order
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $orders = $this->orderService->getAllOrder($type = 'web');
             $title = 'Danh sách đơn hàng';
-            return view('admin.order.list', compact('orders','title'));
+            if ($request->session()->has('authUser')) {
+                $result = $request->session()->get('authUser');
+                $role  = $result['user']['role_id'];
+               
+            }
+            return view('admin.order.list', compact('orders','title','role'));
         } catch (\Exception $e) {
             Log::error('Failed to fetch orders: ' . $e->getMessage());
             return ApiResponse::error('Failed to fetch orders', 500);

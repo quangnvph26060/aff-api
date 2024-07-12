@@ -62,7 +62,6 @@ $orderStatuses = [
                                                 </td>
                                                 
                                                 <td>
-                                                
                                                     @foreach($item->order_detail as $quantity )
                                                     {{$quantity->quantity}} <br>
                                                     @endforeach
@@ -77,17 +76,34 @@ $orderStatuses = [
                                                 <td>{{$item->name}}</td>
                                                 <td style="width:150px">{{$item->receive_address}}</td>
                                                 <td>{{$item->phone}}</td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)">
-                                                            @foreach($orderStatuses as $key => $value)
-                                                            <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }}>
-                                                                {{ $value }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
+                                                @if($role === 4)
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)">
+                                                                @foreach($orderStatuses as $key => $value)
+                                                                <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }}>
+                                                                    {{ $value }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                @endif
+                                                @if($role === 1)
+                                                    <td>
+                                                        <div class="form-group">
+                                                           
+                                                            <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)" >
+                                                                @foreach($orderStatuses as $key => $value)
+                                                                <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }} disabled>
+                                                                    {{ $value }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                @endif
+                                           
                                                 <td>{{number_format($item->total_money)}}đ</td>
                                                 <td align="center">
                                                     <a class="btn btn-warning" href="">Sửa</a>
