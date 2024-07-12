@@ -187,14 +187,51 @@ class OrderService
     public function getOrderAmount()
     {
         try {
-            $number = $this->order->count();
-            $total = $this->order->sum('total_money');
-            $result = new \Illuminate\Database\Eloquent\Collection;
-            $result->push((object)[
-                'number' => $number,
-                'total' => $total,
-            ]);
-            return $result;
+            $request = Request::instance();
+            if ($request->session()->has('authUser')) {
+                $result = $request->session()->get('authUser');
+                $role  = $result['user']['role_id'];
+               
+            }
+            if($role === 1){
+                $number = $this->order->count();
+                $total = $this->order->sum('total_money');
+                $result = new \Illuminate\Database\Eloquent\Collection;
+                $result->push((object)[
+                    'number' => $number,
+                    'total' => $total,
+                ]);
+                return $result;
+               
+            } else if($role === 4) {
+               // $orders =  Product::where('brands_id',$result['user']['id'])->get();
+                $brandId = $result['user']['id'];
+                $orderDetails = OrderDetail::select('order_details.*')
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->where('products.brands_id', $brandId)
+                ->get();
+
+                $orders = [];
+                $addedOrderIds = [];
+                foreach ($orderDetails as $orderDetail) {
+                    $order = $orderDetail->order;
+                    if ($order && !in_array($order->id, $addedOrderIds)) {
+                        $orders[] = $order;
+                        $addedOrderIds[] = $order->id;
+                    }
+                }
+                // $this->order->sum('total_money')
+                Log::info($orders);
+                $number =  count($orders);
+                $total =  array_sum(array_column($orders, 'total_money'));
+                $result = new \Illuminate\Database\Eloquent\Collection;
+                $result->push((object)[
+                    'number' => $number,
+                    'total' => $total,
+                ]);
+                return $result;
+               
+            }
         } catch (\Exception $e) {
             Log::error('Failed to count order: ' . $e->getMessage());
             throw new Exception('Failed to count orders');

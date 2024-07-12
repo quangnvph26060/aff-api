@@ -275,46 +275,7 @@
                                                     </div><!-- end card -->
                                                 </div>
                                             @endif
-                                            {{-- <div class="col-xl-3 col-md-6">
-                                                <!-- card -->
-                                                <div class="card card-animate">
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="flex-grow-1 overflow-hidden">
-                                                                <p
-                                                                    class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                                                    Ví chính</p>
-                                                            </div>
-                                                            <div class="flex-shrink-0">
-                                                                <h5 class="text-muted fs-14 mb-0">
-                                                                    +0.00 %
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="d-flex align-items-end justify-content-between mt-4">
-                                                            <div>
-                                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
-                                                                        class="counter-value"
-                                                                        data-target="165.89">0</span>k
-                                                                </h4>
-                                                                <a href="" class="text-decoration-underline">Withdraw
-                                                                    money</a>
-                                                            </div>
-                                                            <div class="avatar-sm flex-shrink-0">
-                                                                <span
-                                                                    class="avatar-title bg-primary-subtle rounded fs-3">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 56 56">
-                                                                        <path fill="currentColor"
-                                                                            d="M28 4c13.255 0 24 10.745 24 24S41.255 52 28 52S4 41.255 4 28S14.745 4 28 4m0 4C16.954 8 8 16.954 8 28s8.954 20 20 20s20-8.954 20-20S39.046 8 28 8m.573 6.286v2.687c3.976.319 6.855 2.704 6.982 6.314h-3.308c-.207-2.004-1.638-3.165-3.674-3.419V26.5l.764.19c4.183.971 6.473 2.689 6.473 6.076c0 3.897-3.181 6.107-7.237 6.394v2.671h-1.797V39.16c-4.04-.303-7.236-2.577-7.347-6.394h3.292c.286 1.861 1.495 3.229 4.055 3.5V29.33l-.652-.16c-4.04-.937-6.218-2.75-6.218-5.979c0-3.563 2.862-5.916 6.87-6.219v-2.687zm0 15.458v6.537c2.72-.207 3.865-1.495 3.865-3.197c0-1.638-.89-2.608-3.865-3.34m-1.797-9.876c-2.29.286-3.499 1.606-3.499 3.054c0 1.447.955 2.512 3.5 3.149z" />
-                                                                    </svg>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end card body -->
-                                                </div><!-- end card -->
-                                            </div><!-- end col --> --}}
+                                         
                                         </div> <!-- end row-->
 
                                         <div class="row">
@@ -322,18 +283,7 @@
                                                 <div class="card">
                                                     <div class="card-header border-0 align-items-center d-flex">
                                                         <h4 class="card-title mb-0 flex-grow-1">Doanh thu</h4>
-                                                        {{-- <div>
-                                                            <button type="button"
-                                                                class="btn btn-soft-secondary btn-sm">ALL</button>
-                                                            <button type="button"
-                                                                class="btn btn-soft-secondary btn-sm">1M</button>
-                                                            <button type="button"
-                                                                class="btn btn-soft-secondary btn-sm">6M</button>
-                                                            <button type="button"
-                                                                class="btn btn-soft-primary btn-sm">1Y</button>
-                                                        </div> --}}
                                                     </div><!-- end card header -->
-
                                                     <div class="card-header p-0 border-0 bg-light-subtle">
                                                         <div class="row g-0 text-center">
                                                             <div class="col-6 col-sm-6">
@@ -347,7 +297,7 @@
                                                             <div class="col-6 col-sm-6">
                                                                 <div class="p-3 border border-dashed border-start-0">
                                                                     <h5 class="mb-1"><span class="counter-value"
-                                                                            data-target="{{ $totalAnnualRevenue }}">0</span>đ</h5>
+                                                                            data-target="{{  $statistic['total'] }}">0</span>đ</h5>
                                                                     <p class="text-muted mb-0">Thu nhập</p>
                                                                 </div>
                                                             </div>
@@ -385,262 +335,7 @@
                                         </div>
 
                                         <div class="row">
-                                            {{-- <div class="col-xl-6">
-                                                <div class="card">
-                                                    <div class="card-header align-items-center d-flex">
-                                                        <h4 class="card-title mb-0 flex-grow-1">Best Selling Products
-                                                        </h4>
-                                                        <div class="flex-shrink-0">
-                                                            <div class="dropdown card-header-dropdown">
-                                                                <a class="text-reset dropdown-btn" href="#"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <span class="fw-semibold text-uppercase fs-12">Sort
-                                                                        by:
-                                                                    </span><span class="text-muted">Today<i
-                                                                            class="mdi mdi-chevron-down ms-1"></i></span>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#">Today</a>
-                                                                    <a class="dropdown-item" href="#">Yesterday</a>
-                                                                    <a class="dropdown-item" href="#">Last 7 Days</a>
-                                                                    <a class="dropdown-item" href="#">Last 30 Days</a>
-                                                                    <a class="dropdown-item" href="#">This Month</a>
-                                                                    <a class="dropdown-item" href="#">Last Month</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end card header -->
-
-                                                    <div class="card-body">
-                                                        <div class="table-responsive table-card">
-                                                            <table
-                                                                class="table table-hover table-centered align-middle table-nowrap mb-0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div
-                                                                                    class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-fluid d-block" />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1"><a
-                                                                                            href="apps-ecommerce-product-details.html"
-                                                                                            class="text-reset">Branded
-                                                                                            T-Shirts</a></h5>
-                                                                                    <span class="text-muted">24 Apr
-                                                                                        2021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$29.00</h5>
-                                                                            <span class="text-muted">Price</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">62</h5>
-                                                                            <span class="text-muted">Orders</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">510</h5>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$1,798</h5>
-                                                                            <span class="text-muted">Amount</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div
-                                                                                    class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-fluid d-block" />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1"><a
-                                                                                            href="apps-ecommerce-product-details.html"
-                                                                                            class="text-reset">Bentwood
-                                                                                            Chair</a></h5>
-                                                                                    <span class="text-muted">19 Mar
-                                                                                        2021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$85.20</h5>
-                                                                            <span class="text-muted">Price</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">35</h5>
-                                                                            <span class="text-muted">Orders</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal"><span
-                                                                                    class="badge bg-danger-subtle text-danger">Out
-                                                                                    of stock</span> </h5>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$2982</h5>
-                                                                            <span class="text-muted">Amount</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div
-                                                                                    class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-3.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-fluid d-block" />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1"><a
-                                                                                            href="apps-ecommerce-product-details.html"
-                                                                                            class="text-reset">Borosil
-                                                                                            Paper
-                                                                                            Cup</a></h5>
-                                                                                    <span class="text-muted">01 Mar
-                                                                                        2021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$14.00</h5>
-                                                                            <span class="text-muted">Price</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">80</h5>
-                                                                            <span class="text-muted">Orders</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">749</h5>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$1120</h5>
-                                                                            <span class="text-muted">Amount</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div
-                                                                                    class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-4.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-fluid d-block" />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1"><a
-                                                                                            href="apps-ecommerce-product-details.html"
-                                                                                            class="text-reset">One
-                                                                                            Seater
-                                                                                            Sofa</a></h5>
-                                                                                    <span class="text-muted">11 Feb
-                                                                                        2021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$127.50
-                                                                            </h5>
-                                                                            <span class="text-muted">Price</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">56</h5>
-                                                                            <span class="text-muted">Orders</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal"><span
-                                                                                    class="badge bg-danger-subtle text-danger">Out
-                                                                                    of stock</span></h5>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$7140</h5>
-                                                                            <span class="text-muted">Amount</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div
-                                                                                    class="avatar-sm bg-light rounded p-1 me-2">
-                                                                                    <img src="{{asset('assets/images/products/img-5.png')}}"
-                                                                                        alt=""
-                                                                                        class="img-fluid d-block" />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <h5 class="fs-14 my-1"><a
-                                                                                            href="apps-ecommerce-product-details.html"
-                                                                                            class="text-reset">Stillbird
-                                                                                            Helmet</a></h5>
-                                                                                    <span class="text-muted">17 Jan
-                                                                                        2021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$54</h5>
-                                                                            <span class="text-muted">Price</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">74</h5>
-                                                                            <span class="text-muted">Orders</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">805</h5>
-                                                                            <span class="text-muted">Stock</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h5 class="fs-14 my-1 fw-normal">$3996</h5>
-                                                                            <span class="text-muted">Amount</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-
-                                                        <div
-                                                            class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
-                                                            <div class="col-sm">
-                                                                <div class="text-muted">
-                                                                    Showing <span class="fw-semibold">5</span> of <span
-                                                                        class="fw-semibold">25</span> Results
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-auto  mt-3 mt-sm-0">
-                                                                <ul
-                                                                    class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
-                                                                    <li class="page-item disabled">
-                                                                        <a href="#" class="page-link">←</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">1</a>
-                                                                    </li>
-                                                                    <li class="page-item active">
-                                                                        <a href="#" class="page-link">2</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">3</a>
-                                                                    </li>
-                                                                    <li class="page-item">
-                                                                        <a href="#" class="page-link">→</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div> --}}
+                                           
 
                                             <div class="">
                                                 <div class="card card-height-100">
@@ -996,30 +691,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @if($loggedInUser['user']['role_id'] === 1) 
+                                                    <div class="p-3 mt-2">
+                                                        <h6 class="text-muted mb-3 text-uppercase fw-semibold">10 Danh mục hàng đầu </h6>
+                                                        <ol class="ps-3 text-muted">
+                                                            @foreach ($category as $item)
+                                                            <li class="py-1">
+                                                                <a href="#" class="text-muted">{{ $item->name }} <span
+                                                                        class="float-end">({{ $item->products_count
+                                                                        }})</span></a>
+                                                            </li>
+                                                            @endforeach
 
-                                                <div class="p-3 mt-2">
-                                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">10 Danh mục
-                                                        hàng đầu
-                                                    </h6>
-
-                                                    <ol class="ps-3 text-muted">
-
-
-                                                        @foreach ($category as $item)
-                                                        <li class="py-1">
-                                                            <a href="#" class="text-muted">{{ $item->name }} <span
-                                                                    class="float-end">({{ $item->products_count
-                                                                    }})</span></a>
-                                                        </li>
-                                                        @endforeach
-
-                                                    </ol>
-                                                    <div class="mt-3 text-center">
-                                                        <a href="{{route('admin.category.index')}}"
-                                                            class="text-muted text-decoration-underline">Xem tất cả danh
-                                                            mục</a>
+                                                        </ol>
+                                                        <div class="mt-3 text-center">
+                                                            <a href="{{route('admin.category.index')}}"
+                                                                class="text-muted text-decoration-underline">Xem tất cả danh mục</a>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endif
                                                 <div class="p-3">
                                                     <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản
                                                         phẩm</h6>
@@ -1316,22 +1006,23 @@
                                                         </div><!-- end row -->
                                                     </div>
                                                 </div>
-
-                                                <div
-                                                    class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
-                                                    <div class="card-body">
-                                                        <img src="{{asset('assets/images/giftbox.png')}}" alt="">
-                                                        <div class="mt-4">
-                                                            <h5>Mời người dùng mới</h5>
-                                                            <p class="text-muted lh-base">Giới thiệu người bán mới cho chúng tôi và kiếm 100 USD cho mỗi lượt giới thiệu.</p>
-                                                            <button type="button"
-                                                                class="btn btn-primary btn-label rounded-pill" id="handleDashboard">
-                                                                Mời ngay</button>
-                                                                <p id="copy_link" hidden> {{config("app.url")}}/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
-                                                        </div>
+                                                
+                                                    <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
+                                                        @if( $loggedInUser['user']['role_id']  === 4 )
+                                                            <div class="card-body">
+                                                                <img src="{{asset('assets/images/giftbox.png')}}" alt="">
+                                                                <div class="mt-4">
+                                                                    <h5>Mời người dùng mới</h5>
+                                                                    <p class="text-muted lh-base">Giới thiệu người bán mới cho chúng tôi và kiếm 100 USD cho mỗi lượt giới thiệu.</p>
+                                                                    <button type="button"
+                                                                        class="btn btn-primary btn-label rounded-pill" id="handleDashboard">
+                                                                        Mời ngay</button>
+                                                                        <p id="copy_link" hidden> {{config("app.url")}}/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                </div>
-
+                                              
                                             </div>
                                         </div> <!-- end card-->
                                     </div> <!-- end .rightbar-->
