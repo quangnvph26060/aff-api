@@ -14,7 +14,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\UserWallet;
-
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -239,8 +239,37 @@ class OrderService
                 ];
                 return $data;
             }
-            $orders = $this->order->all();
-            return $orders;
+            $request = Request::instance();
+            if ($request->session()->has('authUser')) {
+                $result = $request->session()->get('authUser');
+                $role  = $result['user']['role_id'];
+               
+            }
+            if($role === 1){
+                $orders = $this->order->all();
+               
+            } else if($role === 4) {
+               // $orders =  Product::where('brands_id',$result['user']['id'])->get();
+                $brandId = $result['user']['id'];
+                $orderDetails = OrderDetail::select('order_details.*')
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->where('products.brands_id', $brandId)
+                ->get();
+
+                $orders = [];
+                $addedOrderIds = [];
+                foreach ($orderDetails as $orderDetail) {
+                    $order = $orderDetail->order;
+                    if ($order && !in_array($order->id, $addedOrderIds)) {
+                        $orders[] = $order;
+                        $addedOrderIds[] = $order->id;
+                    }
+                }
+                
+              
+            }
+         
+            return (object) $orders;
         } catch (\Exception $e) {
             Log::error('Failed to retrieve orders: ' . $e->getMessage());
             throw new Exception('Failed to retrieve orders');

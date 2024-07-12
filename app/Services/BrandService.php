@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -60,6 +61,8 @@ class BrandService
                 'email' => $data['email'],
                 'phone' => @$data['phone'],
                 'address' => $data['address'],
+                'role_id' => 4,
+                'password' => Hash::make($this->generatePassword()),
             ]);
 
             DB::commit();
@@ -70,7 +73,21 @@ class BrandService
             throw new Exception('Failed to create Brand');
         }
     }
+    public function generatePassword(): string
+    {
+        $length     = 8;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $password   = '';
 
+        do {
+            $password = '';
+            for ($i = 0; $i < $length; $i++) {
+                $password .= $characters[rand(0, strlen($characters) - 1)];
+            }
+        } while (!preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])/', $password));
+
+        return $password;
+    }
     public function getBrandById(int $id): Brand
     {
         Log::info("Fetching product with ID: $id");

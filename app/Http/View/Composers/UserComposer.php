@@ -19,6 +19,7 @@ class UserComposer
                     'email'             => $result['user']['email'],
                     'images'            => $result['user']['user_info'][0]['img_url'] ?? '/users/avatar-1.jpg',
                     'referral_code'     => $result['user']['referral_code'],
+                    'user'              => $result['user'],
                 ]);
 
             }

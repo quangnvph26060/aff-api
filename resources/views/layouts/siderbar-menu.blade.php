@@ -19,6 +19,7 @@
                     </a>
                 </li>
                 <li class="menu-title mt-2" data-key="t-components">Quản lý</li>
+               @if($loggedInUser['user']['role_id'] === 1)
                 <li>
                     <a href="{{route('admin.config')}}" class="has-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024">
@@ -26,14 +27,9 @@
                         </svg>
                         <span data-key="t-apps">Cấu hình</span>
                     </a>
-                    {{-- <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('admin.team')}}">
-                                <span data-key="t-chat">Danh sách</span>
-                            </a>
-                        </li>
-                    </ul> --}}
+                
                 </li>
+              
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 2048 2048">
@@ -74,6 +70,7 @@
                         </li>
                     </ul>
                 </li>
+               
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -94,6 +91,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -112,96 +110,113 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                            <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
-                        </svg>
-                        <span data-key="t-apps">Quản lý Đội Nhóm</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('admin.team')}}">
-                                <span data-key="t-chat">Danh sách</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                            <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
-                        </svg>
-                        <span data-key="t-apps">Quản lý yêu cầu rút tiền</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('admin.transaction.index')}}">
-                                <span data-key="t-chat">Danh sách</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
-                            <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
-                        </svg>
-                        <span data-key="t-apps">MLM</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('admin.mlm')}}">
-                                <span data-key="t-chat">Cài đặt MLM</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14">
-                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1.5 12h11a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1"/>
-                                <path d="M7 5.714a1.029 1.029 0 1 0 0-2.058a1.029 1.029 0 0 0 0 2.058"/>
-                                <path d="M8.8 7.514a1.8 1.8 0 1 0-3.6 0v.772h.771l.257 2.058h1.544l.257-2.058H8.8z"/>
-                            </g>
-                        </svg>
-                        <span data-key="t-apps">Quản lý gói tháng</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('admin.package')}}">
-                                <span data-key="t-chat">Gói tháng</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14">
-                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1.5 12h11a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1"/>
-                                <path d="M7 5.714a1.029 1.029 0 1 0 0-2.058a1.029 1.029 0 0 0 0 2.058"/>
-                                <path d="M8.8 7.514a1.8 1.8 0 1 0-3.6 0v.772h.771l.257 2.058h1.544l.257-2.058H8.8z"/>
-                            </g>
-                        </svg>
-                        <span data-key="t-apps">Quản lý thành viên</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li class="ms-3">
-                            <a href="{{route('admin.khach-hang')}}">
-                                <span data-key="t-chat">Khách hàng</span>
-                            </a>
-                        </li>
-                        <li class="ms-3">
-                            <a href="{{route('admin.cong-tac-vien')}}">
-                                <span data-key="t-chat">Công tác viên</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if($loggedInUser['user']['role_id'] === 1)
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
+                            </svg>
+                            <span data-key="t-apps">Quản lý Đội Nhóm</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('admin.team')}}">
+                                    <span data-key="t-chat">Danh sách</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
+                            </svg>
+                            <span data-key="t-apps">Quản lý yêu cầu rút tiền</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('admin.transaction.index')}}">
+                                    <span data-key="t-chat">Danh sách</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                <path fill="currentColor" d="M14 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0m2-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-3 9a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3zm-8.5 9A1.5 1.5 0 0 0 3 23.5A4.5 4.5 0 0 0 7.5 28h17a4.5 4.5 0 0 0 4.5-4.5a1.5 1.5 0 0 0-1.5-1.5zm3 4a2.5 2.5 0 0 1-2.45-2h21.9a2.5 2.5 0 0 1-2.45 2zm15.889-11H26a1 1 0 0 1 1 1v3.5a1 1 0 1 0 2 0V16a3 3 0 0 0-3-3h-3.646c.5.559.863 1.243 1.035 2M9.646 13H6a3 3 0 0 0-3 3v3.5a1 1 0 1 0 2 0V16a1 1 0 0 1 1-1h2.612a4.487 4.487 0 0 1 1.034-2M7.5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M4 8.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m19 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M24.5 5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" />
+                            </svg>
+                            <span data-key="t-apps">MLM</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('admin.mlm')}}">
+                                    <span data-key="t-chat">Cài đặt MLM</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1.5 12h11a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1"/>
+                                    <path d="M7 5.714a1.029 1.029 0 1 0 0-2.058a1.029 1.029 0 0 0 0 2.058"/>
+                                    <path d="M8.8 7.514a1.8 1.8 0 1 0-3.6 0v.772h.771l.257 2.058h1.544l.257-2.058H8.8z"/>
+                                </g>
+                            </svg>
+                            <span data-key="t-apps">Quản lý gói tháng</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('admin.package')}}">
+                                    <span data-key="t-chat">Gói tháng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1.5 12h11a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1"/>
+                                    <path d="M7 5.714a1.029 1.029 0 1 0 0-2.058a1.029 1.029 0 0 0 0 2.058"/>
+                                    <path d="M8.8 7.514a1.8 1.8 0 1 0-3.6 0v.772h.771l.257 2.058h1.544l.257-2.058H8.8z"/>
+                                </g>
+                            </svg>
+                            <span data-key="t-apps">Quản lý thành viên</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li class="ms-3">
+                                <a href="{{route('admin.khach-hang')}}">
+                                    <span data-key="t-chat">Khách hàng</span>
+                                </a>
+                            </li>
+                            <li class="ms-3">
+                                <a href="{{route('admin.cong-tac-vien')}}">
+                                    <span data-key="t-chat">Công tác viên</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- Sidebar -->
     </div>
 </div>
+<style scoped>
+    #sidebar-menu .has-arrow:after {
+        content:"-";
+    font-family: "Material Design Icons";
+    display: block;
+    float: right;
+    -webkit-transition: -webkit-transform .2s;
+    transition: -webkit-transform .2s;
+    transition: transform .2s;
+    transition: transform .2s, -webkit-transform .2s;
+    font-size: 1.1rem;
+    margin-right: -5px;
+    margin-top: -2px;
+}
+</style>

@@ -6,6 +6,7 @@ use App\Enums\RequestApi;
 use App\Events\EventRegister;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
+use App\Models\Brand;
 use App\Models\Commission;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -499,13 +500,20 @@ class UserService
         $user = User::where('phone', $credentials['phone'])
             ->orWhere('email', $credentials['phone'])
             ->first();
+        if (!$user) {
+            $user = Brand::where('email', $credentials['phone'])->first();    
+        }
+    
+        if (!$user) {
+            throw new Exception('Unauthorized');
+        }
         $userRoleId = $user->role_id;
         // dd($userRoleId);
         if ($request->type === RequestApi::WEB) {
-            if ($userRoleId != 1) {
+            if ($userRoleId != 1 && $userRoleId != 4) {
                 throw new Exception('Not an admin');
             }
-        } elseif ($request->type === RequestApi::API) {
+        }elseif ($request->type === RequestApi::API) {
             if ($userRoleId != 2) {
                 throw new Exception('Not a user');
             }

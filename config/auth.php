@@ -43,7 +43,11 @@ return [
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users'
-        ]
+        ],
+        'brands' => [
+            'driver' => 'session',
+            'provider' => 'brands',
+        ],
     ],
 
     /*
@@ -68,7 +72,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'brands' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Brand::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -96,6 +103,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'brands' => [
+            'provider' => 'brands',
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 

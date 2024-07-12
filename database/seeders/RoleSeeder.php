@@ -19,6 +19,7 @@ class RoleSeeder extends Seeder
             "Admin", // admin
             "Affiliate Marketer", // Người tiếp thị liên kết
             "User", // Người dùng
+            "Supplier", // nhà cung cấp 
         ];
         foreach ($data as $key => $value) {
             $data_check = Role::where('name', $value)->get();

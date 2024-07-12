@@ -20,7 +20,7 @@ $orderStatuses = [
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Danh sách đơn hàng</h4>
+                        <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
                     </div>
                 </div>
             </div>
@@ -48,55 +48,55 @@ $orderStatuses = [
                                             <th style="text-align: center">Hành động</th>
                                         </tr>
                                     </thead>
-                                    @if ($orders->count() > 0 )
-                                    <tbody>
-                                        @foreach($orders as $key => $item)
+                                      
+                                        <tbody>
+                                            @foreach($orders as $key => $item)
 
-                                        <tr>
-                                            <td> {{$key + 1}}</td>
-                                            <td>{{$item->zip_code}}</td>
-                                            <td class="product-cell">
-                                                @foreach($item->order_detail as $k)
-                                                    <span class="product-name">{{$k->product['name'] ?? ""}}</span>
-                                                @endforeach
-                                            </td>
-                                            
-                                            <td>
-                                              
-                                                @foreach($item->order_detail as $quantity )
-                                                {{$quantity->quantity}} <br>
-                                                @endforeach
-                                            </td>
+                                            <tr>
+                                                <td> {{$key + 1}}</td>
+                                                <td>{{$item->zip_code}}</td>
+                                                <td class="product-cell">
+                                                    @foreach($item->order_detail as $k)
+                                                        <span class="product-name">{{$k->product['name'] ?? ""}}</span>
+                                                    @endforeach
+                                                </td>
+                                                
+                                                <td>
+                                                
+                                                    @foreach($item->order_detail as $quantity )
+                                                    {{$quantity->quantity}} <br>
+                                                    @endforeach
+                                                </td>
 
-                                            <td>
-                                                @foreach($item->order_detail as $k )
-                                                {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ<br>
-                                                @endforeach
-                                            </td>
-                                            <td>{{$item->user_id[0]['referral_code']}}</td>
-                                            <td>{{$item->name}}</td>
-                                            <td style="width:150px">{{$item->receive_address}}</td>
-                                            <td>{{$item->phone}}</td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)">
-                                                        @foreach($orderStatuses as $key => $value)
-                                                        <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }}>
-                                                            {{ $value }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>{{number_format($item->total_money)}}đ</td>
-                                            <td align="center">
-                                                <a class="btn btn-warning" href="">Sửa</a>
-                                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger" href="">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                    @endif
+                                                <td>
+                                                    @foreach($item->order_detail as $k )
+                                                    {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ<br>
+                                                    @endforeach
+                                                </td>
+                                                <td>{{$item->user_id[0]['referral_code']}}</td>
+                                                <td>{{$item->name}}</td>
+                                                <td style="width:150px">{{$item->receive_address}}</td>
+                                                <td>{{$item->phone}}</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)">
+                                                            @foreach($orderStatuses as $key => $value)
+                                                            <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }}>
+                                                                {{ $value }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>{{number_format($item->total_money)}}đ</td>
+                                                <td align="center">
+                                                    <a class="btn btn-warning" href="">Sửa</a>
+                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger" href="">Xóa</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                  
                                 </table>
                                 <nav>
                                     <!-- <ul class="pagination">

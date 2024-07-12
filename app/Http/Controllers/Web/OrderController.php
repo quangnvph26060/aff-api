@@ -26,8 +26,8 @@ class OrderController extends Controller
     {
         try {
             $orders = $this->orderService->getAllOrder($type = 'web');
-            Log::info($orders);
-            return view('admin.order.list', compact('orders'));
+            $title = 'Danh sách đơn hàng';
+            return view('admin.order.list', compact('orders','title'));
         } catch (\Exception $e) {
             Log::error('Failed to fetch orders: ' . $e->getMessage());
             return ApiResponse::error('Failed to fetch orders', 500);

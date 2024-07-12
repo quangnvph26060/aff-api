@@ -7,6 +7,7 @@ use App\Http\Responses\ApiResponse;
 use App\Models\Brand;
 use App\Services\BrandService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class BrandController extends Controller
@@ -33,6 +34,7 @@ class BrandController extends Controller
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:15',
             'images' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max size as needed
+            
         ]);
 
         // Map validated data to the required array format
@@ -44,7 +46,7 @@ class BrandController extends Controller
             'images' => $validatedData['images'],
         ];
 
-        $brand = $this->brandService->createBrand($data);
+        $this->brandService->createBrand($data);
         // dd($request->all());
         return redirect()->route('admin.brand.index')->with('success', 'Thêm thành công');
      }
