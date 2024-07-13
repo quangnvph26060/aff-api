@@ -47,6 +47,9 @@
                 transparent 20px
             );
         }
+        .cke_notifications_area{
+            display: none !important;
+        }
     </style>
 </head>
 
