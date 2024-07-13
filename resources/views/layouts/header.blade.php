@@ -19,7 +19,7 @@
                 </svg>
             </button>
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            {{-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
                     <button class="btn btn-primary" type="button">
@@ -31,7 +31,7 @@
                         </svg>
                     </button>
                 </div>
-            </form>
+            </form> --}}
         </div>
 
         <div class="d-flex">
