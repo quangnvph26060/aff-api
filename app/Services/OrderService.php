@@ -240,23 +240,50 @@ class OrderService
     public function getBestSeller()
     {
         try {
-
-            $bestseller = $this->orderDetail
-            ->select(
-                'products.name as product_name',
-                'products.price',
-                'categories.name as category_name',
-                DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
-                DB::raw('SUM(order_details.quantity) as total_sold_amount')
-            )
-            ->join('products', 'order_details.product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
-            ->orderBy('total_sold_amount', 'desc')
-            ->limit(6)
-            ->get();
-            // dd($bestseller);
-            return $bestseller;
+            $request = Request::instance();
+            if ($request->session()->has('authUser')) {
+                $result = $request->session()->get('authUser');
+                $role  = $result['user']['role_id'];
+               
+            }
+            if($role === 1 ){
+                 $bestseller = $this->orderDetail
+                ->select(
+                    'products.name as product_name',
+                    'products.price',
+                    'categories.name as category_name',
+                    DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
+                    DB::raw('SUM(order_details.quantity) as total_sold_amount')
+                )
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
+                ->orderBy('total_sold_amount', 'desc')
+                ->limit(6)
+                ->get();
+                // dd($bestseller);
+                return $bestseller;
+            }else if ( $role === 4 )
+            {
+                $brandId = $result['user']['id'];
+                $bestseller = $this->orderDetail
+                ->select(
+                    'products.name as product_name',
+                    'products.price',
+                    'categories.name as category_name',
+                    DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
+                    DB::raw('SUM(order_details.quantity) as total_sold_amount')
+                )
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
+                ->orderBy('total_sold_amount', 'desc')
+                ->where('products.brands_id', $brandId)
+                ->limit(6)
+                ->get();
+              
+                return $bestseller;
+            }
         } catch (\Exception $e) {
             Log::error('Failed to retrieve orders: ' . $e->getMessage());
             throw new Exception('Failed to retrieve orders');
@@ -355,9 +382,26 @@ class OrderService
     public function orderNew()
     {
         try {
-
-            $order = $this->order->orderBy('created_at', 'desc')->take(5)->get();
-            return $order;
+            $request = Request::instance();
+            if ($request->session()->has('authUser')) {
+                $result = $request->session()->get('authUser');
+                $role  = $result['user']['role_id'];
+               
+            }
+            if($role === 1 ) {
+                $order = $this->order->orderBy('created_at', 'desc')->take(5)->get();
+                return $order;
+            }else if ($role === 4){
+                $brandId = $result['user']['id'];
+                $orderDetails = OrderDetail::select('order_details.*','orders.zip_code','orders.name','orders.total_money')
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->where('products.brands_id', $brandId)
+                ->take(5)
+                ->get();
+                return $orderDetails;
+            }
+          
         } catch (\Exception $e) {
             Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
             throw new Exception('Lỗi không lấy ra đơn hàng');

@@ -362,6 +362,7 @@
                                                         <div class="table-responsive table-card">
                                                             <table
                                                                 class="table table-centered table-hover align-middle table-nowrap mb-0">
+                                                                
                                                                 <tbody>
                                                                     @foreach($bestseller as $product)
                                                                     <tr>
@@ -405,8 +406,10 @@
                                                             class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
                                                             <div class="col-sm">
                                                                 <div class="text-muted">
-                                                                    Hiển thị <span class="fw-semibold">{{
-                                                                        $bestseller->count() }}</span> / <span
+                                                                    Hiển thị <span class="fw-semibold">
+                                                                       
+                                                                        {{-- {{ $bestseller->count() }} --}}
+                                                                        </span> / <span
                                                                         class="fw-semibold">6</span> kết quả
                                                                 </div>
                                                             </div>
@@ -472,7 +475,7 @@
                                                                     <tr>
                                                                         <th scope="col">Mã đơn hàng</th>
                                                                         <th scope="col">Khách hàng</th>
-                                                                        <th scope="col">Số lượng</th>
+                                                                        <th scope="col">Tổng tiền</th>
                                                                         <th scope="col">Trạng thái</th>
 
                                                                     </tr>
@@ -499,9 +502,9 @@
                                                                         </td>
 
                                                                         <td>
-                                                                            <span class="text-success">{{
-                                                                                number_format($item->total_money)
-                                                                                }}đ</span>
+                                                                            <span class="text-success">
+                                                                                {{ number_format($item->total_money) }}đ
+                                                                            </span>
                                                                         </td>
 
                                                                         <td>
@@ -1008,8 +1011,8 @@
                                                 </div>
                                                 
                                                     <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
-                                                        @if( $loggedInUser['user']['role_id']  === 4 )
-                                                            <div class="card-body">
+                                                        
+                                                            <div class="card-body" id="div3">
                                                                 <img src="{{asset('assets/images/giftbox.png')}}" alt="">
                                                                 <div class="mt-4">
                                                                     <h5>Mời người dùng mới</h5>
@@ -1020,7 +1023,7 @@
                                                                         <p id="copy_link" hidden> {{config("app.url")}}/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
                                                                 </div>
                                                             </div>
-                                                        @endif
+                                                     
                                                     </div>
                                               
                                             </div>
@@ -1952,16 +1955,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     
-  var div1Element = document.getElementById('div1');
-  var div2Element = document.getElementById('div2');
-var role =  {{$loggedInUser['user']['role_id']}};
+    var div1Element = document.getElementById('div1');
+    var div2Element = document.getElementById('div2');
+    var div3Element = document.getElementById('div3');
+    var role =  {{$loggedInUser['user']['role_id']}};
  
   if (role === 1) {
     div1Element.className = 'col-xl-3 col-md-6';
     div2Element.className = 'col-xl-3 col-md-6';
+    div3Element.style.display = 'block';
   } else if (role === 4) {
     div1Element.className = 'col-xl-6 col-md-6';
     div2Element.className = 'col-xl-6 col-md-6';
+    div3Element.style.display = 'none';
   }
     //
     document.getElementById('handleDashboard').addEventListener('click', function() {
