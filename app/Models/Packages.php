@@ -13,7 +13,8 @@ class Packages extends Model
         'name',
         'price',
         'images',
-        'status'
+        'status',
+        'note'
     ];
     
 

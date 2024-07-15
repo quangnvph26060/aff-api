@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\v1\CartController;
 use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TransactionController;
 use App\Http\Controllers\Api\v1\OrderController;
+use App\Http\Controllers\Api\v1\PackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +68,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::delete('/{id}', [CategoryController::class, 'destroy']);
 
     });
-
+    Route::group(['prefix' => 'packages'], function ($router) { 
+        Route::get('/', [PackageController::class, 'index']);
+        Route::post('/find-package/{id}', [PackageController::class, 'DetailPackage']);
+    });
     Route::group(['prefix' => 'products'], function ($router) { 
         Route::get('/', [ProductController::class, 'index']);
         Route::post('/', [ProductController::class, 'store']);

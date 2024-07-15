@@ -48,7 +48,8 @@ class PackageService
                 'name'   => $data['name'] ?? "",
                 'price'  => $data['price'] ?? "",
                 'status' => $data['status'] ?? "",
-                'image' => $filename ?? "",
+                'note'   => $data['description'] ?? "",
+                'image'  => $filename ?? "",
             ]);
 
             DB::commit();
@@ -91,6 +92,7 @@ class PackageService
                 'price'  => $data['price'] ?? "",
                 'status' => $data['status'] ?? "",
                 'image'  => $data['images'] ?? "",
+                'note'   => $data['description'] ?? "",
             ]);
 
             DB::commit();

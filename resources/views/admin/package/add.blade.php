@@ -72,6 +72,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="example-url-input" class="form-label">Mô tả <span
+                                                    class="text text-danger">*</span></label>
+                                            <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+                                            <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                    style="font-weight: 500" id="description_error"></span> </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <div>
                                             <button type="button" onclick="submitaddPackage(event)" class="btn btn-primary w-md">
