@@ -48,7 +48,7 @@ $orderStatuses = [
                                             <th style="text-align: center">Hành động</th>
                                         </tr>
                                     </thead>
-                                      
+                                       
                                         <tbody>
                                             @foreach($orders as $key => $item)
 
@@ -56,9 +56,12 @@ $orderStatuses = [
                                                 <td> {{$key + 1}}</td>
                                                 <td>{{$item->zip_code}}</td>
                                                 <td class="product-cell">
+                                                 
                                                     @foreach($item->order_detail as $k)
                                                         <span class="product-name">{{$k->product['name'] ?? ""}}</span>
+                                                        <span class="product-name">{{$k->package['name'] ?? ""}}</span>
                                                     @endforeach
+                                                   
                                                 </td>
                                                 
                                                 <td>
@@ -69,7 +72,9 @@ $orderStatuses = [
 
                                                 <td>
                                                     @foreach($item->order_detail as $k )
-                                                    {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}đ<br>
+                                                    {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}
+                                                    {{ isset($k->package['price']) ? number_format($k->package['price']) : "" }}
+                                                    đ<br>
                                                     @endforeach
                                                 </td>
                                                 <td>{{$item->user_id[0]['referral_code']}}</td>
@@ -182,12 +187,18 @@ $orderStatuses = [
             }
         });
     }
+    var productName = document.querySelectorAll(".product-name");
+    if (productName.innerText.trim() === "") {
+        productName.classList.add("hide");
+    }
 </script>
 <style scoped>
 .product-cell {
    flex-direction: column;
 }
-
+.hide {
+    display: none;
+  }
 .product-cell .product-name {    
     overflow: hidden;
     display: -webkit-box;

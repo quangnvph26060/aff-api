@@ -16,6 +16,7 @@ class OrderDetail extends Model
         // "total_money",
         "order_id",
         "product_id",
+        "package_id",
     ];
     public function product()
     {
@@ -24,5 +25,9 @@ class OrderDetail extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+    public function package()
+    {
+        return $this->belongsTo(Packages::class);
     }
 }

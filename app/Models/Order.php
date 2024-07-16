@@ -20,9 +20,12 @@ class Order extends Model
         'zip_code',
         'notify',
     ];
-    protected $appends = ['order_detail','user_id'];
+    protected $appends = ['order_detail','user_id','package'];
     public function getOrderDetailAttribute(){
-        return OrderDetail::where('order_id', $this->attributes['id'])->with('product')->get();
+        return OrderDetail::where('order_id', $this->attributes['id'])->with('product','package')->get();
+    }
+    public function  getPackageAttribute(){
+        return OrderDetail::where('order_id', $this->attributes['id'])->with('package')->get();
     }
     public function getUserIdAttribute(){
         return User::where('id', $this->attributes['user_id'])->get();
@@ -31,6 +34,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class)->with('product');
     }
+    public function orderDetailPackage()
+    {
+        return $this->hasMany(OrderDetail::class)->with('package');
+    }
     public function ship()
     {
         return $this->hasOne(Ship::class);
@@ -38,5 +45,9 @@ class Order extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
+    }
+    public function package(){
+
+        return $this->hasMany(OrderDetail::class)->width('package');
     }
 }

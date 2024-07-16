@@ -14,7 +14,8 @@ class Packages extends Model
         'price',
         'images',
         'status',
-        'note'
+        'note',
+        'reduced_price'
     ];
     
 

@@ -52,7 +52,7 @@ class OrderService
                 'notify' => 0,
             ]);
             if (!$order) {
-                return response()->json('error', 'Order error');
+                return response()->json('error', 'Order product error');
             }
             $arrMail = []; // mail
             foreach ($data['list_product'] as $detail) {

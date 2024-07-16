@@ -39,7 +39,7 @@
                     $total += $subtotal;
                 @endphp
                 <tr>
-                    <td>{{ $item['product']['name'] ?? "" }}</td>
+                    <td>{{ $item['product']['name'] ?? $item['package']['name'] }}</td>
                     <td>{{ $quantity }}</td>
                     <td>{{ number_format($price, 0, ',', '.') }} VND</td>
                     <td>{{ number_format($subtotal, 0, ',', '.') }} VND</td>

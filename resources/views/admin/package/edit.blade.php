@@ -42,7 +42,7 @@
                                                         style="font-weight: 500" id="name_error"></span> </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-text-input" class="form-label">Image  <span
+                                                <label for="example-text-input" class="form-label">Hình ảnh  <span
                                                         class="text text-danger">*</span></label>
 
                                                 <input id="images" class="form-control" type="file" name="images"
@@ -55,7 +55,7 @@
 
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-search-input" class="form-label">Price <span
+                                                <label for="example-search-input" class="form-label">Giá gói tháng <span
                                                         class="text text-danger">*</span></label>
                                                 <input value="{{ old('name', $package->price) }}" required class="form-control" name="price" type="number"
                                                     id="price">
@@ -63,7 +63,15 @@
                                                         style="font-weight: 500" id="price_error"></span> </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-url-input" class="form-label">Status <span class="text text-danger">*</span></label>
+                                                <label for="example-search-input" class="form-label">Phần trăm giảm giá <span
+                                                        class="text text-danger">*</span></label>
+                                                <input value="{{ old('name', $package->reduced_price) }}" required class="form-control" name="reduced_price" type="reduced_price"
+                                                    id="reduced_price">
+                                                <div class="col-lg-9"><span class="invalid-feedback d-block"
+                                                        style="font-weight: 500" id="reduced_price_error"></span> </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="example-url-input" class="form-label">Trạng thái <span class="text text-danger">*</span></label>
                                                 <select required class="form-control  trang-thai" name="status" id="status" >
                                                     <option value="">-- Chọn trạng thái --</option>
                                                     <option value="1" {{ $package->status == 1 ? 'selected' : '' }}>Hoạt động</option>
@@ -133,6 +141,18 @@
             'email': {
                 'element': document.getElementById('price'),
                 'error': document.getElementById('price_error'),
+                'validations': [
+                    {
+                        'func': function(value){
+                            return checkRequired(value);
+                        },
+                        'message': generateErrorMessage('E0018')
+                    },
+                ]
+            },
+            'email': {
+                'element': document.getElementById('reduced_price'),
+                'error': document.getElementById('reduced_price_error'),
                 'validations': [
                     {
                         'func': function(value){
