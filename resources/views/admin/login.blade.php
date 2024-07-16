@@ -112,7 +112,7 @@
                                             <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <!-- end carouselIndicators -->
-                                        <div class="carousel-inner">
+                                        {{-- <div class="carousel-inner">
                                             <div class="carousel-item active">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
@@ -173,7 +173,8 @@
                                                         did,
                                                         but people will never forget
                                                         how donec in efficitur lectus, nec lobortis metus you made them
-                                                        feel.”</h4>
+                                                        feel.”
+                                                    </h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <img src="#" class="avatar-md img-fluid rounded-circle" alt="...">
@@ -186,7 +187,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <!-- end carousel-inner -->
                                     </div>
                                     <!-- end review carousel -->
