@@ -130,7 +130,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/package-add', [PackageController::class, 'store'])->name('package.add');
     Route::get('/package-edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package-update/{id}', [PackageController::class, 'update'])->name('package.update');
-
+    Route::get('package/list', [PackageController::class, 'packageList'])->name('package.list');
     // get customer 
     Route::get('khach-hang',[AuthController::class,'getCustomer'])->name('khach-hang');
     Route::get('cong-tac-vien',[AuthController::class,'getCustomerAffilate'])->name('cong-tac-vien');

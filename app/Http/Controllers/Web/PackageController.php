@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\OrderDetail;
 use App\Models\Packages;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
@@ -54,5 +55,26 @@ class PackageController extends Controller
              return ApiResponse::error('Error editing the package', 404);
          }
      }
+     public function packageList(Request $request)
+    {
+        try {
+        $orders = OrderDetail::select('order_details.*', 'orders.*', 'users.referral_code')
+                ->join('packages', 'order_details.package_id', '=', 'packages.id')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->with('package')
+                ->get();
+        $title = 'Danh sách đơn hàng';
+        if ($request->session()->has('authUser')) {
+            $result = $request->session()->get('authUser');
+            $role  = $result['user']['role_id'];
+        
+        }
+        return view('admin.order.package-list', compact('orders','title','role'));
+        } catch (\Exception $e) {
+        Log::error('Failed to fetch orders: ' . $e->getMessage());
+        return ApiResponse::error('Failed to fetch orders', 500);
+        }
+    }
 
 }

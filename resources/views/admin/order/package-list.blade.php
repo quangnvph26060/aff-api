@@ -35,14 +35,13 @@ $orderStatuses = [
                                         <tr>
                                             <th>STT</th>
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên sản phẩm</th>
+                                            <th>Tên gói tháng</th>
                                             <th>Số lượng</th>
                                             <th>Đơn giá </th>
                                             <th>Mã người đặt hàng</th>
                                             <th>Tên khách hàng</th>
                                             <th>Địa chỉ giao hàng</th>
                                             <th>Số điện thoại</th>
-
                                             <th>Trạng thái</th>
                                             <th>Tổng tiền thanh toán</th>
                                             <th style="text-align: center">Hành động</th>
@@ -56,31 +55,23 @@ $orderStatuses = [
                                                 <td> {{$key + 1}}</td>
                                                 <td>{{$item->zip_code}}</td>
                                                 <td class="product-cell">
-                                                    @foreach($item->order_detail as $k)
-                                                        <span class="product-name">{{$k->product['name'] ?? ""}}</span>
-                                                    @endforeach
+                                                    {{$item->package->name}}
                                                 </td>
                                                 
                                                 <td>
-                                                    @foreach($item->order_detail as $quantity )
-                                                    {{$quantity->quantity}} <br>
-                                                    @endforeach
+                                                   1
                                                 </td>
 
                                                 <td>
-                                                    @foreach($item->order_detail as $k )
-                                                    {{ isset($k->product['price']) ? number_format($k->product['price']) : "" }}
-                                                    đ<br>
-                                                    @endforeach
+                                                    {{$item->package->price}}
                                                 </td>
-                                                <td>{{$item->user_id[0]['referral_code']}}</td>
+                                                <td>{{ $item->referral_code }}</td>
                                                 <td>{{$item->name}}</td>
                                                 <td style="width:150px">{{$item->receive_address}}</td>
                                                 <td>{{$item->phone}}</td>
-                                                @if($role === 4)
                                                     <td>
                                                         <div class="form-group">
-                                                            <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)">
+                                                            <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)" >
                                                                 @foreach($orderStatuses as $key => $value)
                                                                 <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }}>
                                                                     {{ $value }}
@@ -89,22 +80,6 @@ $orderStatuses = [
                                                             </select>
                                                         </div>
                                                     </td>
-                                                @endif
-                                                @if($role === 1)
-                                                    <td>
-                                                        <div class="form-group">
-                                                           
-                                                            <select class="form-select" onchange="updateOrderStatus({{$item->id}} , this.value)" >
-                                                                @foreach($orderStatuses as $key => $value)
-                                                                <option value="{{ $key }}" {{ $item->status == $key ? 'selected' : '' }} disabled>
-                                                                    {{ $value }}
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                @endif
-                                           
                                                 <td>{{number_format($item->total_money)}}đ</td>
                                                 <td align="center">
                                                     <a class="btn btn-warning" href="">Sửa</a>

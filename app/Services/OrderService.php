@@ -311,7 +311,6 @@ class OrderService
             }
             if($role === 1){
                 $orders = $this->order->all();
-               
             } else if($role === 4) {
                // $orders =  Product::where('brands_id',$result['user']['id'])->get();
                 $brandId = $result['user']['id'];

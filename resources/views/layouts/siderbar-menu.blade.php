@@ -105,10 +105,20 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li class="ms-3">
                             <a href="/admin/order/list">
-                                <span data-key="t-chat">Danh sách</span>
+                                <span data-key="t-chat">Danh sách sản phẩm</span>
                             </a>
                         </li>
+                         @if($loggedInUser['user']['role_id'] === 1)
+                           
+                                <li class="ms-3">
+                                    <a href="/admin/package/list">
+                                        <span data-key="t-chat">Danh sách gói tháng</span>
+                                    </a>
+                                </li>
+                           
+                        @endif
                     </ul>
+                   
                 </li>
                 @if($loggedInUser['user']['role_id'] === 1)
                     <li>
