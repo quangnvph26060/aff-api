@@ -38,8 +38,6 @@ class ProductController extends Controller
     // show screen product
     public function store()
     {
-        // $user = Auth::user();
-        // dd($user);
         try {
             $products = $this->productService->getAllProducts();
             $category = $this->categoryService->getAllCategories();

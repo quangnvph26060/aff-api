@@ -11,6 +11,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -25,6 +26,13 @@ class ProductController extends Controller
     {
         try {
             $products = $this->productService->getProductsByStatus();
+            $userPackage = Auth::user()->activeUserPackage; 
+            if ($userPackage) {
+                $discountPercentage = $userPackage->package[0]['reduced_price'];
+                foreach ($products as $product) {
+                    $product->price = $product->price - ($product->price * ($discountPercentage / 100));
+                }
+            }
             return ApiResponse::success($products);
         }catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();

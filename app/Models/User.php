@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -95,5 +96,13 @@ class User extends Authenticatable implements JWTSubject
     public function wallet()
     {
         return $this->belongsToMany(Wallet::class)->withTimestamps();
+    }
+
+    public function activeUserPackage()
+    {
+        return $this->hasOne(UserPackage::class)
+                    ->where('is_active', 1)
+                    ->where('end_date', '>=', Carbon::now())
+                    ->where('user_id', $this->id);
     }
 }

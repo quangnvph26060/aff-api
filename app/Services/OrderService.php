@@ -13,6 +13,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\UserPackage;
 use App\Models\UserWallet;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
@@ -340,12 +341,27 @@ class OrderService
     }
     public function updateStatus($data)
     {
-        Log::info($data);
         try {
             $orderStatus  = $this->order->find($data['order_id']);
             if ($orderStatus) {
                 $orderStatus->status = $data['status'];
                 $orderStatus->save();
+                $orderDetail = OrderDetail::where('order_id',$orderStatus->id)->whereNotNull('package_id')->with('order')->first();
+                if($orderDetail->order['status'] === 2){
+                    $user_package = new UserPackage();
+                    $user_package->create([
+                        "user_id" => $orderDetail->order['user_id'][0]['id'] ?? "",
+                        "package_id" => $orderDetail->package_id,
+                        "start_date" => Carbon::now(),
+                        "end_date" => Carbon::now()->addDays(30),
+                        "is_active" => 1,
+                    ]);
+                } else if ( $orderDetail->order['status'] === 3 ) {
+                    UserPackage::where('user_id', $orderDetail->order['user_id'][0]['id'])
+                    ->where('package_id', $orderDetail->package['id'])
+                    ->delete();
+                    Log::info('Xóa thành công');
+                }
                 return $orderStatus;
             }
         } catch (\Exception $e) {

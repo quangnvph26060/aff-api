@@ -3,12 +3,8 @@
 @php
 $orderStatuses = [
 1 => 'Chờ xử lý',
-2 => 'Đang vận chuyển',
-3 => 'Đã giao hàng',
-4 => 'Đã hủy',
-5 => 'Đã hoàn tiền',
-6 => 'Tạm dừng',
-7 => 'Thất bại',
+2 => 'Thành Công',
+3 => 'Đã hủy',
 ];
 @endphp
 <div class="main-content">
