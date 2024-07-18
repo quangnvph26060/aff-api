@@ -55,7 +55,9 @@ class AppServiceProvider extends ServiceProvider
                 'admin.cong-tac-vien',
                 'admin.package.view',
                 'admin.package.edit',
-                'admin.package.list'
+                'admin.package.list',
+                'admin.category.search',
+                'admin.product.search'
             ];
             $path = Route::currentRouteName();
             // Log::info('demo path: ' . $path);

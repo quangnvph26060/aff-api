@@ -48,11 +48,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-rep-plugin">
-                            @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                            @endif
+                            <div id="flash-message" style="display:none;" class="alert alert-success"></div>
                             <div class="table-responsive mb-0" data-pattern="priority-columns">
                                 <table id="tech-companies-1" class="table table-striped">
                                     <thead>
@@ -66,15 +62,15 @@
                                     </thead>
                                     <tbody>
                                         @foreach($data as $index => $item)
-                                        <tr>
+                                        <tr id="category-{{ $item->id }}">
                                             <td> {{ $index + 1 }}</td>
                                             <td>{{$item->name}}</td>
                                             <td class="text-black">{{$item->description}}</td>
                                             <!-- <td>{{$item->products_count}}</td> -->
                                             <td align="center">
                                                 <a class="btn btn-warning" href="{{ route('admin.category.edit', ['id' => $item->id]) }}">Sửa</a>
-                                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"  class="btn btn-danger"
-                                                    href="{{ route('admin.category.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                <a  class="btn btn-danger" onclick="deleteCategory({{ $item->id }})">Xóa</a>
+                                               
                                                
                                             </td>
                                         </tr>
@@ -151,5 +147,31 @@
             document.getElementById('categorySearchForm').submit();
         }
     }
+    
+
+    function deleteCategory(categoryId) {
+        if (confirm('Bạn có chắc chắn muốn xóa?')) {
+            $.ajax({
+                url: '{{ route('admin.category.delete', '') }}/' + categoryId,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#flash-message').text(response.success).show().delay(3000).fadeOut();
+                        // Xóa phần tử đã xóa khỏi DOM
+                        $('#category-' + categoryId).remove();
+                    } else {
+                        alert('Có lỗi xảy ra: ' + response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Có lỗi xảy ra: ' + xhr.responseJSON.error);
+                }
+            });
+        }
+    }
+
 </script>
 @endsection

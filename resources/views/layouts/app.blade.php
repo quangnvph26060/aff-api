@@ -33,6 +33,7 @@
     <!-- validator -->
      <script src="{{asset('validator/validator.js')}}"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <meta name="csrf-token" content="{{ csrf_token() }}">
      <link rel="stylesheet" type="text/css" href="/css/bootstrap-notifications.min.css">
 

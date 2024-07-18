@@ -56,14 +56,12 @@ class CategoryController extends Controller
     {
         try {
             $this->categoryService->deleteCategory($id);
-            session()->flash('success', 'Xóa danh mục thành công.');
-           return redirect()->route('admin.category.index');
+            return response()->json(['success' => 'Xóa danh mục thành công.']);
         } catch (ModelNotFoundException $e) {
-            $exception = new CategoryNotFoundException();
-            return $exception->render(request());
+            return response()->json(['error' => 'Category not found.'], 404);
         } catch (\Exception $e) {
             Log::error('Failed to delete category: ' . $e->getMessage());
-            return ApiResponse::error('Failed to delete category', 500);
+            return response()->json(['error' => 'Failed to delete category.'], 500);
         }
     }
    

@@ -88,7 +88,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('category/add', [CategoryController::class, 'viewCategory'])->name('category.add');
-    Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::delete('delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
     Route::get('category-search-name', [CategoryController::class, 'search'])->name('category.search');
     // Order routes
     Route::get('order/list', [OrderController::class, 'index'])->name('order.list');
