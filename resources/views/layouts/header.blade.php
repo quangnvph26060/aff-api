@@ -342,6 +342,9 @@
     .main-navbar-header{
         padding: 0px !important;
     }
+    .navbar-brand-box{
+        display: none !important;
+    }
 }
 
 </style>
