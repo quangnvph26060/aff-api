@@ -26,13 +26,7 @@ class ProductController extends Controller
     {
         try {
             $products = $this->productService->getProductsByStatus();
-            $userPackage = Auth::user()->activeUserPackage; 
-            if ($userPackage) {
-                $discountPercentage = $userPackage->package[0]['reduced_price'];
-                foreach ($products as $product) {
-                    $product->price = $product->price - ($product->price * ($discountPercentage / 100));
-                }
-            }
+           
             return ApiResponse::success($products);
         }catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
@@ -124,5 +118,17 @@ class ProductController extends Controller
     }
     public function getProductTop() {
         return $this->productService->getProductTop();
+    }
+    public function checkPackageProduct(){
+        try{
+            $userPackage = Auth::user()->activeUserPackage; 
+            return ApiResponse::success($userPackage);
+        }catch (ModelNotFoundException $e) {
+            $exception = new ProductNotFoundException();
+            return $exception->render(request());
+        }  catch (\Exception $e){
+            Log::error('Failed to fetch package: ' . $e->getMessage());
+            return ApiResponse::error('Failed to fetch package', 500);
+        }
     }
 }

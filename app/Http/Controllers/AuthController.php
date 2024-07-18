@@ -159,10 +159,12 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user) {
                 $admin = User::where('role_id',1)->first();
+                $userPackage = $user->activeUserPackage; 
                 return response()->json([
-                    'status' => 'success',
-                    'data' => $user,
-                    'admin' => $admin,
+                    'status'       => 'success',
+                    'data'         => $user,
+                    'admin'        => $admin,
+                    'user_package' => $userPackage,
                 ]);
             } else {
                 return response()->json([
