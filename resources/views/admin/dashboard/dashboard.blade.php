@@ -47,7 +47,7 @@
                 <!-- ============================================================== -->
                 <div class="main-content ml-dasboard" >
 
-                    <div class="page-content">
+                    <div class="page-content main-page-content">
                         <div class="container-fluid">
 
                             <div class="row">
@@ -2053,6 +2053,14 @@
         }
         .ml-dasboard{
             margin-left: 10px;
+        }
+        @media (max-width:768px){
+            .main-page-content{
+                padding: unset !important;
+            }
+        .revenueChart {
+            width: 100% !important;
+        }
         }
     </style>
 @endsection

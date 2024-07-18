@@ -109,7 +109,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
     Route::post('transaction/{id}', [TransactionController::class, 'xulytransaction'])->name('xulytransaction');
     // notifycation
-    Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
+    // Route::get('/notify', [OrderController::class, 'orderCount'])->name('order.noti');
 
 
     Route::get('brand', [BrandController::class, 'index'])->name('brand.index');

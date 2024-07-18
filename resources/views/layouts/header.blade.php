@@ -1,9 +1,9 @@
 <header id="page-topbar">
-    <div class="navbar-header">
+    <div class="navbar-header main-navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index.html" class="logo logo-dark">
+                <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
                     <span class="logo-lg">
                         <img src="{{ asset($config->logo ?? "") }}" alt="Logo" height="24" class="logo-img">
                         <span class="logo-text">{{ $config->name ?? "" }}</span>
@@ -338,6 +338,9 @@
 
     .logo-text {
         font-size: 1.2rem;
+    }
+    .main-navbar-header{
+        padding: 0px !important;
     }
 }
 

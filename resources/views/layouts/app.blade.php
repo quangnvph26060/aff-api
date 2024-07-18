@@ -337,7 +337,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function(response) {             
                     var orderCount = response.orderCount.original.orderCount;
                     $('#order-count-badge').text(orderCount);
                 },
