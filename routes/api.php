@@ -25,13 +25,6 @@ use App\Http\Controllers\Api\v1\PackageController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Route::options('/{any}', function () {
-//     return response('OK', 200)
-//         ->header('Access-Control-Allow-Origin', '*')
-//         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-//         ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-// })->where('any', '.*');
-
 Route::post('find-password', [UserController::class, 'resetPassword'])->name('findPass');
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp'])->name('send_otp');
@@ -61,7 +54,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
-
+    Route::post('edit-user',[UserController::class,'editUser']);
     Route::group(['prefix' => 'categories'], function ($router) {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);

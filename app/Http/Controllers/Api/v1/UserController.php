@@ -116,4 +116,13 @@ class UserController extends Controller
             return ApiResponse::error('Failed to send pass ', 500);
         }
     }
+    public function editUser (Request $request){
+        try {
+            $data = $this->userService->editUser($request->all());
+            return ApiResponse::success($data, 'edit user success', 201);
+        } catch (\Exception $th) {
+            Log::error('Failed to edit user: ' . $th->getMessage());
+            return ApiResponse::error('Failed to edit user ', 500);
+        }
+    }
 }

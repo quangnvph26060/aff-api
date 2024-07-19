@@ -667,4 +667,28 @@ class UserService
     public function getCustomerAffilate(){
         return $this->user->where('role_id', 2)->get();
     }
+    public function editUser($data)
+    {
+        DB::beginTransaction();
+        try {
+            $id  = Auth()->user()->id;
+            $user = $this->user->find($id);
+            if (!$user) {
+                throw new \Exception('User not found');
+            }
+
+            $user->update([
+                'name' => $data['name'],
+                'address' => $data['address'],
+                'phone' => $data['phone']
+            ]);
+
+            DB::commit();
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Failed to edit user: {$e->getMessage()}");
+            throw $e;
+        }
+    }
 }
