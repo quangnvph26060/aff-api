@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DemoController;
+use App\Http\Controllers\Api\v1\BrandController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redis;
@@ -105,6 +106,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::post('/createorder', [OrderController::class, 'createOrder'])->name('create.order');
     Route::get('/get-order', [OrderController::class, 'index']);
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
+    Route::get('/banner-brand',[BrandController::class,'imageBrand'])->name('banner.brand');
 });
 
 Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');

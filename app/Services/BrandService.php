@@ -160,4 +160,14 @@ class BrandService
             throw new Exception('Failed to search products');
         }
     }
+    public function imageBrand() {
+        try{
+            $banner = $this->brand->select('logo')->get();
+            return $banner;
+        }catch(\Exception $e){
+            Log::error("Failed to image brand: {$e->getMessage()}");
+            throw new Exception('Failed to image brand');
+        }
+    }
+
 }
