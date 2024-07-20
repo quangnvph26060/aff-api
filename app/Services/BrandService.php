@@ -169,5 +169,4 @@ class BrandService
             throw new Exception('Failed to image brand');
         }
     }
-
 }

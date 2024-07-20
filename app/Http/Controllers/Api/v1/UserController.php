@@ -125,4 +125,14 @@ class UserController extends Controller
             return ApiResponse::error('Failed to edit user ', 500);
         }
     }
+    public function editInfoAdmin(Request $request){
+        try {
+            $id   = Auth()->user()->id;
+            $data =  $this->userService->updateUserInfoByIdAPI($id, $request->all());
+            return ApiResponse::success($data, 'edit user info success', 201);
+        } catch(\Exception $e) {
+            Log::error('Failed to update user info: ' . $e->getMessage());
+            return ApiResponse::error('Failed to update  user info', 500);
+        }
+    }
 }

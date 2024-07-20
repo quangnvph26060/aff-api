@@ -11,6 +11,7 @@ use App\Models\Commission;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Wallet;
+use Illuminate\Http\File;
 use Baileyherbert\BankQr\BankQr;
 //use Illuminate\Support\Facades\Log;
 //use Exception;
@@ -590,6 +591,8 @@ class UserService
      * @param array $data
      * @return UserInfo
      */
+    
+    // user role admin
     public function updateUserInfoById(int $id, array $data)
     {
         DB::beginTransaction();
@@ -598,7 +601,6 @@ class UserService
             $userinfo = UserInfo::where('user_id', $id)->first();
             $fontImagePath = '';
             $backImagePath = '';
-
             //Handle font image upload
             if (isset($data['font-image']) && $data['font-image'] instanceof UploadedFile && $data['font-image']->isValid()) {
                 $imageFont = $data['font-image'];
@@ -609,17 +611,14 @@ class UserService
                     $imageFont->storeAs('public/cccd/cccd' . $id, $fontImageName);
                 }
             }
-
             if (isset($data['back-image']) && $data['back-image'] instanceof UploadedFile && $data['back-image']->isValid()) {
                 $imageBack = $data['back-image'];
                 $backImageName = 'image_' . $imageBack->getClientOriginalName();
                 $backImagePath = 'storage/cccd/cccd' . $id . '/' . $backImageName;
-
                 if (!Storage::exists($backImagePath)) {
                     $imageBack->storeAs('public/cccd/cccd' . $id, $backImageName);
                 }
             }
-
             if ($userinfo) {
                 $userinfo->update([
                     "front_image" => isset($data['font-image']) ? $fontImagePath : $userinfo->front_image,
@@ -643,7 +642,6 @@ class UserService
                     'branch' => $img.$data['bank']."-".$data['idnumber'].'-qr_only.png'
                 ]);
             }
-
             DB::commit();
             return $userinfo;
         } catch (Exception $e) {
@@ -652,7 +650,98 @@ class UserService
             throw $e;
         }
     }
+    // user role affilate
+    public function updateUserInfoByIdAPI(int $id, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $img = "https://img.vietqr.io/image/";
+            $userinfo = UserInfo::where('user_id', $id)->first();
+            $fontImagePath = '';
+            $backImagePath = '';
+    
+            //Handle font image upload
+            if (isset($data['FormUserInfo']['font-image']) && is_string($data['FormUserInfo']['font-image'])) {
+                $dataUrl = $data['FormUserInfo']['font-image'];
+                if (preg_match('/^data:image\/(\w+);base64,/', $dataUrl, $matches)) {
+                    $imageData = base64_decode(explode(',', $dataUrl)[1]);
+                    $extension = $matches[1];
+                    
+                    if (!empty($imageData) && !empty($extension)) {
+                        $fontImageName = 'image_' . time() . '.' . $extension;
+                        $fontImagePath = 'public/cccd/cccd' . $id . '/' . $fontImageName;
 
+                        // Lưu ảnh vào hệ thống tệp
+                        Storage::put($fontImagePath, $imageData);
+
+                        // Nếu bạn muốn trả về đường dẫn của ảnh đã lưu
+                        $fontsavedImageUrl = Storage::url($fontImagePath);
+                    } else {
+                        return response()->json(['error' => 'Invalid image data'], 400);
+                    }
+                } else {
+                    return response()->json(['error' => 'Invalid base64 string'], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Image not provided'], 400);
+            }
+    
+            //Handle back image upload
+            if (isset($data['FormUserInfo']['back-image']) && is_string($data['FormUserInfo']['back-image'])) {
+                $dataUrl = $data['FormUserInfo']['back-image'];
+                if (preg_match('/^data:image\/(\w+);base64,/', $dataUrl, $matches)) {
+                    $imageData = base64_decode(explode(',', $dataUrl)[1]);
+                    $extension = $matches[1];
+                    
+                    if (!empty($imageData) && !empty($extension)) {
+                        $backImageName = 'image_' . time() . '.' . $extension;
+                        $backImagePath = 'public/cccd/cccd' . $id . '/' . $backImageName;
+
+                        // Lưu ảnh vào hệ thống tệp
+                        Storage::put($backImagePath, $imageData);
+
+                        // Nếu bạn muốn trả về đường dẫn của ảnh đã lưu
+                        $backsavedImageUrl = Storage::url($backImagePath);
+                    } else {
+                        return response()->json(['error' => 'Invalid image data'], 400);
+                    }
+                } else {
+                    return response()->json(['error' => 'Invalid base64 string'], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Image not provided'], 400);
+            }
+            if ($userinfo) {
+                $userinfo->update([
+                    "front_image" => isset($data['FormUserInfo']['font-image']) ? $fontsavedImageUrl : $userinfo->front_image,
+                    "back_image" => isset($data['FormUserInfo']['back-image']) ? $backsavedImageUrl : $userinfo->back_image,
+                    "citizen_id_number" => @$data['FormUserInfo']['citizen_id_number'],
+                    "bank" => @$data['FormUserInfo']['bank'],
+                    "idnumber" => @$data['FormUserInfo']['idnumber'], // ??
+                    "bank_name" => @$data['FormUserInfo']['bank_name'],
+                    'branch' => $img . $data['FormUserInfo']['bank'] . "-" . $data['FormUserInfo']['idnumber'] . '-qr_only.png'
+                ]);
+            } else {
+                $userinfo = UserInfo::create([
+                    'user_id' => $id,
+                    "front_image" => $fontsavedImageUrl,
+                    "back_image" => $fontsavedImageUrl,
+                    "citizen_id_number" => @$data['FormUserInfo']['citizen_id_number'],
+                    "bank" => @$data['FormUserInfo']['bank'],
+                    "idnumber" => @$data['FormUserInfo']['idnumber'], // ??
+                    "bank_name" => @$data['FormUserInfo']['bank_name'],
+                    'branch' => $img . $data['FormUserInfo']['bank'] . "-" . $data['FormUserInfo']['idnumber'] . '-qr_only.png'
+                ]);
+            }
+    
+            DB::commit();
+            return $userinfo;
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error("Failed to create user: {$e->getMessage()}");
+            throw $e;
+        }
+    }
 
     /**
      * hàm upload images user

@@ -55,6 +55,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
     Route::post('edit-user',[UserController::class,'editUser']);
+    Route::post('update-user-info',[UserController::class,'editInfoAdmin']);
     Route::group(['prefix' => 'categories'], function ($router) {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);
@@ -100,6 +101,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::get('/get-order', [OrderController::class, 'index']);
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
     Route::get('/banner-brand',[BrandController::class,'imageBrand'])->name('banner.brand');
+    Route::get('/get-bank',[BrandController::class,'getBank']);
 });
 
 Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');
