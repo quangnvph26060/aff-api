@@ -36,3 +36,6 @@ npm install vuex
 -- 7/11/2024
 UPDATE products
 SET is_featured = 0
+
+-- 7/22/2024
+npm install -g npm@10.8.2

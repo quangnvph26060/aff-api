@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Method;
+use App\Models\UserWallet;
 
 class TransactionService
 {
@@ -66,6 +67,17 @@ class TransactionService
                 'amount' => $amount,
                 'method_id' => $method_id,
                 'status' => 'pending',
+            ]);
+
+            if(!$transaction){
+                return response()->json(['status'=>'errors','message'=>"Failed to transaction"]);   
+            }
+            $result = UserWallet::where('user_id',$transaction->user_id)->where('wallet_id',$transaction->wallet_id)->first();
+            if(!$result){
+                return response()->json(['status'=>'errors','message'=>"Failed to  User Wallet"]);   
+            }
+            $result->update([
+                'total_revenue' => $result->total_revenue - $transaction->amount 
             ]);
             // dd($transaction);
             DB::commit();
