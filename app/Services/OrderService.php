@@ -7,6 +7,7 @@ use App\Events\NewOrderEvent;
 use App\Exceptions\OrderNotFoundException;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\SendEmailJob;
+use Faker\Generator as Faker;
 use App\Jobs\SendMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -25,19 +26,51 @@ use Illuminate\Support\Facades\Auth;
 class OrderService
 {
     protected $order, $orderDetail;
-
-    public function __construct(Order $order, OrderDetail $orderDetail)
+    protected $faker;
+    public function __construct(Order $order, OrderDetail $orderDetail, Faker $faker,)
     {
         $this->order = $order;
         $this->orderDetail = $orderDetail;
+        $this->faker = $faker;
     }
+    protected function randomReferalCode()
+    {
+        $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
+        $exist_user = User::where('referral_code', $rand)->exists();
+        while ($exist_user) {
+            $this->randomReferalCode();
+        }
+
+        return $rand;
+    }
     public function createOrder($data)
     {
         DB::beginTransaction();
         try {
             $user = Auth::user();
+
             $user_id = $user->id;
+            // Kiểm tra nếu user đã có referral_code rồi thì không cập nhật nữa
+            if (!$user->referral_code) {
+                // Tạo một mã referral code mới
+                $newReferralCode = $this->randomReferalCode();
+                $existingUser = User::where('referral_code', $newReferralCode)->first();
+
+                if ($existingUser) {
+                    do {
+                        $newReferralCode = $this->randomReferalCode();
+                        $existingUser = User::where('referral_code', $newReferralCode)->first();
+                    } while ($existingUser);
+                }
+
+                $updateReferralCode = User::where('id', $user_id)->update(['referral_code' => $newReferralCode]);
+
+                if (!$updateReferralCode) {
+                    return response()->json(['status' => "error", 'message' => 'Error randomizing referral code']);
+                }
+            }
+
             $receive_address = $data['receive_address'];
             $total_money = $data['total_money'];
             $this->getUserTeam($total_money);
@@ -62,7 +95,7 @@ class OrderService
                     'product_id' => $detail['product_id'],
                     'quantity' => $detail['amount'],
                 ]);
-                
+
                 $email = $detail['product']['brands']['email'];
                 if (!in_array($email, $arrMail)) {
                     $arrMail[] = $email;
@@ -72,7 +105,7 @@ class OrderService
                 $product->quantity = $product->quantity - $detail['amount'];
                 $product->save();
             }
-            
+
             foreach ($arrMail as $email) {
                 $arrSendMail = [
                     'type' => 'send_brands',
@@ -192,9 +225,8 @@ class OrderService
             if ($request->session()->has('authUser')) {
                 $result = $request->session()->get('authUser');
                 $role  = $result['user']['role_id'];
-               
             }
-            if($role === 1){
+            if ($role === 1) {
                 $number = $this->order->count();
                 $total = $this->order->sum('total_money');
                 $result = new \Illuminate\Database\Eloquent\Collection;
@@ -203,14 +235,13 @@ class OrderService
                     'total' => $total,
                 ]);
                 return $result;
-               
-            } else if($role === 4) {
-               // $orders =  Product::where('brands_id',$result['user']['id'])->get();
+            } else if ($role === 4) {
+                // $orders =  Product::where('brands_id',$result['user']['id'])->get();
                 $brandId = $result['user']['id'];
                 $orderDetails = OrderDetail::select('order_details.*')
-                ->join('products', 'order_details.product_id', '=', 'products.id')
-                ->where('products.brands_id', $brandId)
-                ->get();
+                    ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->where('products.brands_id', $brandId)
+                    ->get();
 
                 $orders = [];
                 $addedOrderIds = [];
@@ -231,7 +262,6 @@ class OrderService
                     'total' => $total,
                 ]);
                 return $result;
-               
             }
         } catch (\Exception $e) {
             Log::error('Failed to count order: ' . $e->getMessage());
@@ -245,44 +275,42 @@ class OrderService
             if ($request->session()->has('authUser')) {
                 $result = $request->session()->get('authUser');
                 $role  = $result['user']['role_id'];
-               
             }
-            if($role === 1 ){
-                 $bestseller = $this->orderDetail
-                ->select(
-                    'products.name as product_name',
-                    'products.price',
-                    'categories.name as category_name',
-                    DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
-                    DB::raw('SUM(order_details.quantity) as total_sold_amount')
-                )
-                ->join('products', 'order_details.product_id', '=', 'products.id')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
-                ->orderBy('total_sold_amount', 'desc')
-                ->limit(6)
-                ->get();
+            if ($role === 1) {
+                $bestseller = $this->orderDetail
+                    ->select(
+                        'products.name as product_name',
+                        'products.price',
+                        'categories.name as category_name',
+                        DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
+                        DB::raw('SUM(order_details.quantity) as total_sold_amount')
+                    )
+                    ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->join('categories', 'products.category_id', '=', 'categories.id')
+                    ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
+                    ->orderBy('total_sold_amount', 'desc')
+                    ->limit(6)
+                    ->get();
                 // dd($bestseller);
                 return $bestseller;
-            }else if ( $role === 4 )
-            {
+            } else if ($role === 4) {
                 $brandId = $result['user']['id'];
                 $bestseller = $this->orderDetail
-                ->select(
-                    'products.name as product_name',
-                    'products.price',
-                    'categories.name as category_name',
-                    DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
-                    DB::raw('SUM(order_details.quantity) as total_sold_amount')
-                )
-                ->join('products', 'order_details.product_id', '=', 'products.id')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
-                ->orderBy('total_sold_amount', 'desc')
-                ->where('products.brands_id', $brandId)
-                ->limit(6)
-                ->get();
-              
+                    ->select(
+                        'products.name as product_name',
+                        'products.price',
+                        'categories.name as category_name',
+                        DB::raw('SUM(order_details.quantity * products.price) as total_cost'),
+                        DB::raw('SUM(order_details.quantity) as total_sold_amount')
+                    )
+                    ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->join('categories', 'products.category_id', '=', 'categories.id')
+                    ->groupBy('products.id', 'products.name', 'categories.name', 'products.price')
+                    ->orderBy('total_sold_amount', 'desc')
+                    ->where('products.brands_id', $brandId)
+                    ->limit(6)
+                    ->get();
+
                 return $bestseller;
             }
         } catch (\Exception $e) {
@@ -308,17 +336,16 @@ class OrderService
             if ($request->session()->has('authUser')) {
                 $result = $request->session()->get('authUser');
                 $role  = $result['user']['role_id'];
-               
             }
-            if($role === 1){
+            if ($role === 1) {
                 $orders = $this->order->all();
-            } else if($role === 4) {
-               // $orders =  Product::where('brands_id',$result['user']['id'])->get();
+            } else if ($role === 4) {
+                // $orders =  Product::where('brands_id',$result['user']['id'])->get();
                 $brandId = $result['user']['id'];
                 $orderDetails = OrderDetail::select('order_details.*')
-                ->join('products', 'order_details.product_id', '=', 'products.id')
-                ->where('products.brands_id', $brandId)
-                ->get();
+                    ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->where('products.brands_id', $brandId)
+                    ->get();
 
                 $orders = [];
                 $addedOrderIds = [];
@@ -329,10 +356,8 @@ class OrderService
                         $addedOrderIds[] = $order->id;
                     }
                 }
-                
-              
             }
-         
+
             return (object) $orders;
         } catch (\Exception $e) {
             Log::error('Failed to retrieve orders: ' . $e->getMessage());
@@ -346,8 +371,8 @@ class OrderService
             if ($orderStatus) {
                 $orderStatus->status = $data['status'];
                 $orderStatus->save();
-                $orderDetail = OrderDetail::where('order_id',$orderStatus->id)->whereNotNull('package_id')->with('order')->first();
-                if($orderDetail->order['status'] === 2){
+                $orderDetail = OrderDetail::where('order_id', $orderStatus->id)->whereNotNull('package_id')->with('order')->first();
+                if ($orderDetail->order['status'] === 2) {
                     $user_package = new UserPackage();
                     $user_package->create([
                         "user_id" => $orderDetail->order['user_id'][0]['id'] ?? "",
@@ -356,10 +381,10 @@ class OrderService
                         "end_date" => Carbon::now()->addDays(30),
                         "is_active" => 1,
                     ]);
-                } else if ( $orderDetail->order['status'] === 3 ) {
+                } else if ($orderDetail->order['status'] === 3) {
                     UserPackage::where('user_id', $orderDetail->order['user_id'][0]['id'])
-                    ->where('package_id', $orderDetail->package['id'])
-                    ->delete();
+                        ->where('package_id', $orderDetail->package['id'])
+                        ->delete();
                     Log::info('Xóa thành công');
                 }
                 return $orderStatus;
@@ -401,22 +426,20 @@ class OrderService
             if ($request->session()->has('authUser')) {
                 $result = $request->session()->get('authUser');
                 $role  = $result['user']['role_id'];
-               
             }
-            if($role === 1 ) {
+            if ($role === 1) {
                 $order = $this->order->orderBy('created_at', 'desc')->take(5)->get();
                 return $order;
-            }else if ($role === 4){
+            } else if ($role === 4) {
                 $brandId = $result['user']['id'];
-                $orderDetails = OrderDetail::select('order_details.*','orders.zip_code','orders.name','orders.total_money')
-                ->join('products', 'order_details.product_id', '=', 'products.id')
-                ->join('orders', 'order_details.order_id', '=', 'orders.id')
-                ->where('products.brands_id', $brandId)
-                ->take(5)
-                ->get();
+                $orderDetails = OrderDetail::select('order_details.*', 'orders.zip_code', 'orders.name', 'orders.total_money')
+                    ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                    ->where('products.brands_id', $brandId)
+                    ->take(5)
+                    ->get();
                 return $orderDetails;
             }
-          
         } catch (\Exception $e) {
             Log::error('Lỗi không lấy ra đơn hàng: ' . $e->getMessage());
             throw new Exception('Lỗi không lấy ra đơn hàng');
@@ -452,11 +475,11 @@ class OrderService
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(total_money) as total')
         )
-        ->whereYear('created_at', $currentYear)
-        ->groupBy('year', 'month')
-        ->orderBy('month')
-        ->get()
-        ->keyBy('month');
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('year', 'month')
+            ->orderBy('month')
+            ->get()
+            ->keyBy('month');
 
         $months = range(1, 12);
         $monthlyRevenueWithZeroes = [];

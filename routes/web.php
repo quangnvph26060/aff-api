@@ -22,7 +22,7 @@ use App\Http\Controllers\Web\TransactionController;
 use App\Http\Middleware\checklogin;
 use Predis\Configuration\Option\Prefix;
 use PSpell\Config;
-
+use GuzzleHttp\Client;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +42,46 @@ Route::get('test', function () {
 });
 
 Route::get('wel', function () {
-    return view('welcome');
+    $client = new Client();
+    $accessToken = '3QSQMh-Lwoe1hHfGjfNW8G2Z7rseywHd7iKSJ-Ack5u7vGbVpBQBPJlzTK7fdeay8D5u0-ZWwIaNjHOmrS2i6ohs3ZISffzEB94TST_cvM0GqtfYn9R-JngW1N_RsFWERv54DQ2cnJ9LybOece7m07_4K1gIWliHNy07O8wkXqDovpHTcRQnNNI36apBwQTAVjqKRPQNX5DVhmegbjpqC2EPInFyhFC34kKA0VULzYb6sbeZevBVC5shJ262pCamTevFDQ2voavizMv0WPB4FZF6T067fOi5JUmw2AoMkdT4nqi7kAEnBGZgAoVQs8WP7emM8AphgojCfJK7WTITErtcCWICgfXwO-C-Kh67nLHUr5bee9t-O7wl142gnRbuNu0nPeR5ccbezs5ocB_V0dFuUnHDHKU60Cb9ludgAm'; 
+    $appSecret = 'FT9yHjTKO3r5DDXTKUKh'; // Thay thế bằng app_secret của bạn
+
+    // Tính toán appsecret_proof
+    $appsecretProof = hash_hmac('sha256', $accessToken, $appSecret);
+
+    $url = 'https://business.openapi.zalo.me/message/template';
+
+    $data = [
+        'phone' => '0382252561',
+        'template_id' => '7895417a7d3f9461cd2e',
+        'template_data' => [
+            'ky' => '1',
+            'thang' => '4/2020',
+            'start_date' => '20/03/2020',
+            'end_date' => '20/04/2020',
+            'customer' => 'Nguyễn Thị Hoàng Anh',
+            'cid' => 'PE010299485',
+            'address' => 'VNG Campus, TP.HCM',
+            'amount' => '100',
+            'total' => '100000',
+        ],
+        'tracking_id' => 'tracking_id'
+    ];
+
+    try {
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'access_token' => $accessToken,
+            ],
+            'json' => $data
+        ]);
+
+        $responseBody = json_decode($response->getBody(), true);
+        return response()->json($responseBody);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
+    }
 });
 Route::get('ad', function () {
     return view('emails.order');

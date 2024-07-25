@@ -66,7 +66,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::group(['prefix' => 'packages'], function ($router) { 
         Route::get('/', [PackageController::class, 'index']);
         Route::post('/find-package/{id}', [PackageController::class, 'DetailPackage']);
-        Route::post('/createorder', [PackageController::class, 'createOrder'])->name('create.order');
+        Route::post('/createorderpackage', [PackageController::class, 'createPackageOrder'])->name('create.orderpackage');
     });
     Route::group(['prefix' => 'products'], function ($router) { 
         Route::get('/', [ProductController::class, 'index']);

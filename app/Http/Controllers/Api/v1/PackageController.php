@@ -33,7 +33,7 @@ class PackageController extends Controller
       }
     }
     
-    public function createOrder(Request $request)
+    public function createPackageOrder(Request $request)
     {
         try{
             $order = $this->orderService->createOrder($request->all());
