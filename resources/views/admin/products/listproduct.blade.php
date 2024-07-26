@@ -61,7 +61,7 @@
                                             <label for="exampleSelect" class="form-label">Loại sản phẩm</label>
                                             <select class="form-select" id="loc_category" name="category">
                                                 <option value="}">--- Loại sản phẩm ---</option>
-                                                @foreach ($category as $item)
+                                                    @foreach ($category as $item)
                                                 <option value="{{ route('admin.product.filter', ['id'=> $item->id]) }}">
                                                     {{
                                                     $item->name }}</option>

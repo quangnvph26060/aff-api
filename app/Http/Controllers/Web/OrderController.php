@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         try {
-            $orders = $this->orderService->getAllOrder($type = 'web');
+            $orders = $this->orderService->getAllOrder($type = 'web',$request->input('search'),$request->input('status'));
             $title = 'Danh sách đơn hàng';
             if ($request->session()->has('authUser')) {
                 $result = $request->session()->get('authUser');

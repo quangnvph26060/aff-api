@@ -319,9 +319,10 @@ class OrderService
         }
         // dd($result);
     }
-    public function getAllOrder($type)
+    public function getAllOrder($type, $search, $status)
     {
         try {
+
             if ($type == RequestApi::API) {
                 $user_id = Auth::user()->id;
                 $orders = $this->order->where('user_id', $user_id)->get();
@@ -338,7 +339,17 @@ class OrderService
                 $role  = $result['user']['role_id'];
             }
             if ($role === 1) {
-                $orders = $this->order->all();
+                $query = Order::query();
+                if ($search) {
+                    $query->where('zip_code', 'like', '%' . $search . '%');
+                }
+                if ($status) {
+                    $query->where('status', 'like', '%' . $status . '%');
+                }
+                $orders = $query->whereDoesntHave('orderDetails', function ($query) {
+                    $query->whereNull('product_id');
+                })->simplePaginate(10);           
+                
             } else if ($role === 4) {
                 // $orders =  Product::where('brands_id',$result['user']['id'])->get();
                 $brandId = $result['user']['id'];

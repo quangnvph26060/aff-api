@@ -18,6 +18,42 @@ $orderStatuses = [
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
                     </div>
+                    <div class="row">
+                        <form class="col-lg-5" method="get" action="{{ route('admin.package.list') }}"
+                            id="productSearchForm">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label for="">Tìm kiếm đơn hàng</label>
+                                        <input autocomplete="off" name="search" type="text" class="form-control"
+                                            placeholder="Tìm kiếm đơn hàng" required id="name">
+                                        {{-- <div style="color: red;" id="name_error" class="name_error"></div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="" style="opacity: 0">1</label> <br>
+                                        <button type="button" onclick="searchProduct(event)"
+                                            class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Tìm kiếm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-lg-7">
+                            <form class="col-lg-4" action="{{ route('admin.package.list') }}" method="get" id="statusForm">
+                                <div class="form-group">
+                                    <label for="exampleSelect" class="form-label">Trạng thái đơn hàng</label>
+                                    <select class="form-select" id="loc_category" name="status" onchange="this.form.submit()">
+                                        <option value="">---  Chọn  ---</option>
+                                        @foreach($orderStatuses as $index => $item)
+                                            <option value="{{ $index }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                   </div>
                 </div>
             </div>
             <!-- end page title -->
@@ -86,42 +122,8 @@ $orderStatuses = [
                                         </tbody>
                                   
                                 </table>
-                                <nav>
-                                    <!-- <ul class="pagination">
-
-                <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
-        <span class="page-link" aria-hidden="true">&lsaquo;</span>
-    </li>
-
-
-                
-    
-    
-                                                                            <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=2">2</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=3">3</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=4">4</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=5">5</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=6">6</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=7">7</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=8">8</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=9">9</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=10">10</a></li>
-                                                                            
-                        <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
-    
-    
-                                
-    
-    
-                                                                            <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=119">119</a></li>
-                                                                                    <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=120">120</a></li>
-                                                            
-
-                <li class="page-item">
-        <a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=2" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
-    </li>
-</ul> -->
+                                <nav class="pt-4 pb-4">
+                                   {{$orders->links()}}
                                 </nav>
 
                             </div>
@@ -136,6 +138,10 @@ $orderStatuses = [
 </div>
 @endsection
 <script>
+     function searchProduct(event){
+        event.preventDefault();
+        document.getElementById('productSearchForm').submit();
+    }
     function updateOrderStatus(orderId, status) {
         console.log(orderId, status);
         $.ajax({

@@ -17,7 +17,8 @@ class PackageController extends Controller
     {
         $this->package = $package;
     }
-    public function index(){
+    public function index(Request $request){
+       
         $package = Packages::all();
         return view('admin.package.index',compact('package'));
     }
@@ -58,13 +59,27 @@ class PackageController extends Controller
      public function packageList(Request $request)
     {
         try {
+            $search = $request->input('search'); // Điều kiện tìm kiếm
+            $category = $request->input('status'); // Lọc theo trạng thái đơn hàng
+
         $orders = OrderDetail::select('order_details.*', 'orders.*', 'users.referral_code')
                 ->join('packages', 'order_details.package_id', '=', 'packages.id')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->with('package')
-                ->get();
-        $title = 'Danh sách đơn hàng';
+                ->with('package');
+                if ($search) {
+                    $orders->where('orders.zip_code', 'like', '%' . $search . '%');
+                }
+                
+                // Thêm điều kiện lọc theo trạng thái
+                if ($category) {
+                    $orders->where('orders.status', $category); // Hoặc điều kiện tùy chỉnh khác
+                }
+                
+                // Phân trang kết quả
+                $orders = $orders->simplePaginate(10);
+            
+        $title = 'Danh sách gói tháng';
         if ($request->session()->has('authUser')) {
             $result = $request->session()->get('authUser');
             $role  = $result['user']['role_id'];

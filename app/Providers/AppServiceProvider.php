@@ -57,10 +57,11 @@ class AppServiceProvider extends ServiceProvider
                 'admin.package.edit',
                 'admin.package.list',
                 'admin.category.search',
-                'admin.product.search'
+                'admin.product.search',
+                'admin.product.filter'
             ];
             $path = Route::currentRouteName();
-            // Log::info('demo path: ' . $path);
+            //  Log::info('demo path: ' . $path);
          
             if ( !request()->path() === 'api/v1/send-otp' ) {
                 View::composer('*', UserComposer::class);
