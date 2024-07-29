@@ -84,6 +84,7 @@ class OrderService
                 'phone' => $data['phone'],
                 'zip_code' => $data['zip_code'],
                 'notify' => 0,
+                'payment_method'=>$data['payment_method']
             ]);
             if (!$order) {
                 return response()->json('error', 'Order product error');

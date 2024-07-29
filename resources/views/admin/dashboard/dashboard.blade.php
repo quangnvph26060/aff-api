@@ -1020,7 +1020,7 @@
                                                                     <button type="button"
                                                                         class="btn btn-primary btn-label rounded-pill" id="handleDashboard">
                                                                         Mời ngay</button>
-                                                                        <p id="copy_link" hidden> {{config("app.url")}}/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
+                                                                        <p id="copy_link" hidden> {{config("app.url")}}/affilate/login?referralcode={{$loggedInUser['user']['referral_code']}}</p>
                                                                 </div>
                                                             </div>
                                                      

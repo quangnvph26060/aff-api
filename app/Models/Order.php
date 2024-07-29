@@ -19,6 +19,7 @@ class Order extends Model
         'phone',
         'zip_code',
         'notify',
+        'payment_method',
     ];
     protected $appends = ['order_detail','user_id','package'];
     public function getOrderDetailAttribute(){
