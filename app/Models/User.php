@@ -97,12 +97,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Wallet::class)->withTimestamps();
     }
-
+    // gói tháng
     public function activeUserPackage()
     {
         return $this->hasOne(UserPackage::class)
                     ->where('is_active', 1)
                     ->where('end_date', '>=', Carbon::now())
                     ->where('user_id', $this->id);
+    }
+    // bình luận
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

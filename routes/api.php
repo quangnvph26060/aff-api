@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CartController;
+use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TransactionController;
 use App\Http\Controllers\Api\v1\OrderController;
@@ -102,6 +103,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
     Route::get('/banner-brand',[BrandController::class,'imageBrand'])->name('banner.brand');
     Route::get('/get-bank',[BrandController::class,'getBank']);
+
+    Route::group(['prefix' => 'comment'], function ($router) {
+        Route::post('/', [CommentController::class, 'store']);
+        Route::post('/get-comment', [CommentController::class, 'index']);
+        Route::delete('/{id}', [CommentController::class, 'destroy']);
+    });
 });
 
 Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');
