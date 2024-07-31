@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AdminController;
 
 use App\Http\Controllers\Web\BrandController;
-
+use App\Http\Controllers\Web\CommentController;
 use App\Http\Controllers\Web\ConfigController;
 
 use App\Http\Controllers\Web\DashboardController;
@@ -173,6 +173,10 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     // get customer 
     Route::get('khach-hang',[AuthController::class,'getCustomer'])->name('khach-hang');
     Route::get('cong-tac-vien',[AuthController::class,'getCustomerAffilate'])->name('cong-tac-vien');
+
+    Route::get('/comment',[CommentController::class,'index'])->name('comment');
+    Route::get('/comment/{id}',[CommentController::class,'find'])->name('comment.find');
+    Route::delete('/comments/{id}', [CommentController::class, 'delete'])->name('comments.delete');
 });
 
 

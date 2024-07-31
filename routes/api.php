@@ -107,7 +107,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::group(['prefix' => 'comment'], function ($router) {
         Route::post('/', [CommentController::class, 'store']);
         Route::post('/get-comment', [CommentController::class, 'index']);
-        Route::delete('/{id}', [CommentController::class, 'destroy']);
+        Route::delete('/{id}', [CommentController::class, 'delete']);
     });
 });
 

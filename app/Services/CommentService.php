@@ -63,22 +63,5 @@ class CommentService
             throw $e; // Re-throw to be caught by controller
         }
     }
-    public function deleteComment(Comment $comment)
-    {
-        if (auth()->id() !== $comment->user_id) {
-            return [
-                'success' => false,
-                'message' => 'Bạn không có quyền xóa bình luận này.',
-                'status' => 403
-            ];
-        }
-
-        $comment->delete();
-
-        return [
-            'success' => true,
-            'message' => 'Bình luận đã được xóa.',
-            'status' => 200
-        ];
-    }
+   
 }

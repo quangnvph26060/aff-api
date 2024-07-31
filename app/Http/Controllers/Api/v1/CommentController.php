@@ -71,25 +71,16 @@ class CommentController extends Controller
         }
     }
 
-    public function destroy(Comment $comment)
-    {
-        try {
-            $result = $this->commentService->deleteComment($comment);
-
-            return response()->json([
-                'success' => $result['success'],
-                'message' => $result['message'],
-            ], $result['status']);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Bình luận không tìm thấy.',
-            ], 404);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Đã xảy ra lỗi. Vui lòng thử lại sau.',
-            ], 500);
+    public function delete($id){
+        $data = Comment::find($id);
+        if(!$data){
+            return response()->json(['status'=>'errors','message'=>'Xóa bình luận thất bại!']);
         }
+        $data->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Xóa bình luận thành công!'
+        ]);
+        
     }
 }
