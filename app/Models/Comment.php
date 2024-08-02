@@ -11,7 +11,13 @@ class Comment extends Model
     protected $fillable = [
         'content', 'user_id', 'product_id', 'parent_id', 'rate'
     ];
-
+    protected $appends = ['user_name','image_product'];
+    public function getUserNameAttribute(){
+        return User::where('id',$this->attributes['user_id'])->pluck('name')->first();
+    }
+    public function getImageProductAttribute(){
+        return Product::where('id',$this->attributes['product_id'])->with('images')->first();
+    }
     public function user()
     {
         return $this->belongsTo(User::class); 

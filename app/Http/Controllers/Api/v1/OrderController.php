@@ -28,10 +28,10 @@ class OrderController extends Controller
      *b
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $orders = $this->orderService->getAllOrder($type = 'api');
+            $orders = $this->orderService->getAllOrder($type = 'api',$request->input('search'),$request->input('status'));
             Log::info($orders);
             return ApiResponse::success($orders, 'Get Orders successfully', 201);
         } catch (\Exception $e) {

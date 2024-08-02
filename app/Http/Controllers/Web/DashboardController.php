@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Order;
 use App\Models\Product;
 use App\Services\CategoryService;
@@ -38,6 +39,7 @@ class DashboardController extends Controller
         $useramount = $this->userService->countAllUser();
         $useramountAffliate = $this->userService->countAllUserAffliate();
         $orderamount = $this->orderService->getOrderAmount();
+        $comment = $this->getCommentProduct();
         $statistic = $orderamount -> map(function($amount){
             return[
                 'number' => $amount->number,
@@ -46,24 +48,30 @@ class DashboardController extends Controller
         })->first();
         if ($request->session()->has('authUser')) {
             $loggedInUser = $request->session()->get('authUser');
-
         }
+
         // dd($loggedInUser);
-        return view('admin.dashboard.dashboard', compact('order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue', 'totalAnnualRevenue','useramountAffliate'));
+        return view('admin.dashboard.dashboard', compact('comment','order', 'category','bestseller', 'statistic', 'useramount','loggedInUser', 'getMonthlyRevenue', 'totalAnnualRevenue','useramountAffliate'));
     }
     public function BestSeller()
     {
         try {
             $data = $this->orderService->getBestSeller();
-            // dd($data);
             return $data;
         } catch (\Exception $e) {
             Log::error('Failed to get best seller: ' . $e->getMessage());
             // return view('admin.dashboard.dashboard', ['error' => 'Failed to get best seller']);
             throw new Exception('Failed');
         }
-
     }
-
-
+    public function getCommentProduct()
+    {
+        $data = Comment::all();
+        $count = $data->count();
+        $dataArr = [
+            'data' => $data,
+            'count' => $count,
+        ];
+        return (array)$dataArr;
+    }
 }

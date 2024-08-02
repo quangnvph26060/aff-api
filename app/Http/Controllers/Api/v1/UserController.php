@@ -45,6 +45,7 @@ class UserController extends Controller
             return ApiResponse::error('Failed to create user ', 500);
         }
     }
+    // đăng ký
     public function store(Request $request)
     {
         try {

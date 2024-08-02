@@ -31,7 +31,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::post('/send-otp', [UserController::class, 'sendOtp'])->name('send_otp');
     Route::post('/register', [UserController::class, 'store']);
     Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
-    Route::post('demo-cors',[DemoController::class,'demoCors']);
     Route::group([
         'middleware' => ['api'],
 

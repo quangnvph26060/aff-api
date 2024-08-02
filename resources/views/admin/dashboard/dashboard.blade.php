@@ -717,148 +717,44 @@
                                                     <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản
                                                         phẩm</h6>
                                                     <!-- Swiper -->
-                                                    <div class="swiper vertical-swiper" style="height: 250px;">
+                                                    <div class="swiper vertical-swiper" style="height: 250px;overflow: scroll; overflow-y: auto;">
                                                         <div class="swiper-wrapper">
-                                                            <div class="swiper-slide">
-                                                                <div class="card border border-dashed shadow-none">
-                                                                    <div class="card-body">
-                                                                        <div class="d-flex">
-                                                                            <div class="flex-shrink-0 avatar-sm">
-                                                                                <div
-                                                                                    class="avatar-title bg-light rounded">
-                                                                                    <img src="{{asset('assets/images/products/img-2.png')}}"
-                                                                                        alt="" height="30">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-3">
-                                                                                <div>
-                                                                                    <p
-                                                                                        class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        " Sản phẩm tuyệt vời và trông rất đẹp, có nhiều tính năng. "</p>
+                                                            @foreach($comment['data'] as $item)
+                                                                <div class="swiper-slide">
+                                                                    <div class="card border border-dashed shadow-none">
+                                                                        <div class="card-body">
+                                                                            <div class="d-flex">
+                                                                                <div class="flex-shrink-0 avatar-sm">
                                                                                     <div
-                                                                                        class="fs-11 align-middle text-warning">
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
+                                                                                        class="avatar-title bg-light rounded">
+                                                                                        <img src="{{asset($item->image_product['images'][0]['image_path'])}}"
+                                                                                            alt="" height="30">
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-end mb-0 text-muted">
-                                                                                    - Từ : <cite
-                                                                                        title="Source Title">Force
-                                                                                        Medicines</cite>
+                                                                                <div class="flex-grow-1 ms-3">
+                                                                                    <div>
+                                                                                        <p
+                                                                                            class="text-muted mb-1 fst-italic text-truncate-two-lines">
+                                                                                            " {{ $item->content }} "</p>
+                                                                                        <div
+                                                                                            class="fs-11 align-middle text-warning">
+                                                                                            <i class="ri-star-fill"></i>
+                                                                                            <i class="ri-star-fill"></i>
+                                                                                            <i class="ri-star-fill"></i>
+                                                                                            <i class="ri-star-fill"></i>
+                                                                                            <i class="ri-star-fill"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-end mb-0 text-muted">
+                                                                                        - Từ : <cite
+                                                                                            title="Source Title">{{$item->user_name}}</cite>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="swiper-slide">
-                                                                <div class="card border border-dashed shadow-none">
-                                                                    <div class="card-body">
-                                                                        <div class="d-flex">
-                                                                            <div class="flex-shrink-0">
-                                                                                <img src="{{asset('assets/images/products/img-2.png')}}"
-                                                                                    alt="" class="avatar-sm rounded">
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-3">
-                                                                                <div>
-                                                                                    <p
-                                                                                        class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        " Mẫu tuyệt vời, rất dễ hiểu và dễ thao tác. "</p>
-                                                                                    <div
-                                                                                        class="fs-11 align-middle text-warning">
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i
-                                                                                            class="ri-star-half-fill"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="text-end mb-0 text-muted">
-                                                                                    - Từ : <cite
-                                                                                        title="Source Title">Henry
-                                                                                        Baird</cite>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="swiper-slide" style="display: none">
-                                                                <div class="card border border-dashed shadow-none">
-                                                                    <div class="card-body">
-                                                                        <div class="d-flex">
-                                                                            <div class="flex-shrink-0 avatar-sm">
-                                                                                <div
-                                                                                    class="avatar-title bg-light rounded">
-                                                                                    <img src="{{asset('assets/images/companies/img-2.png')}}"
-                                                                                        alt="" height="30">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-3">
-                                                                                <div>
-                                                                                    <p
-                                                                                        class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        "Very beautiful product and Very
-                                                                                        helpful
-                                                                                        customer service."</p>
-                                                                                    <div
-                                                                                        class="fs-11 align-middle text-warning">
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-line"></i>
-                                                                                        <i class="ri-star-line"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="text-end mb-0 text-muted">
-                                                                                    - by <cite
-                                                                                        title="Source Title">Zoetic
-                                                                                        Fashion</cite>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="swiper-slide" style="display: none">
-                                                                <div class="card border border-dashed shadow-none">
-                                                                    <div class="card-body">
-                                                                        <div class="d-flex">
-                                                                            <div class="flex-shrink-0">
-                                                                                <img src="{{asset('assets/images/products/img-2.png')}}"
-                                                                                    alt="" class="avatar-sm rounded">
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-3">
-                                                                                <div>
-                                                                                    <p
-                                                                                        class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                                        " The product is very beautiful.
-                                                                                        I like
-                                                                                        it. "</p>
-                                                                                    <div
-                                                                                        class="fs-11 align-middle text-warning">
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i class="ri-star-fill"></i>
-                                                                                        <i
-                                                                                            class="ri-star-half-fill"></i>
-                                                                                        <i class="ri-star-line"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="text-end mb-0 text-muted">
-                                                                                    - by <cite
-                                                                                        title="Source Title">Nancy
-                                                                                        Martino</cite>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
@@ -883,7 +779,7 @@
                                                     </div>
                                                     <div class="text-center">
                                                         <div class="text-muted">Tổng cộng  <span
-                                                                class="fw-medium">5.50k</span>
+                                                                class="fw-medium">{{$comment['count'] ?? 0}}</span>
                                                             đánh giá</div>
                                                     </div>
 
