@@ -331,9 +331,10 @@ class UserService
 
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
-                if($data['is_referral']){
+                if($data['referral_code']){
                     $referral_code = $data['referral_code'];
-                    $findUser = $this->user->where('referral_code', $referral_code)->get();
+                    $findUser = $this->user->where('referral_code', $referral_code)->first();
+                   Log::info($findUser);
                     $is_result = $findUser->toArray();
                 }
            
@@ -342,7 +343,7 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $is_result[0]['referrer_id'] ?? "",
+                'referral_code' => $is_result['referrer_code'] ?? "",
                 // 'referral_code' => $this->randomReferralCode(),
                 // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
@@ -394,10 +395,11 @@ class UserService
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
 
-           if(!$data['is_referral']){
-                    $referral_code = $data['referral_code'];
-                    $findUser = $this->user->where('referral_code', $referral_code)->get();
-                    $is_result = $findUser->toArray();
+           if($data['referral_code']){
+                $referral_code = $data['referral_code'];
+                $findUser = $this->user->where('referral_code', $referral_code)->first();
+                Log::info($findUser);
+                $is_result = $findUser->toArray();
             }
            
             $user = $this->user->create([
@@ -407,7 +409,7 @@ class UserService
                 'address' => @$data['address'],
                 'referral_code' => "",
                 'phone' => @$data['phone'],
-                'referrer_id' => $is_result[0]['referral_code'] ?? "",
+                'referrer_id' => $is_result['referral_code'] ?? "",
                 'role_id' => 2,
                 'status' => 'active',
             ]);
