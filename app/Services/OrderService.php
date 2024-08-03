@@ -127,6 +127,7 @@ class OrderService
             // Lấy access_token từ cache hoặc làm mới nếu hết hạn
             $accessToken = $this->getAccessToken();
             // Gửi yêu cầu đến API của Zalo ZNS
+            Log::info('order: ' . $order);
             try {
                 $client = new Client();
                 $response = $client->post('https://business.openapi.zalo.me/message/template',[
@@ -139,7 +140,7 @@ class OrderService
                         'template_id' => '354647', // ID template của ZNS
                         'template_data' => [
                             'order_code' => $order->zip_code ?? "",
-                            'date' => "01/08/2020" ?? "",
+                            'date' => Carbon::now()->format('d/m/Y') ?? "",
                             'price' => $order->total_money ?? "",
                             'name' => $order->user_id[0]['name'] ?? "Full Name",
                             'payment' => $order->payment_method === 1 ? " chuyển khoản" : " nhận hàng"
@@ -181,10 +182,10 @@ class OrderService
             ]);
     
             $body = json_decode($response->getBody(), true);
-    
+            Log::info($body);
             if (isset($body['access_token'])) {
                 // Lưu access_token mới vào cache
-                Cache::put('access_token', $body['access_token'], 3600); // 3600 = 1h
+                Cache::put('access_token', $body['access_token'], 86400); // 86400 = 24h
                 return $body['access_token'];
             } else {
                 throw new \Exception('Failed to refresh access token');
@@ -202,7 +203,7 @@ class OrderService
 
     // Nếu không có access_token trong cache, làm mới nó
     if (!$accessToken) {
-        $refreshToken = '7ZAyBpMDW0WIDB8dDOo621imiYSobF4LUcUoIoZSzGDz8OH93TYiObWOu1vmnOfCNGh52mVLytDf6Beu9-lwKtqMYI09yVvROXQlTmJAqmet4ETCM-od1Xy9zt9erCjOCG--ArdeqW4C6eH6KDFURXm6YJjWsi9SB0UH5KZRqNvkExK60iF2BdeZZmKod_mlGtF9L3E3Y1HZVBnFAS3i7WuWZ7OXa-uOMNAzCN6Jq4z2MuCWFUBJVKyjbGuxvDbpG2-tFHhGoazB7va9CVJp8aSSndK9_POVLJYcGI7KopnwF8LrBz2rA78EzMW5peGa8ttiL576c7yuUyKJHPIBMGHJmXbgjlT74MkK86xOv6eyFuCNLeteUmfnbGTuhDfS0adkT7xtXXipEi537ee57pIMYmC';
+        $refreshToken = 'I_VRB3zP_c97yTKaFrZuOaxrrIGuGBzdE8BoHYXrkGSDjlGpT7gbCbwR_InwJ8CgQxtw7bj_b21veRWYTNF70ncma08nGTWIEOkDC0vvyoSwrfefAtlqQY-pesy2PCnz5QY0NHmUs6e7jefP2dhiQ0UgWMS1HiTpTxUVIMbEysP-jxqzQ6QG7bcFkojnPVW5TBUI5bHbvoucfgut06JhS2wbi6vR39f7TQMmHb9xom4gWRKp3NVSAms1an1XKU4kUhkn84fMc0DDdz8XRbEv6d-kr2y7Lw4tAlZn31WBjpGpokOt1Zt3D23Kh14o2eDH5DNhS3Dzn4eJafbj3NgmVoA7u3fIAf0JPlQrAqfTaMXAjFyeRbooQKAXwsThRxXTNAITJdjfs7LCfRTHTaX1cnnsFaBrQG';
         $secretKey = 'ZFIg89WL81V2R2Sj3vMd';
         $appId = '2355989370921006107';
         $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);
