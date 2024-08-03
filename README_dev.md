@@ -39,3 +39,31 @@ SET is_featured = 0
 
 -- 7/22/2024
 npm install -g npm@10.8.2
+
+
+
+-- 8/2/2024 
+làm việc với zns zalo 
+
+link các mã lỗi : https://zalo.cloud/zns/guidelines/handle-error-code
+
+Api: link tham khảo: https://zalo.cloud/zns/guidelines/zns-api
+
+api gửi thông tin đon hàng khi user mua thành công 
+
+
+https://business.openapi.zalo.me/message/template
+
+
+body:
+{
+    "phone": "84382252561",
+    "template_id": "354647",
+    "template_data": {
+       "order_code": "order_code",
+        "date": "01/08/2020",
+        "price": 100,
+        "name": "nguyễn văn quangv",
+        "payment": "payment"
+    }, 
+}
