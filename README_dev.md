@@ -67,3 +67,84 @@ body:
         "payment": "payment"
     }, 
 }
+// hàm lấy lại access_token
+ public function refreshAccessToken($refreshToken, $secretKey, $appId)
+    {
+        $client = new Client();
+        try {
+            $response = $client->post('https://oauth.zaloapp.com/v4/oa/access_token', [
+                'headers' => [
+                    'secret_key' => $secretKey
+                ],
+                'form_params' => [
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $refreshToken,
+                    'app_id' => $appId
+                ]
+            ]);
+    
+            $body = json_decode($response->getBody(), true);
+    
+            if (isset($body['access_token'])) {
+                // Lưu access_token mới vào cache
+                Cache::put('access_token', $body['access_token'], 3600); // 3600 = 1h
+                return $body['access_token'];
+            } else {
+                throw new \Exception('Failed to refresh access token');
+            }
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu có
+            Log::error('Failed to refresh access token: ' . $e->getMessage());
+            throw new \Exception('Failed to refresh access token');
+        }
+    }
+
+public function getAccessToken()
+{
+    // Lấy access_token từ cache
+    $accessToken = Cache::get('access_token');
+
+    // Nếu không có access_token trong cache, làm mới nó
+    if (!$accessToken) {
+        $refreshToken = '7ZAyBpMDW0WIDB8dDOo621imiYSobF4LUcUoIoZSzGDz8OH93TYiObWOu1vmnOfCNGh52mVLytDf6Beu9-lwKtqMYI09yVvROXQlTmJAqmet4ETCM-od1Xy9zt9erCjOCG--ArdeqW4C6eH6KDFURXm6YJjWsi9SB0UH5KZRqNvkExK60iF2BdeZZmKod_mlGtF9L3E3Y1HZVBnFAS3i7WuWZ7OXa-uOMNAzCN6Jq4z2MuCWFUBJVKyjbGuxvDbpG2-tFHhGoazB7va9CVJp8aSSndK9_POVLJYcGI7KopnwF8LrBz2rA78EzMW5peGa8ttiL576c7yuUyKJHPIBMGHJmXbgjlT74MkK86xOv6eyFuCNLeteUmfnbGTuhDfS0adkT7xtXXipEi537ee57pIMYmC';
+        $secretKey = 'ZFIg89WL81V2R2Sj3vMd';
+        $appId = '2355989370921006107';
+        $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);
+    }
+    Log::info($accessToken);
+    return $accessToken;
+}
+ném đoạn này vào functuion mua hàng
+// Lấy access_token từ cache hoặc làm mới nếu hết hạn
+            $accessToken = $this->getAccessToken();
+            // Gửi yêu cầu đến API của Zalo ZNS
+            try {
+                $client = new Client();
+                $response = $client->post('https://business.openapi.zalo.me/message/template',[
+                    'headers' => [
+                        'access_token' => $accessToken, // Thay YOUR_ACCESS_TOKEN bằng access token của bạn
+                        'Content-Type' => 'application/json'
+                    ],
+                    'json' => [
+                        'phone' => '84382252561', // Số điện thoại của người nhận
+                        'template_id' => '354647', // ID template của ZNS
+                        'template_data' => [
+                            'order_code' => $order->zip_code ?? "",
+                            'date' => "01/08/2020" ?? "",
+                            'price' => $order->total_money ?? "",
+                            'name' => $order->user_id[0]['name'] ?? "Full Name",
+                            'payment' => $order->payment_method === 1 ? " chuyển khoản" : " nhận hàng"
+                        ]
+                    ]
+                ]);
+                $responseBody = $response->getBody()->getContents();
+                Log::info('Phản hồi API: ' . $responseBody);
+                // Kiểm tra phản hồi từ API
+                if ($response->getStatusCode() == 200) {
+                    Log::info('Gửi ZNS thành công.');
+                } else {
+                    Log::error('Gửi ZNS thất bại: ' . $response->getBody());
+                }
+            } catch (\Exception $e) {
+                Log::error('Lỗi khi gửi ZNS: ' . $e->getMessage());
+            }
