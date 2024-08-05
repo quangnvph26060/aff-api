@@ -66,7 +66,13 @@
                                             <td>{{{number_format($item->amount) }}}</td>
                                             <td>{{number_format($item->amount * 0.1)}}</td>
                                             <td>{{number_format(($item->amount - ($item->amount * 0.1)))}}</td>
-                                            <td>{{$item->status == 'pending' ? 'Chưa được xử lý' : 'Đã hoàn thành'}}
+                                            <td>
+                                                @if($item->status == 'pending')
+                                                    <div style="color: red;">Chưa được xử lý</div>
+                                                @else
+                                                    <div style="color: green;">Đã hoàn thành</div>
+                                                @endif
+                                            </td>
                                             </td>
                                             <td align="center">
                                                 <p class="btn btn-primary openModalBtn" data-id='{{ $item->id }}'

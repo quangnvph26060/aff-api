@@ -11,6 +11,8 @@ use App\Http\Responses\ApiResponse;
 use App\Jobs\SendEmailJob;
 use Faker\Generator as Faker;
 use App\Jobs\SendMail;
+use App\Models\AffSetting;
+use App\Models\Commission;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -51,7 +53,7 @@ class OrderService
         DB::beginTransaction();
         try {
             $user = Auth::user();
-
+            $affSetting  = AffSetting::first();
             $user_id = $user->id;
             // Kiểm tra nếu user đã có referral_code rồi thì không cập nhật nữa
             if (!$user->referral_code) {
@@ -75,7 +77,9 @@ class OrderService
 
             $receive_address = $data['receive_address'];
             $total_money = $data['total_money'];
-            $this->getUserTeam($total_money);
+            if( $affSetting->status === "enabled" ){
+                $this->getUserTeam($total_money); // phần trăm hoa hồng cho từng tầng
+            }
             $order = $this->order->create([
                 'user_id' => $user_id,
                 'receive_address' => $receive_address,
@@ -136,7 +140,7 @@ class OrderService
                         'Content-Type' => 'application/json'
                     ],
                     'json' => [
-                        'phone' => '84382252561', // Số điện thoại của người nhận
+                        'phone' => preg_replace('/^0/', '84',$order->user_id[0]['phone']), // Số điện thoại của người nhận
                         'template_id' => '354647', // ID template của ZNS
                         'template_data' => [
                             'order_code' => $order->zip_code ?? "",
@@ -186,6 +190,10 @@ class OrderService
             if (isset($body['access_token'])) {
                 // Lưu access_token mới vào cache
                 Cache::put('access_token', $body['access_token'], 86400); // 86400 = 24h
+                if (isset($body['refresh_token'])) {
+                    // Lưu refresh_token mới vào cache nếu có
+                    Cache::put('refresh_token', $body['refresh_token'],7776000); // 7776000 = 3 month
+                }
                 return $body['access_token'];
             } else {
                 throw new \Exception('Failed to refresh access token');
@@ -197,20 +205,21 @@ class OrderService
         }
     }
     public function getAccessToken()
-{
-    // Lấy access_token từ cache
-    $accessToken = Cache::get('access_token');
-
-    // Nếu không có access_token trong cache, làm mới nó
-    if (!$accessToken) {
-        $refreshToken = 'I_VRB3zP_c97yTKaFrZuOaxrrIGuGBzdE8BoHYXrkGSDjlGpT7gbCbwR_InwJ8CgQxtw7bj_b21veRWYTNF70ncma08nGTWIEOkDC0vvyoSwrfefAtlqQY-pesy2PCnz5QY0NHmUs6e7jefP2dhiQ0UgWMS1HiTpTxUVIMbEysP-jxqzQ6QG7bcFkojnPVW5TBUI5bHbvoucfgut06JhS2wbi6vR39f7TQMmHb9xom4gWRKp3NVSAms1an1XKU4kUhkn84fMc0DDdz8XRbEv6d-kr2y7Lw4tAlZn31WBjpGpokOt1Zt3D23Kh14o2eDH5DNhS3Dzn4eJafbj3NgmVoA7u3fIAf0JPlQrAqfTaMXAjFyeRbooQKAXwsThRxXTNAITJdjfs7LCfRTHTaX1cnnsFaBrQG';
-        $secretKey = 'ZFIg89WL81V2R2Sj3vMd';
-        $appId = '2355989370921006107';
-        $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);
+    {
+        // Lấy access_token và refresh_token từ cache
+        $accessToken = Cache::get('access_token');
+        $is_refreshToken = Cache::get('refresh_token');
+        Log::info($is_refreshToken);
+        // Nếu không có access_token trong cache, làm mới nó
+        if (!$accessToken) {
+            $refreshToken = $is_refreshToken;
+            $secretKey = 'ZFIg89WL81V2R2Sj3vMd';
+            $appId = '2355989370921006107';
+            $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);
+        }
+        Log::info('accessToken: '.$accessToken);
+        return $accessToken;
     }
-    Log::info($accessToken);
-    return $accessToken;
-}
     /**
      * hàm lấy ra user trong team
      */
@@ -274,15 +283,21 @@ class OrderService
         $user = Auth::user();
         $currentReferrerId = $user->referrer_id;
 
-        $percentages = [0.25, 0.10, 0.07, 0.05, 0.03]; // Các phần trăm tương ứng cho F1 đến F5
+        $rates = Commission::orderBy('rate', 'desc')
+        ->pluck('rate')
+        ->map(fn($rate) => $rate / 100)
+        ->toArray();
+        Log::info('$rates'.gettype($rates));
 
+       // Các phần trăm tương ứng cho F0 đến F5
         for ($i = 0; $i < 5 && $currentReferrerId; $i++) {
             $referrer = User::where('referral_code', $currentReferrerId)->first();
             if ($referrer) {
+                
                 $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 2)->first();
                 if ($result) {
                     $result->update([
-                        'total_revenue' => $result->total_revenue + ($total_money * $percentages[$i])
+                        'total_revenue' => $result->total_revenue + ($total_money * $rates[$i])
                     ]);
                 } else {
                     // Dừng vòng lặp nếu không tìm thấy UserWallet

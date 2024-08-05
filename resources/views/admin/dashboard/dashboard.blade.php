@@ -1944,7 +1944,7 @@
     </script>
     <style scoped>
         .revenueChart{
-            width: 700px !important;
+            width: 100% !important;
             height: 350px !important;
         }
         .ml-dasboard{

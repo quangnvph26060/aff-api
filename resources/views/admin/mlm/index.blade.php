@@ -7,22 +7,23 @@
                     <p class="fs-24">Cài đặt tiếp thị</p>
                 </div>
 
-                <p>Trạng thái</p>
+                <h4>Trạng thái</h4>
+                
                 <!-- Radio buttons -->
                 <div class="mb-3 d-flex justify-content-start">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                            value="option1" onclick="handleRadioClick(this.value)">
+                            value="enabled" onclick="handleRadioClick(this.value)" {{$affSetting->status === "enabled" ? "checked":"" }}>
                         <label class="form-check-label" for="inlineRadio1">Cho phép</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                            value="option2" onclick="handleRadioClick(this.value)">
+                            value="disabled" onclick="handleRadioClick(this.value)" {{$affSetting->status === "disabled" ? "checked":"" }}>
                         <label class="form-check-label" for="inlineRadio2">Vô hiệu hóa</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                            value="option3" onclick="handleRadioClick(this.value)">
+                            value="custom" onclick="handleRadioClick(this.value)" {{$affSetting->status === "custom" ? "checked":"" }}>
                         <label class="form-check-label" for="inlineRadio3">Chỉ tắt cho những người được chọn</label>
                     </div>
                 </div>
@@ -30,57 +31,53 @@
                 <!-- Paragraph displayed based on selected option -->
                 <p id="message1" class="hidden mt-3">Bạn đã chọn tùy chọn Cho phép.</p>
                 <p id="message2" class="hidden mt-3">Bạn đã chọn tùy chọn Vô hiệu hóa.</p>
-                <p id="message3" class="hidden mt-3">Bạn đã chọn tùy chọn Chỉ tắt cho những người được chọn.</p>
+                <p id="message3" class="hidden mt-3">
+                    Bạn đã chọn tùy chọn Chỉ tắt cho những người được chọn. 
+                    <div id="message3-select" class="custom-select-container hidden" style="overflow-y: auto;">
+                        @foreach($userAffilate as $item )
+                            <div class="custom-select">
+                                <input type="checkbox" id="option1" name="{{$item->idsou}}" value="1" {{$item->is_commission_disabled === 1 ? "checked" : ""}}>
+                                <label for="option1">{{$item->email}}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </p>
 
                 <!-- Select inputs -->
+                <h4>Set hoa hồng cho từng tầng</h4>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="mb-3">
-                    <label for="select1" class="form-label">Select 1</label>
-                    <select class="form-select" id="select1">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <form action="{{ route('admin.commissions.update') }}" method="POST">
+                        @csrf
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Level</th>
+                                        <th>Tỷ lệ phần trăm (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($commissionRates as $rate)
+                                        <tr>
+                                            <td>{{ $rate->level }}</td>
+                                            <td>
+                                                <input type="number" name="commissions[{{ $rate->level }}]" value="{{ $rate->rate }}" class="form-control" step="0.01" required>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="select2" class="form-label">Select 2</label>
-                    <select class="form-select" id="select2">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="select3" class="form-label">Select 3</label>
-                    <select class="form-select" id="select3">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary ">Lưu</button>
+                {{-- <button class="btn btn-primary ">Lưu</button> --}}
             </div>
-
-            <script>
-                function handleRadioClick(value) {
-                    var messages = {
-                        'option1': 'message1',
-                        'option2': 'message2',
-                        'option3': 'message3'
-                    };
-
-                    for (var key in messages) {
-                        var message = document.getElementById(messages[key]);
-                        if (value === key) {
-                            message.classList.remove('hidden');
-                        } else {
-                            message.classList.add('hidden');
-                        }
-                    }
-                }
-            </script>
         </div>
     </div>
     <script>
@@ -103,8 +100,73 @@
                 document.getElementById('categorySearchForm').submit();
             }
         }
+        function handleRadioClick(value) {
+            var messages = {
+                'enabled': 'message1',
+                'disabled': 'message2',
+                'custom': 'message3'
+            };
+            for (var key in messages) {
+                var message = document.getElementById(messages[key]);
+                if (value === key) {
+                    message.classList.remove('hidden');
+                } else {
+                    message.classList.add('hidden');
+                }
+            }
+              // Hiển thị hoặc ẩn div chứa các checkbox dựa trên tùy chọn
+            var checkboxContainer = document.getElementById('message3-select');
+            if (value === 'custom') {
+                checkboxContainer.classList.remove('hidden');
+            } else {
+                checkboxContainer.classList.add('hidden');
+            }
+             // Gửi yêu cầu cập nhật cài đặt qua API
+            $.ajax({
+            url: '/admin/aff-settings/update-status',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: JSON.stringify({ status: value }),
+            contentType: 'application/json',
+            success: function(data) {
+                console.log(data.message);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+            
+        }
     </script>
     <style>
+         .custom-select-container {
+          width: 300px; /* Adjust width as needed */
+          max-height: 100px; /* Adjust height as needed */
+          overflow-y: 30px; /* Add vertical scrollbar */
+          border: 1px solid #ccc; /* Border around the container */
+          border-radius: 4px; /* Rounded corners */
+          padding: 10px; /* Add padding inside the container */
+          background-color: #fff; /* Background color */
+      }
+
+      /* Style for each checkbox item */
+      .custom-select {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px; /* Space between items */
+      }
+
+      /* Style for labels */
+      .custom-select label {
+          margin-left: 8px; /* Space between checkbox and label */
+      }
+
+      /* Optional: Style for checked checkboxes */
+      .custom-select input[type="checkbox"]:checked + label {
+          font-weight: bold; /* Change label text style when checked */
+      }
         .form-container {
             margin-left: 10px;
         }

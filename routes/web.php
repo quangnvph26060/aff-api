@@ -163,6 +163,8 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/updateconfig', [ConfigController::class, 'updateConfig'])->name('updateconfig');
     // MLM
     Route::get('/mlm', [MlmController::class, 'index'])->name('mlm');
+    Route::post('/commissions', [MlmController::class, 'update'])->name('commissions.update');
+    Route::post('/aff-settings/update-status', [MlmController::class, 'updateStatus'])->name('commissions.aff-settings');
     // pakage
     Route::get('/package', [PackageController::class, 'index'])->name('package');
     Route::get('/package-add', [PackageController::class, 'viewAdd'])->name('package.view');

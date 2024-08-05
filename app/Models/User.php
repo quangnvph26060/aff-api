@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'city_id',
         'district_id',
         'wards_id',
+        'is_commission_disabled',
     ];
     protected $hidden = [
         'password',

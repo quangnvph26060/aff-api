@@ -148,3 +148,7 @@ ném đoạn này vào functuion mua hàng
             } catch (\Exception $e) {
                 Log::error('Lỗi khi gửi ZNS: ' . $e->getMessage());
             }
+
+-- 8/5/2024
+php artisan migrate --path=/database/migrations/2024_08_05_101842_create_aff_settings_table.php
+php artisan migrate --path=/database/migrations/2024_08_05_114122_add_is_commission_disabled_to_users_table.php
