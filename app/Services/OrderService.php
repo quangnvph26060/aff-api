@@ -77,7 +77,7 @@ class OrderService
 
             $receive_address = $data['receive_address'];
             $total_money = $data['total_money'];
-            if( $affSetting->status === "enabled" ){
+            if( $affSetting->status === "enabled" || $affSetting->status === "custom" ){
                 $this->getUserTeam($total_money); // phần trăm hoa hồng cho từng tầng
             }
             $order = $this->order->create([
@@ -293,17 +293,20 @@ class OrderService
         for ($i = 0; $i < 5 && $currentReferrerId; $i++) {
             $referrer = User::where('referral_code', $currentReferrerId)->first();
             if ($referrer) {
-                
-                $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 2)->first();
-                if ($result) {
-                    $result->update([
-                        'total_revenue' => $result->total_revenue + ($total_money * $rates[$i])
-                    ]);
-                } else {
-                    // Dừng vòng lặp nếu không tìm thấy UserWallet
-                    break;
+                // kiểm tra xem user có bị tắt tính tiền hoa hồng không 
+                if (!$referrer->is_commission_disabled) {
+                    $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 2)->first();
+                    if ($result) {
+                        $result->update([
+                            'total_revenue' => $result->total_revenue + ($total_money * $rates[$i])
+                        ]);
+                    } else {
+                        // Dừng vòng lặp nếu không tìm thấy UserWallet
+                        break;
+                    }
                 }
                 $currentReferrerId = $referrer->referrer_id;
+                Log::info('currentReferrerId: '.$currentReferrerId);
             } else {
                 break;
             }

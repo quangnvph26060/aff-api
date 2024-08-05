@@ -36,7 +36,7 @@
                     <div id="message3-select" class="custom-select-container hidden" style="overflow-y: auto;">
                         @foreach($userAffilate as $item )
                             <div class="custom-select">
-                                <input type="checkbox" id="option1" name="{{$item->idsou}}" value="1" {{$item->is_commission_disabled === 1 ? "checked" : ""}}>
+                                <input type="checkbox" id="option1" name="{{$item->id}}" value="{{$item->id}}" {{$item->is_commission_disabled === 1 ? "checked" : ""}}>
                                 <label for="option1">{{$item->email}}</label>
                             </div>
                         @endforeach
@@ -123,22 +123,45 @@
             }
              // Gửi yêu cầu cập nhật cài đặt qua API
             $.ajax({
-            url: '/admin/aff-settings/update-status',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: JSON.stringify({ status: value }),
-            contentType: 'application/json',
-            success: function(data) {
-                console.log(data.message);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
+                url: '/admin/aff-settings/update-status',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify({ status: value }),
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data.message);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
             
         }
+        document.querySelectorAll('#message3-select input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            $.ajax({
+                url: '/admin/update-commission-status',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify({
+                    id: this.value,
+                    is_commission_disabled: this.checked ? 1 : 0
+                }),
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data.message);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+
     </script>
     <style>
          .custom-select-container {

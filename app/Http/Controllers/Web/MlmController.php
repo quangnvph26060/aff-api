@@ -36,21 +36,36 @@ class MlmController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateStatus(Request $request)
+   public function updateStatus(Request $request)
+   {
+   $validatedData = $request->validate([
+      'status' => 'required|in:enabled,disabled,custom',
+   ]);
+
+   // Giả sử chỉ có một bản ghi trong bảng aff_settings
+   $setting = AffSetting::first();
+
+   if ($setting) {
+      $setting->status = $validatedData['status'];
+      $setting->save();
+      return response()->json(['message' => 'Cài đặt đã được cập nhật thành công.'], 200);
+   }
+
+   return response()->json(['message' => 'Cài đặt không tồn tại.'], 404);
+   }
+   public function updateCommissionStatus(Request $request)
     {
-        $validatedData = $request->validate([
-            'status' => 'required|in:enabled,disabled,custom',
-        ]);
+        $userId = $request->input('id');
+        $isCommissionDisabled = $request->input('is_commission_disabled');
 
-        // Giả sử chỉ có một bản ghi trong bảng aff_settings
-        $setting = AffSetting::first();
+        $user = User::find($userId);
+        if ($user) {
+            $user->is_commission_disabled = $isCommissionDisabled;
+            $user->save();
 
-        if ($setting) {
-            $setting->status = $validatedData['status'];
-            $setting->save();
-            return response()->json(['message' => 'Cài đặt đã được cập nhật thành công.'], 200);
+            return response()->json(['message' => 'Commission status updated successfully.']);
         }
 
-        return response()->json(['message' => 'Cài đặt không tồn tại.'], 404);
+        return response()->json(['message' => 'User not found.'], 404);
     }
 }
