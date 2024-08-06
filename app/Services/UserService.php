@@ -165,7 +165,7 @@ class UserService
     //         return $result;
     //     }
     // }
-    public function getTeamMember($id): \Illuminate\Database\Eloquent\Collection
+    public function getTeamMember($id, $filter = 'all'): \Illuminate\Database\Eloquent\Collection
     {
         try {
             Log::info("Getting team member of member: $id");
@@ -173,6 +173,17 @@ class UserService
             if ($currentMember) {
                 $currentUser = $currentMember;
                 $teamMember = User::where('referrer_id', $currentUser->referral_code)->get();
+                 // Áp dụng bộ lọc
+                 if ($filter != 'all') {
+                    $teamMember = $teamMember->filter(function ($member) use ($filter) {
+                        if ($filter == 'no-purchase') {
+                            return $member->orders->isEmpty();
+                        } elseif ($filter == 'has-purchase') {
+                            return !$member->orders->isEmpty();
+                        }
+                        return true; // No filter applied
+                    });
+                }
                 $result = new Collection;
                 foreach ($teamMember as $member) {
                     $personalRevenue = $member->userwallet->sum('total_revenue');
@@ -249,8 +260,21 @@ class UserService
                 }
             } else {
                 $currentUser = $request->session()->get('authUser');
+
+              
+
                 $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
                 $result = new \Illuminate\Database\Eloquent\Collection;
+                Log::info($teamMembersB);
+                $filter = $request->input('filter', 'all');
+                $teamMembersB = $teamMembersB->filter(function ($memberB) use ($filter) {
+                    if ($filter == 'no-purchase') {
+                        return $memberB->orders->isEmpty();
+                    } elseif ($filter == 'has-purchase') {
+                        return !$memberB->orders->isEmpty();
+                    }
+                    return true;
+                });
 
                 foreach ($teamMembersB as $memberB) {
                     $level = Commission::where('id', $memberB->commission_id)->value('level');
@@ -283,8 +307,6 @@ class UserService
                             ]);
                         }
                     }
-
-                       
                     
                     // Tạo đối tượng kết quả và thêm vào Collection
                     $result->push((object)[

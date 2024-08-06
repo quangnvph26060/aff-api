@@ -35,18 +35,15 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
     protected $appends = ['role','wallet','user_info'];
+
     public function getUserInfoAttribute(){
         return UserInfo::where('user_id', $this->attributes['id'])->get();
     }
     public function getWalletAttribute(){
-       
-     return  UserWallet::where('user_id', $this->attributes['id'])->get();
-    
-      
-
+        return  UserWallet::where('user_id', $this->attributes['id'])->get();
     }
     public function getRoleAttribute(){
-      return  Role::where('id',$this->attributes['role_id'])->first();
+        return  Role::where('id',$this->attributes['role_id'])->first();
     }
 
     public function getJWTIdentifier()
@@ -110,5 +107,23 @@ class User extends Authenticatable implements JWTSubject
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referrer_id');
+    }
+    public function level($user)
+    {
+        // Xác định cấp độ của người dùng dựa trên referrer_id
+        $level = 1;
+        while ($user->referrer_id) {
+            $user = User::where('referral_code', $user->referrer_id)->first();
+            $level++;
+        }
+        return $level;
     }
 }

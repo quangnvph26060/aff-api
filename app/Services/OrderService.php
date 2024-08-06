@@ -131,7 +131,7 @@ class OrderService
             // Lấy access_token từ cache hoặc làm mới nếu hết hạn
             $accessToken = $this->getAccessToken();
             // Gửi yêu cầu đến API của Zalo ZNS
-            Log::info('order: ' . $order);
+            Log::info('accessToken new: ' . $accessToken);
             try {
                 $client = new Client();
                 $response = $client->post('https://business.openapi.zalo.me/message/template',[
@@ -217,7 +217,6 @@ class OrderService
             $appId = '2355989370921006107';
             $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);
         }
-        Log::info('accessToken: '.$accessToken);
         return $accessToken;
     }
     /**

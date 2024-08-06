@@ -1,5 +1,9 @@
 @extends('layouts.app')
 @section('content')
+@php
+    $currentRouteName = Route::currentRouteName(); // lấy ra route name
+    $id  = request()->route('id'); 
+@endphp
     <div class="main-content">
 
         <div class="page-content">
@@ -20,12 +24,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-lg-4">
-                                    <form action="" method="post">
-                                        <div class="form-group d-flex col-7">
-                                            <input type="text" class="form-control" name="search"
-                                                placeholder="Nhập tìm kiếm">
-                                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    <form method="GET" action="{{$currentRouteName === "admin.team" ? route('admin.team') : route('admin.member',['id'=>$id])}}" class="d-flex align-items-center">
+                                        <div class="form-group me-3">
+                                                <select name="filter" id="filter" class="form-select">
+                                                <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>Tất cả</option>
+                                                <option value="has-purchase" {{ request('filter') == 'has-purchase' ? 'selected' : '' }}>Đã mua hàng</option>
+                                                <option value="no-purchase" {{ request('filter') == 'no-purchase' ? 'selected' : '' }}>Chưa mua hàng</option>
+                                            </select>
                                         </div>
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                     </form>
 
                                 </div>
@@ -67,41 +74,7 @@
                                         </tbody>
                                     </table>
                                     <nav>
-                                        <!-- <ul class="pagination">
-
-                    <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
-            <span class="page-link" aria-hidden="true">&lsaquo;</span>
-        </li>
-
-
-
-
-
-                                                                                <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=2">2</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=3">3</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=4">4</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=5">5</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=6">6</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=7">7</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=8">8</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=9">9</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=10">10</a></li>
-
-                            <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
-
-
-
-
-
-                                                                                <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=119">119</a></li>
-                                                                                        <li class="page-item"><a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=120">120</a></li>
-
-
-                    <li class="page-item">
-            <a class="page-link" href="https://quanlycongviec.site/admin/mission/list?page=2" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
-        </li>
-    </ul> -->
+                                    {{-- phân trang  --}}
                                     </nav>
 
                                 </div>
