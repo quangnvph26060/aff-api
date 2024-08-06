@@ -8,8 +8,10 @@ use App\Http\Responses\ApiResponse;
 use App\Jobs\SendMail;
 use App\Models\Brand;
 use App\Models\Commission;
+use App\Models\PendingBonus;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Models\UserWallet;
 use App\Models\Wallet;
 use Illuminate\Http\File;
 use Baileyherbert\BankQr\BankQr;
@@ -247,9 +249,7 @@ class UserService
                 }
             } else {
                 $currentUser = $request->session()->get('authUser');
-                // dd($currentUser);
                 $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
-                // dd($teamMembersB);
                 $result = new \Illuminate\Database\Eloquent\Collection;
 
                 foreach ($teamMembersB as $memberB) {
@@ -257,14 +257,35 @@ class UserService
                     // Lấy tổng doanh số cá nhân của thành viên B
                     $personalRevenue = $memberB->userwallet->sum('total_revenue');
 
-                    // Tính tổng doanh thu của tất cả các thành viên C của thành viên B
+                    // Tính tổng doanh thu của tất cả các thành viên
                     $teamRevenue = User::whereIn('referrer_id', [$memberB->referral_code])
                         ->with('userwallet')
                         ->get()
                         ->sum(function ($user) {
                             return $user->userwallet->sum('total_revenue');
                         });
+                     // Kiểm tra nếu tổng doanh thu của team >= 30 triệu
+                    if ($teamRevenue >= 30000000) {
+                        $eligibleDate = Carbon::now()->startOfMonth()->addMonth();
 
+                        $existingBonus = PendingBonus::where('user_id', $memberB->id)
+                        ->whereMonth('eligible_date', $eligibleDate->month)
+                        ->whereYear('eligible_date', $eligibleDate->year)
+                        ->where('processed', false)
+                        ->first();
+                
+                        if (!$existingBonus) {
+                            PendingBonus::create([
+                                'user_id' => $memberB->id,
+                                'amount' => 2000000,
+                                'eligible_date' => $eligibleDate,
+                                'processed' => false,
+                            ]);
+                        }
+                    }
+
+                       
+                    
                     // Tạo đối tượng kết quả và thêm vào Collection
                     $result->push((object)[
                         'id' => $memberB->id,

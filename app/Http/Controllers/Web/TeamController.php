@@ -44,7 +44,7 @@ class TeamController extends Controller
     {
         try {
             $data = $this->userService->getAllTeamMember($request);
-            // dd($data);
+            Log::info($data);
             // Trích xuất thông tin cần thiết từ dữ liệu
             $teamMembers = $data->map(function ($member) {
                 return [
@@ -52,8 +52,8 @@ class TeamController extends Controller
                     'name' => $member->name,
                     'email' => $member->email,
                     'phone' => $member->phone,
-                    'personal_sale' => $member->personalRevenue,
-                    'team_sale' => $member->teamRevenue,
+                    'personal_sale' => $member->personalRevenue, // doanh số cá nhân (ví chính + ví thưởng)
+                    'team_sale' => $member->teamRevenue, // doanh số nhóm 
                     'level' => $member ->level
                 ];
             });

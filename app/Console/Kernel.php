@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+    //   $schedule->command('bonuses:distribute')->everyMinute(); // 1 phút chạy 1 lần 
+        $schedule->command('bonuses:distribute')->daily(); // Chạy lệnh mỗi ngày một lần vào lúc 00:00 (giữa đêm).
     }
 
     /**

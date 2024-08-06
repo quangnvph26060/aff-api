@@ -150,5 +150,10 @@ ném đoạn này vào functuion mua hàng
             }
 
 -- 8/5/2024
+
 php artisan migrate --path=/database/migrations/2024_08_05_101842_create_aff_settings_table.php
 php artisan migrate --path=/database/migrations/2024_08_05_114122_add_is_commission_disabled_to_users_table.php
+
+-- 8/6/2024
+
+php artisan migrate --path=/database/migrations/2024_08_06_111204_create_pending_bonuses_table.php

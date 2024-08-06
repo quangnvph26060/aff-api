@@ -165,15 +165,19 @@
     </script>
     <style>
          .custom-select-container {
-          width: 300px; /* Adjust width as needed */
-          max-height: 100px; /* Adjust height as needed */
-          overflow-y: 30px; /* Add vertical scrollbar */
-          border: 1px solid #ccc; /* Border around the container */
-          border-radius: 4px; /* Rounded corners */
-          padding: 10px; /* Add padding inside the container */
-          background-color: #fff; /* Background color */
-      }
-
+            width: 300px; /* Adjust width as needed */
+            max-height: 100px; /* Adjust height as needed */
+            overflow-y: 30px; /* Add vertical scrollbar */
+            border: 1px solid #ccc; /* Border around the container */
+            border-radius: 4px; /* Rounded corners */
+            padding: 10px; /* Add padding inside the container */
+            background-color: #fff; /* Background color */
+        }
+        @media(max-width:768px){
+            .custom-select-container{
+                width: 100%;
+            }
+        }
       /* Style for each checkbox item */
       .custom-select {
           display: flex;

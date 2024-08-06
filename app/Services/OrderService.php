@@ -295,7 +295,7 @@ class OrderService
             if ($referrer) {
                 // kiểm tra xem user có bị tắt tính tiền hoa hồng không 
                 if (!$referrer->is_commission_disabled) {
-                    $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 2)->first();
+                    $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 1)->first();
                     if ($result) {
                         $result->update([
                             'total_revenue' => $result->total_revenue + ($total_money * $rates[$i])
