@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
 class OrderService
@@ -453,17 +455,25 @@ class OrderService
                 $orderDetails = OrderDetail::select('order_details.*')
                     ->join('products', 'order_details.product_id', '=', 'products.id')
                     ->where('products.brands_id', $brandId)
-                    ->get();
-
+                    ->get(); 
                 $orders = [];
                 $addedOrderIds = [];
                 foreach ($orderDetails as $orderDetail) {
                     $order = $orderDetail->order;
                     if ($order && !in_array($order->id, $addedOrderIds)) {
-                        $orders[] = $order;
-                        $addedOrderIds[] = $order->id;
+                        // Kiểm tra điều kiện cho $status
+                        if(empty($status) || ($status && $order->status === (int)$status)){
+                            $orders[] = $order;
+                            // $addedOrderIds[] = $order->id; // Bạn có thể thêm vào mảng này ở sau nếu cần
+                        }
                     }
                 }
+                $page = request()->get('page', 1);
+                $perPage = 10; 
+                $total = count($orders);
+                $offset = ($page - 1) * $perPage;
+                $items = array_slice($orders, $offset, $perPage);
+                $orders =  new LengthAwarePaginator($items, $total, $perPage, $page);
             }
 
             return (object) $orders;

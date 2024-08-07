@@ -176,10 +176,13 @@ class UserService
                  // Áp dụng bộ lọc
                  if ($filter != 'all') {
                     $teamMember = $teamMember->filter(function ($member) use ($filter) {
+                        $orders = $member->orders;
+                        $startOfWeek = Carbon::now()->startOfWeek();
+                        $endOfWeek = Carbon::now()->endOfWeek();
                         if ($filter == 'no-purchase') {
-                            return $member->orders->isEmpty();
+                            return $orders->whereBetween('created_at', [$startOfWeek, $endOfWeek])->isEmpty();
                         } elseif ($filter == 'has-purchase') {
-                            return !$member->orders->isEmpty();
+                            return !$orders->whereBetween('created_at', [$startOfWeek, $endOfWeek])->isEmpty();
                         }
                         return true; // No filter applied
                     });
@@ -268,10 +271,13 @@ class UserService
                 Log::info($teamMembersB);
                 $filter = $request->input('filter', 'all');
                 $teamMembersB = $teamMembersB->filter(function ($memberB) use ($filter) {
+                    $orders = $memberB->orders;
+                    $startOfWeek = Carbon::now()->startOfWeek();
+                    $endOfWeek = Carbon::now()->endOfWeek();
                     if ($filter == 'no-purchase') {
-                        return $memberB->orders->isEmpty();
+                        return $orders->whereBetween('created_at', [$startOfWeek, $endOfWeek])->isEmpty();
                     } elseif ($filter == 'has-purchase') {
-                        return !$memberB->orders->isEmpty();
+                        return !$orders->whereBetween('created_at', [$startOfWeek, $endOfWeek])->isEmpty();
                     }
                     return true;
                 });
