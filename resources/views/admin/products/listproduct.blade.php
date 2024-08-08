@@ -116,7 +116,7 @@
                                             @foreach($products as $key => $value)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $value->name }}</td>
+                                                <td class="text-product">{{ $value->name }}</td>
                                                 <td>{{ $value->brands->name ?? ""}}</td>
                                                 <td>
 
@@ -350,7 +350,16 @@
         position: relative;
         transition: background-color 0.3s ease;
     }
-
+.text-product{
+    width: 200px !important; /* Thiết lập chiều rộng */
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden; /* Ẩn phần văn bản vượt quá */
+  display: -webkit-box; /* Sử dụng box để giới hạn số dòng */
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical; /* Định hướng dọc cho box */
+  line-height: 1.2; /* Điều chỉnh chiều cao dòng nếu cần */
+}
     .toggle-knob {
         width: 26px;
         height: 26px;

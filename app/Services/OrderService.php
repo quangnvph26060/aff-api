@@ -138,7 +138,7 @@ class OrderService
                 $client = new Client();
                 $response = $client->post('https://business.openapi.zalo.me/message/template',[
                     'headers' => [
-                        'access_token' => $accessToken, // Thay YOUR_ACCESS_TOKEN bằng access token của bạn
+                        'access_token' => 'T9nu7kDXZN1ucdOMus2BS76UTXRaU8if384E1keDzWaFzcKrcG_D0bghK2QXKUP1Llnj9PPSumO7scOrxMMOAItTEHRfJQyaSxmsF-OTW0G5XteRtJldDmkS6INg4f57AeWdHErjWraspm1zy76x7mFqEm7oIgO6PyGW09Ljs3i7baqNnnBvT3At1cxI3ADMDgjUCim8qo9Sy5S1d7QeObFQ2NV9TQ1v7jKgNDihWsGhZXe1mWIQ0X2A5ot82EaP9Qz02y1AkH5QoIOzkag61dBxVcQS7kXnLOmTQOKDdNTobJDtW0cnLMsEIs29Ciz668apPTG9j5mph18pm0YP7pgl02MkCvCRMw871R86gGDAlpmPhIEX1KQ51Mh9Ulj5FEHrPFaTuruGv4LRwsBALmJ8G4XjGwB8p5RYUePxs', // Thay YOUR_ACCESS_TOKEN bằng access token của bạn
                         'Content-Type' => 'application/json'
                     ],
                     'json' => [
@@ -188,7 +188,7 @@ class OrderService
             ]);
     
             $body = json_decode($response->getBody(), true);
-            Log::info($body);
+          
             if (isset($body['access_token'])) {
                 // Lưu access_token mới vào cache
                 Cache::put('access_token', $body['access_token'], 86400); // 86400 = 24h
@@ -211,10 +211,10 @@ class OrderService
         // Lấy access_token và refresh_token từ cache
         $accessToken = Cache::get('access_token');
         $is_refreshToken = Cache::get('refresh_token');
-        Log::info($is_refreshToken);
+        Log::info('is_refreshToken: '.$is_refreshToken);
         // Nếu không có access_token trong cache, làm mới nó
         if (!$accessToken) {
-            $refreshToken = $is_refreshToken;
+            $refreshToken = '1eqITcWAwbKAYnn-Q0liLGEF77vl4-mmMk9WHKq2-p0kW4X967h0PswdJp1UVTjiKU9MDJDfqsyyZ54NDrtpRoJUH1KIFCfj1DzPFXacq1O5-YP2F1BICYEDLMSP3Vut4SfWM2CobtHLw0GbPYxtSrEbO3nXUV5r3e9X7s1srqvmfMu2JI3WGINSOoaAFfTgPSLaI0iruIeJpMnL337t5WVHKNnf9AGhNTfJGbCIsmvjqaj_JmR33boCK7P-QE8U7B1qP2un_p42jGuV5sYUJn-MRIC3QEe00AfcTZLsrYSRjtrC3b7x4JQ4NdW0GjGW0ebuQdH3oIP1k2L8HIUIDLp471jMHQSuMv89SMPdXL9xiIuMOMgROWwhEHmsD81W5zCCCXmK-6GGrseGE0lkN5komHjf4U5U';
             $secretKey = 'ZFIg89WL81V2R2Sj3vMd';
             $appId = '2355989370921006107';
             $accessToken = $this->refreshAccessToken($refreshToken, $secretKey, $appId);

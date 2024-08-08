@@ -86,7 +86,7 @@
                     <!-- end auth full page content -->
                 </div>
                 <!-- end col -->
-                <div class="col-xxl-9 col-lg-8 col-md-5">
+                <div class="col-xxl-9 col-lg-8 col-md-5 main-banner-mobi">
                     <div class="auth-bg pt-md-5 p-4 d-flex">
                         <div class="bg-overlay bg-primary" ></div>
                         <ul class="bg-bubbles">
@@ -270,6 +270,11 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+    }
+    @media(max-width:768px){
+        .main-banner-mobi{
+            display: none;
+        }
     }
 </style>
 </html>

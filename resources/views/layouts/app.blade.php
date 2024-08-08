@@ -51,6 +51,9 @@
         .cke_notifications_area{
             display: none !important;
         }
+        body{
+            font-family: 'Roboto', system-ui !important; 
+        }
     </style>
 </head>
 
@@ -297,7 +300,7 @@
         });
     </script> --}}
     <script>
-        Pusher.logToConsole = true;
+        Pusher.logToConsole = false; // sẽ thấy được các logs
        var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
            cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
            encrypted: true

@@ -566,12 +566,13 @@ class UserService
             throw new Exception('Unauthorized');
         }
         $userRoleId = $user->role_id;
+        Log::info('referral_code: '.$user->referral_code);
         if ($request->type === RequestApi::WEB) {
             if ($userRoleId != 1 && $userRoleId != 4) {
                 throw new Exception('Not an admin');
             }
         }elseif ($request->type === RequestApi::API) {
-            if ($userRoleId != 2) {
+            if ($userRoleId != 2 ) {
                 throw new Exception('Not a user');
             }
         }

@@ -6,7 +6,7 @@
                 <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
                     <span class="logo-lg">
                         <img src="{{ asset($config->logo ?? "") }}" alt="Logo" height="24" class="logo-img">
-                        <span class="logo-text">{{ $config->name ?? "" }}</span>
+                        {{-- <span class="logo-text">{{ $config->name ?? "" }}</span> --}}
                     </span>
                 </a>
             </div>
@@ -315,6 +315,7 @@
 }
 
 .logo-lg {
+    padding: 0px 60px;
     display: flex;
     align-items: center;
 }
