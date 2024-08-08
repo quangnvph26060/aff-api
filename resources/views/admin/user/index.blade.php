@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-4 main-avatar-mobi">
                 <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-body">
@@ -656,6 +656,11 @@ function validateInput(input) {
 
     .modal-content {
         width: 100%;
+    }
+    @media(max-width:768px){
+        .main-avatar-mobi{
+            display: none;
+        }
     }
 </style>
 @endsection

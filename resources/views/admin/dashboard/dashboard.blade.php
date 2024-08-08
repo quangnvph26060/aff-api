@@ -45,7 +45,7 @@
                 <!-- ============================================================== -->
                 <!-- Start right Content here -->
                 <!-- ============================================================== -->
-                <div class="main-content ml-dasboard" >
+                <div class="main-content ml-dasboard mt-50" >
 
                     <div class="page-content main-page-content">
                         <div class="container-fluid">
@@ -258,7 +258,7 @@
                                                                             data-target="{{$useramountAffliate}}">0</span>
                                                                     </h4>
                                                                     <a style="text-decoration: none !important"
-                                                                        class="text-decoration-underline">CÔNG TÁC VIÊN</a>
+                                                                        class="text-decoration-underline">Công tác viên</a>
                                                                 </div>
                                                                 <div class="avatar-sm flex-shrink-0">
                                                                     <span
@@ -375,9 +375,10 @@
                                                                                 <div>
                                                                                     <h5 class="fs-14 my-1 fw-medium">
                                                                                         <a href="#"
-                                                                                            class="text-reset">{{
-                                                                                            $product->product_name
-                                                                                            }}</a>
+                                                                                            class="text-reset main-text">
+                                                                                            {{ Illuminate\Support\Str::limit($product->product_name, 50) }}
+                                                                                            
+                                                                                            </a>
                                                                                     </h5>
                                                                                 </div>
                                                                             </div>
@@ -1950,13 +1951,23 @@
         .ml-dasboard{
             margin-left: 10px;
         }
+        .mt-50{
+            margin-top: -50px;
+        }
         @media (max-width:768px){
             .main-page-content{
                 padding: unset !important;
             }
-        .revenueChart {
-            width: 100% !important;
+            .revenueChart {
+                width: 100% !important;
+            }
+            .mt-50{
+            margin-top: 0px;
         }
         }
+        .main-text{
+            width: 30px;
+        }
+      
     </style>
 @endsection

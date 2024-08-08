@@ -18,7 +18,7 @@
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-title mt-2" data-key="t-components">Quản lý</li>
+                {{-- <li class="menu-title mt-2" data-key="t-components">Quản lý</li> --}}
                @if($loggedInUser['user']['role_id'] === 1)
                 <li>
                     <a href="{{route('admin.config')}}" class="has-arrow">
