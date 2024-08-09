@@ -24,7 +24,7 @@
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
-                <div class="col-xxl-3 col-lg-4 col-md-5">
+                <div class="col-xxl-6 col-lg-6 col-md-5">
                     <div class="auth-full-page-content d-flex p-sm-5 p-4">
                         <div class="w-100">
                             <div class="d-flex flex-column h-100">
@@ -86,7 +86,7 @@
                     <!-- end auth full page content -->
                 </div>
                 <!-- end col -->
-                <div class="col-xxl-9 col-lg-8 col-md-5 main-banner-mobi">
+                <div class="col-xxl-6 col-lg-6 col-md-5 main-banner-mobi">
                     <div class="auth-bg pt-md-5 p-4 d-flex">
                         <div class="bg-overlay bg-primary" ></div>
                         <ul class="bg-bubbles">

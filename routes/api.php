@@ -102,7 +102,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
     Route::get('/banner-brand',[BrandController::class,'imageBrand'])->name('banner.brand');
     Route::get('/get-bank',[BrandController::class,'getBank']);
-    Route::get('/get-config',[BrandController::class,'getConfig']);
     Route::group(['prefix' => 'comment'], function ($router) {
         Route::post('/', [CommentController::class, 'store']);
         Route::post('/get-comment', [CommentController::class, 'index']);
@@ -112,3 +111,4 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
 
 Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');
 Route::post('/update-status-notify',[OrderController::class,'updateNotify'])->name('status.notify');
+Route::get('/get-config',[BrandController::class,'getConfig']);
