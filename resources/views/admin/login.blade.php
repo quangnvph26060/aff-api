@@ -25,8 +25,8 @@
         <div class="container-fluid p-0">
             <div class="row g-0">
                 <div class="col-xxl-6 col-lg-6 col-md-5">
-                    <div class="auth-full-page-content d-flex p-sm-5 p-4">
-                        <div class="w-100">
+                    <div class="auth-full-page-content d-flex p-sm-5 p-4 justify-content-center" >
+                        <div class="main-layout-login">
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="#" class="d-block auth-logo">
@@ -271,9 +271,15 @@
         background-size: cover;
         background-position: center;
     }
+    .main-layout-login{
+            width: 50% ;
+    }
     @media(max-width:768px){
         .main-banner-mobi{
             display: none;
+        }
+        .main-layout-login{
+            width: 100% ;
         }
     }
 </style>

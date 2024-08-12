@@ -93,7 +93,7 @@
                                                     <td class="product-cell">
                                                         @foreach ($item->order_detail as $k)
                                                             <span
-                                                                class="product-name">{{ $k->product['name'] ?? '' }}</span>
+                                                                class="text-product">{{ $k->product['name'] ?? '' }}</span>
                                                         @endforeach
                                                     </td>
 
@@ -278,4 +278,14 @@ ul.pagination li span {
         border-bottom: 1px solid gray;
         line-height: 22px;
     }
+    .text-product{
+    width: 200px !important; /* Thiết lập chiều rộng */
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden; /* Ẩn phần văn bản vượt quá */
+  display: -webkit-box; /* Sử dụng box để giới hạn số dòng */
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical; /* Định hướng dọc cho box */
+  line-height: 1.2; /* Điều chỉnh chiều cao dòng nếu cần */
+}
 </style>

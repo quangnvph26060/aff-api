@@ -315,12 +315,13 @@
 }
 
 .logo-lg {
-    padding: 0px 60px;
+  
     display: flex;
     align-items: center;
 }
 
 .logo-img {
+    width: 158px;
     height: 24px;
     margin-right: 10px;
 }
