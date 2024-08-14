@@ -228,7 +228,7 @@
             const isChecked = this.checked ? 1 : 0;
               // Gọi API với fetch
               const formData = new FormData();
-                formData.append('id_commi', value);
+                formData.append('id_product', value);
                 formData.append('status', isChecked);
                 formData.append('_token', '{{ csrf_token() }}');
               $.ajax({
@@ -330,7 +330,7 @@
         .trang-thai{
             display: block !important;
         }
-    .toggle-container {
+        .toggle-container {
         display: flex;
         align-items: center;
     }
