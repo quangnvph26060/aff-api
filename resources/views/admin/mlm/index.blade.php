@@ -59,6 +59,7 @@
                                     <tr>
                                         <th>Level</th>
                                         <th>Tỷ lệ phần trăm (%)</th>
+                                        <th style="width: 10%" >Trạng thái </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,14 @@
                                             <td>{{ $rate->level }}</td>
                                             <td>
                                                 <input type="number" name="commissions[{{ $rate->level }}]" value="{{ $rate->rate }}" class="form-control" step="0.01" required>
+                                            </td>
+                                            <td>
+                                                <div class="toggle-container">
+                                                    <input data-id="{{$rate->id}}" type="checkbox" id="toggle{{$rate->id}}" {{$rate->status == 1  ? "checked" : ""}} value="{{$rate->status}}" class="toggle-checkbox">
+                                                    <label for="toggle{{$rate->id}}" class="toggle-label">
+                                                        <span class="toggle-knob"></span>
+                                                    </label>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -81,6 +90,32 @@
         </div>
     </div>
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.toggle-checkbox');
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', function(event) {
+                const idCommission = event.target.getAttribute('id').replace('toggle', '');
+                // Gọi API với fetch
+                const formData = new FormData();
+                    formData.append('id', idCommission);
+                    formData.append('_token', '{{ csrf_token() }}');
+                    $.ajax({
+                        url: '{{ route("admin.commissions.status") }}',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        
+                    }   
+                });
+
+            });
+        });
+    });
         var formEconomyEdit = {
             'category': {
                 'element': document.getElementById('category'),
@@ -218,5 +253,43 @@
         .fs-24{
             font-size: 24px;
         }
+        .toggle-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .toggle-checkbox {
+        display: none;
+    }
+
+    .toggle-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        width: 60px;
+        height: 30px;
+        background-color: #ccc;
+        border-radius: 30px;
+        position: relative;
+        transition: background-color 0.3s ease;
+    }
+    .toggle-knob {
+        width: 26px;
+        height: 26px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.3s ease;
+    }
+
+    .toggle-checkbox:checked + .toggle-label {
+        background-color: #4caf50;
+    }
+
+    .toggle-checkbox:checked + .toggle-label .toggle-knob {
+        transform: translateX(30px);
+    }
     </style>
 @endsection

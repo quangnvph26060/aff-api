@@ -130,9 +130,10 @@ class OrderService
             ];
             SendMail::dispatch($arrSendMail); // send email to  user order
             event(new NewOrderEvent()); // notify to admin
+
             // Lấy access_token từ cache hoặc làm mới nếu hết hạn
             $accessToken = $this->getAccessToken();
-            // Gửi yêu cầu đến API của Zalo ZNS
+           
             Log::info('accessToken new: ' . $accessToken);
             try {
                 $client = new Client();
@@ -284,30 +285,32 @@ class OrderService
         $user = Auth::user();
         $currentReferrerId = $user->referrer_id;
 
-        $rates = Commission::orderBy('rate', 'desc')
-        ->pluck('rate')
-        ->map(fn($rate) => $rate / 100)
+        $rates = Commission::orderBy('rate', 'asc')
+        ->get(['id', 'rate', 'status']) 
+        ->mapWithKeys(fn($item) => [$item->id => $item->status == 1 ? $item->rate / 100 : 0])
         ->toArray();
-        Log::info('$rates'.gettype($rates));
+        $reversedRates = array_reverse($rates);
+        Log::info('Processed rates with keys:', $rates);
 
-       // Các phần trăm tương ứng cho F0 đến F5
-        for ($i = 0; $i < 5 && $currentReferrerId; $i++) {
+       // Các phần trăm tương ứng cho F1 đến F5
+        for ($i = 1; $i <= 5 && $currentReferrerId; $i++) {
             $referrer = User::where('referral_code', $currentReferrerId)->first();
             if ($referrer) {
-                // kiểm tra xem user có bị tắt tính tiền hoa hồng không 
+                // kiểm tra xem user có bị tắt tính tiền hoa hồng không
                 if (!$referrer->is_commission_disabled) {
                     $result = UserWallet::where('user_id', $referrer->id)->where('wallet_id', 1)->first();
                     if ($result) {
                         $result->update([
-                            'total_revenue' => $result->total_revenue + ($total_money * $rates[$i])
+                            'total_revenue' => $result->total_revenue + ($total_money * $rates[6 - $i])
                         ]);
+                        Log::info($result);
                     } else {
                         // Dừng vòng lặp nếu không tìm thấy UserWallet
                         break;
                     }
                 }
                 $currentReferrerId = $referrer->referrer_id;
-                Log::info('currentReferrerId: '.$currentReferrerId);
+                // Log::info('currentReferrerId: '.$currentReferrerId);
             } else {
                 break;
             }

@@ -37,23 +37,23 @@ class MlmController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
    public function updateStatus(Request $request)
-   {
-   $validatedData = $request->validate([
-      'status' => 'required|in:enabled,disabled,custom',
-   ]);
+    {
+        $validatedData = $request->validate([
+            'status' => 'required|in:enabled,disabled,custom',
+        ]);
 
-   // Giả sử chỉ có một bản ghi trong bảng aff_settings
-   $setting = AffSetting::first();
+        // Giả sử chỉ có một bản ghi trong bảng aff_settings
+        $setting = AffSetting::first();
 
-   if ($setting) {
-      $setting->status = $validatedData['status'];
-      $setting->save();
-      return response()->json(['message' => 'Cài đặt đã được cập nhật thành công.'], 200);
-   }
+        if ($setting) {
+            $setting->status = $validatedData['status'];
+            $setting->save();
+            return response()->json(['message' => 'Cài đặt đã được cập nhật thành công.'], 200);
+        }
 
-   return response()->json(['message' => 'Cài đặt không tồn tại.'], 404);
-   }
-   public function updateCommissionStatus(Request $request)
+        return response()->json(['message' => 'Cài đặt không tồn tại.'], 404);
+    }
+    public function updateCommissionStatus(Request $request)
     {
         $userId = $request->input('id');
         $isCommissionDisabled = $request->input('is_commission_disabled');
@@ -68,4 +68,21 @@ class MlmController extends Controller
 
         return response()->json(['message' => 'User not found.'], 404);
     }
+    public function updateCommissionActive(Request $request)
+    {
+        $commission = Commission::find($request->id);
+        if ($commission) {
+            $commission->status = $commission->status === 1 ? 0 : 1;
+            $commission->save();
+            return response()->json([
+                'message' => 'MLM cập nhật trạng thái thành công',
+                'commission' => $commission,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Commission not found.',
+            ], 404);
+        }
+    }
+    
 }

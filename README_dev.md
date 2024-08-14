@@ -157,3 +157,8 @@ php artisan migrate --path=/database/migrations/2024_08_05_114122_add_is_commiss
 -- 8/6/2024
 
 php artisan migrate --path=/database/migrations/2024_08_06_111204_create_pending_bonuses_table.php
+
+
+-- 14/8/2024 
+ALTER TABLE commission
+ADD COLUMN status INT NOT NULL DEFAULT 1;
