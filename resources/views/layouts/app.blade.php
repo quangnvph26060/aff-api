@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <title>AFFILATE</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
@@ -53,6 +55,9 @@
         }
         body{
             font-family: 'Roboto', system-ui !important; 
+            overflow-x: hidden;
+overflow: auto;
+
         }
     </style>
 </head>
@@ -340,8 +345,26 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(response) {             
+                success: function(response) {
                     var orderCount = response.orderCount.original.orderCount;
+                    $('#order-count-badge').text(orderCount);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching order details:', error);
+                }
+            });
+        }
+        function handleAll(){
+            const formData = new FormData();
+            formData.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: '{{ route("handle.status.notify") }}',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    var orderCount = 0;
                     $('#order-count-badge').text(orderCount);
                 },
                 error: function(xhr, status, error) {

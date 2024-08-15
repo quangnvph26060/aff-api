@@ -175,8 +175,11 @@
                     aria-labelledby="page-header-notifications-dropdown">
                     <div class="p-3">
                         <div class="row align-items-center">
-                            <div class="col">
+                            <div class="col d-flex  justify-content-between">
                                 <h6 class="m-0"> Thông báo </h6>
+                                <h6 class="m-0">
+                                    <p class="main-seen"  onclick="handleAll()">Đánh dấu đã đọc</p>
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -347,6 +350,10 @@
     .navbar-brand-box{
         display: none !important;
     }
+}
+.main-seen{
+    text-decoration: underline; /* Thêm gạch chân */
+    cursor: pointer;
 }
 
 </style>

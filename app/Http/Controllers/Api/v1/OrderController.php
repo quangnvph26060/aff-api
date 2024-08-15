@@ -162,4 +162,17 @@ class OrderController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    /**
+     * handle all status order
+     */
+    public function handleAllNotify(Request $request)  {
+        try {
+            $orders = Order::where('notify',0)->get();
+            foreach ($orders as $order) {
+                $order->update(['notify' => 1]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
 }

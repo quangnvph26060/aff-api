@@ -111,4 +111,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
 
 Route::post('/order-count',[OrderController::class,'orderCount'])->name('count.order');
 Route::post('/update-status-notify',[OrderController::class,'updateNotify'])->name('status.notify');
+Route::post('/handle-status-notify',[OrderController::class,'handleAllNotify'])->name('handle.status.notify');
 Route::get('/get-config',[BrandController::class,'getConfig']);
