@@ -32,7 +32,6 @@ class OrderController extends Controller
     {
         try {
             $orders = $this->orderService->getAllOrder($type = 'api',$request->input('search'),$request->input('status'));
-            Log::info($orders);
             return ApiResponse::success($orders, 'Get Orders successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to fetch orders: ' . $e->getMessage());

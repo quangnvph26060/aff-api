@@ -457,7 +457,11 @@ class OrderService
                 $brandId = $result['user']['id'];
                 $orderDetails = OrderDetail::select('order_details.*')
                     ->join('products', 'order_details.product_id', '=', 'products.id')
+                    ->join('orders', 'order_details.order_id', '=', 'orders.id')
                     ->where('products.brands_id', $brandId)
+                    ->when($search, function ($query, $search) {
+                        return $query->where('orders.zip_code', $search);
+                    })
                     ->get(); 
                 $orders = [];
                 $addedOrderIds = [];
