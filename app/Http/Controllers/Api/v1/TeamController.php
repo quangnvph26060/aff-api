@@ -45,7 +45,9 @@ class TeamController extends Controller
                     'phone' => $member->phone,
                     'personal_sale' => $member->personalRevenue,
                     'team_sale' => $member->teamRevenue,
-                    'level' => $member ->level
+                    'level' => $member ->level,
+                    'referral_code' => $member->referral_code,
+
                 ];
             });
             // dd($teamMembers);
@@ -126,5 +128,32 @@ class TeamController extends Controller
     public function destroy(User $cr)
     {
         //
+    }
+    public function changeGroup(Request $request){
+        try {
+            Log::info("change memberCode: ". $request->memberCode);
+            $memberCode = $request->memberCode;
+            $teamLeaderCode = $request->teamLeaderCode;
+
+            if (empty($memberCode) || empty($teamLeaderCode)) {
+                return ApiResponse::error('Member code and team leader code are required.', 400);
+            }
+          
+            $user = User::where('referral_code',$memberCode)->first();
+            if(!$user){
+                return ApiResponse::error('User with given member code not found',500);
+            }
+            $updateSuccess = $user->update(['referrer_id'=>$teamLeaderCode]);
+          
+            if ($updateSuccess) {
+                return ApiResponse::success('', 'Change group success!', 200);
+            } else {
+                return ApiResponse::error('Failed to update user information.', 500);
+            }
+          
+        } catch (\Throwable $e) {
+            Log::error('Failed to fetch users: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Failed to fetch users'], 500);
+        }
     }
 }

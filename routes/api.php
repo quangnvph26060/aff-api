@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\v1\TeamController;
 use App\Http\Controllers\Api\v1\TransactionController;
 use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PackageController;
+use App\Http\Controllers\Web\TeamController as WebTeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +86,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::get('/memberlist/{id}', [TeamController::class, 'getTeamMember']);
 
     Route::get('/teammember', [TeamController::class, 'index']);
-
+    Route::post('changegroup',[TeamController::class,'changeGroup']);
     Route::post('/responseWallet', [TransactionController::class, 'store']);
 
     Route::get('/transactionlist', [TransactionController::class, 'index']);
