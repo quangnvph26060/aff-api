@@ -28,16 +28,18 @@ use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Contracts\Mail\Mailer;
 class OrderService
 {
     protected $order, $orderDetail;
     protected $faker;
-    public function __construct(Order $order, OrderDetail $orderDetail, Faker $faker,)
+    protected $mailer;
+    public function __construct(Order $order, OrderDetail $orderDetail, Faker $faker,Mailer $mailer)
     {
         $this->order = $order;
         $this->orderDetail = $orderDetail;
         $this->faker = $faker;
+        $this->mailer = $mailer;
     }
     protected function randomReferalCode()
     {
@@ -132,39 +134,39 @@ class OrderService
             event(new NewOrderEvent()); // notify to admin
 
             // Lấy access_token từ cache hoặc làm mới nếu hết hạn
-            $accessToken = $this->getAccessToken();
+           // $accessToken = $this->getAccessToken();
            
-            Log::info('accessToken new: ' . $accessToken);
-            try {
-                $client = new Client();
-                $response = $client->post('https://business.openapi.zalo.me/message/template',[
-                    'headers' => [
-                        'access_token' => 'T9nu7kDXZN1ucdOMus2BS76UTXRaU8if384E1keDzWaFzcKrcG_D0bghK2QXKUP1Llnj9PPSumO7scOrxMMOAItTEHRfJQyaSxmsF-OTW0G5XteRtJldDmkS6INg4f57AeWdHErjWraspm1zy76x7mFqEm7oIgO6PyGW09Ljs3i7baqNnnBvT3At1cxI3ADMDgjUCim8qo9Sy5S1d7QeObFQ2NV9TQ1v7jKgNDihWsGhZXe1mWIQ0X2A5ot82EaP9Qz02y1AkH5QoIOzkag61dBxVcQS7kXnLOmTQOKDdNTobJDtW0cnLMsEIs29Ciz668apPTG9j5mph18pm0YP7pgl02MkCvCRMw871R86gGDAlpmPhIEX1KQ51Mh9Ulj5FEHrPFaTuruGv4LRwsBALmJ8G4XjGwB8p5RYUePxs', // Thay YOUR_ACCESS_TOKEN bằng access token của bạn
-                        'Content-Type' => 'application/json'
-                    ],
-                    'json' => [
-                        'phone' => preg_replace('/^0/', '84',$order->user_id[0]['phone']), // Số điện thoại của người nhận
-                        'template_id' => '354647', // ID template của ZNS
-                        'template_data' => [
-                            'order_code' => $order->zip_code ?? "",
-                            'date' => Carbon::now()->format('d/m/Y') ?? "",
-                            'price' => $order->total_money ?? "",
-                            'name' => $order->user_id[0]['name'] ?? "Full Name",
-                            'payment' => $order->payment_method === 1 ? " chuyển khoản" : " nhận hàng"
-                        ]
-                    ]
-                ]);
-                $responseBody = $response->getBody()->getContents();
-                Log::info('Phản hồi API: ' . $responseBody);
-                // Kiểm tra phản hồi từ API
-                if ($response->getStatusCode() == 200) {
-                    Log::info('Gửi ZNS thành công.');
-                } else {
-                    Log::error('Gửi ZNS thất bại: ' . $response->getBody());
-                }
-            } catch (\Exception $e) {
-                Log::error('Lỗi khi gửi ZNS: ' . $e->getMessage());
-            }
+            // Log::info('accessToken new: ' . $accessToken);
+            // try {
+            //     $client = new Client();
+            //     $response = $client->post('https://business.openapi.zalo.me/message/template',[
+            //         'headers' => [
+            //             'access_token' => 'T9nu7kDXZN1ucdOMus2BS76UTXRaU8if384E1keDzWaFzcKrcG_D0bghK2QXKUP1Llnj9PPSumO7scOrxMMOAItTEHRfJQyaSxmsF-OTW0G5XteRtJldDmkS6INg4f57AeWdHErjWraspm1zy76x7mFqEm7oIgO6PyGW09Ljs3i7baqNnnBvT3At1cxI3ADMDgjUCim8qo9Sy5S1d7QeObFQ2NV9TQ1v7jKgNDihWsGhZXe1mWIQ0X2A5ot82EaP9Qz02y1AkH5QoIOzkag61dBxVcQS7kXnLOmTQOKDdNTobJDtW0cnLMsEIs29Ciz668apPTG9j5mph18pm0YP7pgl02MkCvCRMw871R86gGDAlpmPhIEX1KQ51Mh9Ulj5FEHrPFaTuruGv4LRwsBALmJ8G4XjGwB8p5RYUePxs', // Thay YOUR_ACCESS_TOKEN bằng access token của bạn
+            //             'Content-Type' => 'application/json'
+            //         ],
+            //         'json' => [
+            //             'phone' => preg_replace('/^0/', '84',$order->user_id[0]['phone']), // Số điện thoại của người nhận
+            //             'template_id' => '354647', // ID template của ZNS
+            //             'template_data' => [
+            //                 'order_code' => $order->zip_code ?? "",
+            //                 'date' => Carbon::now()->format('d/m/Y') ?? "",
+            //                 'price' => $order->total_money ?? "",
+            //                 'name' => $order->user_id[0]['name'] ?? "Full Name",
+            //                 'payment' => $order->payment_method === 1 ? " chuyển khoản" : " nhận hàng"
+            //             ]
+            //         ]
+            //     ]);
+            //     $responseBody = $response->getBody()->getContents();
+            //     Log::info('Phản hồi API: ' . $responseBody);
+            //     // Kiểm tra phản hồi từ API
+            //     if ($response->getStatusCode() == 200) {
+            //         Log::info('Gửi ZNS thành công.');
+            //     } else {
+            //         Log::error('Gửi ZNS thất bại: ' . $response->getBody());
+            //     }
+            // } catch (\Exception $e) {
+            //     Log::error('Lỗi khi gửi ZNS: ' . $e->getMessage());
+            // }
             DB::commit();
             return $order;
         } catch (Exception $e) {

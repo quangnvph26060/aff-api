@@ -380,15 +380,15 @@ class UserService
 
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
+            Log::info('User data being created: '. $data['name']);
                 if($data['referral_code']){
                     $referral_code = $data['referral_code'];
                     $findUser = $this->user->where('referral_code', $referral_code)->first();
-                   Log::info($findUser);
                     $is_result = $findUser->toArray();
                 }
            
             $user = [
-                'name' => @$data['name'],
+                'name' => isset($data['name']) ? $data['name'] : null,
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],

@@ -510,7 +510,7 @@
 
                                                                         <td>
                                                                             <span
-                                                                                class="badge bg-success-subtle text-success">Paid</span>
+                                                                                class="badge bg-success-subtle text-success">Thành công</span>
                                                                         </td>
 
                                                                     </tr>

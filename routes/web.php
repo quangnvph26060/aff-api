@@ -182,7 +182,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/comment/{id}',[CommentController::class,'find'])->name('comment.find');
     Route::delete('/comments/{id}', [CommentController::class, 'delete'])->name('comments.delete');
 });
-
+Route::get('/get-logo-banner', [ConfigController::class, 'getLogoBanner']);
 
 // vue
 Route::view('/{any?}', 'app')->where('any', '.*');

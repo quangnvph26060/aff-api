@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use App\Services\ConfigService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 
 class ConfigController extends Controller
 {
@@ -36,5 +38,13 @@ class ConfigController extends Controller
             Log::error('Failed to update configuration: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to update configuration');
         }
+    }
+    public function getLogoBanner(){
+        $logoBanner = Config::first();
+        Log::info('logo: '. $logoBanner);
+        return response()->json([
+            'logo' => $logoBanner->logo,
+            'banner' => $logoBanner->login_banner,
+        ]);
     }
 }

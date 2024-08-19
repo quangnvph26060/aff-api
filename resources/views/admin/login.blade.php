@@ -32,8 +32,7 @@
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="#" class="d-block auth-logo">
-
-                                        <span class="logo-txt">Quản lý Affilate</span>
+                                        <div id="logo" alt="Logo"> </div>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
@@ -79,9 +78,9 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="mt-4 mt-md-5 text-center">
+                                {{-- <div class="mt-4 mt-md-5 text-center">
                                     <p class="mb-0">Affilate</p>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -254,6 +253,12 @@
                 document.getElementById('submitformlogin').submit();
             }
         }
+        fetch('/get-logo-banner')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('logo').innerHTML = `<img src="{{ config('app.url') }}/${data.logo}" alt="Logo" width="40%">`;
+                document.getElementById('banner').innerHTML = `<img src="${data.banner}" alt="Banner">`;
+            });
     </script>
     <!-- <script src="https://quanlycongviec.site/libs/assets/libs/jquery/jquery.min.js"></script>
     <script src="https://quanlycongviec.site/libs/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
