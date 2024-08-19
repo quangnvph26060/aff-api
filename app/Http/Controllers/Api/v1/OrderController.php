@@ -7,6 +7,7 @@ use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Services\OrderService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -85,6 +86,24 @@ class OrderController extends Controller
         }
 
     }
+    /**
+     *  user có thể xóa đơn hàng của user khi ở trạng thái chờ xử lý 
+     */
+    public function delOrderUser(Request  $request){
+        $id = $request->orderId;
+        if(!$id){
+            return response()->json(['errors'=>'delOrderUser error id','status'=>'errors']);
+        }
+        $order  = Order::find($id);
+        $orderDetail  = OrderDetail::where('order_id',$id);
+        if(!$order && !$orderDetail){
+            return response()->json(['errors'=> 'delOrderUser error find order','status'=>'errors']);
+        }
+        $orderDetail->delete();
+        $order->delete();
+        return response(['status'=>'success','Delete Order to user success']);
+    }
+
     // private function saveOrder($data)
     // {
     //     return $order;

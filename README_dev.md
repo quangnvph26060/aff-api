@@ -166,3 +166,8 @@ ADD COLUMN status INT NOT NULL DEFAULT 1;
 -- 19/8/2024
 ALTER TABLE products
 ADD COLUMN approve_product BOOLEAN DEFAULT FALSE;
+
+
+thay đổi policy sang text trong bảng config
+
+npm install date-fns

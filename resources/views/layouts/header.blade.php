@@ -318,14 +318,14 @@
 }
 
 .logo-lg {
-  
+    width: 175px;
     display: flex;
     align-items: center;
 }
 
 .logo-img {
-    width: 158px;
-    height: 24px;
+    width: 100%;
+    height: auto;
     margin-right: 10px;
 }
 
