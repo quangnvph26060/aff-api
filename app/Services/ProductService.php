@@ -33,7 +33,6 @@ class ProductService
     {
         try {
             $user = $this->userService->getUser(request());
-            Log::info('data user login: '. $user['user']);
             if($user['user']['role_id'] === 1 ){
                 return $this->product->orderBy('created_at', 'desc')->paginate(10);
             }
@@ -50,7 +49,7 @@ class ProductService
         try {
             Log::info('Fetching all products by published');
 
-            return $this->product->where('status', 'published')->where('quantity','>', 0)->get();
+            return $this->product->where('status', 'published')->where('quantity','>', 0)->where('approve_product', 1)->get();
         } catch (Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());
             throw new Exception('Failed to fetch products');
@@ -243,6 +242,19 @@ class ProductService
                 throw new ModelNotFoundException("Find Product to update featured");
             }
             $product->update(['is_featured' => $status]);
+        } catch (Exception $e) {
+            Log::error("Error updating Product Featured: {$e->getMessage()}");
+            throw new Exception('Failed to update Product Featured');
+        }
+    }
+    // duyệt sản phẩm
+    public function updateProductApprove($id_product, $status) {
+        try {
+            $product = $this->product->find($id_product);
+            if (!$product) {
+                throw new ModelNotFoundException("Find Product to update featured");
+            }
+            $product->update(['approve_product' => $status]);
         } catch (Exception $e) {
             Log::error("Error updating Product Featured: {$e->getMessage()}");
             throw new Exception('Failed to update Product Featured');

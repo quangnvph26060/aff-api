@@ -162,3 +162,7 @@ php artisan migrate --path=/database/migrations/2024_08_06_111204_create_pending
 -- 14/8/2024 
 ALTER TABLE commission
 ADD COLUMN status INT NOT NULL DEFAULT 1;
+
+-- 19/8/2024
+ALTER TABLE products
+ADD COLUMN approve_product BOOLEAN DEFAULT FALSE;

@@ -117,6 +117,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('product-status', [ProductController::class, 'Changestatus'])->name('changestatus');
      // update status featrud product
     Route::post('/update-featured-product',[ProductController::class,'updateProductFeatured'])->name('product.featured');
+    Route::post('/update-approve-product',[ProductController::class,'updateProductApprove'])->name('product.approve');
     // Route::get('product/list', function () {
     //     return view('admin.products.listproduct');
     // })->name('product.list');

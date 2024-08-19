@@ -170,4 +170,14 @@ class ProductController extends Controller
         $status     = $request->status;
         return  $this->productService->updateProductFeatured($id_product, $status);
     }
+    /**
+     * duyệt sản phẩm  
+     */
+    public function updateProductApprove(Request $request)  {
+        $id_product = $request->id_product;
+        $status     = $request->status;
+        return  $this->productService->updateProductApprove($id_product, $status);
+    }
+    
 }
+

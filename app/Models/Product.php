@@ -23,7 +23,8 @@ class Product extends Model
         "discount_id",
         "status",
         'brands_id',
-        'purchase_price'
+        'purchase_price',
+        'approve_product'
     ];
 
     protected $appends = ['category','images','brands'];
