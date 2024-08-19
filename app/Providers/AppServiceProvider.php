@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Blade::directive('truncate', function ($expression) {
+            return "<?php echo Str::limit($expression, 50); ?>";
+        });
         // View::composer('*', UserComposer::class);
         // View::composer('*', OrderComposer::class);
       
@@ -64,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
                 'admin.member'
             ];
             $path = Route::currentRouteName();
-           //   Log::info('demo path: ' . $path);
+            //  Log::info('demo path: ' . $path);
          
             if ( !request()->path() === 'api/v1/send-otp' ) {
                 View::composer('*', UserComposer::class);

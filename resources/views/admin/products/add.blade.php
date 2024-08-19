@@ -37,13 +37,19 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="example-text-input" class="form-label">Loại thương hiệu<span
+                                                    <label for="example-text-input" class="form-label">Nhà cung cấp<span
                                                             class="text text-danger">*</span></label>
                                                     <select class="form-control" name="brand_id" id="brand_id" required>
                                                         <option value="">Chọn danh mục</option>
-                                                        @foreach ($brand as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                        @endforeach
+                                                        @if($role['user']['role_id'] === 1 )
+                                                            @foreach ($brand as $item)
+                                                                <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($brand as $item)
+                                                                <option value="{{ $item->id }}" {{$item->id === $role['user']['role_id'] ? "selected" : ""}}>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        @endif
                                                     </select>
                                                     <div class="col-lg-9"><span class="invalid-feedback d-block"
                                                             style="font-weight: 500" id="brand_id_error"></span> </div>

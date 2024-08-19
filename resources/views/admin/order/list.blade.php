@@ -93,7 +93,7 @@
                                                     <td class="product-cell">
                                                         @foreach ($item->order_detail as $k)
                                                             <span
-                                                                class="text-product">{{ $k->product['name'] ?? '' }}</span>
+                                                                class="text-product"> @truncate($k->product['name'] ?? '') </span>
                                                         @endforeach
                                                     </td>
 
@@ -157,30 +157,7 @@
 
                                     </table>
                                     <nav class="pt-4 pb-4">
-                                        @if ($role === 1)
-                                            {{ $orders->links() }}
-                                        @elseif($role === 4)
-                                            {{-- {{ $orders->setPath(route('admin.order.list'))->links('pagination::bootstrap-4') }} --}}
-                                            @if ($orders->lastPage() > 1)
-                                            <ul class="pagination">
-                                                @if ($orders->currentPage() > 3)
-                                                    <li><a href="{{ route('admin.order.list', ['page' => 1]) }}">1</a></li>
-                                                    <li><span>...</span></li>
-                                                @endif
-                                        
-                                                @for ($i = max(1, $orders->currentPage() - 2); $i <= min($orders->currentPage() + 2, $orders->lastPage()); $i++)
-                                                    <li class="{{ $orders->currentPage() == $i ? 'active' : '' }}">
-                                                        <a href="{{ route('admin.order.list', ['page' => $i]) }}">{{ $i }}</a>
-                                                    </li>
-                                                @endfor
-                                        
-                                                @if ($orders->currentPage() < $orders->lastPage() - 2)
-                                                    <li><span>...</span></li>
-                                                    <li><a href="{{ route('admin.order.list', ['page' => $orders->lastPage()]) }}">{{ $orders->lastPage() }}</a></li>
-                                                @endif
-                                            </ul>
-                                        @endif
-                                        @endif
+                                      {{$orders->links('pagination::simple-pagination')}}
                                     </nav>
                                 </div>
                             </div>

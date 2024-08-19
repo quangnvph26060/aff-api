@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Services\BrandService;
 use App\Services\CategoryService;
+use App\Services\UserService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
@@ -25,10 +26,10 @@ class ProductController extends Controller
     protected $productService;
     protected $categoryService;
     protected $brandService;
-
-    public function __construct(ProductService $productService, CategoryService $categoryService, BrandService $brandService)
+    protected $userService;
+    public function __construct(ProductService $productService, CategoryService $categoryService, BrandService $brandService, UserService $userService)
     {
-
+        $this->userService = $userService;
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
@@ -41,7 +42,8 @@ class ProductController extends Controller
         try {
             $products = $this->productService->getAllProducts();
             $category = $this->categoryService->getAllCategories();
-            return view('admin.products.listproduct', compact('products', 'category'));
+            $role =  $this->userService->getUser(request());
+            return view('admin.products.listproduct', compact('products', 'category','role'));
         } catch (ModelNotFoundException $e) {
             $exception = new ProductNotFoundException();
             return $exception->render(request());
@@ -55,7 +57,8 @@ class ProductController extends Controller
         try {
             $category = $this->categoryService->getAllCategories();
             $brand = $this->brandService->getAllBrand();
-            return view('admin.products.add', compact('category','brand'));
+            $role =  $this->userService->getUser(request());
+            return view('admin.products.add', compact('category','brand','role'));
         } catch (\Exception $e) {
             Log::error('Failed to create category: ' . $e->getMessage());
             return ApiResponse::error('Failed to create category', 500);
@@ -110,8 +113,8 @@ class ProductController extends Controller
         try {
             $category = $this->categoryService->getAllCategories();
             $products = $this->productService->productByName($request->name);
-
-            return view('admin.products.listproduct', compact('products','category'));
+            $role =  $this->userService->getUser(request());
+            return view('admin.products.listproduct', compact('products','category','role'));
 
         } catch (\Exception $e) {
             Log::error('Failed to delete product: ' . $e->getMessage());
@@ -125,8 +128,8 @@ class ProductController extends Controller
             $category = $this->categoryService->getAllCategories();
             $products = $this->productService->productByCategory($id);
             $category_name = $this->categoryService->findOrFailCategory($id)->name;
-
-                return view('admin.products.listproduct', compact('products','category'));
+            $role =  $this->userService->getUser(request());
+                return view('admin.products.listproduct', compact('products','category','role'));
 
             // return ApiResponse::success($product, 'Product created successfully', 201);
         } catch (\Exception $e) {

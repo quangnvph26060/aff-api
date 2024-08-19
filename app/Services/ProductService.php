@@ -4,19 +4,22 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService
 {
     protected $product;
-
-    public function __construct(Product $product)
+    protected $userService;
+    public function __construct(Product $product, UserService $userService)
     {
         $this->product = $product;
+        $this->userService = $userService;
     }
 
     /**
@@ -26,12 +29,16 @@ class ProductService
      * @throws Exception
      * CreatedBy: youngbachhh (27/05/2024)
      */
-    public function getAllProducts(): \Illuminate\Database\Eloquent\Collection
+    public function getAllProducts()
     {
         try {
-            Log::info('Fetching all products');
+            $user = $this->userService->getUser(request());
+            Log::info('data user login: '. $user['user']);
+            if($user['user']['role_id'] === 1 ){
+                return $this->product->orderBy('created_at', 'desc')->paginate(10);
+            }
 
-            return $this->product->all();
+            return $this->product->where('brands_id',$user['user']['id'] )->orderBy('created_at', 'desc')->paginate(10);
         } catch (Exception $e) {
             Log::error('Failed to fetch products: ' . $e->getMessage());
             throw new Exception('Failed to fetch products');
@@ -74,18 +81,13 @@ class ProductService
 
     /**
      * Hàm tạo mới một sản phẩm
-     *
-     * @param array $data
-     * @return Product
-     * @throws Exception
-     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function createProduct(array $data): Product
     {
         DB::beginTransaction();
 
         try {
-            Log::info("Creating a new product with name: {$data['name']}");
+            // Log::info("Creating a new product with name: {$data['name']}");
 
             $product = $this->product->create([
                 'name' => $data['name'],
@@ -149,7 +151,8 @@ class ProductService
         DB::beginTransaction();
         try {
             $product = $this->getProductById($id);
-            Log::info("Updating product with ID: $id");
+            Log::info("Updating product with data: " . json_encode($data));
+
             $update = $product->update($data);
             if ($update) {
                 if (isset($data['images'])) {
@@ -200,10 +203,11 @@ class ProductService
         }
     }
 
-    public function productByCategory($id): \Illuminate\Database\Eloquent\Collection
+
+    public function productByCategory($id)
     {
         try {
-            $products = $this->product->where('category_id', $id)->get();
+            $products = $this->product->where('category_id', $id)->paginate(10);
             return $products;
         } catch (Exception $e) {
             Log::error("Failed to fetch products: {$e->getMessage()}");
@@ -211,10 +215,10 @@ class ProductService
         }
     }
 
-    public function productByName($name): \Illuminate\Database\Eloquent\Collection
+    public function productByName($name)
     {
         try {
-            $products = $this->product->where('name', 'LIKE', '%' . $name . '%')->get();
+            $products = $this->product->where('name', 'LIKE', '%' . $name . '%')->paginate(10);
             return $products;
         } catch (Exception $e) {
             Log::error("Failed to search products: {$e->getMessage()}");

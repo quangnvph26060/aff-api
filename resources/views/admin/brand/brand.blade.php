@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Danh sách thương hương hiệu </h4>
+                        <h4 class="mb-sm-0 font-size-18">Danh sách nhà cung cấp </h4>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
 
 
                             <div style="float: right">
-                                <a href="{{ route('admin.brand.add') }}" class="btn btn-primary">Thêm thương hiệu</a>
+                                <a href="{{ route('admin.brand.add') }}" class="btn btn-primary">Thêm nhà cung cấp</a>
                             </div>
                         </div>
                         @if (session('success'))
@@ -119,7 +119,7 @@
                                                     @endif
 
                                                 </td>
-                                                <td>{{ $value->name }}</td>
+                                                <td>@truncate($value->name)</td>
                                                 <td>{{ $value->email }}</td>
                                                 <td>{{ $value->phone }}</td>
                                                 <td>{{ $value->address }}</td>

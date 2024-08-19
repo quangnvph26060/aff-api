@@ -80,19 +80,19 @@
                             </div>
                         </div>
                         @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
                         @endif
                         @if (session('fail'))
-                        <div class="alert alert-success">
-                            {{ session('fail') }}
-                        </div>
+                            <div class="alert alert-success">
+                                {{ session('fail') }}
+                            </div>
                         @endif
 
                         <div class="card-body">
                             <div class="table-rep-plugin">
-                                <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                <div class="table-responsive mb-0 table-container" data-pattern="priority-columns">
                                     <table id="tech-companies-1" class="table table-striped">
                                         <thead>
                                             <tr>
@@ -106,108 +106,114 @@
                                                 <th>Hoa Hồng</th>
                                                 <th>Loại danh mục</th>
                                                 <th>Trạng thái</th>
-                                                <th>Đặc trưng</th>
+                                                @if(is_array($role))
+                                                    @if($role['user']['role_id'] === 1)
+                                                        <th>Đặc trưng</th>
+                                                    @endif
+                                                @endif
                                                 <th style="text-align: center">Hành động</th>
                                             </tr>
                                         </thead>
                                         @if ($products->count() > 0)
-                                        <tbody>
+                                            <tbody>
 
-                                            @foreach($products as $key => $value)
-                                            <tr>
-                                                <td>{{ $key+1 }}</td>
-                                                <td class="text-product">{{ $value->name }}</td>
-                                                <td>{{ $value->brands->name ?? ""}}</td>
-                                                <td>
+                                                @foreach($products as $key => $value)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>@truncate($value->name)</td>
+                                                    <td>{{ $value->brands->name ?? ""}}</td>
+                                                    <td>
 
-                                                    @if (isset($value->images[0]))
-                                                    <img style="width: 100px; height: 75px;"
-                                                        src="{{asset($value->images[0]->image_path )}}" alt="">
+                                                        @if (isset($value->images[0]))
+                                                        <img style="width: 100px; height: 75px;"
+                                                            src="{{asset($value->images[0]->image_path )}}" alt="">
+                                                        @endif
+
+                                                    </td>
+                                                    <td>{{ $value->quantity }}</td>
+                                                    <td>{{ number_format($value->purchase_price) }}đ</td>
+                                                    <td>{{ number_format($value->price) }}đ</td>
+                                                    <td>{{ $value->commission_rate }}%</td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="form-select category" name="category">
+                                                                @foreach ($category as $item)
+                                                                <option {{ $value->category_id == $item->id ? 'selected' :
+                                                                    ''}}
+                                                                    data-idProduct="{{ $value->id }}" value="{{ $item->id
+                                                                    }}">
+                                                                    {{$item->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="form-select status trang-thai" id="status">
+                                                                <option {{ $value->status == 'published' ? 'selected' : ''
+                                                                    }}
+                                                                    data-idProduct="{{ $value->id }}" value="published">Được
+                                                                    phát hành</option>
+                                                                <option {{ $value->status == 'inactive' ? 'selected' : '' }}
+                                                                    data-idProduct="{{ $value->id }}" value="inactive">Không
+                                                                    hoạt động</option>
+                                                                <option {{ $value->status == 'scheduled' ? 'selected' : ''
+                                                                    }}
+                                                                    data-idProduct="{{ $value->id }}" value="scheduled">Lên
+                                                                    kế
+                                                                    hoạch</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    @if(is_array($role))
+                                                        @if($role['user']['role_id'] === 1)
+                                                            <td>
+                                                                <div class="toggle-container">
+                                                                    <input type="checkbox" id="toggle{{$value->id}}" {{$value->is_featured == 1  ? "checked" : ""}} value="{{$value->id}}" class="toggle-checkbox">
+                                                                    <label for="toggle{{$value->id}}" class="toggle-label">
+                                                                        <span class="toggle-knob"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     @endif
-
-                                                </td>
-                                                <td>{{ $value->quantity }}</td>
-                                                <td>{{ number_format($value->purchase_price) }}đ</td>
-                                                <td>{{ number_format($value->price) }}đ</td>
-                                                <td>{{ $value->commission_rate }}%</td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select class="form-select category" name="category">
-                                                            @foreach ($category as $item)
-                                                            <option {{ $value->category_id == $item->id ? 'selected' :
-                                                                ''}}
-                                                                data-idProduct="{{ $value->id }}" value="{{ $item->id
-                                                                }}">
-                                                                {{$item->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select class="form-select status trang-thai" id="status">
-                                                            <option {{ $value->status == 'published' ? 'selected' : ''
-                                                                }}
-                                                                data-idProduct="{{ $value->id }}" value="published">Được
-                                                                phát hành</option>
-                                                            <option {{ $value->status == 'inactive' ? 'selected' : '' }}
-                                                                data-idProduct="{{ $value->id }}" value="inactive">Không
-                                                                hoạt động</option>
-                                                            <option {{ $value->status == 'scheduled' ? 'selected' : ''
-                                                                }}
-                                                                data-idProduct="{{ $value->id }}" value="scheduled">Lên
-                                                                kế
-                                                                hoạch</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="toggle-container">
-                                                        <input type="checkbox" id="toggle{{$value->id}}" {{$value->is_featured == 1  ? "checked" : ""}} value="{{$value->id}}" class="toggle-checkbox">
-                                                        <label for="toggle{{$value->id}}" class="toggle-label">
-                                                            <span class="toggle-knob"></span>
-                                                        </label>
-                                                    </div>
-                                                    
-                                                   
-                                                </td>
-                                                <td align="center">
-                                                    <a class="btn btn-warning"
-                                                        href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
-                                                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                        class="btn btn-danger"
-                                                        href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
+                                                    <td align="center">
+                                                        <a class="btn btn-warning"
+                                                            href="{{ route('admin.product.edit', ['id'=> $value->id]) }}">Sửa</a>
+                                                        <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                            class="btn btn-danger"
+                                                            href="{{ route('admin.product.delete', ['id'=> $value->id]) }}">Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
                                         @else
-                                        <tbody>
-                                            <td class="text-center" colspan="10">
-                                                <div class="">
-                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-                                                        viewBox="0 0 2048 2048">--}}
-                                                        {{--
-                                                        <path fill="currentColor"
-                                                            d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
-                                                        --}}
-                                                        {{--
-                                                    </svg>--}}
-                                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-                                                        viewBox="0 0 2048 2048">--}}
-                                                        {{--
-                                                        <path fill="currentColor"
-                                                            d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
-                                                        --}}
-                                                        {{--
-                                                    </svg>--}}
-                                                    Không có sản phẩm cần tìm
-                                                </div>
-                                            </td>
-                                        </tbody>
+                                            <tbody>
+                                                <td class="text-center" colspan="10">
+                                                    <div class="">
+                                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                                                            viewBox="0 0 2048 2048">--}}
+                                                            {{--
+                                                            <path fill="currentColor"
+                                                                d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
+                                                            --}}
+                                                            {{--
+                                                        </svg>--}}
+                                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                                                            viewBox="0 0 2048 2048">--}}
+                                                            {{--
+                                                            <path fill="currentColor"
+                                                                d="m960 120l832 416v1040l-832 415l-832-415V536l832-416zm625 456L960 264L719 384l621 314l245-122zM960 888l238-118l-622-314l-241 120l625 312zM256 680v816l640 320v-816L256 680zm768 1136l640-320V680l-640 320v816z" />
+                                                            --}}
+                                                            {{--
+                                                        </svg>--}}
+                                                        Không có sản phẩm cần tìm
+                                                    </div>
+                                                </td>
+                                            </tbody>
                                         @endif
                                     </table>
-
+                                    {{ $products->links('pagination::simple-pagination') }}
 
                                 </div>
                             </div>
@@ -216,7 +222,7 @@
                     <!-- end card -->
                 </div> <!-- end col -->
             </div> <!-- end row -->
-
+           
         </div> <!-- container-fluid -->
     </div>
     <script>
@@ -378,5 +384,16 @@
     .toggle-checkbox:checked + .toggle-label .toggle-knob {
         transform: translateX(30px);
     }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+  
     </style>
     @endsection

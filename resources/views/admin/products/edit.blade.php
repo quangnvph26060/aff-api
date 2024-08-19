@@ -60,7 +60,7 @@
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Loại thương
                                                     hiệu<span class="text text-danger">*</span></label>
-                                                <select class="form-control" name="category_id" id="" required>
+                                                <select class="form-control" name="brands_id" id="" required>
                                                     <option value="">Chọn thương hiệu</option>
                                                     @foreach ($brand as $item )
                                                     <option {{ $product->brands->id == $item->id ? 'selected' : ''

@@ -97,7 +97,7 @@ class UserService
     public function getUser(Request $request)
     {
         if ($request->is('api/*')) {
-            // Xác định người dùng qua token (cho API)
+            // Xác định người dùng qua token
             $user = Auth::user();
             if ($user) {
                 return response()->json([
@@ -111,7 +111,7 @@ class UserService
                 ], 401);
             }
         } else {
-            // Xác định người dùng qua session (cho web)
+            // Xác định người dùng qua session
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
             }
