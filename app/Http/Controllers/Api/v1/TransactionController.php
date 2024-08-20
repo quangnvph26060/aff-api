@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api\v1;
 use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\Commission;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Services\TransactionService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
@@ -110,5 +113,20 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function WaitingForPayment(Request $request){
+        $user = Auth::user();
+
+        if(!$user){
+            return ApiResponse::error('User not authenticated', 401);
+        }
+
+        $id = $user->id;
+
+        $commissions = Transaction::where('user_id', $id)->where('status','pending')->get();
+    
+        $totalAmount = $commissions->sum('amount');
+        
+        return ApiResponse::success( $totalAmount,'Total commission amount',200);
     }
 }

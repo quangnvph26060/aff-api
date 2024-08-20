@@ -33,7 +33,7 @@ class DistributeMonthlyBonuses extends Command
     public function handle()
     {
         $today = Carbon::now();
-        Log::info($today);
+        Log::info($today->day);
         // Chỉ xử lý từ ngày 1 đến ngày 5 của tháng
         if ($today->day >= 1 && $today->day <= 7) {
             Log::info('date: '. date('Y-m-d'));
