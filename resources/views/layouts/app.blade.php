@@ -10,10 +10,12 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="https://quanlycongviec.site/libs/assets/images/favicon.ico">
+    
+    <link rel="shortcut icon" href="{{ asset('libs/assets/images/favicon.ico') }}">
+
     <!-- plugin css -->
     <link
-        href="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css"
+        href="{{asset('libs/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css')}}"
         rel="stylesheet" type="text/css" />
 
     <!-- preloader css -->
@@ -29,7 +31,7 @@
     <!-- App Css-->
     <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet"
         type="text/css" />
-    <link href="https://quanlycongviec.site/libs/assets/libs/choices.js/public/assets/styles/choices.min.css"
+    <link href="{{asset('libs/assets/libs/choices.js/public/assets/styles/choices.min.css')}}"
         rel="stylesheet" type="text/css" />
 
     <!-- validator -->
@@ -114,25 +116,25 @@ overflow: auto;
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/jquery/jquery.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/metismenu/metisMenu.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/node-waves/waves.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="{{asset('libs/assets/libs/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('libs/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('libs/assets/libs/metismenu/metisMenu.min.js')}}"></script>
+    <script src="{{asset('libs/assets/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{asset('libs/assets/libs/node-waves/waves.min.js')}}"></script>
+    <script src="{{asset('libs/assets/libs/feather-icons/feather.min.js')}}"></script>
     <!-- pace js -->
-    <script src="https://quanlycongviec.site/libs/assets/libs/pace-js/pace.min.js"></script>
+    <script src="{{asset('libs/assets/libs/pace-js/pace.min.js')}}"></script>
 
     <!-- apexcharts -->
     <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
     <!-- Plugins js-->
     <script
-        src="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        src="{{asset('libs/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
     <script
-        src="https://quanlycongviec.site/libs/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+        src="{{asset('libs/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js')}}"></script>
     <!-- dashboard init -->
 
-     <script src="https://quanlycongviec.site/libs/assets/js/app.js"></script>
+     <script src="{{asset('libs/assets/js/app.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="//js.pusher.com/3.1/pusher.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -239,8 +241,8 @@ overflow: auto;
         }
     </script>
     <!-- choices js -->
-    <script src="https://quanlycongviec.site/libs/assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="https://quanlycongviec.site/libs/assets/js/pages/form-advanced.init.js"></script>
+    <script src="{{asset('libs/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+    <script src="{{asset('libs/assets/js/pages/form-advanced.init.js')}}"></script>
     {{-- <script>
         function openModel(id, keyword) {
             $('#keyword').html(keyword);

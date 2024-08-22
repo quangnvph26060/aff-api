@@ -57,44 +57,7 @@
                 </div>
             </div>
 
-            <!-- <div class="dropdown d-none d-sm-inline-block">
-                <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <img id="header-lang-img" src="https://quanlycongviec.site/libs/assets/images/flags/us.jpg"
-                        alt="Header Language" height="16">
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-
-
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="en">
-                        <img src="https://quanlycongviec.site/libs/assets/images/flags/us.jpg" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">English</span>
-                    </a>
-
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
-                        <img src="https://quanlycongviec.site/libs/assets/images/flags/spain.jpg" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Spanish</span>
-                    </a>
-
-
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
-                        <img src="https://quanlycongviec.site/libs/assets/images/flags/germany.jpg" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">German</span>
-                    </a>
-
-
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
-                        <img src="https://quanlycongviec.site/libs/assets/images/flags/italy.jpg" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Italian</span>
-                    </a>
-
-
-                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
-                        <img src="https://quanlycongviec.site/libs/assets/images/flags/russia.jpg" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Russian</span>
-                    </a>
-                </div>
-            </div> -->
+           
 
             <div class="dropdown d-none d-sm-inline-block">
                 <button type="button" class="btn header-item" id="mode-setting-btn">
@@ -113,21 +76,21 @@
                         <div class="row g-0">
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/github.png"
+                                    <img src="{{asset('libs/assets/images/brands/github.png')}}"
                                         alt="Github">
                                     <span>GitHub</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/bitbucket.png"
+                                    <img src="{{asset('libs/assets/images/brands/bitbucket.png')}}"
                                         alt="bitbucket">
                                     <span>Bitbucket</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/dribbble.png"
+                                    <img src="{{asset('libs/assets/images/brands/dribbble.png')}}"
                                         alt="dribbble">
                                     <span>Dribbble</span>
                                 </a>
@@ -137,21 +100,21 @@
                         <div class="row g-0">
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/dropbox.png"
+                                    <img src="{{asset('libs/assets/images/brands/dropbox.png')}}"
                                         alt="dropbox">
                                     <span>Dropbox</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/mail_chimp.png"
+                                    <img src="{{asset('libs/assets/images/brands/mail_chimp.png')}}"
                                         alt="mail_chimp">
                                     <span>Mail Chimp</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="https://quanlycongviec.site/libs/assets/images/brands/slack.png"
+                                    <img src="{{asset('libs/assets/images/brands/slack.png')}}"
                                         alt="slack">
                                     <span>Slack</span>
                                 </a>
