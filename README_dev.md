@@ -171,3 +171,7 @@ ADD COLUMN approve_product BOOLEAN DEFAULT FALSE;
 thay đổi policy sang text trong bảng config
 
 npm install date-fns
+
+-- 23/8/2024
+ALTER TABLE methods
+ADD active BOOLEAN NOT NULL DEFAULT 1;

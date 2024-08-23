@@ -13,4 +13,5 @@ final class RequestApi extends Enum
 {
     const API = 'api';
     const WEB = 'web';
+    const T_ACTIVE = 1;
 }

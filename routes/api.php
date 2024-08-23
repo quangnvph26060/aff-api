@@ -102,6 +102,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::get('/get-order', [OrderController::class, 'index']);
     Route::get('/order-detail', [OrderController::class, 'getOrderNew']);
     Route::post('/delete-order-user', [OrderController::class, 'delOrderUser']);
+    Route::get('/get-order-month', [OrderController::class, 'getOrderInMonth']);
+    Route::get('/get-methods', [OrderController::class, 'getMethodPayment']);
     Route::get('/banner-brand',[BrandController::class,'imageBrand'])->name('banner.brand');
     Route::get('/get-bank',[BrandController::class,'getBank']);
     Route::group(['prefix' => 'comment'], function ($router) {

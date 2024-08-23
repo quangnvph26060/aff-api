@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Enums\RequestApi;
 use App\Exceptions\OrderNotFoundException;
 use App\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\Method;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Services\OrderService;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Colors\Rgb\Channels\Red;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -192,5 +195,21 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }
+    }
+    public function getOrderInMonth(){
+        $userId = Auth::id();
+        $now = Carbon::now();
+
+        $sumTotalOrder = Order::query()
+                          ->where('user_id', $userId)
+                          ->whereMonth('created_at', $now->month)
+                          ->whereYear('created_at', $now->year)
+                          ->sum('total_money');
+        return response()->json(['data' => $sumTotalOrder, 'status' => 'success']);
+
+    }
+    public function getMethodPayment(){
+        $methods = Method::where('active',RequestApi::T_ACTIVE)->get();
+        return response()->json(['data' => $methods, 'status' => 'success']);
     }
 }
