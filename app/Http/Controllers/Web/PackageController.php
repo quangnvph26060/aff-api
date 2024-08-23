@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enums\RequestApi;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
+use App\Models\Method;
 use App\Models\OrderDetail;
 use App\Models\Packages;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PackageController extends Controller
@@ -92,4 +95,60 @@ class PackageController extends Controller
         }
     }
 
+    // pay 
+    public function getPay () {
+        $data = Method::all();
+        $title = "Phương thức thanh toán";
+        return view('admin.pay.index',compact('data','title'));
+    }
+
+    public function updateStatusPay(Request $request)  {
+
+        $id_pay     = $request->id_pay;
+        $status     = $request->status;
+    
+        $result     = Method::find($id_pay);
+
+        if(!$result){
+            return response()->json(['status'=>'errors','update status failer']);
+        }
+        $result->update(['active'=>$status]);
+
+        return response()->json(['status'=>'success','update status success']);
+    }
+    public function delete($id) {
+        if(!$id){
+            return redirect()->route('admin.pay');
+        }
+        $pay = Method::find($id);
+        if(!$pay){
+            return ApiResponse::error('Find method pay errors', 500);
+        }
+        $pay->delete();
+        session()->flash('success','Xóa phương thức thanh toán thành  cống!');
+        return redirect()->back();
+    }
+    public function storePay(Request $request) {
+        DB::beginTransaction();
+    
+        try {
+            $name = $request->input('namepay');
+            $method = Method::create([
+                'name' => $name,
+                'active' => RequestApi::T_ACTIVE,
+            ]);
+    
+            DB::commit(); 
+    
+            session()->flash('success', 'Thêm phương thức thanh toán thành công!');
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack(); 
+
+            session()->flash('error', 'Thêm phương thức thanh toán thất bại!'); 
+
+            return ApiResponse::error('Failed to create method', 500);
+        }
+    }
 }

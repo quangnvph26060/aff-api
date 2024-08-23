@@ -65,7 +65,8 @@ class AppServiceProvider extends ServiceProvider
                 'admin.product.filter',
                 'admin.comment',
                 'admin.comment.find',
-                'admin.member'
+                'admin.member',
+                'admin.pay'
             ];
             $path = Route::currentRouteName();
             //  Log::info('demo path: ' . $path);

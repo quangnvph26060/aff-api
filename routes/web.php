@@ -168,6 +168,7 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::post('/aff-settings/update-status', [MlmController::class, 'updateStatus'])->name('commissions.aff-settings');
     Route::post('/update-commission-status', [MlmController::class, 'updateCommissionStatus']);
     Route::post('/commission-status', [MlmController::class, 'updateCommissionActive'])->name('commissions.status');
+
     // pakage
     Route::get('/package', [PackageController::class, 'index'])->name('package');
     Route::get('/package-add', [PackageController::class, 'viewAdd'])->name('package.view');
@@ -175,6 +176,12 @@ Route::middleware(['auth.user'])->prefix('admin')->name('admin.')->group(functio
     Route::get('/package-edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
     Route::post('/package-update/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::get('package/list', [PackageController::class, 'packageList'])->name('package.list');
+
+    //pay 
+    Route::get('/pay', [PackageController::class, 'getPay'])->name('pay');
+    Route::post('/update', [PackageController::class, 'updateStatusPay'])->name('pay.update.status');
+    Route::post('/add-pay', [PackageController::class, 'storePay'])->name('pay.add');
+    Route::delete('/delete-pay/{id}', [PackageController::class, 'delete'])->name('pay.delete');
     // get customer 
     Route::get('khach-hang',[AuthController::class,'getCustomer'])->name('khach-hang');
     Route::get('cong-tac-vien',[AuthController::class,'getCustomerAffilate'])->name('cong-tac-vien');
