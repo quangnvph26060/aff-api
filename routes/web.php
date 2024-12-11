@@ -91,7 +91,7 @@ Route::get('ad', function () {
 // });
 // end demo
 
-Route::get('/admin/login', [AuthController::class, 'viewLogin'])->name('admin.login');
+Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
 // Route::group(['prefix' => 'admin'], function () {
 //     Route::get('/login', [AuthController::class, 'viewLogin'])->name('admin.login');
 //     Route::get('/', [AuthController::class, 'viewLogin'])->name('admin.login');
