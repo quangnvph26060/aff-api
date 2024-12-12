@@ -42,7 +42,7 @@
                                     </div>
                                     <form method="POST" class="mt-4 pt-2" action="{{ route('login') }}" id="submitformlogin">
                                         @csrf
-                                        <input name="type" type="hidden" class="form-control" id="username" value=" web">
+                                        <input name="type" type="hidden" class="form-control" id="username" value="web">
                                         <div class="mb-3">
                                             <label class="form-label">Email hoặc số điện thoại</label>
                                             <input name="phone" type="text" class="form-control" id="phone">
