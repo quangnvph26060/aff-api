@@ -24,7 +24,7 @@ class Authenticate extends Middleware
     {
       
         if (Auth::guest()) {
-            return redirect()->route('login');
+            return redirect()->route('admin.login');
         }
         return $next($request);
     }
