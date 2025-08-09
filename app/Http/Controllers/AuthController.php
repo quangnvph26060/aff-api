@@ -60,7 +60,6 @@ class AuthController extends Controller
             }
         } catch (\Exception $e) {
             return $this->handleLoginError($request, $e);
-
         }
     }
     /**
@@ -69,7 +68,7 @@ class AuthController extends Controller
     protected function filterUserData(array $data): array
     {
         return array_filter($data, function ($key) {
-            return in_array($key, ['phone', 'password','type']);
+            return in_array($key, ['phone', 'password', 'type']);
         }, ARRAY_FILTER_USE_KEY);
     }
     protected function handleLoginError($request, \Exception $e)
@@ -98,7 +97,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
 
-        if($request->type === "web"){
+        if ($request->type === "web") {
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect()->route('admin.login');
@@ -106,7 +105,7 @@ class AuthController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
         $user->tokens()->delete();
         Auth::logout();
-       return ApiResponse::success('Successfully logged out', 201);
+        return ApiResponse::success('Successfully logged out', 201);
     }
 
     /**
@@ -129,9 +128,9 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $user = auth()->user();
-        if(($user->role->name === "Admin")){
+        if (($user->role->name === "Admin")) {
             $role = "Admin";
-        }else {
+        } else {
             $role = "User";
         }
         $user->tokens()->delete();
@@ -153,13 +152,14 @@ class AuthController extends Controller
     /**
      * hàm lấy thông tin người dùng
      */
-    public function getUser(Request $request) {
+    public function getUser(Request $request)
+    {
         if ($request->is('api/*')) {
             // Xác định người dùng qua token (cho API)
             $user = Auth::user();
             if ($user) {
-                $admin = User::where('role_id',1)->first();
-                $userPackage = $user->activeUserPackage; 
+                $admin = User::where('role_id', 1)->first();
+                $userPackage = $user->activeUserPackage;
                 return response()->json([
                     'status'       => 'success',
                     'data'         => $user,
@@ -177,11 +177,11 @@ class AuthController extends Controller
             if ($request->session()->has('authUser')) {
                 $user = $request->session()->get('authUser');
             }
-             return $user;
+            return $user;
         }
     }
 
-     /**
+    /**
      * Thay đổi mật khẩu
      */
 
@@ -198,12 +198,12 @@ class AuthController extends Controller
             );
             return redirect()->back()->with($result['status'], $result['message']);
         }
-
     }
     /**
      * hàm hiển thị view login
      */
-    public function viewLogin(){
+    public function viewLogin()
+    {
         $config = $this->configService->getConfig();
         return view('admin.login', compact('config'));
     }
@@ -237,11 +237,12 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'No file uploaded.'], 400);
     }
-    public function getCustomer () {
+    public function getCustomer()
+    {
         try {
             $data = $this->userService->getCustomer();
             $title = "Danh sách khách hàng";
-            if(!$data){
+            if (!$data) {
                 throw new ModelNotFoundException('Failed to customer');
             }
             return view('admin.customer.customer', ['data' => $data, 'title' => $title]);
@@ -250,20 +251,27 @@ class AuthController extends Controller
             throw new Exception('Failed to customer');
         }
     }
-    
-    public function getCustomerAffilate () {
+
+    public function getCustomerAffilate(Request $request)
+    {
         try {
-            $data =  $this->userService->getCustomerAffilate();
-            $title = "Danh sách công tác viên";
-            if(!$data){
-                throw new ModelNotFoundException('Failed to customer');
+            $keyword = $request->input('keyword'); // Lấy từ khóa tìm kiếm
+
+            $data = $this->userService->getCustomerAffilate($keyword);
+
+            $title = "Danh sách cộng tác viên";
+            if ($data->isEmpty()) {
+                throw new ModelNotFoundException('Không tìm thấy khách hàng');
             }
-            return view('admin.customer.customer_affliate', ['data' => $data, 'title' => $title]);
-        }   catch (Exception $e) {
+
+            return view('admin.customer.customer_affliate', [
+                'data' => $data,
+                'title' => $title,
+                'keyword' => $keyword
+            ]);
+        } catch (Exception $e) {
             Log::error('Failed to customer: ' . $e->getMessage());
             throw new Exception('Failed to customer affliate');
         }
     }
-
-
 }

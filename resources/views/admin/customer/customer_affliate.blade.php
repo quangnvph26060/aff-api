@@ -17,20 +17,18 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="col-lg-4">
-                                    <form action="" method="post">
-                                        <div class="form-group d-flex col-7">
-                                            <input type="text" class="form-control" name="search"
-                                                placeholder="Nhập tìm kiếm">
-                                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                        </div>
-                                    </form>
+
+                        <div class="col-lg-5">
+                            <form method="GET" action="{{ route('admin.cong-tac-vien') }}">
+                                <div class="form-group gap-2 d-flex">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Nhập tìm kiếm"
+                                        style="height: 35px" value="{{ $keyword ?? '' }}">
+                                    <button type="submit" class="btn btn-primary text-nowrap" style="height: 35px">
+                                        Tìm kiếm
+                                    </button>
 
                                 </div>
-                            </div>
-
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class="table-rep-plugin">
@@ -48,22 +46,43 @@
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
                                                 <th>Vai trò</th>
+                                                <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data as  $index=>$item)
+                                            @foreach ($data as $index => $item)
                                                 <tr>
-                                                    <td>{{ $index+1 }}</td>
-                                                   <td>{{$item['name']}}</td>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $item['name'] }}</td>
                                                     <td>{{ $item['email'] }}</td>
-                                                    <td> {{$item['phone']}}</td>
-                                                    <td> {{$item['role_id'] === 2 ? "Công tác viên" :""}}</td>
+                                                    <td> {{ $item['phone'] }}</td>
+                                                    <td> {{ $item['role_id'] === 2 ? 'Công tác viên' : '' }}</td>
+                                                    <td>
+                                                        <!-- Nút Sửa -->
+                                                         {{-- href="{{ route('admin.customer.edit', $item['id']) }}" --}}
+                                                        <a 
+                                                            class="btn btn-sm btn-warning">
+                                                            Sửa
+                                                        </a>
+
+                                                        <!-- Nút Xóa -->
+                                                        {{-- action="{{ route('admin.customer.delete', $item['id']) }}" --}}
+                                                        <form 
+                                                            method="POST" style="display:inline-block;"
+                                                            onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                                Xóa
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                     <nav>
-                             
+
                                     </nav>
 
                                 </div>

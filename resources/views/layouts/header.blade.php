@@ -193,13 +193,12 @@
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
 
-                    <img class="rounded-circle header-profile-user"
+                    {{-- <img class="rounded-circle header-profile-user"
                         src="{{ isset($loggedInUser['images']) ? asset($loggedInUser['images']) : asset('/users/avatar-1.jpg') }}"
-                        alt="Image">
-
-
-
-
+                        alt="Image"> --}}
+                    <img class="rounded-circle header-profile-user"
+                        src="{{ asset('/users/avatar-1.jpg') }}"
+                        alt="Image"> 
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">
 
                     </span>

@@ -61,22 +61,22 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function countAllUser(){
-        try{
+    public function countAllUser()
+    {
+        try {
             $amount = $this->user->where('role_id', 3)->count();
             return $amount;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to count users: ' . $e->getMessage());
             throw new Exception('Failed to count users');
         }
     }
-    public function countAllUserAffliate(){
-        try{
+    public function countAllUserAffliate()
+    {
+        try {
             $amount = $this->user->where('role_id', 2)->count();
             return $amount;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to count users: ' . $e->getMessage());
             throw new Exception('Failed to count users');
         }
@@ -173,8 +173,8 @@ class UserService
             if ($currentMember) {
                 $currentUser = $currentMember;
                 $teamMember = User::where('referrer_id', $currentUser->referral_code)->get();
-                 // Áp dụng bộ lọc
-                 if ($filter != 'all') {
+                // Áp dụng bộ lọc
+                if ($filter != 'all') {
                     $teamMember = $teamMember->filter(function ($member) use ($filter) {
                         $orders = $member->orders;
                         $startOfWeek = Carbon::now()->startOfWeek();
@@ -264,7 +264,7 @@ class UserService
             } else {
                 $currentUser = $request->session()->get('authUser');
 
-              
+
 
                 $teamMembersB = User::where('referrer_id', $currentUser['user']['referral_code'])->with('userwallet')->get();
                 $result = new \Illuminate\Database\Eloquent\Collection;
@@ -294,16 +294,16 @@ class UserService
                         ->sum(function ($user) {
                             return $user->userwallet->sum('total_revenue');
                         });
-                     // Kiểm tra nếu tổng doanh thu của team >= 30 triệu
+                    // Kiểm tra nếu tổng doanh thu của team >= 30 triệu
                     if ($teamRevenue >= 30000000) {
                         $eligibleDate = Carbon::now()->startOfMonth()->addMonth();
 
                         $existingBonus = PendingBonus::where('user_id', $memberB->id)
-                        ->whereMonth('eligible_date', $eligibleDate->month)
-                        ->whereYear('eligible_date', $eligibleDate->year)
-                        ->where('processed', false)
-                        ->first();
-                
+                            ->whereMonth('eligible_date', $eligibleDate->month)
+                            ->whereYear('eligible_date', $eligibleDate->year)
+                            ->where('processed', false)
+                            ->first();
+
                         if (!$existingBonus) {
                             PendingBonus::create([
                                 'user_id' => $memberB->id,
@@ -313,7 +313,7 @@ class UserService
                             ]);
                         }
                     }
-                    
+
                     // Tạo đối tượng kết quả và thêm vào Collection
                     $result->push((object)[
                         'id' => $memberB->id,
@@ -380,13 +380,13 @@ class UserService
 
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
-            Log::info('User data being created: '. $data['name']);
-                if($data['referral_code']){
-                    $referral_code = $data['referral_code'];
-                    $findUser = $this->user->where('referral_code', $referral_code)->first();
-                    $is_result = $findUser->toArray();
-                }
-           
+            Log::info('User data being created: ' . $data['name']);
+            if ($data['referral_code']) {
+                $referral_code = $data['referral_code'];
+                $findUser = $this->user->where('referral_code', $referral_code)->first();
+                $is_result = $findUser->toArray();
+            }
+
             $user = [
                 'name' => isset($data['name']) ? $data['name'] : null,
                 'email' => @$data['email'],
@@ -406,7 +406,7 @@ class UserService
                 'user' => $user,
                 'otp' => $data['otp'],
             ];
-        
+
             SendMail::dispatch($arrSendMail);
             //  event(new EventRegister($user,@$data['otp']));
             return $user;
@@ -444,13 +444,13 @@ class UserService
         try {
             Log::info("Creating a new user with phone: {$data['phone']}");
 
-           if($data['referral_code']){
+            if ($data['referral_code']) {
                 $referral_code = $data['referral_code'];
                 $findUser = $this->user->where('referral_code', $referral_code)->first();
                 Log::info($findUser);
                 $is_result = $findUser->toArray();
             }
-           
+
             $user = $this->user->create([
                 'name' => @$data['name'],
                 'email' => @$data['email'],
@@ -559,9 +559,9 @@ class UserService
             ->orWhere('email', $credentials['phone'])
             ->first();
         if (!$user) {
-            $user = Brand::where('email', $credentials['phone'])->first();    
+            $user = Brand::where('email', $credentials['phone'])->first();
         }
-    
+
         // if (!$user) {
         //     throw new Exception('Unauthorized');
         // }
@@ -571,8 +571,8 @@ class UserService
             if ($userRoleId != 1 && $userRoleId != 4) {
                 throw new Exception('Not an admin');
             }
-        }elseif ($request->type === RequestApi::API) {
-            if ($userRoleId != 2 ) {
+        } elseif ($request->type === RequestApi::API) {
+            if ($userRoleId != 2) {
                 throw new Exception('Not a user');
             }
         }
@@ -648,7 +648,7 @@ class UserService
      * @param array $data
      * @return UserInfo
      */
-    
+
     // user role admin
     public function updateUserInfoById(int $id, array $data)
     {
@@ -684,9 +684,8 @@ class UserService
                     "bank" => @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
-                    'branch' => $img.$data['bank']."-".$data['idnumber'].'-qr_only.png'
+                    'branch' => $img . $data['bank'] . "-" . $data['idnumber'] . '-qr_only.png'
                 ]);
-
             } else {
                 $userinfo = UserInfo::create([
                     'user_id' => $id,
@@ -696,7 +695,7 @@ class UserService
                     "bank" =>  @$data['bank'],
                     "idnumber" =>  @$data['idnumber'],
                     "bank_name" =>  @$data['bank_name'],
-                    'branch' => $img.$data['bank']."-".$data['idnumber'].'-qr_only.png'
+                    'branch' => $img . $data['bank'] . "-" . $data['idnumber'] . '-qr_only.png'
                 ]);
             }
             DB::commit();
@@ -716,14 +715,14 @@ class UserService
             $userinfo = UserInfo::where('user_id', $id)->first();
             $fontImagePath = '';
             $backImagePath = '';
-    
+
             //Handle font image upload
             if (isset($data['FormUserInfo']['font-image']) && is_string($data['FormUserInfo']['font-image'])) {
                 $dataUrl = $data['FormUserInfo']['font-image'];
                 if (preg_match('/^data:image\/(\w+);base64,/', $dataUrl, $matches)) {
                     $imageData = base64_decode(explode(',', $dataUrl)[1]);
                     $extension = $matches[1];
-                    
+
                     if (!empty($imageData) && !empty($extension)) {
                         $fontImageName = 'image_' . time() . '.' . $extension;
                         $fontImagePath = 'public/cccd/cccd' . $id . '/' . $fontImageName;
@@ -742,14 +741,14 @@ class UserService
             } else {
                 return response()->json(['error' => 'Image not provided'], 400);
             }
-    
+
             //Handle back image upload
             if (isset($data['FormUserInfo']['back-image']) && is_string($data['FormUserInfo']['back-image'])) {
                 $dataUrl = $data['FormUserInfo']['back-image'];
                 if (preg_match('/^data:image\/(\w+);base64,/', $dataUrl, $matches)) {
                     $imageData = base64_decode(explode(',', $dataUrl)[1]);
                     $extension = $matches[1];
-                    
+
                     if (!empty($imageData) && !empty($extension)) {
                         $backImageName = 'image_' . time() . '.' . $extension;
                         $backImagePath = 'public/cccd/cccd' . $id . '/' . $backImageName;
@@ -790,7 +789,7 @@ class UserService
                     'branch' => $img . $data['FormUserInfo']['bank'] . "-" . $data['FormUserInfo']['idnumber'] . '-qr_only.png'
                 ]);
             }
-    
+
             DB::commit();
             return $userinfo;
         } catch (Exception $e) {
@@ -803,16 +802,22 @@ class UserService
     /**
      * hàm upload images user
      */
-    public function uploadImageUserInfo($data)
+    public function uploadImageUserInfo($data) {}
+    public function getCustomer()
     {
-
-    }
-    public function getCustomer(){
         return $this->user->where('role_id', 3)->get();
     }
-    public function getCustomerAffilate(){
-        return $this->user->where('role_id', 2)->get();
+    public function getCustomerAffilate($keyword = null)
+    {
+        $query = $this->user->where('role_id', 2);
+
+        if ($keyword) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        return $query->get();
     }
+
     public function editUser($data)
     {
         DB::beginTransaction();

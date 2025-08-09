@@ -533,7 +533,7 @@
                                     <div class="layout-rightside">
                                         <div class="card h-100 rounded-0">
                                             <div class="card-body p-0">
-                                                <div class="p-3">
+                                                {{-- <div class="p-3">
                                                     <h6 class="text-muted mb-0 text-uppercase fw-semibold">Hoạt động gần
                                                         đây</h6>
                                                 </div>
@@ -694,7 +694,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 @if($loggedInUser['user']['role_id'] === 1) 
                                                     <div class="p-3 mt-2">
                                                         <h6 class="text-muted mb-3 text-uppercase fw-semibold">10 Danh mục hàng đầu </h6>
@@ -784,7 +784,7 @@
                                                             đánh giá</div>
                                                     </div>
 
-                                                    <div class="mt-3">
+                                                    {{-- <div class="mt-3">
                                                         <div class="row align-items-center g-2">
                                                             <div class="col-auto">
                                                                 <div class="p-1">
@@ -904,7 +904,7 @@
                                                                 </div>
                                                             </div>
                                                         </div><!-- end row -->
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 
                                                     <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
